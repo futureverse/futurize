@@ -1,0 +1,20 @@
+Package: futurize
+Version: 1.0
+Title: Parallelize Common Apply Function 
+Description: A minimal, valid, complete R package that can be used as a baseline for testing and troubleshooting various components of R and R packages.
+Authors@R: c(
+   person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
+          email = "henrikb@braju.com"))
+License: GPL (>= 3)
+Depends:
+    future,
+Imports:
+    digest,
+    future.apply
+Suggests:
+    stats,
+    testthat (>= 3.0.0),
+    parallelly
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+RoxygenNote: 7.3.2
