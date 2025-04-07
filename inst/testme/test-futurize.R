@@ -1,7 +1,7 @@
 library(futurize)
 
 plan(sequential)
-#plan(multisession, workers = 3)
+#plan(multisession, workers = 2)
 
 y <- lapply(X = 1:3, FUN = function(x) { print(x) }) |> futurize(stdout = FALSE)
 print(y)
