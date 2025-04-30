@@ -1,3 +1,4 @@
+if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
 library(purrr)
 
@@ -55,15 +56,18 @@ for (kk in seq_along(exprs)) {
     str(res)
   }
 
-  expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L)))
-  res2 <- eval(expr_f2)
+  out <- utils::capture.output({
+    expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L)))
+    res2 <- eval(expr_f2)
+  })
+  print(out)
+  stopifnot(identical(out, character(0L)))
   stopifnot(identical(res2, res))
-
 
   expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L))
   res3 <- eval(expr_f3)
   stopifnot(identical(res3, res))
 }
 
-
 plan(sequential)
+} ## if (requireNamespace("purrr") && requireNamespace("furrr"))

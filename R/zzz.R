@@ -4,4 +4,7 @@
 
   ## furrr
   append_transpilers_for_furrr()
+
+  ## doFuture
+  append_transpilers_for_doFuture()
 }
