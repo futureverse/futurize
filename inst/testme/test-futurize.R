@@ -62,6 +62,15 @@ for (kk in seq_along(exprs)) {
   } else {
     str(res)
   }
+
+  expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L)))
+  res2 <- eval(expr_f2)
+  stopifnot(identical(res2, res))
+
+
+  expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L))
+  res3 <- eval(expr_f3)
+  stopifnot(identical(res3, res))
 }
 
 
