@@ -2,6 +2,7 @@
 
 S3method(partition,list)
 export(futurize)
+export(futurize_options)
 export(partition)
 importFrom(furrr,future_map)
 importFrom(future,future)

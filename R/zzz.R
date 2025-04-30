@@ -1,4 +1,18 @@
 .onLoad <- function(libname, pkgname) {
-  appendTranspilers("addon", make_addon_transpilers("base", "future.apply"))
-  appendTranspilers("addon", make_addon_transpilers("purrr", "furrr"))
+  ## future.apply
+  appendTranspilers("addon", make_addon_transpilers("base", "future.apply", make_options = function(options, fcn) {
+    names(options) <- sprintf("future.%s", names(options))
+    keep <- intersect(names(formals(fcn)), names(options))
+    options <- options[keep]
+    options
+  }))
+
+  ## furrr
+  appendTranspilers("addon", make_addon_transpilers("purrr", "furrr", make_options = function(options, fcn) {
+    keep <- intersect(names(formals(furrr::furrr_options)), names(options))
+    options <- options[keep]
+    options <- do.call(furrr::furrr_options, args = options)
+    options <- list(.options = options)
+    options
+  }))
 }

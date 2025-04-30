@@ -6,7 +6,9 @@
 #'
 #' @inheritParams future::future
 #'
-#' @param \ldots Currently not used.
+#' @param options Named options controlling how futures are resolved.
+#' 
+#' @param \ldots Names options passed to [future_options()].
 #'
 #' @param flavor Flavor of futurize transpiler to use.
 #' If `"addon"`, then registered transpilers for packages such as
@@ -20,7 +22,7 @@
 #'
 #' @importFrom future future value
 #' @export
-futurize <- function(expr, substitute = TRUE, ..., flavor = c("addon", "built-in"), envir = parent.frame()) {
+futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., flavor = c("addon", "built-in"), envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
   debug <- isTRUE(getOption("futurize.debug"))
   if (debug) {
@@ -91,7 +93,7 @@ futurize <- function(expr, substitute = TRUE, ..., flavor = c("addon", "built-in
   } else {
     ns <- getNamespace(ns_name)
     if (!exists(fcn_name, mode = "function", envir = ns, inherits = TRUE)) {
-      stop(sprintf("No such  function in %s: %s()", sQuote(ns_name), deparse(call)))
+      stop(sprintf("No such function in %s: %s()", sQuote(ns_name), deparse(call)))
     }
   }
 
@@ -107,10 +109,10 @@ futurize <- function(expr, substitute = TRUE, ..., flavor = c("addon", "built-in
   }
   if (debug) mdebugf_pop()
 
-  if (debug) mprint("Transpile call expression")
-  expr_futurized <- transpiler[["transpiler"]](expr)
+  if (debug) mdebug("Transpile call expression")
+  expr_futurized <- transpiler[["transpiler"]](expr, options = options)
   if (debug) mprint(expr_futurized)
 
-  if (debug) mprint("Evaluate transpiled call expression")
+  if (debug) mdebug("Evaluate transpiled call expression")
   eval(expr_futurized, envir = envir)
 } ## futurize()

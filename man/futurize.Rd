@@ -7,6 +7,7 @@
 futurize(
   expr,
   substitute = TRUE,
+  options = futurize_options(...),
   ...,
   flavor = c("addon", "built-in"),
   envir = parent.frame()
@@ -18,6 +19,8 @@ futurize(
 \item{substitute}{If TRUE, argument \code{expr} is
 \code{\link[base]{substitute}()}:ed, otherwise not.}
 
+\item{options}{Named options controlling how futures are resolved.}
+
 \item{flavor}{Flavor of futurize transpiler to use.
 If `"addon"`, then registered transpilers for packages such as
 \pkg{future.apply} and \pkg{furrr} are used.
@@ -26,7 +29,7 @@ If `"builtin"`, then built-in transpilers are used.}
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
 
-\item{\ldots}{Currently not used.}
+\item{\ldots}{Names options passed to [future_options()].}
 }
 \value{
 Returns the value of `call`.
