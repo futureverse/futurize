@@ -8,8 +8,6 @@ futurize(
   expr,
   substitute = TRUE,
   ...,
-  stdout = TRUE,
-  conditions = "condition",
   flavor = c("addon", "built-in"),
   envir = parent.frame()
 )
@@ -19,32 +17,6 @@ futurize(
 
 \item{substitute}{If TRUE, argument \code{expr} is
 \code{\link[base]{substitute}()}:ed, otherwise not.}
-
-\item{stdout}{If TRUE (default), then the standard output is captured,
-and re-outputted when \code{value()} is called.
-If FALSE, any output is silenced (by sinking it to the null device as
-it is outputted).
-Using \code{stdout = structure(TRUE, drop = TRUE)} causes the captured
-standard output to be dropped from the future object as soon as it has
-been relayed. This can help decrease the overall memory consumed by
-captured output across futures.
-Using \code{stdout = NA} fully avoids intercepting the standard output;
-behavior of such unhandled standard output depends on the future backend.}
-
-\item{conditions}{A character string of conditions classes to be captured
-and relayed.  The default is to relay all conditions, including messages
-and warnings.  To drop all conditions, use \code{conditions = character(0)}.
-Errors are always relayed.
-Attribute \code{exclude} can be used to ignore specific classes, e.g.
-\code{conditions = structure("condition", exclude = "message")} will capture
-all \code{condition} classes except those that inherits from the \code{message} class.
-Using \code{conditions = structure(..., drop = TRUE)} causes any captured
-conditions to be dropped from the future object as soon as it has
-been relayed, e.g. by \code{value(f)}. This can help decrease the overall
-memory consumed by captured conditions across futures.
-Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
-except from errors; behavior of such unhandled conditions depends on the
-future backend and the environment from which R runs.}
 
 \item{flavor}{Flavor of futurize transpiler to use.
 If `"addon"`, then registered transpilers for packages such as
