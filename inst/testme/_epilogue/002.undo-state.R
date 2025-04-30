@@ -1,4 +1,5 @@
 testme <- as.environment("testme")
+hpaste <- future:::hpaste
 
 ## Undo options
 ## (a) Reset
