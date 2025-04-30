@@ -1,7 +1,6 @@
 library(futurize)
 
-plan(sequential)
-#plan(multisession, workers = 2)
+plan(multisession)
 
 y <- lapply(X = 1:3, FUN = function(x) { print(x) }) |> futurize(stdout = FALSE)
 print(y)
@@ -64,3 +63,6 @@ for (kk in seq_along(exprs)) {
     str(res)
   }
 }
+
+
+plan(sequential)

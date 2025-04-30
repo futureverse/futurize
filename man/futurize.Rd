@@ -10,6 +10,7 @@ futurize(
   ...,
   stdout = TRUE,
   conditions = "condition",
+  flavor = c("addon", "built-in"),
   envir = parent.frame()
 )
 }
@@ -44,6 +45,11 @@ memory consumed by captured conditions across futures.
 Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
+
+\item{flavor}{Flavor of futurize transpiler to use.
+If `"addon"`, then registered transpilers for packages such as
+\pkg{future.apply} and \pkg{furrr} are used.
+If `"builtin"`, then built-in transpilers are used.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}

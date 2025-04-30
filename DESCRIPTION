@@ -1,7 +1,7 @@
 Package: futurize
-Version: 0.0.1-9000
-Title: Parallelize Common Apply Function 
-Description: A minimal, valid, complete R package that can be used as a baseline for testing and troubleshooting various components of R and R packages.
+Version: 0.0.2
+Title: Parallelize Most Common Apply Functions via One Magic Function
+Description: The futurize() function rewrites (transpiles) calls to sequential map-reduce functions such as base::lapply() and purrr::map() into parallel Futureverse alternatives, giving you a drop-in pathway to scalable parallel computing. Ideal for speeding up iterative computations with minimal refactoring.
 Authors@R: c(
    person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
           email = "henrikb@braju.com"))
@@ -10,7 +10,8 @@ Depends:
     future
 Imports:
     digest,
-    future.apply
+    future.apply,
+    furrr
 Suggests:
     stats
 RoxygenNote: 7.3.2
