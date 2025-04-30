@@ -2,7 +2,7 @@
 % Please edit documentation in R/futurize.R
 \name{futurize}
 \alias{futurize}
-\title{Run a map-reduce call in parallel}
+\title{Evaluate a regular map-reduce call in parallel}
 \usage{
 futurize(
   expr,
@@ -32,15 +32,18 @@ identified.}
 \item{\ldots}{Names options passed to [future_options()].}
 }
 \value{
-Returns the value of `call`.
+Returns the value of the evaluated expression `expr`.
 }
 \description{
-Run a map-reduce call in parallel
+Evaluate a regular map-reduce call in parallel
 }
 \examples{
 xs <- list(1, 1:2, 1:2, 1:5)
 a <- 42
 
+# ------------------------------------------
+# Base R apply functions
+# ------------------------------------------
 # Sequential call
 y <- lapply(X = xs, FUN = function(x, ...) {
   sum(c(x, a), ...)
@@ -49,5 +52,20 @@ y <- lapply(X = xs, FUN = function(x, ...) {
 # Parallelized version
 y <- lapply(X = xs, FUN = function(x, ...) {
   sum(c(x, a), ...)
-}) |> futurize()
+}, na.rm = TRUE) |> futurize()
+
+
+# ------------------------------------------
+# purrr map-reduce functions
+# ------------------------------------------
+# Sequential call
+y <- purrr::map_dbl(xs, function(x, ...) {
+  sum(c(x, a), ...)
+}, na.rm = TRUE)
+   
+# Parallelized version
+y <- purrr::map_dbl(xs, function(x, ...) {
+  sum(c(x, a), ...)
+}) |> futurize(stdout = FALSE, seed = FALSE)
+print(y)
 }

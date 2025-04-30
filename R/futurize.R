@@ -1,8 +1,4 @@
-## YEAH! This is the first of two steps for a futurize() function
-## This solves the second part of that challenge. It works!
-## It took 2.5 hours to get to a first working prototype /HB 2025-03-17
-
-#' Run a map-reduce call in parallel
+#' Evaluate a regular map-reduce call in parallel
 #'
 #' @inheritParams future::future
 #'
@@ -16,7 +12,7 @@
 #' If `"builtin"`, then built-in transpilers are used.
 #'
 #' @returns
-#' Returns the value of `call`.
+#' Returns the value of the evaluated expression `expr`.
 #'
 #' @example incl/futurize.R
 #'
