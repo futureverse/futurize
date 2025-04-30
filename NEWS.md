@@ -2,7 +2,17 @@
 
  * Implement `futurize(flavor = "addon")`, which transpiles common
    map-reduce calls of base R and the **purrr** package, into
-   **future.apply** and **furrr** counter parts.
+   **future.apply** and **furrr** counterparts.  If you already use
+   **future.apply** or **furrr**, you can now replace your
+   `future_*()` calls with the futurized alternatives. For example,
+   instead of `y <- future_lapply(xs, fcn)` you can use `y <-
+   lapply(xs, fcn) | futurize()`, and instead of `future_map(xs, fcn)`
+   you can use `y <- map(xs, fcn) |> futurize()`.
+   
+ * Initially, `flavor = "addon"` will be the default, because
+   **future.apply** and **furrr** are well tested. In a future version
+   (pun intended), when the built-in transpilers have been equally
+   well tested, the default will switch to `flavor = "built-in"`.
    
  
 # Version 0.0.1 (2025-03-07)
@@ -20,4 +30,3 @@
    on the current future backend. When resolved, the results are
    reduced back to the structure that the original base R apply
    function would return.
-   
