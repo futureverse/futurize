@@ -1,8 +1,4 @@
-# Build transpilers for the future.apply and furrr APIs
-#
-#   make_addon_transpilers("base", "future.apply")
-#   make_addon_transpilers("purrr", "furrr")
-#
+# Used by transpilers for the future.apply, furrr packages
 make_addon_transpilers <- function(from_package, to_package, make_options) {
   call_template <- as.call(list(as.symbol("::"), as.symbol(to_package), as.symbol("<place-holder>")))
   make_call <- function(name) {
