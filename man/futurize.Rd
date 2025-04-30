@@ -9,7 +9,7 @@ futurize(
   substitute = TRUE,
   options = futurize_options(...),
   ...,
-  flavor = c("addon", "built-in"),
+  flavor = c("add-on", "built-in"),
   envir = parent.frame()
 )
 }
@@ -22,9 +22,9 @@ futurize(
 \item{options}{Named options controlling how futures are resolved.}
 
 \item{flavor}{Flavor of futurize transpiler to use.
-If `"addon"`, then registered transpilers for packages such as
+If `"add-on"`, then registered transpilers for packages such as
 \pkg{future.apply} and \pkg{furrr} are used.
-If `"builtin"`, then built-in transpilers are used.}
+If `"built-in"`, then built-in transpilers are used.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
