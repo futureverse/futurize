@@ -19,20 +19,19 @@ futurize(
 \item{substitute}{If TRUE, argument \code{expr} is
 \code{\link[base]{substitute}()}:ed, otherwise not.}
 
-\item{options}{Named options controlling how futures are resolved.}
+\item{options, \ldots}{Named options, passed to \code{\link[=futurize_options]{futurize_options()}},
+controlling how futures are resolved.}
 
 \item{flavor}{Flavor of futurize transpiler to use.
-If `"add-on"`, then registered transpilers for packages such as
+If \code{"add-on"}, then registered transpilers for packages such as
 \pkg{future.apply} and \pkg{furrr} are used.
-If `"built-in"`, then built-in transpilers are used.}
+If \code{"built-in"}, then built-in transpilers are used.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
-
-\item{\ldots}{Names options passed to [future_options()].}
 }
 \value{
-Returns the value of the evaluated expression `expr`.
+Returns the value of the evaluated expression \code{expr}.
 }
 \description{
 Evaluate a regular map-reduce call in parallel

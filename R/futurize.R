@@ -2,10 +2,9 @@
 #'
 #' @inheritParams future::future
 #'
-#' @param options Named options controlling how futures are resolved.
+#' @param options,\ldots Named options, passed to [futurize_options()],
+#' controlling how futures are resolved.
 #' 
-#' @param \ldots Names options passed to [future_options()].
-#'
 #' @param flavor Flavor of futurize transpiler to use.
 #' If `"add-on"`, then registered transpilers for packages such as
 #' \pkg{future.apply} and \pkg{furrr} are used.

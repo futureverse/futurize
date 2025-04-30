@@ -78,18 +78,18 @@ frequently) or FALSE (less frequently).
 as possible or not.}
 
 \item{scheduling}{Average number of futures ("chunks") per worker.
-If `0.0`, then a single future is used to process all elements
-of `X`.
-If `1.0` or `TRUE`, then one future per worker is used.
-If `2.0`, then each worker will process two futures
-(if there are enough elements in `X`).
-If `Inf` or `FALSE`, then one future per element of
-`X` is used.
-Only used if `future.chunk.size` is `NULL`.}
+If \code{0.0}, then a single future is used to process all elements
+of \code{X}.
+If \code{1.0} or \code{TRUE}, then one future per worker is used.
+If \code{2.0}, then each worker will process two futures
+(if there are enough elements in \code{X}).
+If \code{Inf} or \code{FALSE}, then one future per element of
+\code{X} is used.
+Only used if \code{future.chunk.size} is \code{NULL}.}
 
 \item{chunk.size}{The average number of elements per future ("chunk").
-If `Inf`, then all elements are processed in a single future.
-If `NULL`, then argument `future.scheduling` is used.}
+If \code{Inf}, then all elements are processed in a single future.
+If \code{NULL}, then argument \code{future.scheduling} is used.}
 
 \item{\ldots}{Additional named options.}
 }
