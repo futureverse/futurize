@@ -1,3 +1,4 @@
+#' @importFrom furrr future_map
 append_transpilers_for_furrr <- function() {
   append_transpilers("add-on", make_addon_transpilers(
     "purrr", "furrr", make_options = function(options, fcn) {

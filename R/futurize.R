@@ -92,9 +92,17 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     }
   }
 
-  if (debug) mdebugf_push("Locating %s transpiler for %s::%s() ...", sQuote(flavor), ns_name, fcn_name)
+  if (debug) {
+    mdebugf_push("Locating %s transpiler for %s::%s() ...", sQuote(flavor), ns_name, fcn_name)
+    mdebugf("Namespaces registed with futurize(): %s", commaq(names(transpiler_sets)))
+  }
+  
   ## Is there a registered transpiler for the function?
   transpilers <- transpiler_sets[[ns_name]]
+  if (is.null(transpilers)) {
+    stop(sprintf("Function %s::%s() is not in one of the registered futurize namespaces: %s", ns_name, fcn_name, commaq(names(transpiler_sets))))
+  }
+
   if (! fcn_name %in% names(transpilers)) {
     stop(sprintf("Do not know how to futurize function: %s()", deparse(call)))
   }
