@@ -20,7 +20,10 @@
    unifying, unique set of arguments that can be used to configure how
    the futures are resolved, how they are partitioned into chunks, and
    how output and conditions are relayed, among other things.
-   
+
+ * Add support also for **plyr**, e.g. `y <- llply(xs, fcn) |>
+   futurize()`.
+ 
  * Argument `flavor = "add-on"` is the default for `futurize()`,
    mainly because **future.apply**, **furrr**, and **doFuture** are
    very well tested. In a future version (pun intended), when the

@@ -29,7 +29,6 @@ append_transpilers_for_doFuture <- function() {
 
   transpilers <- list(transpilers)
   names(transpilers) <- "foreach"
-  transpilers
 
   append_transpilers("add-on", transpilers)
 }

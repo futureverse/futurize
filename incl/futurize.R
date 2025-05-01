@@ -45,3 +45,15 @@ y <- foreach(x = xs) %do% {
   sum(x)
 } |> futurize()
 str(y)
+
+
+# ------------------------------------------
+# foreach map-reduce functions
+# ------------------------------------------
+# Sequential call
+library(plyr)
+y <- llply(xs, sum)
+   
+# Parallelized version
+y <- llply(xs, sum) |> futurize()
+str(y)

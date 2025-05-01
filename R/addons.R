@@ -35,3 +35,18 @@ make_addon_transpilers <- function(from_package, to_package, make_options) {
   names(transpilers) <- from_package
   transpilers
 } ## make_addon_transpilers()
+
+
+append_transpilers_for_pkg <- function(pkg) {
+  if (pkg == "doFuture") {
+    append_transpilers_for_doFuture()
+  } else if (pkg == "furrr") {
+    append_transpilers_for_furrr()
+  } else if (pkg == "future.apply") {
+    append_transpilers_for_future.apply()
+  } else if (pkg == "plyr") {
+    append_transpilers_for_plyr()
+  } else {
+    stop("Unsupported package: ", sQuote(pkg))
+  }
+}
