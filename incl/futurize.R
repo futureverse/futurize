@@ -17,7 +17,7 @@ str(y)
 # ------------------------------------------
 # purrr map-reduce functions
 # ------------------------------------------
-library(purrr)
+if (require("purrr") && requireNamespace("furrr")) {
 
 # Sequential call
 y <- map(xs, function(x) {
@@ -30,12 +30,15 @@ y <- map(xs, function(x) {
 }) |> futurize()
 str(y)
 
+} ## if (require("purrr") && requireNamespace("furrr"))
+
 
 # ------------------------------------------
 # foreach map-reduce functions
 # ------------------------------------------
+if (require("foreach") && requireNamespace("doFuture")) {
+
 # Sequential call
-library(foreach)
 y <- foreach(x = xs) %do% {
   sum(x)
 }
@@ -46,14 +49,19 @@ y <- foreach(x = xs) %do% {
 } |> futurize()
 str(y)
 
+} ## if (require("foreach") && requireNamespace("doFuture"))
+
 
 # ------------------------------------------
 # foreach map-reduce functions
 # ------------------------------------------
+if (require("plyr")) {
+
 # Sequential call
-library(plyr)
 y <- llply(xs, sum)
    
 # Parallelized version
 y <- llply(xs, sum) |> futurize()
 str(y)
+
+} ## if (require("plyr"))
