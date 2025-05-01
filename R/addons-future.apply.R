@@ -9,4 +9,7 @@ append_transpilers_for_future.apply <- function() {
       options
     })
   )
+
+  ## Return required packages
+  c("future.apply")
 }

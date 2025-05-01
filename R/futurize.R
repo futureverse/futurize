@@ -101,13 +101,19 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
       stop(sprintf("Please install %s in order to futurize %s::%s()",
            sQuote(ns_name), ns_name, fcn_name))
     }
-    append_transpilers_for_pkg(ns_name)
+    req_pkgs <- append_transpilers_for_pkg(ns_name)
+    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
+    if (!all(okay)) {
+      pkgs <- req_pkgs[!okay]
+      stop(sprintf("Please install %s in order to futurize %s::%s()",
+           commaq(pkgs), ns_name, fcn_name))
+    }
     transpiler_sets <- get_transpilers(flavor)
     transpilers <- transpiler_sets[[ns_name]]
   }
 
   if (debug) {
-    mdebugf("Namespaces registed with futurize(): %s", commaq(names(transpiler_sets)))
+    mdebugf("Namespaces registered with futurize(): %s", commaq(names(transpiler_sets)))
   }
   
   ## Is there a registered transpiler for the function?

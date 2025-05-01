@@ -55,4 +55,7 @@ append_transpilers_for_plyr <- function() {
   names(transpilers) <- "plyr"
 
   append_transpilers("add-on", transpilers)
+
+  ## Return required packages
+  c("plyr", "doFuture")
 }

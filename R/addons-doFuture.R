@@ -29,4 +29,7 @@ append_transpilers_for_doFuture <- function() {
   names(transpilers) <- "foreach"
 
   append_transpilers("add-on", transpilers)
+  
+  ## Return required packages
+  c("plyr", "doFuture")
 }

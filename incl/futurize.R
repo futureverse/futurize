@@ -55,7 +55,7 @@ str(y)
 # ------------------------------------------
 # foreach map-reduce functions
 # ------------------------------------------
-if (require("plyr")) {
+if (require("plyr") && requireNamespace("doFuture")) {
 
 # Sequential call
 y <- llply(xs, sum)
@@ -64,4 +64,4 @@ y <- llply(xs, sum)
 y <- llply(xs, sum) |> futurize()
 str(y)
 
-} ## if (require("plyr"))
+} ## if (require("plyr") && requireNamespace("doFuture"))

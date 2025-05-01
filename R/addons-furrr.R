@@ -8,4 +8,7 @@ append_transpilers_for_furrr <- function() {
       options
     })
   )
+
+  ## Return required packages
+  c("purrr", "furrr")
 }
