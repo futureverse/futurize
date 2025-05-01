@@ -1,6 +1,13 @@
-transpiler_db <- list()
+.env <- new.env()
+.env[["transpiler_db"]] <- list()
 
-append_transpilers <- function(flavor = c("add-on", "built-in"), ...) {
-  flavor <- match.arg(flavor, several.ok = FALSE)
-  transpiler_db[[flavor]] <<- c(transpiler_db[[flavor]], ...)
+get_transpilers <- function(flavor) {
+  .env[["transpiler_db"]][[flavor]]
+}
+
+append_transpilers <- function(flavor, ...) {
+  transpiler_db <- .env[["transpiler_db"]]
+  transpiler_db[[flavor]] <- c(transpiler_db[[flavor]], ...)
+  .env[["transpiler_db"]] <- transpiler_db
+  message("Appended transpilers:")
 }

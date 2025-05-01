@@ -1,5 +1,5 @@
 Package: futurize
-Version: 0.0.2-9006
+Version: 0.0.2-9007
 Title: Parallelize Common Apply Functions via One Magic Function
 Description: The futurize() function rewrites (transpiles) calls to sequential map-reduce functions such as base::lapply() and purrr::map() into parallel Futureverse alternatives, giving you a drop-in pathway to scalable parallel computing. By combining this function with R's native pipe operator, you have an ideal way for speeding up iterative computations with minimal refactoring, e.g. 'lapply(x, fcn) |> futurize()' and 'purrr::map(x, fcn) |> futurize()'.
 Authors@R: c(

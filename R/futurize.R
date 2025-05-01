@@ -31,8 +31,6 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   )
 
   flavor <- match.arg(flavor, several.ok = FALSE)
-  transpiler_sets <- transpiler_db[[flavor]]
-  stopifnot(length(transpiler_sets) > 0L)
   
   ## Identify (namespace, function)
   call <- expr[[1]]
@@ -94,11 +92,25 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
   if (debug) {
     mdebugf_push("Locating %s transpiler for %s::%s() ...", sQuote(flavor), ns_name, fcn_name)
+  }
+
+  transpiler_sets <- get_transpilers(flavor)
+  transpilers <- transpiler_sets[[ns_name]]
+  if (is.null(transpilers)) {
+    if (!requireNamespace(ns_name)) {
+      stop(sprintf("Please install %s in order to futurize %s::%s()",
+           sQuote(ns_name), ns_name, fcn_name))
+    }
+    append_transpilers_for_pkg(ns_name)
+    transpiler_sets <- get_transpilers(flavor)
+    transpilers <- transpiler_sets[[ns_name]]
+  }
+
+  if (debug) {
     mdebugf("Namespaces registed with futurize(): %s", commaq(names(transpiler_sets)))
   }
   
   ## Is there a registered transpiler for the function?
-  transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
     stop(sprintf("Function %s::%s() is not in one of the registered futurize namespaces: %s", ns_name, fcn_name, commaq(names(transpiler_sets))))
   }
