@@ -1,5 +1,3 @@
-#' @importFrom doFuture %dofuture%
-#' @importFrom future.apply future_lapply
 append_transpilers_for_doFuture <- function() {
   make_options <- function(options) {
     names_options <- sprintf("future.%s", names(options))

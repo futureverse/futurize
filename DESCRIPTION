@@ -11,14 +11,11 @@ Depends:
     future
 Imports:
     digest,
-    doFuture,
-    future.apply,
-    furrr,
-    plyr
+    future.apply
 Suggests:
-    foreach,
-    purrr,
-    stats
+    foreach, doFuture,
+    purrr, furrr,
+    plyr
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)

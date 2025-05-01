@@ -7,7 +7,6 @@
 #   )
 # )
 #
-#' @importFrom plyr llply
 append_transpilers_for_plyr <- function() {
   template <- quote(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), (EXPR))

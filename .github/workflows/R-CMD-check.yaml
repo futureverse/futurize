@@ -66,6 +66,7 @@ jobs:
       - name: Install package itself (special case)
         run: |
           install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
+          remotes::install_github("futureverse/doFuture", ref = "develop")
           
         shell: Rscript {0}
 

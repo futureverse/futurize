@@ -1,4 +1,3 @@
-#' @importFrom future.apply future_lapply
 append_transpilers_for_future.apply <- function() {
   append_transpilers("add-on", make_addon_transpilers(
     "base", "future.apply", make_options = function(options, fcn) {
