@@ -1,16 +1,5 @@
 # Version 0.0.2 (2025-04-30)
 
- * Implement `futurize()`, which transpiles common apply-like,
-   map-reduce calls, of base R, **purrr** and **foreach**, into a
-   "futurized" version that automatically parallelizes the call via
-   future and the Futureverse ecosystem. For example, a base R call `y
-   <- lapply(xs, fcn) |> futurize()` transpiles the call to `y <-
-   future.apply::future_lapply(xs, fcn))`. Similarly, `y <-
-   purrr::map(xs, fcn) |> futurize()` becomes `furrr::future_map(xs,
-   fcn)`, and `y <- foreach::foreach(x = xs) %do% { fcn(x) }` becomes
-   `y <- foreach::foreach(x = xs) %dofuture% { fcn(x) }` (of the
-   **doFuture**).
-
  * The `futurize()` unifies our current **future.apply**, **furrr**,
    and **doFuture** solutions into a minimal, unified API. This means
    you no longer need to learn those future-specific packages and
@@ -21,16 +10,36 @@
    the futures are resolved, how they are partitioned into chunks, and
    how output and conditions are relayed, among other things.
 
- * Add support also for **plyr**, e.g. `y <- llply(xs, fcn) |>
+ * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`.
+
+ * Add support for **purrr**, e.g. `y <- map(xs, fcn) |> futurize()`.
+ 
+ * Add support for **foreach**, e.g. `y <- foreach(x = xs) %do% {
+   fcn(x) } |> futurize()`.
+ 
+ * Add support for **plyr**, e.g. `y <- llply(xs, fcn) |>
    futurize()`.
  
- * Argument `flavor = "add-on"` is the default for `futurize()`,
-   mainly because **future.apply**, **furrr**, and **doFuture** are
-   very well tested. In a future version (pun intended), when the
-   built-in transpilers have been equally well tested, and they can
-   superseed these packages, then the default will switch to `flavor =
-   "built-in"`.
-
+ * Argument `flavor = "add-on"` is the default for `futurize()`, which
+   transpiles the apply-like calls into corresponding
+   **future.apply**, **furrr**, and **doFuture** calls. This is the
+   current default, because those packages are very well tested, which
+   in turns means that using the `... |> futurize()` syntax is
+   effectively just syntactic sugar that guarantes identical behavior
+   to directly using the API of those packages. In contrast, the
+   `flavor = "built-in"` method do not rely on these
+   packages. Instead, they rely on a new powerful, generic mechanism
+   for partitioning a set of futures into chunks, where the futures in
+   each chunk are merged into a single future, which then are resolved
+   in parallel. This new approach makes it easier to stay true to, and
+   agile with original packages. For instance, the built-in transpiler
+   for **purrr** relies on **purrr** to generate the original set of
+   futures, and the only thing we have to implement is how to reduce
+   the results back to what **purrr** would return. When the built-in
+   implementation have proven to work well, we will consider making
+   them the new default, and we can start thinking about deprecated
+   **future.apply** and **furrr**.
+   
  
 # Version 0.0.1 (2025-03-07)
 
