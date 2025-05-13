@@ -1,14 +1,15 @@
 # Version 0.0.2 (2025-04-30)
 
- * The `futurize()` unifies our current **future.apply**, **furrr**,
-   and **doFuture** solutions into a minimal, unified API. This means
-   you no longer need to learn those future-specific packages and
-   their APIs, and all you need to know is the `... |> futurize()`
-   syntax.  The default behavior of `futurize()` is sufficient for
-   most use cases and users, but if needed, it comes with one
-   unifying, unique set of arguments that can be used to configure how
-   the futures are resolved, how they are partitioned into chunks, and
-   how output and conditions are relayed, among other things.
+ * The **futurize** package unifies our current **future.apply**,
+   **furrr**, and **doFuture** solutions into a minimal, unified
+   API. This means you no longer need to learn those future-specific
+   packages and their APIs, and all you need to know is the `... |>
+   futurize()` syntax.  The default behavior of `futurize()` is
+   sufficient for most use cases and users, but, if needed, it comes
+   with one unifying, unique set of arguments that can be used to
+   configure how the futures are resolved, how they are partitioned
+   into chunks, and how output and conditions are relayed, among other
+   things.
 
  * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`.
 
