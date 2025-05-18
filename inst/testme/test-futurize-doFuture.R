@@ -25,7 +25,23 @@ out <- utils::capture.output({
   } |> futurize(stdout = FALSE)
 })
 print(out)
-stopifnot(identical(out, character(0L)))
+stopifnot(
+  identical(out, character(0L)),
+  identical(y, y_truth)
+)
+
+
+message("Test with RNG:")
+y <- local({
+  opts <- options(future.rng.onMisuse = "error")
+  on.exit(options(opts))
+  foreach(x = 1:3, .combine = c) %do% {
+    dummy <- sample.int(2L)
+    sqrt(x)
+  } |> futurize(seed = TRUE)
+})
+print(y)
+stopifnot(identical(y, y_truth))
 
 plan(sequential)
 
