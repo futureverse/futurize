@@ -22,8 +22,7 @@
    futurize()`.
  
  * Add support for **BiocParallel**, e.g. `y <- bplapply(xs, fcn) |>
-   futurize()`. _WARNING: This is currently incomplete as one cannot
-   pass future options to `%dofuture%` used internally._
+   futurize()`.
  
  * Argument `flavor = "add-on"` is the default for `futurize()`, which
    transpiles the apply-like calls into corresponding

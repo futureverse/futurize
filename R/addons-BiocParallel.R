@@ -6,7 +6,11 @@
 #
 append_transpilers_for_BiocParallel <- function() {
   template <- quote(
-    with(doFuture::registerDoFuture(flavor = "%dofuture%"), (EXPR))
+    with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
+      ## This will be automatically removed by doFuture
+      options(future.disposable = OPTS)
+      EXPR
+    })
   )
 
   make_options <- function(options) {
@@ -14,11 +18,14 @@ append_transpilers_for_BiocParallel <- function() {
   }
 
   transpiler <- eval(bquote(function(expr, options = NULL) {
+    ## Update 'OPTS'
+    template[[3]][[2]][[2]] <- make_options(options)
+    ## Update 'EXPR'
     parts <- c(
       as.list(expr),
       BPPARAM = BiocParallel::DoparParam()
     )
-    template[[3]][[2]] <- as.call(parts)
+    template[[3]][[3]] <- as.call(parts)
     template
   }))
   body(transpiler) <- body(transpiler)
