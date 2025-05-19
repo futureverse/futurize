@@ -46,6 +46,8 @@ append_transpilers_for_pkg <- function(pkg) {
     append_transpilers_for_future.apply()
   } else if (pkg == "plyr") {
     append_transpilers_for_plyr()
+  } else if (pkg == "BiocParallel") {
+    append_transpilers_for_BiocParallel()
   } else {
     stop("Unsupported package: ", sQuote(pkg))
   }

@@ -1,4 +1,4 @@
-# Version 0.0.2 (2025-04-30)
+# Version 0.0.2 (2025-05-18)
 
  * The **futurize** package unifies our current **future.apply**,
    **furrr**, and **doFuture** solutions into a minimal, unified
@@ -20,6 +20,10 @@
  
  * Add support for **plyr**, e.g. `y <- llply(xs, fcn) |>
    futurize()`.
+ 
+ * Add support for **BiocParallel**, e.g. `y <- bplapply(xs, fcn) |>
+   futurize()`. _WARNING: This is currently incomplete as one cannot
+   pass future options to `%dofuture%` used internally._
  
  * Argument `flavor = "add-on"` is the default for `futurize()`, which
    transpiles the apply-like calls into corresponding

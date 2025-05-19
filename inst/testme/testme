@@ -1,0 +1,13 @@
+  /home/henrik/futureverse/futurize/inst/testme:
+  drwxrwxr-x 4 henrik henrik 4096 May 18 20:21 .
+  drwxrwxr-x 3 henrik henrik 4096 Apr  7 01:10 ..
+  -rwxrwxr-x 1 henrik henrik 2299 Apr 29 18:11 deploy.R
+  drwxrwxr-x 2 henrik henrik 4096 Apr 30 15:58 _epilogue
+  drwxrwxr-x 2 henrik henrik 4096 Apr  7 01:31 _prologue
+  -rw------- 1 henrik henrik   16 Apr 30 15:58 .Rhistory
+  -rwxrwxr-x 1 henrik henrik 7816 Apr 29 18:11 run.R
+C -rw-rw-r-- 1 henrik henrik 2329 May 18 20:21 test-futurize-BiocParallel.R
+  -rw-rw-r-- 1 henrik henrik  910 May 18 16:43 test-futurize-doFuture.R
+  -rw-rw-r-- 1 henrik henrik 2308 May 18 16:40 test-futurize-furrr.R
+  -rw-rw-r-- 1 henrik henrik 2830 May 18 16:41 test-futurize-future.apply.R
+  -rw-rw-r-- 1 henrik henrik 2262 May 18 16:42 test-futurize-plyr.R

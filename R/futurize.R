@@ -78,7 +78,12 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
       stop(sprintf("No such function: %s()", deparse(call)))
     }
     fcn <- get(fcn_name, mode = "function", envir = envir, inherits = TRUE)
-    ns_name <- environmentName(environment(fcn))
+    env <- environment(fcn)
+    if (inherits(fcn, "standardGeneric")) {
+      env <- parent.env(env)
+    }
+    ns_name <- environmentName(env)
+    stopifnot(nzchar(ns_name))
     if (debug) {
       mdebugf("Function located in: %s", sQuote(ns_name))
       mdebug_pop()
