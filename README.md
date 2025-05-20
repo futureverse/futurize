@@ -36,4 +36,6 @@ built-in support for parallelization, e.g.
 cv <- glmnet::cv.glmnet(x, y) |> futurize(seed = TRUE)
 
 b <- boot(city, ratio, R = 999) |> futurize()
+
+gm_all <- allFit(gm1) |> futurize(packages = "lme4")
 ```

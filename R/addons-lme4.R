@@ -1,12 +1,12 @@
-# boot::boot(...) =>
+# lme4::allFit(...) =>
 #
 # local({
 #   cl <- future.ideas::makeClusterFuture(OPTS)
-#   boot::boot(..., parallel = "snow", ncpus = 2L, cl = cl)
+#   lme4::allFit(..., parallel = "snow", ncpus = 2L, cl = cl)
 # })
 #
-append_transpilers_for_boot <- function() {
-  package <- "boot"
+append_transpilers_for_lme4 <- function() {
+  package <- "lme4"
   
   template <- quote(
     local({
