@@ -42,6 +42,8 @@ append_transpilers_for_pkg <- function(pkg) {
     append_transpilers_for_doFuture()
   } else if (pkg == "purrr") {
     append_transpilers_for_furrr()
+  } else if (pkg == "crossmap") {
+    append_transpilers_for_crossmap()
   } else if (pkg == "base") {
     append_transpilers_for_future.apply()
   } else if (pkg == "glmnet") {

@@ -19,6 +19,9 @@ xs <- 1:10
 y <- purrr::map(xs, sqrt) |> futurize()
 
 xs <- 1:10
+y <- crossmap::xmap_dbl(xs, ~ .y * .x) |> futurize()
+
+xs <- 1:10
 y <- foreach(x = xs) %do% { sqrt(x) } |> futurize()
 
 xs <- 1:10

@@ -15,6 +15,8 @@
 
  * Add support for **purrr**, e.g. `y <- map(xs, fcn) |> futurize()`.
  
+ * Add support for **crossmap**, e.g. `y <- xmap_dbl(xs, fcn) |> futurize()`.
+ 
  * Add support for **foreach**, e.g. `y <- foreach(x = xs) %do% {
    fcn(x) } |> futurize()`.
  
@@ -29,6 +31,8 @@
 
  * Add support for **boot**, e.g. `b <- boot(data, statistic, R =
    1000) |> futurize()`.
+
+ * Add support for **lme4**, e.g. `gm <- allFit(gm) |> futurize()`.
 
  * Argument `flavor = "add-on"` is the default for `futurize()`, which
    transpiles the apply-like calls into corresponding
