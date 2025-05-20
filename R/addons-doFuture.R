@@ -1,4 +1,6 @@
 append_transpilers_for_doFuture <- function() {
+  package <- "doFuture"
+  
   make_options <- function(options) {
     names_options <- sprintf("future.%s", names(options))
     names <- names(formals(future.apply::future_lapply))
@@ -31,5 +33,5 @@ append_transpilers_for_doFuture <- function() {
   append_transpilers("add-on", transpilers)
   
   ## Return required packages
-  c("plyr", "doFuture")
+  c(package)
 }

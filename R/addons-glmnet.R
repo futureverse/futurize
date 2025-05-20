@@ -6,6 +6,8 @@
 # })
 #
 append_transpilers_for_glmnet <- function() {
+  package <- "glmnet"
+  
   template <- quote(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
@@ -38,7 +40,7 @@ append_transpilers_for_glmnet <- function() {
 
   transpilers <- list()
 
-  ns <- getNamespace("glmnet")
+  ns <- getNamespace(package)
   exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
   names <- exports
   for (name in names) {
@@ -46,7 +48,7 @@ append_transpilers_for_glmnet <- function() {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
       if ("parallel" %in% names(formals(fcn))) {
         transpilers[[name]] <- list(
-          label = sprintf("glmnet::%s() ~> glmnet::%s(..., parallel = TRUE)", name, name),
+          label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
           transpiler = transpiler
         )
       }
@@ -54,10 +56,10 @@ append_transpilers_for_glmnet <- function() {
   }
 
   transpilers <- list(transpilers)
-  names(transpilers) <- "glmnet"
+  names(transpilers) <- package
 
   append_transpilers("add-on", transpilers)
 
   ## Return required packages
-  c("glmnet", "doFuture")
+  c(package, "doFuture")
 }

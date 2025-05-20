@@ -8,6 +8,8 @@
 # )
 #
 append_transpilers_for_plyr <- function() {
+  package <- "plyr"
+  
   template <- quote(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), (EXPR))
   )
@@ -36,7 +38,7 @@ append_transpilers_for_plyr <- function() {
 
   transpilers <- list()
 
-  ns <- getNamespace("plyr")
+  ns <- getNamespace(package)
   exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
   names <- exports
   for (name in names) {
@@ -44,7 +46,7 @@ append_transpilers_for_plyr <- function() {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
       if (".parallel" %in% names(formals(fcn))) {
         transpilers[[name]] <- list(
-          label = sprintf("plyr::%s() ~> plyr::%s(..., parallel = TRUE)", name, name),
+          label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
           transpiler = transpiler
         )
       }
@@ -52,10 +54,10 @@ append_transpilers_for_plyr <- function() {
   }
 
   transpilers <- list(transpilers)
-  names(transpilers) <- "plyr"
+  names(transpilers) <- package
 
   append_transpilers("add-on", transpilers)
 
   ## Return required packages
-  c("plyr", "doFuture")
+  c(package, "doFuture")
 }
