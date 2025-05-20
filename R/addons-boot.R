@@ -8,12 +8,18 @@
 append_transpilers_for_boot <- function() {
   template <- quote(
     local({
-      cl <- do.call(future.ideas::makeClusterFuture, args = OPTS)
+      cl <- do.call(makeClusterFuture, args = OPTS)
       EXPR
     })
   )
   idx_OPTS <- c(2, 2, 3, 3)
   idx_EXPR <- c(2, 3)
+
+  ## To please 'R CMD check' until makeClusterFuture() is
+  ## in a publicly available package
+  call <- as.call(lapply(c("::", "future.ideas", "makeClusterFuture"), as.name))
+  template[[c(2,2,3,2)]] <- call
+
 
   make_options <- function(options) {
     options
@@ -23,7 +29,7 @@ append_transpilers_for_boot <- function() {
     
     ## Update 'OPTS'
     template[[idx_OPTS]] <- make_options(options)
-    
+
     ## Update 'EXPR'
     parts <- c(
       as.list(expr),
@@ -60,5 +66,5 @@ append_transpilers_for_boot <- function() {
   append_transpilers("add-on", transpilers)
 
   ## Return required packages
-  c("boot", "doFuture")
+  c("boot", "future.ideas")
 }

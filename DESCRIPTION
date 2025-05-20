@@ -18,8 +18,7 @@ Suggests:
     plyr,
     BiocParallel,
     glmnet,
-    boot,
-    future.ideas
+    boot
 Language: en-US
 Encoding: UTF-8
 RoxygenNote: 7.3.2

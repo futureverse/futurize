@@ -1,4 +1,4 @@
-if (requireNamespace("boot")) {
+if (requireNamespace("boot") && requireNamespace("future.ideas")) {
 library(futurize)
 library(boot)
 
