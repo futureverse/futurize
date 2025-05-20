@@ -27,6 +27,9 @@
  * Add support for **glmnet**, e.g. `cv <- cv.glmnet(x, y) |>
    futurize()`.
 
+ * Add support for **boot**, e.g. `b <- boot(data, statistic, R =
+   1000) |> futurize()`.
+
  * Argument `flavor = "add-on"` is the default for `futurize()`, which
    transpiles the apply-like calls into corresponding
    **future.apply**, **furrr**, and **doFuture** calls. This is the

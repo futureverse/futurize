@@ -46,6 +46,8 @@ append_transpilers_for_pkg <- function(pkg) {
     append_transpilers_for_future.apply()
   } else if (pkg == "glmnet") {
     append_transpilers_for_glmnet()
+  } else if (pkg == "boot") {
+    append_transpilers_for_boot()
   } else if (pkg == "plyr") {
     append_transpilers_for_plyr()
   } else if (pkg == "BiocParallel") {
