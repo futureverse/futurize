@@ -1,4 +1,4 @@
-# Version 0.0.2 (2025-05-19)
+# Version 0.0.2 (2025-05-23)
 
  * The **futurize** package unifies our current **future.apply**,
    **furrr**, and **doFuture** solutions into a minimal, unified
@@ -11,7 +11,9 @@
    into chunks, and how output and conditions are relayed, among other
    things.
 
- * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`.
+ * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`,
+   `y <- by(xs, idxs, fcn) |> futurize()`, and `xs <- kernapply(x, k)
+   |> futurize()`.
 
  * Add support for **purrr**, e.g. `y <- map(xs, fcn) |> futurize()`.
  

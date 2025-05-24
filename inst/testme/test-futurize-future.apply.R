@@ -1,5 +1,7 @@
 if (requireNamespace("future.apply")) {
 library(futurize)
+library(stats)
+library(datasets)
 
 plan(multisession)
 
@@ -8,6 +10,11 @@ print(y)
 
 
 xs <- list(aa = 1, bb = 1:2, cc = 1:10, dd = 1:5, .ee = -6:6)
+
+X <- EuStockMarkets[,1:2]
+k <- kernel("daniell", m = 50L)
+stopifnot(inherits(X, "matrix"), inherits(X, "ts"), inherits(k, "tskernel"))
+
 FUN_no_rng <- function(x, na.rm = TRUE) {
   a <- 1:5
   add <- NULL
@@ -27,6 +34,7 @@ es <- as.environment(xs)
 
 
 exprs <- list(
+  kernapply = quote(kernapply(x = X, k = k) ),
   lapply = quote(lapply(X = xs, FUN = FUN) ),
   lapply = quote(base::lapply(X = xs, FUN = FUN) ),
   sapply = quote(sapply(X = xs, FUN = FUN) ),
@@ -37,7 +45,8 @@ exprs <- list(
   vapply = quote(base::vapply(X = xs, FUN.VALUE = NA_real_, FUN = FUN, USE.NAMES = FALSE) ),
   eapply = quote(base::eapply(env = es, FUN = FUN) ),
   eapply = quote(base::eapply(env = es, FUN = FUN, all.names = TRUE) ),
-  eapply = quote(base::eapply(env = es, FUN = FUN, USE.NAMES = FALSE) )
+  eapply = quote(base::eapply(env = es, FUN = FUN, USE.NAMES = FALSE) ),
+  kernapply = quote(kernapply(x = X, k = k) )
 )
 
 for (kk in seq_along(exprs)) {
