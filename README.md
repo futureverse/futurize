@@ -31,6 +31,16 @@ xs <- 1:10
 y <- BiocParallel::bplapply(xs, sqrt) |> futurize()
 ```
 
+and
+
+```r
+y <- by(warpbreaks, warpbreaks[,"tension"],
+        function(x) lm(breaks ~ wool, data = x)) |> futurize()
+
+xs <- EuStockMarkets[, 1:2]
+k <- kernel("daniell", 50)
+xs_smooth <- future_kernapply(xs, k = k) |> futurize()
+```
 
 You can also futurize calls to several packages that have optional
 built-in support for parallelization, e.g.
