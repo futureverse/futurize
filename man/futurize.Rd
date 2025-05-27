@@ -2,7 +2,7 @@
 % Please edit documentation in R/futurize.R
 \name{futurize}
 \alias{futurize}
-\title{Evaluate a regular map-reduce call in parallel}
+\title{Evaluate common R functions in parallel}
 \usage{
 futurize(
   expr,
@@ -34,7 +34,7 @@ identified.}
 Returns the value of the evaluated expression \code{expr}.
 }
 \description{
-Evaluate a regular map-reduce call in parallel
+\if{html}{\figure{futurize-logo.png}{options: style='float: right;' alt='logo' width='120'}}
 }
 \examples{
 xs <- list(1, 1:2, 1:2, 1:5)

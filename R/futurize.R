@@ -1,4 +1,6 @@
-#' Evaluate a regular map-reduce call in parallel
+#' Evaluate common R functions in parallel
+#'
+#' \if{html}{\figure{futurize-logo.png}{options: style='float: right;' alt='logo' width='120'}}
 #'
 #' @inheritParams future::future
 #'
