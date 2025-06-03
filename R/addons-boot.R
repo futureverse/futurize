@@ -1,7 +1,7 @@
 # boot::boot(...) =>
 #
 # local({
-#   cl <- future.ideas::makeClusterFuture(OPTS)
+#   cl <- future::makeClusterFuture(OPTS)
 #   boot::boot(..., parallel = "snow", ncpus = 2L, cl = cl)
 # })
 #
@@ -19,7 +19,7 @@ append_transpilers_for_boot <- function() {
 
   ## To please 'R CMD check' until makeClusterFuture() is
   ## in a publicly available package
-  call <- as.call(lapply(c("::", "future.ideas", "makeClusterFuture"), as.name))
+  call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
   template[[c(2,2,3,2)]] <- call
 
 
@@ -68,5 +68,5 @@ append_transpilers_for_boot <- function() {
   append_transpilers("add-on", transpilers)
 
   ## Return required packages
-  c(package, "future.ideas")
+  c(package, "future")
 }
