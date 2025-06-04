@@ -39,7 +39,7 @@ y <- by(warpbreaks, warpbreaks[,"tension"],
 
 xs <- EuStockMarkets[, 1:2]
 k <- kernel("daniell", 50)
-xs_smooth <- future_kernapply(xs, k = k) |> futurize()
+xs_smooth <- kernapply(xs, k = k) |> futurize()
 ```
 
 You can also futurize calls to several packages that have optional
