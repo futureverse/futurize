@@ -34,7 +34,7 @@ identified.}
 Returns the value of the evaluated expression \code{expr}.
 }
 \description{
-\if{html}{\figure{futurize-text-logo.png}{options: style='float: right;' alt='logo' width='120'}}
+\if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
 }
 \examples{
 xs <- list(1, 1:2, 1:2, 1:5)

@@ -1,6 +1,6 @@
 #' Evaluate common R functions in parallel
 #'
-#' \if{html}{\figure{futurize-text-logo.png}{options: style='float: right;' alt='logo' width='120'}}
+#' \if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
 #'
 #' @inheritParams future::future
 #'

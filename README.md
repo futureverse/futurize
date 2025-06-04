@@ -1,4 +1,4 @@
-# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-text-logo.png" alt="The 'future' hexlogo" align="right"/>
+# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-magic-touch-parallelization-120x138.png" alt="The 'future' hexlogo" align="right"/>
 
 The **futurize** package makes it extremely simple to parallelize your
 existing apply-like, map-reduce calls. All you need to know is that
