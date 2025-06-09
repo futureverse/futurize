@@ -21,6 +21,7 @@
 #' @return
 #' A named list of future options.
 #'
+#' @aliases parallelize_options
 #' @export
 futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", gc = FALSE, earlySignal = FALSE, scheduling = 1.0, chunk.size = NULL, ...) {
   args <- list(
@@ -35,3 +36,6 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
   )
   args
 }
+
+#' @export
+parallelize_options <- futurize_options

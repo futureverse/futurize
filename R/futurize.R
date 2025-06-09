@@ -17,6 +17,7 @@
 #'
 #' @example incl/futurize.R
 #'
+#' @aliases parallelize
 #' @importFrom future future value
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., flavor = c("add-on", "built-in"), envir = parent.frame()) {
@@ -144,3 +145,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   if (debug) mdebug("Evaluate transpiled call expression")
   eval(expr_futurized, envir = envir)
 } ## futurize()
+
+
+#' @export
+parallelize <- futurize
