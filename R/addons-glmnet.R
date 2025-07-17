@@ -18,8 +18,7 @@ append_transpilers_for_glmnet <- function() {
 
   make_options <- function(options, defaults = NULL) {
     if (length(defaults) > 0) {
-      specified <- attr(options, "specified")
-      names <- setdiff(names(defaults), specified)
+      names <- setdiff(names(defaults), attr(options, "specified"))
       for (name in names) options[[name]] <- defaults[[name]]
     }
     options
@@ -62,7 +61,7 @@ append_transpilers_for_glmnet <- function() {
       if ("parallel" %in% names(formals(fcn))) {
         transpilers[[name]] <- list(
           label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = make_transpiler(name = name)
+          transpiler = make_transpiler(name)
         )
       }
     }

@@ -22,7 +22,7 @@ print(gm_all_truth)
 
 message("Futurized processing:")
 set.seed(42)
-gm_all <- allFit(gm1) |> futurize(packages = "lme4")
+gm_all <- allFit(gm1) |> futurize()
 print(gm_all)
 
 message("Comparing results:")

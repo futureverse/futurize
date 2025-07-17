@@ -23,27 +23,46 @@ append_transpilers_for_lme4 <- function() {
   template[[c(2,2,3,2)]] <- call
 
 
-  make_options <- function(options) {
+  make_options <- function(options, defaults = NULL) {
+    if (length(defaults) > 0) {
+      names <- setdiff(names(defaults), attr(options, "specified"))
+      for (name in names) {
+        if (name == "packages") {
+          options[[name]] <- c(options[[name]], defaults[[name]])
+        } else {
+          options[[name]] <- defaults[[name]]
+        }
+      }
+    }
     options
   }
-
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  
+  make_transpiler <- function(name) {
+    defaults <- list()
+    if (name == "allFit") {
+      defaults <- list(packages = "lme4")
+    }
     
-    ## Update 'OPTS'
-    template[[idx_OPTS]] <- make_options(options)
 
-    ## Update 'EXPR'
-    parts <- c(
-      as.list(expr),
-      parallel = "snow",
-      ncpus = 2L,   ## only used for test ncpus > 1
-      cl = quote(cl)
-    )
-    template[[idx_EXPR]] <- as.call(parts)
+    transpiler <- eval(bquote(function(expr, options = NULL) {
+      ## Update 'OPTS'
+      template[[idx_OPTS]] <- make_options(options, defaults = .(defaults))
+  
+      ## Update 'EXPR'
+      parts <- c(
+        as.list(expr),
+        parallel = "snow",
+        ncpus = 2L,   ## only used for test ncpus > 1
+        cl = quote(cl)
+      )
+      template[[idx_EXPR]] <- as.call(parts)
+      
+      template
+    }))
+    body(transpiler) <- body(transpiler)
     
-    template
-  }))
-  body(transpiler) <- body(transpiler)
+    transpiler
+  }
 
   transpilers <- list()
 
@@ -56,7 +75,7 @@ append_transpilers_for_lme4 <- function() {
       if ("parallel" %in% names(formals(fcn))) {
         transpilers[[name]] <- list(
           label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = transpiler
+          transpiler = make_transpiler(name)
         )
       }
     }

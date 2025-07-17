@@ -50,5 +50,5 @@ b <- boot::boot(city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
-m <- lme4::allFit(models) |> futurize(packages = "lme4")
+m <- lme4::allFit(models) |> futurize()
 ```
