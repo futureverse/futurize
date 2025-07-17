@@ -1,6 +1,7 @@
 if (requireNamespace("BiocParallel")) {
 library(futurize)
 library(BiocParallel)
+options(future.rng.onMisuse = "error")
 
 plan(multisession)
 

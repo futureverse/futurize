@@ -1,6 +1,7 @@
 if (requireNamespace("crossmap")) {
 library(futurize)
 library(crossmap)
+options(future.rng.onMisuse = "error")
 
 plan(multisession)
 

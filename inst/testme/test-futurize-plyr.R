@@ -1,6 +1,7 @@
 if (requireNamespace("plyr")) {
 library(futurize)
 library(plyr)
+options(future.rng.onMisuse = "error")
 
 plan(multisession)
 

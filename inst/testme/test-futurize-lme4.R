@@ -1,6 +1,7 @@
 if (requireNamespace("lme4") && requireNamespace("future.ideas")) {
 library(futurize)
 library(lme4)
+options(future.rng.onMisuse = "error")
 
 all_equal <- function(a, b, ...) {
   ## Cannot use all.equal(a, b), because there is timing data

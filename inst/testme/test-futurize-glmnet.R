@@ -1,6 +1,7 @@
 if (requireNamespace("glmnet")) {
 library(futurize)
 library(glmnet)
+options(future.rng.onMisuse = "error")
 
 all_equal <- function(a, b, ...) {
   a$call <- NULL

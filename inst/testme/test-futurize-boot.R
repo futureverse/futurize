@@ -1,6 +1,7 @@
 if (requireNamespace("boot") && requireNamespace("future.ideas")) {
 library(futurize)
 library(boot)
+options(future.rng.onMisuse = "error")
 
 all_equal <- function(a, b, ...) {
   a$call <- b$call <- NULL

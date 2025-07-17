@@ -1,6 +1,7 @@
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
 library(purrr)
+options(future.rng.onMisuse = "error")
 
 plan(multisession)
 

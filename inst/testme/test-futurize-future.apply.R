@@ -2,6 +2,7 @@ if (requireNamespace("future.apply")) {
 library(futurize)
 library(stats)
 library(datasets)
+options(future.rng.onMisuse = "error")
 
 plan(multisession)
 

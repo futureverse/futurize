@@ -1,6 +1,7 @@
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
+options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
