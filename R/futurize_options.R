@@ -20,20 +20,32 @@
 #'
 #' @return
 #' A named list of future options.
+#' Attribute `specified` is a character vector of future options
+#' that were explicitly specified.
 #'
 #' @aliases parallelize_options
 #' @export
 futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", gc = FALSE, earlySignal = FALSE, scheduling = 1.0, chunk.size = NULL, ...) {
   args <- list(
-    seed = seed,
-    globals = globals,
-    packages = packages,
-    stdout = stdout,
-    conditions = conditions,
-    gc = gc,
+           seed = seed,
+        globals = globals,
+       packages = packages,
+         stdout = stdout,
+     conditions = conditions,
+             gc = gc,
     earlySignal = earlySignal,
-    ...
+                  ...
   )
+  specified <- character(0L)
+  if (!missing(seed)) specified <- c(specified, "seed")
+  if (!missing(globals)) specified <- c(specified, "globals")
+  if (!missing(packages)) specified <- c(specified, "packages")
+  if (!missing(stdout)) specified <- c(specified, "stdout")
+  if (!missing(conditions)) specified <- c(specified, "conditions")
+  if (!missing(gc)) specified <- c(specified, "gc")
+  if (!missing(earlySignal)) specified <- c(specified, "earlySignal")
+  specified <- c(specified, ...names())
+  attr(args, "specified") <- specified
   args
 }
 
