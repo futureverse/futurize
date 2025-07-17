@@ -34,6 +34,8 @@ y <- BiocParallel::bplapply(xs, sqrt) |> futurize()
 and
 
 ```r
+y <- replicate(3, rnorm(1)) |> futurize()
+
 y <- by(warpbreaks, warpbreaks[,"tension"],
         function(x) lm(breaks ~ wool, data = x)) |> futurize()
 

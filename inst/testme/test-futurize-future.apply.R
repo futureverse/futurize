@@ -35,19 +35,20 @@ es <- as.environment(xs)
 
 
 exprs <- list(
-  kernapply = quote(kernapply(x = X, k = k) ),
-  lapply = quote(lapply(X = xs, FUN = FUN) ),
-  lapply = quote(base::lapply(X = xs, FUN = FUN) ),
-  sapply = quote(sapply(X = xs, FUN = FUN) ),
-  sapply = quote(base::sapply(X = xs, FUN = FUN) ),
-  sapply = quote(base::sapply(X = xs, FUN = FUN, simplify = FALSE) ),
-  sapply = quote(base::sapply(X = xs, FUN = FUN, USE.NAMES = FALSE) ),
-  vapply = quote(base::vapply(X = xs, FUN.VALUE = NA_real_, FUN = FUN) ),
-  vapply = quote(base::vapply(X = xs, FUN.VALUE = NA_real_, FUN = FUN, USE.NAMES = FALSE) ),
-  eapply = quote(base::eapply(env = es, FUN = FUN) ),
-  eapply = quote(base::eapply(env = es, FUN = FUN, all.names = TRUE) ),
-  eapply = quote(base::eapply(env = es, FUN = FUN, USE.NAMES = FALSE) ),
-  kernapply = quote(kernapply(x = X, k = k) )
+     lapply = quote( lapply(X = xs, FUN = FUN) ),
+     lapply = quote( base::lapply(X = xs, FUN = FUN) ),
+     sapply = quote( sapply(X = xs, FUN = FUN) ),
+     sapply = quote( base::sapply(X = xs, FUN = FUN) ),
+     sapply = quote( base::sapply(X = xs, FUN = FUN, simplify = FALSE) ),
+     sapply = quote( base::sapply(X = xs, FUN = FUN, USE.NAMES = FALSE) ),
+     vapply = quote( base::vapply(X = xs, FUN.VALUE = NA_real_, FUN = FUN) ),
+     vapply = quote( base::vapply(X = xs, FUN.VALUE = NA_real_, FUN = FUN, USE.NAMES = FALSE) ),
+     eapply = quote( base::eapply(env = es, FUN = FUN) ),
+     eapply = quote( base::eapply(env = es, FUN = FUN, all.names = TRUE) ),
+     eapply = quote( base::eapply(env = es, FUN = FUN, USE.NAMES = FALSE) ),
+  replicate = quote( replicate(2, 42) ),
+  replicate = quote( base::replicate(2, 42) ),
+  kernapply = quote( kernapply(x = X, k = k) )
 )
 
 for (kk in seq_along(exprs)) {
@@ -110,6 +111,13 @@ for (kk in seq_along(exprs)) {
   )
 }
 
+
+message("futurize() for replicate() should default to seed = TRUE")
+y <- replicate(2, rnorm(1)) |> futurize()
+
+message("futurize(seed = FALSE) gives RNG error with replicate()")
+y <- tryCatch(replicate(2, rnorm(1)) |> futurize(seed = FALSE), error = identity)
+stopifnot(inherits(y, "error"))
 
 plan(sequential)
 } ## if (requireNamespace("future.apply"))
