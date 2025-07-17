@@ -1,3 +1,5 @@
+#' @tags detritus-files
+
 if (requireNamespace("future.apply")) {
 library(futurize)
 library(stats)
