@@ -50,6 +50,8 @@ append_transpilers_for_pkg <- function(pkg) {
     append_transpilers_for_glmnet()
   } else if (pkg == "boot") {
     append_transpilers_for_boot()
+  } else if (pkg == "caret") {
+    append_transpilers_for_caret()
   } else if (pkg == "lme4") {
     append_transpilers_for_lme4()
   } else if (pkg == "plyr") {

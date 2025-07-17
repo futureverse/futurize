@@ -1,3 +1,13 @@
+# Version (development version)
+
+ * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
+   iris, method = "rf", trControl = ctrl) |> futurize()`.
+   
+ * The default future options for `futurize()` are now customized such
+   they work in more cases, e.g. there is no need to declare `seed =
+   TRUE` for `replicate(3, rnorm(1)) |> futurize()`.
+   
+
 # Version 0.0.2 (2025-05-23)
 
  * The **futurize** package unifies our current **future.apply**,
@@ -28,11 +38,11 @@
  * Add support for **BiocParallel**, e.g. `y <- bplapply(xs, fcn) |>
    futurize()`.
 
- * Add support for **glmnet**, e.g. `cv <- cv.glmnet(x, y) |>
-   futurize()`.
-
  * Add support for **boot**, e.g. `b <- boot(data, statistic, R =
    1000) |> futurize()`.
+
+ * Add support for **glmnet**, e.g. `cv <- cv.glmnet(x, y) |>
+   futurize()`.
 
  * Add support for **lme4**, e.g. `gm <- allFit(gm) |> futurize()`.
 
