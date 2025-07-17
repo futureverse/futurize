@@ -27,7 +27,7 @@ cv_truth <- cv.glmnet(x, y)
 print(cv_truth)
 
 set.seed(1011)
-cv <- cv.glmnet(x, y) |> futurize(seed = TRUE)
+cv <- cv.glmnet(x, y) |> futurize()
 print(cv)
 
 res <- all_equal(cv, cv_truth)

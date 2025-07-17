@@ -7,7 +7,7 @@
 #
 append_transpilers_for_glmnet <- function() {
   package <- "glmnet"
-  
+
   template <- quote(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
@@ -16,27 +16,40 @@ append_transpilers_for_glmnet <- function() {
     })
   )
 
-  make_options <- function(options) {
+  make_options <- function(options, defaults = NULL) {
+    if (length(defaults) > 0) {
+      specified <- attr(options, "specified")
+      names <- setdiff(names(defaults), specified)
+      for (name in names) options[[name]] <- defaults[[name]]
+    }
     options
   }
-
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  
+  make_transpiler <- function(name) {
+    defaults <- list()
+    if (name == "cv.glmnet") {
+      defaults <- list(seed = TRUE)
+    }
     
-    ## Update 'OPTS'
-    idx_OPTS <- c(3, 2, 2)
-    template[[idx_OPTS]] <- make_options(options)
+    transpiler <- eval(bquote(function(expr, options = NULL) {
+      ## Update 'OPTS'
+      idx_OPTS <- c(3, 2, 2)
+      template[[idx_OPTS]] <- make_options(options, defaults = .(defaults))
+      
+      ## Update 'EXPR'
+      parts <- c(
+        as.list(expr),
+        parallel = TRUE
+      )
+      idx_EXPR <- c(3, 3)
+      template[[idx_EXPR]] <- as.call(parts)
+      
+      template
+    }))
+    body(transpiler) <- body(transpiler)
     
-    ## Update 'EXPR'
-    parts <- c(
-      as.list(expr),
-      parallel = TRUE
-    )
-    idx_EXPR <- c(3, 3)
-    template[[idx_EXPR]] <- as.call(parts)
-    
-    template
-  }))
-  body(transpiler) <- body(transpiler)
+    transpiler
+  }
 
   transpilers <- list()
 
@@ -49,7 +62,7 @@ append_transpilers_for_glmnet <- function() {
       if ("parallel" %in% names(formals(fcn))) {
         transpilers[[name]] <- list(
           label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = transpiler
+          transpiler = make_transpiler(name = name)
         )
       }
     }
