@@ -1,5 +1,3 @@
-#' @tags detritus-files
-
 if (requireNamespace("future.apply")) {
 library(futurize)
 library(stats)
@@ -113,13 +111,14 @@ for (kk in seq_along(exprs)) {
   )
 }
 
-
 message("futurize() for replicate() should default to seed = TRUE")
 y <- replicate(2, rnorm(1)) |> futurize()
+
+## Switch to 'sequential' already here to avoid detritus files on Windows
+plan(sequential)
 
 message("futurize(seed = FALSE) gives RNG error with replicate()")
 y <- tryCatch(replicate(2, rnorm(1)) |> futurize(seed = FALSE), error = identity)
 stopifnot(inherits(y, "error"))
 
-plan(sequential)
 } ## if (requireNamespace("future.apply"))

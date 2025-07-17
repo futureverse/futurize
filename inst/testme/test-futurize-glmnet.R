@@ -1,3 +1,5 @@
+#' @tags detritus-files
+
 if (requireNamespace("glmnet")) {
 library(futurize)
 library(glmnet)
