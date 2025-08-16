@@ -1,7 +1,7 @@
 # glmnet::cv.glmnet(...) =>
 #
 # with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
-#   options(future.disposable = ...)
+#   options(future.disposable = <future arguments>)
 #   glmnet::cv.glmnet(..., parallel = TRUE)
 # })
 #

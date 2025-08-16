@@ -3,7 +3,7 @@
 # with(doFuture::registerDoFuture(flavor = "%dofuture%"), 
 #   plyr::llply(xs, fcn,
 #     .parallel = TRUE,
-#     .paropts = list(.options.future = list(...))
+#     .paropts = list(.options.future = <future arguments>)
 #   )
 # )
 #

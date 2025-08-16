@@ -1,3 +1,7 @@
+# base::lapply(xs, fcn, ...) =>
+#
+# future.apply::future_lapply(xs, fcn, ..., <future.* arguments>)
+#
 append_transpilers_for_future.apply <- function() {
   get_defaults <- function(fcn) {
     defaults <- formals(fcn)

@@ -1,7 +1,7 @@
 # lme4::allFit(...) =>
 #
 # local({
-#   cl <- future::makeClusterFuture(OPTS)
+#   cl <- future::makeClusterFuture(<future arguments>)
 #   lme4::allFit(..., parallel = "snow", ncpus = 2L, cl = cl)
 # })
 #

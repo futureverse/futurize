@@ -1,3 +1,7 @@
+# foreach(...) %do% { ... } =>
+#
+# foreach(..., .options.future = <future arguments>) %dofuture% { ... }
+#
 append_transpilers_for_doFuture <- function() {
   package <- "doFuture"
   

@@ -1,7 +1,7 @@
 # boot::boot(...) =>
 #
 # local({
-#   cl <- future::makeClusterFuture(OPTS)
+#   cl <- future::makeClusterFuture(<future arguments>)
 #   boot::boot(..., parallel = "snow", ncpus = 2L, cl = cl)
 # })
 #

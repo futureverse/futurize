@@ -1,8 +1,8 @@
 # caret::train(...) =>
 #
 # with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
-#   options(future.disposable = ...)
-#   caret::train(...)
+#   options(future.disposable = <future arguments>)
+#   caret::train(..., parallel = TRUE)
 # })
 #
 append_transpilers_for_caret <- function() {

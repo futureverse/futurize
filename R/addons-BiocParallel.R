@@ -1,6 +1,7 @@
 # BiocParallel::bplapply(xs, fcn) =>
 #
 # with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
+#   options(future.disposable = <future arguments>)
 #   BiocParallel::bplapply(xs, fcn, BPPARAM = BiocParallel::DoparParam())
 # })
 #
