@@ -1,7 +1,7 @@
-import_from <- function(name, default = NULL, package) {
+import_from <- function(name, mode = "function", default = NULL, package) {
   ns <- getNamespace(package)
-  if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-    get(name, mode = "function", envir = ns, inherits = FALSE)
+  if (exists(name, mode = mode, envir = ns, inherits = FALSE)) {
+    get(name, mode = mode, envir = ns, inherits = FALSE)
   } else if (!is.null(default)) {
     default
   } else {
