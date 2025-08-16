@@ -6,6 +6,9 @@
  * The default future options for `futurize()` are now customized such
    they work in more cases, e.g. there is no need to declare `seed =
    TRUE` for `replicate(3, rnorm(1)) |> futurize()`.
+
+ * `futurize()` gained argument `eval`, which can be used to return
+   the futurized expression instead of evaluating it.
    
 
 # Version 0.0.2 (2025-05-23)

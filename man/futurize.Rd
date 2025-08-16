@@ -11,6 +11,7 @@ futurize(
   options = futurize_options(...),
   ...,
   flavor = c("add-on", "built-in"),
+  eval = TRUE,
   envir = parent.frame()
 )
 }
@@ -27,6 +28,9 @@ controlling how futures are resolved.}
 If \code{"add-on"}, then registered transpilers for packages such as
 \pkg{future.apply} and \pkg{furrr} are used.
 If \code{"built-in"}, then built-in transpilers are used.}
+
+\item{eval}{If TRUE (default), the futurized expression is evaluated,
+other it is returned.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}

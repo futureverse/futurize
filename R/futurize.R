@@ -12,6 +12,9 @@
 #' \pkg{future.apply} and \pkg{furrr} are used.
 #' If `"built-in"`, then built-in transpilers are used.
 #'
+#' @param eval If TRUE (default), the futurized expression is evaluated,
+#' other it is returned.
+#'
 #' @returns
 #' Returns the value of the evaluated expression `expr`.
 #'
@@ -20,7 +23,7 @@
 #' @aliases parallelize
 #' @importFrom future future value
 #' @export
-futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., flavor = c("add-on", "built-in"), envir = parent.frame()) {
+futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., flavor = c("add-on", "built-in"), eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
   debug <- isTRUE(getOption("futurize.debug"))
   if (debug) {
@@ -142,8 +145,13 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   expr_futurized <- transpiler[["transpiler"]](expr, options = options)
   if (debug) mprint(expr_futurized)
 
-  if (debug) mdebug("Evaluate transpiled call expression")
-  eval(expr_futurized, envir = envir)
+  if (eval) {
+    if (debug) mdebug("Evaluate transpiled call expression")
+    eval(expr_futurized, envir = envir)
+  } else {
+    if (debug) mdebug("Return transpiled call expression")
+    expr_futurized
+  }
 } ## futurize()
 
 
