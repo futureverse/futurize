@@ -23,6 +23,7 @@
 #' @return
 #' Returns ...
 #'
+#' @keywords internal
 #' @export
 partition <- function(x, ...) {
   UseMethod("partition")

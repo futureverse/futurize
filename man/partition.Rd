@@ -36,3 +36,4 @@ Returns ...
 \description{
 Partition futures into equivalent classes
 }
+\keyword{internal}
