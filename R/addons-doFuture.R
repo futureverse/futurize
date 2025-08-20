@@ -1,6 +1,12 @@
 # foreach(...) %do% { ... } =>
-#
-# foreach(..., .options.future = <future arguments>) %dofuture% { ... }
+#   foreach(..., .options.future = <future arguments>) %dofuture% { ... }
+#'
+# times(...) %do% { ... } =>
+#   local({
+#     oopts <- options(future.disposable = <future arguments>)
+#     on.exit(options(oopts))
+#     times(...) %dofuture% { ... }
+#   })
 #
 append_transpilers_for_doFuture <- function() {
   package <- "doFuture"
@@ -18,9 +24,24 @@ append_transpilers_for_doFuture <- function() {
   transpiler <- eval(bquote(function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
-    options <- make_options(options)
-    parts <- c(as.list(expr[[2]]), options)
-    expr[[2]] <- as.call(parts)
+    call <- expr[[2]]
+    fcn <- call[[1]]
+    ## times()?
+    if (identical(fcn, as.symbol("times")) ||
+        identical(fcn, quote(foreach::times))) {
+      expr2 <- quote(local({
+        oopts <- options(future.disposable = OPTS)
+        on.exit(options(oopts))
+        EXPR
+      }))
+      expr2[[2]][[2]][[3]][[2]] <- options
+      expr2[[2]][[4]] <- expr
+      expr <- expr2
+    } else {
+      options <- make_options(options)    
+      parts <- c(as.list(expr[[2]]), options)
+      expr[[2]] <- as.call(parts)
+    }
     expr
   }))
   body(transpiler) <- body(transpiler)

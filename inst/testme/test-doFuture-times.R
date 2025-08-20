@@ -22,13 +22,9 @@ for (strategy in strategies) {
   ## produce unreliable results.  Here we don't produce random numbers so it
   ## is ok, but it's a toy example because just like base::replicate(),
   ## foreach::times() is commonly used for resampling purposes.
-  res <- times(3L) %dofuture% {
+  res <- times(3L) %do% {
     dnorm(2L, mean = mu, sd = sigma)
-  }
-  ## FIXME: futurize() does not recognize foreach::times()
-#  res <- times(3L) %do% {
-#    dnorm(2L, mean = mu, sd = sigma)
-#  } |> futurize(seed = TRUE)
+  } |> futurize(seed = TRUE)
   print(res)
 
   if (is.null(res0)) {
