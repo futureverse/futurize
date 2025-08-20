@@ -1,4 +1,4 @@
-@tags detritus-files
+# @tags detritus-files
 
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
