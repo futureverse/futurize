@@ -1,0 +1,49 @@
+#' @tags %dopar%
+#' @tags sequential multisession cluster multicore
+
+if (requireNamespace("foreach") && requireNamespace("doFuture")) {
+library(futurize)
+library(foreach)
+`%dofuture%` <- doFuture::`%dofuture%`
+
+strategies <- future:::supportedStrategies()
+
+message("*** times() ...")
+
+res0 <- NULL
+
+for (strategy in strategies) {
+  message(sprintf("- plan('%s') ...", strategy))
+  plan(strategy)
+
+  mu <- 1.0
+  sigma <- 2.0
+  ## NOTE: Using times() with %dopar% without proper parallel RNG will likely
+  ## produce unreliable results.  Here we don't produce random numbers so it
+  ## is ok, but it's a toy example because just like base::replicate(),
+  ## foreach::times() is commonly used for resampling purposes.
+  res <- times(3L) %dofuture% {
+    dnorm(2L, mean = mu, sd = sigma)
+  }
+  ## FIXME: futurize() does not recognize foreach::times()
+#  res <- times(3L) %do% {
+#    dnorm(2L, mean = mu, sd = sigma)
+#  } |> futurize(seed = TRUE)
+  print(res)
+
+  if (is.null(res0)) {
+    res0 <- res
+  } else {
+    stopifnot(all.equal(res, res0))
+  }
+
+  # Shutdown current plan
+  plan(sequential)
+  
+  message(sprintf("- plan('%s') ... DONE", strategy))
+} ## for (strategy ...)
+
+message("*** times() ... DONE")
+
+plan(sequential)
+} ## if (requireNamespace("foreach") && requireNamespace("doFuture"))
