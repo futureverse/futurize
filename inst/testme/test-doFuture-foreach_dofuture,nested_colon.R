@@ -5,7 +5,6 @@
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
-`%dofuture%` <- doFuture::`%dofuture%`
 
 strategies <- future:::supportedStrategies()
 
@@ -19,14 +18,9 @@ for (strategy1 in strategies) {
     
     as <- 1:2
     bs <- 3:1
-    x <- foreach(a = as) %:% foreach(b = bs) %dofuture% {
+    x <- foreach(a = as) %:% foreach(b = bs) %do% {
       list(a = a, b = b, plan_b = future::plan("list"), plan = future::plan("next"))
-    }
-
-    ## FIXME: futurize() does not recognize %:%
-#    x <- foreach(a = as) %:% foreach(b = bs) %do% {
-#      list(a = a, b = b, plan_b = future::plan("list"), plan = future::plan("next"))
-#    } |> futurize()
+    } |> futurize()
 
     stopifnot(length(x) == length(as))
     for (aa in seq_along(as)) {

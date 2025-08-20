@@ -41,6 +41,11 @@ append_transpilers_for_doFuture <- function() {
       expr2[[2]][[2]][[3]][[2]] <- options
       expr2[[2]][[4]] <- expr
       expr <- expr2
+    } else if (identical(fcn, as.symbol("%:%")) ||
+               identical(fcn, quote(foreach::`%:%`))) {
+      options <- make_options(options)
+      parts <- c(as.list(expr[[2]][[3]]), options)
+      expr[[2]][[3]] <- as.call(parts)
     } else {
       options <- make_options(options)    
       parts <- c(as.list(expr[[2]]), options)
