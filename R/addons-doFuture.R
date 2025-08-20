@@ -29,6 +29,10 @@ append_transpilers_for_doFuture <- function() {
     ## times()?
     if (identical(fcn, as.symbol("times")) ||
         identical(fcn, quote(foreach::times))) {
+      ## Default to seed = TRUE
+      if (!"seed" %in% attr(options, "specified")) {
+        options[["seed"]] <- TRUE
+      }
       expr2 <- quote(local({
         oopts <- options(future.disposable = OPTS)
         on.exit(options(oopts))

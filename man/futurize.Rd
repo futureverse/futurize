@@ -47,12 +47,12 @@ xs <- list(1, 1:2, 1:2, 1:5)
 # ------------------------------------------
 # Base R apply functions
 # ------------------------------------------
-# Sequential call
+# Sequential lapply()
 y <- lapply(X = xs, FUN = function(x) {
   sum(x)
 })
    
-# Parallelized version
+# Parallel version
 y <- lapply(X = xs, FUN = function(x) {
   sum(x)
 }) |> futurize()
@@ -63,12 +63,12 @@ str(y)
 # ------------------------------------------
 if (require("purrr") && requireNamespace("furrr")) {
 
-# Sequential call
+# Sequential map()
 y <- map(xs, function(x) {
   sum(x)
 })
    
-# Parallelized version
+# Parallel version
 y <- map(xs, function(x) {
   sum(x)
 }) |> futurize()
@@ -82,16 +82,26 @@ str(y)
 # ------------------------------------------
 if (require("foreach") && requireNamespace("doFuture")) {
 
-# Sequential call
+# Sequential foreach()
 y <- foreach(x = xs) \%do\% {
   sum(x)
 }
    
-# Parallelized version
+# Parallel version
 y <- foreach(x = xs) \%do\% {
   sum(x)
 } |> futurize()
 str(y)
+
+
+# Sequential times()
+y <- times(3) \%do\% rnorm(1)
+str(y)
+   
+# Parallel version
+y <- times(3) \%do\% rnorm(1) |> futurize()
+str(y)
+
 
 } ## if (require("foreach") && requireNamespace("doFuture"))
 
@@ -101,10 +111,10 @@ str(y)
 # ------------------------------------------
 if (require("plyr") && requireNamespace("doFuture")) {
 
-# Sequential call
+# Sequential llply()
 y <- llply(xs, sum)
    
-# Parallelized version
+# Parallel version
 y <- llply(xs, sum) |> futurize()
 str(y)
 
