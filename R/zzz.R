@@ -1,4 +1,5 @@
-.package <- new.env()
+.package <- new.env(parent = emptyenv())
+.package[[".futurize"]] <- TRUE
 
 ## covr: skip=all
 #' @importFrom utils packageVersion

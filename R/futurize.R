@@ -4,6 +4,10 @@
 #'
 #' @inheritParams future::future
 #'
+#' @param expr An \R expression, typically a function call to futurize.
+#' If `FALSE`, then futurization is disabled, and if `TRUE`, it is
+#' re-enabled.
+#'
 #' @param options,\ldots Named options, passed to [futurize_options()],
 #' controlling how futures are resolved.
 #' 
@@ -29,6 +33,24 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   if (debug) {
     mdebug_push("futurize() ...")
     on.exit(mdebug_pop())
+  }
+
+  .futurize <- .package[[".futurize"]]
+  if (is.logical(expr) && length(expr) == 1L) {
+    if (is.na(expr)) return(.futurize)
+    .package[[".futurize"]] <- expr
+    return(invisible(.futurize))
+  }
+
+  ## Do nothing?
+  if (!.futurize) {
+    if (eval) {
+      if (debug) mdebug("Evaluate call expression")
+      return(eval(expr, envir = envir))
+    } else {
+      if (debug) mdebug("Return call expression")
+      return(expr)
+    }
   }
   
   stopifnot(

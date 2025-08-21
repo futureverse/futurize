@@ -16,7 +16,9 @@ futurize(
 )
 }
 \arguments{
-\item{expr}{An \R \link[base]{expression}.}
+\item{expr}{An \R expression, typically a function call to futurize.
+If \code{FALSE}, then futurization is disabled, and if \code{TRUE}, it is
+re-enabled.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
 \code{\link[base]{substitute}()}:ed, otherwise not.}

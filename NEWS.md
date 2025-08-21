@@ -1,3 +1,9 @@
+# Version 0.0.3-9000 (2025-08-20)
+
+ * Add `futurize(FALSE)` and `futurize(TRUE)` for disabling and
+   enabling futurizing of calls.
+   
+ 
 # Version 0.0.3 (2025-08-20)
 
  * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
