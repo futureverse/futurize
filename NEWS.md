@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 0.0.3 (2025-08-20)
 
  * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
    iris, method = "rf", trControl = ctrl) |> futurize()`.
