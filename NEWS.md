@@ -11,7 +11,7 @@
    the futurized expression instead of evaluating it.
 
  * Add support for `times()` and `%:%` of **foreach**, which require
-   special care when it comes to pass future options,
+   special care when it comes to passing future options,
    e.g. `futurize(seed = FALSE)`.
  
 
