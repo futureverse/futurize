@@ -1,4 +1,4 @@
-if (requireNamespace("lme4") && requireNamespace("future.ideas")) {
+if (requireNamespace("lme4")) {
 library(futurize)
 library(lme4)
 options(future.rng.onMisuse = "error")
