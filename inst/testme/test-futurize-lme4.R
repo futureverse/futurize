@@ -3,6 +3,11 @@ library(futurize)
 library(lme4)
 options(future.rng.onMisuse = "error")
 
+## Disable checks for stray assignments to the global environment(),
+## because lme4::allFit() assigns a 'ctrl' variable when called.
+## See https://github.com/lme4/lme4/issues/853 (aug 2025) for details.
+options(future.globalenv.onMisuse = "warning")
+
 all_equal <- function(a, b, ...) {
   ## Cannot use all.equal(a, b), because there is timing data
   a <- lapply(a, summary)
