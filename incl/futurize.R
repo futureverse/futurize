@@ -63,7 +63,7 @@ str(y)
 
 
 # ------------------------------------------
-# foreach map-reduce functions
+# plyr map-reduce functions
 # ------------------------------------------
 if (require("plyr") && requireNamespace("doFuture")) {
 
