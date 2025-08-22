@@ -38,6 +38,10 @@ append_transpilers_for_lme4 <- function() {
   }
   
   make_transpiler <- function(name) {
+    if (getRversion() < "4.4.0") {
+      stop(sprintf("You are running R %s, but futurization of 'lme4' functions requires R (>= 4.4.0)", getRversion()))
+    }
+    
     defaults <- list()
     if (name == "allFit") {
       defaults <- list(packages = "lme4")
