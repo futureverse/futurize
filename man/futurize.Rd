@@ -10,8 +10,9 @@ futurize(
   substitute = TRUE,
   options = futurize_options(...),
   ...,
-  flavor = c("add-on", "built-in"),
+  when = TRUE,
   eval = TRUE,
+  flavor = c("add-on", "built-in"),
   envir = parent.frame()
 )
 }
@@ -26,13 +27,15 @@ re-enabled.}
 \item{options, \ldots}{Named options, passed to \code{\link[=futurize_options]{futurize_options()}},
 controlling how futures are resolved.}
 
+\item{when}{If TRUE (default), the expression is futurized, otherwise not.}
+
+\item{eval}{If TRUE (default), the futurized expression is evaluated,
+other it is returned.}
+
 \item{flavor}{Flavor of futurize transpiler to use.
 If \code{"add-on"}, then registered transpilers for packages such as
 \pkg{future.apply} and \pkg{furrr} are used.
 If \code{"built-in"}, then built-in transpilers are used.}
-
-\item{eval}{If TRUE (default), the futurized expression is evaluated,
-other it is returned.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}
@@ -46,6 +49,21 @@ whether futurization was previously enabled or disabled.
 \description{
 \if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
 }
+\section{Conditionally futurization}{
+
+It is possible to control whether futurization should take place at
+run-time. For example,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun) |> futurize(when = \{ length(xs) >= 10 \})
+}\if{html}{\out{</div>}}
+
+will be futurized, unless \code{length(xs)} less than ten, in case it is
+evaluated as:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun)
+}\if{html}{\out{</div>}}
+}
+
 \section{Disable and re-enable all futurization}{
 
 It is possible to globally disable the effect of all \code{futurize()} calls

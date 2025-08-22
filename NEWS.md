@@ -1,5 +1,9 @@
 # Version 0.0.3-9000 (2025-08-20)
 
+ * Add `futurize(when = {condition})` for futurizing conditioned on an
+   R expression at run-time, e.g. `lapply(xs, fun) |> futurize(when =
+   (length(xs) > 10)).
+
  * Add `futurize(FALSE)` and `futurize(TRUE)` for disabling and
    enabling futurizing of calls.
 
