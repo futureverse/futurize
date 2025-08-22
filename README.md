@@ -1,5 +1,5 @@
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://github.com/futureverse/futurize/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/futureverse/futurize/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>
+<a href="https://github.com/HenrikBengtsson/futurize/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/futurize/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>
 </div>
 
 
