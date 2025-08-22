@@ -14,10 +14,11 @@ y <- lapply(X = xs, FUN = function(x) {
 }) |> futurize()
 str(y)
 
+
 # ------------------------------------------
 # purrr map-reduce functions
 # ------------------------------------------
-if (require("purrr") && requireNamespace("furrr")) {
+if (require("purrr") && requireNamespace("furrr", quietly = TRUE)) {
 
 # Sequential map()
 y <- map(xs, function(x) {
@@ -30,13 +31,13 @@ y <- map(xs, function(x) {
 }) |> futurize()
 str(y)
 
-} ## if (require("purrr") && requireNamespace("furrr"))
+} ## if (require ...)
 
 
 # ------------------------------------------
 # foreach map-reduce functions
 # ------------------------------------------
-if (require("foreach") && requireNamespace("doFuture")) {
+if (require("foreach") && requireNamespace("doFuture", quietly = TRUE)) {
 
 # Sequential foreach()
 y <- foreach(x = xs) %do% {
@@ -58,14 +59,13 @@ str(y)
 y <- times(3) %do% rnorm(1) |> futurize()
 str(y)
 
-
-} ## if (require("foreach") && requireNamespace("doFuture"))
+} ## if (require ...)
 
 
 # ------------------------------------------
 # plyr map-reduce functions
 # ------------------------------------------
-if (require("plyr") && requireNamespace("doFuture")) {
+if (require("plyr") && requireNamespace("doFuture", quietly = TRUE)) {
 
 # Sequential llply()
 y <- llply(xs, sum)
@@ -74,4 +74,4 @@ y <- llply(xs, sum)
 y <- llply(xs, sum) |> futurize()
 str(y)
 
-} ## if (require("plyr") && requireNamespace("doFuture"))
+} ## if (require ...)
