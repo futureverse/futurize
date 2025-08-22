@@ -17,7 +17,7 @@ futurize(
 }
 \arguments{
 \item{expr}{An \R expression, typically a function call to futurize.
-If \code{FALSE}, then futurization is disabled, and if \code{TRUE}, it is
+If FALSE, then futurization is disabled, and if TRUE, it is
 re-enabled.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
@@ -39,10 +39,34 @@ identified.}
 }
 \value{
 Returns the value of the evaluated expression \code{expr}.
+
+If \code{expr} is a TRUE or FALSE, then a logical is returned indicating
+whether futurization was previously enabled or disabled.
 }
 \description{
 \if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
 }
+\section{Disable and re-enable all futurization}{
+
+It is possible to globally disable the effect of all \code{futurize()} calls
+by calling \code{futurize(FALSE)}. The effect is as if \code{futurize()} was never
+applied. For example,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{futurize(FALSE)
+y <- lapply(xs, fun) |> futurize()
+}\if{html}{\out{</div>}}
+
+is evaluates as:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun)
+}\if{html}{\out{</div>}}
+
+To re-enable futurization, call \code{futurize(TRUE)}.
+Please note that it is only the end-user that may control whether
+futurization should be disabled and enabled. A package must \emph{never}
+disable or enable futurization.
+}
+
 \examples{
 xs <- list(1, 1:2, 1:2, 1:5)
 

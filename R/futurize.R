@@ -5,7 +5,7 @@
 #' @inheritParams future::future
 #'
 #' @param expr An \R expression, typically a function call to futurize.
-#' If `FALSE`, then futurization is disabled, and if `TRUE`, it is
+#' If FALSE, then futurization is disabled, and if TRUE, it is
 #' re-enabled.
 #'
 #' @param options,\ldots Named options, passed to [futurize_options()],
@@ -21,6 +21,31 @@
 #'
 #' @returns
 #' Returns the value of the evaluated expression `expr`.
+#'
+#' If `expr` is a TRUE or FALSE, then a logical is returned indicating 
+#' whether futurization was previously enabled or disabled.
+#'
+#' @section Disable and re-enable all futurization:
+#' It is possible to globally disable the effect of all `futurize()` calls
+#' by calling `futurize(FALSE)`. The effect is as if `futurize()` was never
+#' applied. For example,
+#'
+#' ```r
+#' futurize(FALSE)
+#' y <- lapply(xs, fun) |> futurize()
+#' ```
+#'
+#' is evaluates as:
+#'
+#' ```r
+#' y <- lapply(xs, fun)
+#' ```
+#'
+#' To re-enable futurization, call `futurize(TRUE)`.
+#' Please note that it is only the end-user that may control whether
+#' futurization should be disabled and enabled. A package must _never_
+#' disable or enable futurization.
+#'
 #'
 #' @example incl/futurize.R
 #'
