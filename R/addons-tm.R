@@ -41,7 +41,7 @@ append_transpilers_for_tm <- function() {
   
   make_transpiler <- function(name) {
     transpiler <- eval(bquote(function(expr, options = NULL) {
-      template[[idx_OPTS]] <- make_options(options, defaults = .(defaults))
+      template[[idx_OPTS]] <- make_options(options)
       template[[idx_EXPR]] <- expr
       template
     }))
