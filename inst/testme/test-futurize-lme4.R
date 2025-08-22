@@ -1,4 +1,4 @@
-if (requireNamespace("lme4")) {
+if (requireNamespace("lme4") && getRversion() >= "4.4.0") {
 library(futurize)
 library(lme4)
 options(future.rng.onMisuse = "error")
