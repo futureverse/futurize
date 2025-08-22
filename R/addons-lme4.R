@@ -15,11 +15,13 @@ append_transpilers_for_lme4 <- function() {
   template <- quote(
     local({
       cl <- do.call(makeClusterFuture, args = OPTS)
+      oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
+      on.exit(options(oopts))
       EXPR
     })
   )
   idx_OPTS <- c(2, 2, 3, 3)
-  idx_EXPR <- c(2, 3)
+  idx_EXPR <- c(2, 5)
 
   ## To please 'R CMD check' on R (< 4.4.0), where
   ## future::makeClusterFuture() is not available

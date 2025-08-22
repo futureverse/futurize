@@ -19,15 +19,19 @@ append_transpilers_for_tm <- function() {
   template <- quote(
     local({
       old_engine <- tm::tm_parLapply_engine()
-      on.exit(tm::tm_parLapply_engine(old_engine))
+      oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
+      on.exit({
+        options(oopts)
+        tm::tm_parLapply_engine(old_engine)
+      })
       tm::tm_parLapply_engine(
         do.call(makeClusterFuture, args = OPTS)
       )
       EXPR
     })
   )
-  idx_OPTS <- c(2, 4, 2, 3)
-  idx_EXPR <- c(2, 5)
+  idx_OPTS <- c(2, 5, 2, 3)
+  idx_EXPR <- c(2, 6)
   
   ## To please 'R CMD check' on R (< 4.4.0), where
   ## future::makeClusterFuture() is not available

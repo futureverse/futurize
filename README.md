@@ -1,3 +1,8 @@
+<div id="badges"><!-- pkgdown markup -->
+<a href="https://github.com/futureverse/futurize/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/futureverse/futurize/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>
+</div>
+
+
 # futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-magic-touch-parallelization-120x138.png" alt="The 'future' hexlogo" align="right"/>
 
 The **futurize** package makes it extremely simple to parallelize your
