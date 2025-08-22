@@ -45,8 +45,8 @@ xs_smooth <- kernapply(xs, k = k) |> futurize()
 ```
 
 You can also futurize calls to several packages (e.g. **boot**,
-**caret**, **glmnet**, and **lme4**) that have optional built-in
-support for parallelization, e.g.
+**caret**, **glmnet**, **lme4**, and **tm**) that have optional
+built-in support for parallelization, e.g.
 
 ```r
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
@@ -56,4 +56,6 @@ b <- boot::boot(city, ratio, R = 999) |> futurize()
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
+
+m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 ```
