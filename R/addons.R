@@ -56,6 +56,8 @@ append_transpilers_for_pkg <- function(pkg) {
     append_transpilers_for_lme4()
   } else if (pkg == "plyr") {
     append_transpilers_for_plyr()
+  } else if (pkg == "tm") {
+    append_transpilers_for_tm()
   } else if (pkg == "BiocParallel") {
     append_transpilers_for_BiocParallel()
   } else {

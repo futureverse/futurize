@@ -2,7 +2,10 @@
 
  * Add `futurize(FALSE)` and `futurize(TRUE)` for disabling and
    enabling futurizing of calls.
-   
+
+ * Add support for **tm**, e.g. `m <- tm_map(crude,
+   content_transformer(tolower)) |> futurize()`.
+
  
 # Version 0.0.3 (2025-08-20)
 
