@@ -11,19 +11,28 @@
 #
 append_transpilers_for_tm <- function() {
   package <- "tm"
-  
+
+  if (getRversion() < "4.4.0") {
+    stop(sprintf("You are running R %s, but futurization of '%s' functions requires R (>= 4.4.0)", getRversion(), package))
+  }
+
   template <- quote(
     local({
       old_engine <- tm::tm_parLapply_engine()
       on.exit(tm::tm_parLapply_engine(old_engine))
       tm::tm_parLapply_engine(
-        do.call(future::makeClusterFuture, args = OPTS)
+        do.call(makeClusterFuture, args = OPTS)
       )
       EXPR
     })
   )
   idx_OPTS <- c(2, 4, 2, 3)
   idx_EXPR <- c(2, 5)
+  
+  ## To please 'R CMD check' on R (< 4.4.0), where
+  ## future::makeClusterFuture() is not available
+  call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
+  template[[c(2,4,2,2)]] <- call
 
   make_options <- function(options, defaults = NULL) {
     if (length(defaults) > 0) {

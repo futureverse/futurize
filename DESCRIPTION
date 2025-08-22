@@ -1,5 +1,5 @@
 Package: futurize
-Version: 0.0.3-9009
+Version: 0.0.3-9010
 Title: Parallelize Common Functions via One Magic Function
 Description: The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), 'foreach::foreach() %do% { ... }' into parallel 'futureverse' alternatives, providing you with a simple, straightforward path to scalable parallel computing. By combining this function with R's native pipe operator, you have an ideal way for speeding up iterative computations with minimal refactoring, e.g. 'lapply(xs, fcn) |> futurize()', 'purrr::map(xs, fcn) |> futurize()', and 'foreach::foreach(x = xs) %do% { fcn(x) } |> futurize()'. Other examples of packages and function calls that be parallelized with `futurize()` this way are all functions of the 'BiocParallel', 'plyr', 'crossmap' packages, and select functions of 'glmnet', 'boot', and 'lme4'.
 Authors@R: c(
