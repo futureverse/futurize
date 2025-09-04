@@ -18,28 +18,28 @@ library(futurize)
 plan(multisession)
 
 xs <- 1:10
-y <- lapply(xs, sqrt) |> futurize()
+ys <- lapply(xs, sqrt) |> futurize()
 
 xs <- 1:10
-y <- purrr::map(xs, sqrt) |> futurize()
+ys <- purrr::map(xs, sqrt) |> futurize()
 
 xs <- 1:10
-y <- crossmap::xmap_dbl(xs, ~ .y * .x) |> futurize()
+ys <- crossmap::xmap_dbl(xs, ~ .y * .x) |> futurize()
 
 xs <- 1:10
-y <- foreach(x = xs) %do% { sqrt(x) } |> futurize()
+ys <- foreach(x = xs) %do% { sqrt(x) } |> futurize()
 
 xs <- 1:10
-y <- plyr::llply(xs, sqrt) |> futurize()
+ys <- plyr::llply(xs, sqrt) |> futurize()
 
 xs <- 1:10
-y <- BiocParallel::bplapply(xs, sqrt) |> futurize()
+ys <- BiocParallel::bplapply(xs, sqrt) |> futurize()
 ```
 
 and
 
 ```r
-y <- replicate(3, rnorm(1)) |> futurize()
+ys <- replicate(3, rnorm(1)) |> futurize()
 
 y <- by(warpbreaks, warpbreaks[,"tension"],
         function(x) lm(breaks ~ wool, data = x)) |> futurize()
