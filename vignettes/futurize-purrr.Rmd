@@ -1,0 +1,104 @@
+---
+title: "Parallelize 'purrr' functions"
+author: "Henrik Bengtsson"
+date: "2025-09-16"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Parallelize 'purrr' functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# TL;DR
+
+```r
+library(purrr)
+library(futurize)
+plan(multisession)
+
+y <- 1:10 |>
+       map(rnorm, n = 10) |> futurize(seed = 123) |>
+       map_dbl(mean) |> futurize()
+```
+
+
+# Introduction
+
+The **futurize** package allows you to easily turn sequential code
+into parallel code by piping the sequential code to the `futurize()`
+function. Easy!
+
+This vignette demonstrates how use this approach to parallelize **[purrr]**
+functions such as `map()`, `map_dbl()`, and `walk()`.
+
+
+# Background
+
+The **purrr** `map()` function is commonly used to apply a function to
+the elements of a vector or a list. For example, 
+
+```r
+library(purrr)
+xs <- 1:1000
+y <- map(xs, slow_fcn)
+```
+
+or equivalently using pipe syntax
+
+```r
+library(purrr)
+xs <- 1:1000
+y <- xs |> map(slow_fcn)
+```
+
+Here `map()` evaluates sequentially, but we can easily make it to
+evaluate parallelly, by using:
+
+```r
+library(futurize)
+library(purrr)
+xs <- 1:1000
+y <- xs |> map(slow_fcn) |> futurize()
+```
+
+This will distribute the calculations across the available workers
+assuming that we first have set them up as:
+
+```r
+plan(multisession)
+```
+
+Another example is:
+
+```r
+library(purrr)
+library(futurize)
+plan(future.mirai::mirai_multisession)
+
+y <- 1:10 |>
+       map(rnorm, n = 10) |> futurize(seed = 123) |>
+       map_dbl(mean) |> futurize()
+```
+
+
+# Supported Functions
+
+The `futurize()` function supports parallelization of the common base
+R functions. The following **purrr** functions are supported:
+
+ * `map()`, `map_chr()`, `map_dbl()`, `map_int()`, `map_lgl()`, `map_raw()`, `map_dfr()`, `map_dfc()`, `walk()`
+ * `map2()`, `map2_chr()`, `map2_dbl()`, `map2_int()`, `map2_lgl()`, `map2_raw()`, `map2_dfr()`, `map2_dfc()`, `walk2()`
+ * `pmap()`, `pmap_chr()`, `pmap_dbl()`, `pmap_int()`, `pmap_lgl()`, `pmap_raw()`, `pmap_dfr()`, `pmap_dfc()`, `pwalk()`
+   `imap()`, `imap_chr()`, `imap_dbl()`, `imap_int()`, `imap_lgl()`, `imap_raw()`, `imap_dfr()`, `imap_dfc()`, `iwalk()`
+ * `modify()`, `modify_if()`, `modify_at()`
+ * `map_if()`, `map_at()`
+ * `invoke_map()`, `invoke_map_chr()`, `invoke_map_dbl()`, `invoke_map_int()`, `invoke_map_lgl()`, `invoke_map_raw()`, `invoke_map_dfr()`, `invoke_map_dfc()`
+
+# Notes
+
+ * Not all functions passed to `map()` and friends are guaranteed to
+   be safe for parallelization. Ensure that the function is
+   side-effect free and does not depend on external state.
+ 
+
+[purrr]: https://cran.r-project.org/package=purrr
