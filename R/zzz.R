@@ -4,6 +4,9 @@
 ## covr: skip=all
 #' @importFrom utils packageVersion
 .onLoad <- function(libname, pkgname) {
+  ## R CMD build
+  register_vignette_engine_during_build_only(pkgname)
+  
   .package[["version"]] <- packageVersion(pkgname)
 
   update_package_option("futurize.debug", mode = "logical")

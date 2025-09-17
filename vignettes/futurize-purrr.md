@@ -1,32 +1,29 @@
----
-title: "Parallelize 'purrr' functions"
-author: "Henrik Bengtsson"
-date: "2025-09-16"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Parallelize 'purrr' functions}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+<!--
+%\VignetteIndexEntry{Parallelize 'purrr' functions}
+%\VignetteAuthor{Henrik Bengtsson}
+%\VignetteKeyword{R}
+%\VignetteKeyword{package}
+%\VignetteKeyword{vignette}
+%\VignetteKeyword{handlers}
+%\VignetteEngine{futurize::selfonly}
+-->
 
 # TL;DR
+
+The **futurize** package allows you to easily turn sequential code
+into parallel code by piping the sequential code to the `futurize()`
+function. Easy!
 
 ```r
 library(purrr)
 library(futurize)
 plan(multisession)
 
-y <- 1:10 |>
-       map(rnorm, n = 10) |> futurize(seed = 123) |>
-       map_dbl(mean) |> futurize()
+y <- 1:10 |> map(rnorm, n = 3) |> futurize(seed = TRUE)
 ```
 
 
 # Introduction
-
-The **futurize** package allows you to easily turn sequential code
-into parallel code by piping the sequential code to the `futurize()`
-function. Easy!
 
 This vignette demonstrates how use this approach to parallelize **[purrr]**
 functions such as `map()`, `map_dbl()`, and `walk()`.
@@ -61,11 +58,28 @@ xs <- 1:1000
 y <- xs |> map(slow_fcn) |> futurize()
 ```
 
-This will distribute the calculations across the available workers
-assuming that we first have set them up as:
+This will distribute the calculations across the available parallel
+workers, given that we have set parallel workers, e.g.
 
 ```r
 plan(multisession)
+```
+
+The built-in `multisession` backend parallelizes on your local
+computer and it works on all operating system. There are [other
+parallel backends] to choose from, including alternatives to
+parallelize locally as well as distributed across remote machines,
+e.g.
+
+
+```r
+plan(future.mirai::mirai_multisession)
+```
+
+and
+
+```r
+plan(future.batchtools::batchtools_slurm)
 ```
 
 Another example is:
@@ -76,7 +90,7 @@ library(futurize)
 plan(future.mirai::mirai_multisession)
 
 y <- 1:10 |>
-       map(rnorm, n = 10) |> futurize(seed = 123) |>
+       map(rnorm, n = 10) |> futurize(seed = TRUE) |>
        map_dbl(mean) |> futurize()
 ```
 
