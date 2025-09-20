@@ -93,11 +93,4 @@ The following **stats** package function is also supported:
  * `kernapply()`
 
 
-# Notes
-
- * Not all functions passed to `apply()` are guaranteed to be safe for
-   parallelization. Ensure that the function is side-effect free and
-   does not depend on external state.
-
-
 [other parallel backends]: https://www.futureverse.org/backends.html

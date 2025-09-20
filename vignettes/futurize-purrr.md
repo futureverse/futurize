@@ -3,6 +3,7 @@
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
+%\VignetteKeyword{purrr}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{handlers}
 %\VignetteEngine{futurize::selfonly}
@@ -19,7 +20,8 @@ library(purrr)
 library(futurize)
 plan(multisession)
 
-y <- 1:10 |> map(rnorm, n = 3) |> futurize(seed = TRUE)
+xs <- 1:1000
+y <- xs |> map(slow_fcn) |> futurize()
 ```
 
 
@@ -108,11 +110,5 @@ R functions. The following **purrr** functions are supported:
  * `map_if()`, `map_at()`
  * `invoke_map()`, `invoke_map_chr()`, `invoke_map_dbl()`, `invoke_map_int()`, `invoke_map_lgl()`, `invoke_map_raw()`, `invoke_map_dfr()`, `invoke_map_dfc()`
 
-# Notes
-
- * Not all functions passed to `map()` and friends are guaranteed to
-   be safe for parallelization. Ensure that the function is
-   side-effect free and does not depend on external state.
- 
 
 [purrr]: https://cran.r-project.org/package=purrr
