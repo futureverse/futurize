@@ -9,9 +9,7 @@
 -->
 
 <div class="logos">
-<strong>{base}</strong>
-<br><span style="font-size: 20%;">&nbsp;</span><br>
-<strong>{stats}</strong>
+<img src="../man/figures/r-base-logo.svg" alt="The base-R logo">
 <span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>

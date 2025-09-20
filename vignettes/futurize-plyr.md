@@ -10,7 +10,7 @@
 -->
 
 <div class="logos">
-<img src="../man/figures/plyr-logo.png" alt="The 'plyr' image">
+<img src="../man/figures/cran-plyr-logo.svg" alt="The 'plyr' image">
 <span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>

@@ -15,7 +15,7 @@ into parallel code by piping the sequential code to the `futurize()`
 function. Easy!
 
 <div class="logos">
-<strong>{foreach}</strong>
+<img src="../man/figures/cran-foreach-logo.svg" alt="The CRAN 'foreach' package">
 <span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
