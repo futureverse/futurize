@@ -9,11 +9,19 @@
 %\VignetteEngine{futurize::selfonly}
 -->
 
-# TL;DR
+<div class="logos">
+<img src="../man/figures/crossmap-logo.png" alt="The 'crossmap' image">
+<span>+</span>
+<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<span>=</span>
+<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+</div>
 
 The **futurize** package allows you to easily turn sequential code
 into parallel code by piping the sequential code to the `futurize()`
 function. Easy!
+
+# TL;DR
 
 ```r
 library(crossmap)

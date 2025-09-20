@@ -8,6 +8,16 @@
 %\VignetteEngine{futurize::selfonly}
 -->
 
+<div class="logos">
+<strong>{base}</strong>
+<br><span style="font-size: 20%;">&nbsp;</span><br>
+<strong>{stats}</strong>
+<span>+</span>
+<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<span>=</span>
+<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+</div>
+
 The **futurize** package allows you to easily turn sequential code
 into parallel code by piping the sequential code to the `futurize()`
 function. Easy!
