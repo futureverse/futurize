@@ -75,6 +75,8 @@ append_transpilers_for_BiocParallel <- function() {
   ns <- getNamespace(package)
   exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
   names <- exports
+  ## Exclude BiocParallel::register()
+  names <- c(names, "register")
   for (name in names) {
     if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
