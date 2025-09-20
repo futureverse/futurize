@@ -99,8 +99,8 @@ y <- times(10) %do% rnorm(3) |> futurize()
 The `futurize()` function supports parallelization of the following
 **foreach** functions:
 
- * `foreach()` with `%do%`
- * `times()` with `%do%`
+ * `foreach(...) %do% { ... }`
+ * `times(...) %do% { ... }` with `seed = TRUE` as the default
 
 
 [foreach]: https://cran.r-project.org/package=foreach
