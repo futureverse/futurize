@@ -1,5 +1,5 @@
 <!--
-%\VignetteIndexEntry{Parallelize 'purrr' functions}
+%\VignetteIndexEntry{Parallelize base-R apply functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
