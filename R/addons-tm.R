@@ -65,8 +65,10 @@ append_transpilers_for_tm <- function() {
   transpilers <- list()
 
   ns <- getNamespace(package)
-  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
-  names <- exports
+#  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
+#  names <- exports
+  
+  names <- c("tm_map", "tm_index", "TermDocumentMatrix")
   for (name in names) {
     if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
