@@ -79,6 +79,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     on.exit(mdebug_pop())
   }
 
+  ## futurize(TRUE), futurize(FALSE), or futurize(NA)?
   .futurize <- .package[[".futurize"]]
   if (is.logical(expr) && length(expr) == 1L) {
     if (is.na(expr)) return(.futurize)
@@ -90,7 +91,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     is.logical(when), length(when) == 1L, !is.na(when)
   )
 
-  ## Futurize?
+  ## Don't futurize, i.e. evaluate as-is?
   if (!when || !.futurize) {
     if (eval) {
       if (debug) mdebug("Evaluate call expression")
@@ -103,8 +104,10 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   
 
   flavor <- match.arg(flavor, several.ok = FALSE)
-  
-  ## Identify (namespace, function)
+
+  ## -------------------------------------------------------
+  ## 1. Identify (namespace, function)
+  ## -------------------------------------------------------
   call <- expr[[1]]
   if (is.symbol(call)) {
     ## Examples: lapply(...), map(...)
@@ -167,6 +170,10 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     }
   }
 
+
+  ## -------------------------------------------------------
+  ## 2. Locate matching transpiler
+  ## -------------------------------------------------------
   if (debug) {
     mdebugf_push("Locating %s transpiler for %s::%s() ...", sQuote(flavor), ns_name, fcn_name)
   }
@@ -207,10 +214,18 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   }
   if (debug) mdebugf_pop()
 
+
+  ## -------------------------------------------------------
+  ## 3. Transpile
+  ## -------------------------------------------------------
   if (debug) mdebug("Transpile call expression")
   expr_futurized <- transpiler[["transpiler"]](expr, options = options)
   if (debug) mprint(expr_futurized)
 
+
+  ## -------------------------------------------------------
+  ## 4. Evaluate or return transpiled expression?
+  ## -------------------------------------------------------
   if (eval) {
     if (debug) mdebug("Evaluate transpiled call expression")
     eval(expr_futurized, envir = envir)
