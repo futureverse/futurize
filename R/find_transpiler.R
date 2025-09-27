@@ -7,11 +7,16 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
   call <- expr[[1]]
   
   call_info <- parse_call(call, envir = envir, what = what, debug = debug)
-  ns_name <- call_info[["ns_name"]]
+  fcn <- call_info[["fcn"]]
   fcn_name <- call_info[["fcn_name"]]
+  ns_name <- call_info[["ns_name"]]
 
   if (debug) {
-    mdebugf_push("Locating %s transpiler for %s::%s() ...", sQuote(flavor), ns_name, fcn_name)
+    mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(flavor), ns_name, fcn_name, sQuote(class(fcn)[1]))
+  }
+
+  if (inherits(fcn, "transpiler")) {
+    stop(sprintf("Do not how to transpiler a transpiler function: %s::%s()", ns_name, fcn_name))
   }
 
   transpiler_sets <- get_transpilers(flavor)

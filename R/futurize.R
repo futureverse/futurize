@@ -125,6 +125,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     expr_futurized
   }
 } ## futurize()
+class(futurize) <- c("transpiler", class(futurize))
 
 
 #' @export

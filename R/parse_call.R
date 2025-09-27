@@ -65,7 +65,8 @@ parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
     if (!exists(fcn_name, mode = "function", envir = ns, inherits = TRUE)) {
       stop(sprintf("No such function in %s: %s()", sQuote(ns_name), deparse(call)))
     }
+    fcn <- get(fcn_name, mode = "function", envir = ns, inherits = TRUE)
   }
 
-  list(ns_name = ns_name, fcn_name = fcn_name)
+  list(fcn = fcn, ns_name = ns_name, fcn_name = fcn_name)
 } ## parse_call()
