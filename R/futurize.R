@@ -110,9 +110,9 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   ## -------------------------------------------------------
   call <- expr[[1]]
   call_info <- parse_call(call, envir = envir, what = "futurize", debug = debug)
-  ns_name <- call_info[["ns"]]
-  fcn_name <- call_info[["fcn"]]
-
+  ns_name <- call_info[["ns_name"]]
+  fcn_name <- call_info[["fcn_name"]]
+  
 
   ## -------------------------------------------------------
   ## 2. Locate matching transpiler

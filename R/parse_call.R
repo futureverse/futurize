@@ -19,7 +19,7 @@ parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
       } else if (op_name == ":::") {
         stop(sprintf("Do not know how to %s a private function: %s()", what, deparse(call)))
       } else {
-        stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
+        stop(sprintf("Do not know how to %s function %s()", what, deparse(call)))
       }
       namespace <- call[[2]]
       fcn <- call[[3]]
@@ -27,7 +27,7 @@ parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
       stop(sprintf("Do not know how to %s object of type %s: %s()", what, sQuote(typeof(op)), deparse(call)))
     }
   } else {
-    stop(sprintf("Do not know how to %s function: %s", what, as.character(call)))
+    stop(sprintf("Do not know how to %s expression: %s", what, as.character(call)))
   }
 
   ns_name <- as.character(namespace)
@@ -49,7 +49,9 @@ parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
     }
     fcn <- get(fcn_name, mode = "function", envir = envir, inherits = TRUE)
     env <- environment(fcn)
-    if (inherits(fcn, "standardGeneric")) {
+    if (is.null(env) && is.primitive(fcn)) {
+      env <- baseenv()
+    } else if (inherits(fcn, "standardGeneric")) {
       env <- parent.env(env)
     }
     ns_name <- environmentName(env)
@@ -65,5 +67,5 @@ parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
     }
   }
 
-  list(ns = ns_name, fcn = fcn_name)
+  list(ns_name = ns_name, fcn_name = fcn_name)
 } ## parse_call()
