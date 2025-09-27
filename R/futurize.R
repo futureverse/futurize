@@ -116,10 +116,17 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     if (!inherits(transpile, "transpiler")) break
     
     ## 1c. Generate transpiled expression of nested transpiler
-    parts <- as.list(expr)
-    parts$eval <- FALSE
-    expr2 <- as.call(parts)
-    expr <- eval(expr2, envir = envir)
+    expr <- local({
+      if (debug) mdebug_push("Apply nested transpiler ...")
+      on.exit(mdebug_pop())
+      if (debug) mprint(expr)
+      parts <- as.list(expr)
+      parts$eval <- FALSE
+      expr2 <- as.call(parts)
+      expr <- eval(expr2, envir = envir)
+      if (debug) mprint(expr)
+      expr
+    })
   }
 
 
