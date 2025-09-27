@@ -105,70 +105,18 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
   flavor <- match.arg(flavor, several.ok = FALSE)
 
-  ## -------------------------------------------------------
-  ## 1. Identify (namespace, function)
-  ## -------------------------------------------------------
-  call <- expr[[1]]
-  call_info <- parse_call(call, envir = envir, what = "futurize", debug = debug)
-  ns_name <- call_info[["ns_name"]]
-  fcn_name <- call_info[["fcn_name"]]
-  
 
-  ## -------------------------------------------------------
-  ## 2. Locate matching transpiler
-  ## -------------------------------------------------------
-  if (debug) {
-    mdebugf_push("Locating %s transpiler for %s::%s() ...", sQuote(flavor), ns_name, fcn_name)
-  }
-
-  transpiler_sets <- get_transpilers(flavor)
-  transpilers <- transpiler_sets[[ns_name]]
-  if (is.null(transpilers)) {
-    if (!requireNamespace(ns_name)) {
-      stop(sprintf("Please install %s in order to futurize %s::%s()",
-           sQuote(ns_name), ns_name, fcn_name))
-    }
-    req_pkgs <- append_transpilers_for_pkg(ns_name)
-    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
-    if (!all(okay)) {
-      pkgs <- req_pkgs[!okay]
-      stop(sprintf("Please install %s in order to futurize %s::%s()",
-           commaq(pkgs), ns_name, fcn_name))
-    }
-    transpiler_sets <- get_transpilers(flavor)
-    transpilers <- transpiler_sets[[ns_name]]
-  }
-
-  if (debug) {
-    mdebugf("Namespaces registered with futurize(): %s", commaq(names(transpiler_sets)))
-  }
-  
-  ## Is there a registered transpiler for the function?
-  if (is.null(transpilers)) {
-    stop(sprintf("Function %s::%s() is not in one of the registered futurize namespaces: %s", ns_name, fcn_name, commaq(names(transpiler_sets))))
-  }
-
-  if (! fcn_name %in% names(transpilers)) {
-    stop(sprintf("Do not know how to futurize function: %s()", deparse(call)))
-  }
-  transpiler <- transpilers[[fcn_name]]
-  if (debug) {
-    mdebugf("Transpiler: %s", transpiler[["label"]])
-  }
-  if (debug) mdebugf_pop()
+  ## 1. Find matching transpiler
+  transpiler <- find_transpiler(expr, envir = envir, flavor = flavor, what = "futurize", debug = debug)
 
 
-  ## -------------------------------------------------------
-  ## 3. Transpile
-  ## -------------------------------------------------------
+  ## 2. Transpile
   if (debug) mdebug("Transpile call expression")
   expr_futurized <- transpiler[["transpiler"]](expr, options = options)
   if (debug) mprint(expr_futurized)
 
 
-  ## -------------------------------------------------------
-  ## 4. Evaluate or return transpiled expression?
-  ## -------------------------------------------------------
+  ## 3. Evaluate or return transpiled expression?
   if (eval) {
     if (debug) mdebug("Evaluate transpiled call expression")
     eval(expr_futurized, envir = envir)
