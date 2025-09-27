@@ -1,4 +1,6 @@
-# Version 0.0.3-9000 (2025-08-20)
+# Version 0.0.3-9000 (2025-09-26)
+
+ * Handle nested transpilers.
 
  * Add `futurize(when = {condition})` for futurizing conditioned on an
    R expression at run-time, e.g. `lapply(xs, fun) |> futurize(when =

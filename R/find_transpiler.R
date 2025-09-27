@@ -15,8 +15,12 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
     mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(flavor), ns_name, fcn_name, sQuote(class(fcn)[1]))
   }
 
+  ## Special case: A nested transpiler function?
   if (inherits(fcn, "transpiler")) {
-    stop(sprintf("Do not how to transpiler a transpiler function: %s::%s()", ns_name, fcn_name))
+    transpiler <- list(
+      transpiler = fcn
+    )
+    return(transpiler)
   }
 
   transpiler_sets <- get_transpilers(flavor)

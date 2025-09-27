@@ -106,13 +106,26 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   flavor <- match.arg(flavor, several.ok = FALSE)
 
 
-  ## 1. Find matching transpiler
-  transpiler <- find_transpiler(expr, envir = envir, flavor = flavor, what = "futurize", debug = debug)
+  repeat {
+    ## 1a. Find matching transpiler
+    transpiler <- find_transpiler(expr, envir = envir, flavor = flavor, what = "futurize", debug = debug)
+  
+    transpile <- transpiler[["transpiler"]]
+
+    ## 1b. If not a nested transpiler function, we're done here
+    if (!inherits(transpile, "transpiler")) break
+    
+    ## 1c. Generate transpiled expression of nested transpiler
+    parts <- as.list(expr)
+    parts$eval <- FALSE
+    expr2 <- as.call(parts)
+    expr <- eval(expr2, envir = envir)
+  }
 
 
   ## 2. Transpile
   if (debug) mdebug("Transpile call expression")
-  expr_futurized <- transpiler[["transpiler"]](expr, options = options)
+  expr_futurized <- transpile(expr, options = options)
   if (debug) mprint(expr_futurized)
 
 
