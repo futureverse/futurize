@@ -109,66 +109,9 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   ## 1. Identify (namespace, function)
   ## -------------------------------------------------------
   call <- expr[[1]]
-  if (is.symbol(call)) {
-    ## Examples: lapply(...), map(...)
-    namespace <- NULL
-    fcn <- call
-  } else if (is.call(call)) {
-    stopifnot(length(call) == 3L)
-    ## Examples: base::lapply(...), purrr::map(...)
-    ## Not supported: base:::lapply(), baseenv()$lapply(...), ...
-    op <- call[[1]]
-    if (is.symbol(op)) {
-      op_name <- as.character(op)
-      if (op_name == "::") {
-      } else if (op_name == ":::") {
-        stop(sprintf("Do not know how to futurize a private function: %s()", deparse(call)))
-      } else {
-        stop(sprintf("Do not know how to futurize function: %s()", deparse(call)))
-      }
-      namespace <- call[[2]]
-      fcn <- call[[3]]
-    } else {
-      stop(sprintf("Do not know how to futurize object of type %s: %s()", sQuote(typeof(op)), deparse(call)))
-    }
-  } else {
-    stop(sprintf("Do not know how to futurize function: %s()", as.character(call)))
-  }
-
-  ns_name <- as.character(namespace)
-  fcn_name <- as.character(fcn)
-  if (debug) {
-    if (length(ns_name) == 1L) {
-      msg <- sprintf("Function: %s::%s(...)", ns_name, fcn_name)
-    } else {
-      msg <- sprintf("Function: %s(...)", fcn_name)
-    }
-    mdebug(msg)
-  }
-
-  ## Does the function exist?
-  if (is.null(namespace)) {
-    if (debug) mdebug_push("Locate function ...")
-    if (!exists(fcn_name, mode = "function", envir = envir, inherits = TRUE)) {
-      stop(sprintf("No such function: %s()", deparse(call)))
-    }
-    fcn <- get(fcn_name, mode = "function", envir = envir, inherits = TRUE)
-    env <- environment(fcn)
-    if (inherits(fcn, "standardGeneric")) {
-      env <- parent.env(env)
-    }
-    ns_name <- environmentName(env)
-    stopifnot(nzchar(ns_name))
-    if (debug) {
-      mdebugf("Function located in: %s", sQuote(ns_name))
-      mdebug_pop()
-    }
-  } else {
-    ns <- getNamespace(ns_name)
-    if (!exists(fcn_name, mode = "function", envir = ns, inherits = TRUE)) {
-      stop(sprintf("No such function in %s: %s()", sQuote(ns_name), deparse(call)))
-    }
-  }
+  call_info <- parse_call(call, envir = envir, what = "futurize", debug = debug)
+  ns_name <- call_info[["ns"]]
+  fcn_name <- call_info[["fcn"]]
 
 
   ## -------------------------------------------------------
