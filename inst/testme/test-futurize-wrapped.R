@@ -15,6 +15,14 @@ stopifnot(identical(y, truth))
 y <- local( lapply(1, identity) ) |> futurize()
 stopifnot(identical(y, truth))
 
+## Wrapped in identity( ... )
+y <- identity( lapply(1, identity) ) |> futurize()
+stopifnot(identical(y, truth))
+
+## Wrapped in I( ... )
+y <- I( lapply(1, identity) ) |> futurize()
+stopifnot(identical(y, I(truth)))
+
 ## Wrapped in { { ... } }
 y <- { { lapply(1, identity) } } |> futurize()
 stopifnot(identical(y, truth))

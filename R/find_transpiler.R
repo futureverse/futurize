@@ -22,11 +22,22 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
     fcn_name <- call_info[["fcn_name"]]
     ns_name <- call_info[["ns_name"]]
 
-    ## Special cases: `{ ... }`, `( ... )`, and `local( ... )`
-    if (identical(fcn, `{`) || identical(fcn, `(`) || identical(fcn, base::local)) {
+    ## Special cases: {...}, (...), local(...), I(...), identity(...)
+    if (identical(fcn, `{`) ||
+        identical(fcn, `(`) ||
+        identical(fcn, base::local) ||
+        identical(fcn, base::I) ||
+        identical(fcn, base::identity)
+       ) {
       if (debug) {
-        other <- switch(fcn_name, "{" = "}", "(" = ")")
-        mdebugf("Futurizing an expression wrapped in %s ... %s", fcn_name, other)
+        info <- switch(fcn_name,
+          "{" = "{ ... }",
+          "(" = "( ... )",
+          "I" = "I( ... )",
+          "identity" = "identity( ... )",
+          "local" = "local( ... )"
+        )
+        mdebugf("Futurizing an expression wrapped in %s", info)
       }
       call_pos <- c(2L, call_pos)
     } else {
