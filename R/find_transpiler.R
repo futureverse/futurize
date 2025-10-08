@@ -1,11 +1,11 @@
-find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = FALSE) {
+find_transpiler <- function(expr, envir = parent.frame(), unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), flavor, what, debug = FALSE) {
   if (debug) {
     mdebug_push("find_transpiler() ...")
     on.exit(mdebug_pop())
   }
 
   
-  mdebug_push("Finding call to be futurized ...")
+  mdebug_push("Finding call to be transpiled ...")
   call_pos <- c(1L)
   ready <- FALSE
   while (!ready) {
@@ -22,26 +22,24 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
     fcn_name <- call_info[["fcn_name"]]
     ns_name <- call_info[["ns_name"]]
 
-    ## Special cases: {...}, (...), local(...), I(...), identity(...)
-    if (identical(fcn, `{`) ||
-        identical(fcn, `(`) ||
-        identical(fcn, base::local) ||
-        identical(fcn, base::I) ||
-        identical(fcn, base::identity)
-       ) {
-      if (debug) {
-        info <- switch(fcn_name,
-          "{" = "{ ... }",
-          "(" = "( ... )",
-          "I" = "I( ... )",
-          "identity" = "identity( ... )",
-          "local" = "local( ... )"
-        )
-        mdebugf("Futurizing an expression wrapped in %s", info)
+    ready <- TRUE
+
+    ## Unwrap, e.g. {...}, (...), local(...)?
+    if (length(unwrap) > 0) {
+      for (wrapper in unwrap) {
+        if (identical(fcn, wrapper)) {
+          if (debug) {
+            info <- switch(fcn_name,
+              "{" = "{ ... }",
+              "(" = "( ... )",
+              sprintf("%s( ... )", fcn_name)
+            )
+            mdebugf("Transpiling an expression wrapped in %s", info)
+          }
+          call_pos <- c(2L, call_pos)
+          ready <- FALSE
+        }
       }
-      call_pos <- c(2L, call_pos)
-    } else {
-      ready <- TRUE
     }
   }
   mdebugf("Call position in expression: c(%s)", comma(call_pos))
