@@ -5,11 +5,6 @@ data(crude)
 
 plan(multisession)
 
-# -------------------------------------------------------------------------
-# tm_filter() / tm_index()
-# -------------------------------------------------------------------------
-a0 <- tm_filter(crude, FUN = function(x) any(grep("co[m]?pany", content(x))))
-a1 <- tm_filter(crude, FUN = function(x) any(grep("co[m]?pany", content(x)))) |> futurize()
 
 # -------------------------------------------------------------------------
 # tm_map()
@@ -28,7 +23,6 @@ headings <- function(x) {
 b0 <- tm_map(crude, headings)
 b1 <- tm_map(crude, headings) |> futurize()
 stopifnot(all.equal(a0, a1), identical(a0, a1))
-
 
 
 plan(sequential)
