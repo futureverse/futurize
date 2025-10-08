@@ -79,20 +79,21 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     on.exit(mdebug_pop())
   }
 
-  ## futurize(TRUE), futurize(FALSE), or futurize(NA)?
-  .futurize <- .package[[".futurize"]]
+  ## Enable or disable transpiler, or query its state?
+  ## e.g. futurize(TRUE), futurize(FALSE), or futurize(NA)?
+  .transpile <- .package[[".futurize"]]
   if (is.logical(expr) && length(expr) == 1L) {
-    if (is.na(expr)) return(.futurize)
+    if (is.na(expr)) return(.transpile)
     .package[[".futurize"]] <- expr
-    return(invisible(.futurize))
+    return(invisible(.transpile))
   }
 
   stopifnot(
     is.logical(when), length(when) == 1L, !is.na(when)
   )
 
-  ## Don't futurize, i.e. evaluate as-is?
-  if (!when || !.futurize) {
+  ## Don't transpile, i.e. evaluate as-is?
+  if (!when || !.transpile) {
     if (eval) {
       if (debug) mdebug("Evaluate call expression")
       return(eval(expr, envir = envir))
@@ -108,7 +109,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
   repeat {
     ## 1a. Find matching transpiler
-    transpiler <- find_transpiler(expr, envir = envir, flavor = flavor, what = "futurize", debug = debug)
+    transpiler <- get_transpiler(expr, envir = envir, flavor = flavor, what = "futurize", debug = debug)
   
     transpile <- transpiler[["transpiler"]]
 
@@ -135,9 +136,9 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     mdebug_push("Transpile call expression ...")
   }
 
-  expr_futurized <- transpile(expr, options = options)
+  expr_transpiled <- transpile(expr, options = options)
   if (debug) {
-    mprint(expr_futurized)
+    mprint(expr_transpiled)
     mdebug_pop()
   }
 
@@ -145,10 +146,10 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
   ## 3. Evaluate or return transpiled expression?
   if (eval) {
     if (debug) mdebug("Evaluate transpiled call expression")
-    eval(expr_futurized, envir = envir)
+    eval(expr_transpiled, envir = envir)
   } else {
     if (debug) mdebug("Return transpiled call expression")
-    expr_futurized
+    expr_transpiled
   }
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))

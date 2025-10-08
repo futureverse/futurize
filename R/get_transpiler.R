@@ -1,6 +1,6 @@
-find_transpiler <- function(expr, envir = parent.frame(), unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), flavor, what, debug = FALSE) {
+get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), flavor, what, debug = FALSE) {
   if (debug) {
-    mdebug_push("find_transpiler() ...")
+    mdebug_push("get_transpiler() ...")
     on.exit(mdebug_pop())
   }
 
@@ -122,4 +122,4 @@ find_transpiler <- function(expr, envir = parent.frame(), unwrap = list(base::`{
   if (debug) mdebugf_pop()
 
   transpiler
-} ## find_transpiler()
+} ## get_transpiler()
