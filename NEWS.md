@@ -1,4 +1,4 @@
-# Version 0.0.3-9000 (2025-09-26)
+# Version 0.0.4 (2025-09-26)
 
  * Handle nested transpilers.
 
