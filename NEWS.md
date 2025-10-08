@@ -1,7 +1,9 @@
 # Version 0.0.4-9000 (2025-10-07)
 
  * Add support for futurizing calls nested in, one or more layers, of
-   `{ ... }`, `( ... )`, `local( ... )`, `I()`, and `identity()`.
+   `{ ... }`, `( ... )`, `local( ... )`, `I()`, and `identity()`, e.g.
+   `local({ lapply(x, f) }) |> futurize()` is the same as
+   `local({ lapply(x, f) |> futurize() })`.
 
 
 # Version 0.0.4 (2025-09-26)
