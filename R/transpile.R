@@ -9,14 +9,20 @@
 #' @param eval If TRUE (default), the transpiled expression is evaluated,
 #' other it is returned.
 #'
+#' @param envir The environment where the expression should be evaluated.
+#'
 #' @param flavor Flavor of the transpiler to use.
+#'
+#' @param unwrap (optional) A list of functions that should be considered
+#' wrapping function, that the transpiler should unwrap ("enter"). This
+#' Allows us to transpile expressions within `{ ... }` and `local( ... )`.
 #'
 #' @returns
 #' Returns the value of the evaluated expression `expr` if `eval = TRUE`,
 #' otherwise the transpiled expression.
 #'
 #' @keywords internal
-transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, flavor = "built-in", what = "transpile", envir = parent.frame(), debug = FALSE) {
+transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), flavor = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), debug = FALSE) {
   if (debug) {
     mdebug_push("transpile() ...")
     on.exit(mdebug_pop())
@@ -39,7 +45,7 @@ transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, 
   
   repeat {
     ## 1a. Get a matching transpiler
-    transpiler <- get_transpiler(expr, envir = envir, flavor = flavor, what = what, debug = debug)
+    transpiler <- get_transpiler(expr, envir = envir, flavor = flavor, what = what, unwrap = unwrap, debug = debug)
   
     transpile <- transpiler[["transpiler"]]
 

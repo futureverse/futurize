@@ -10,9 +10,10 @@ transpile(
   ...,
   when = TRUE,
   eval = TRUE,
+  envir = parent.frame(),
   flavor = "built-in",
   what = "transpile",
-  envir = parent.frame(),
+  unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity),
   debug = FALSE
 )
 }
@@ -26,7 +27,13 @@ transpile(
 \item{eval}{If TRUE (default), the transpiled expression is evaluated,
 other it is returned.}
 
+\item{envir}{The environment where the expression should be evaluated.}
+
 \item{flavor}{Flavor of the transpiler to use.}
+
+\item{unwrap}{(optional) A list of functions that should be considered
+wrapping function, that the transpiler should unwrap ("enter"). This
+Allows us to transpile expressions within \code{{ ... }} and \code{local( ... )}.}
 }
 \value{
 Returns the value of the evaluated expression \code{expr} if \code{eval = TRUE},
