@@ -9,6 +9,9 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
   call_pos <- c(1L)
   ready <- FALSE
   while (!ready) {
+    if (debug) {
+      mdebugf("Call position in expression: c(%s)", comma(call_pos))
+    }
     call <- expr[[call_pos]]
     if (debug) {
       mdebug("Call:")
@@ -25,7 +28,7 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
         other <- switch(fcn_name, "{" = "}", "(" = ")")
         mdebugf("Futurizing an expression wrapped in %s ... %s", fcn_name, other)
       }
-      call_pos <- c(call_pos + 1L, 1L)
+      call_pos <- c(2L, call_pos)
     } else {
       ready <- TRUE
     }
@@ -94,9 +97,10 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
     transpiler <- list(
       label      = sprintf("Apply transpiler to inner expression at c(%s)", comma(call_pos)),
       transpiler = function(expr, ...) {
-        expr_inner <- expr[[-call_pos[-1]]]
+        inner_pos <- call_pos[-length(call_pos)]         
+        expr_inner <- expr[[inner_pos]]
         expr_inner <- transpiler_inner(expr_inner, ...)
-        expr[[-call_pos[-1]]] <- expr_inner
+        expr[[inner_pos]] <- expr_inner
         expr
       }
     )

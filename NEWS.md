@@ -1,6 +1,7 @@
 # Version 0.0.4-9000 (2025-10-07)
 
- * Add support for futurizing calls nested in `{ ... }` and  `( ... )`.
+ * Add support for futurizing calls nested in, one or more layers, of
+   `{ ... }` and `( ... )`.
 
 
 # Version 0.0.4 (2025-09-26)
