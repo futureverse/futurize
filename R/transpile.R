@@ -89,3 +89,178 @@ transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, 
   }
 } ## transpile()
 class(transpile) <- c("transpiler", class(transpile))
+
+
+get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), flavor, what, debug = FALSE) {
+  if (debug) {
+    mdebug_push("get_transpiler() ...")
+    on.exit(mdebug_pop())
+  }
+  
+  mdebug_push("Finding call to be transpiled ...")
+  call_pos <- c(1L)
+  ready <- FALSE
+  while (!ready) {
+    if (debug) {
+      mdebugf("Call position in expression: c(%s)", comma(call_pos))
+    }
+    call <- expr[[call_pos]]
+    if (debug) {
+      mdebug("Call:")
+      mprint(call)
+    }
+    call_info <- parse_call(call, envir = envir, what = what, debug = debug)
+    fcn <- call_info[["fcn"]]
+    fcn_name <- call_info[["fcn_name"]]
+    ns_name <- call_info[["ns_name"]]
+
+    ready <- TRUE
+
+    ## Unwrap, e.g. {...}, (...), local(...)?
+    if (length(unwrap) > 0) {
+      for (wrapper in unwrap) {
+        if (identical(fcn, wrapper)) {
+          if (debug) {
+            info <- switch(fcn_name,
+              "{" = "{ ... }",
+              "(" = "( ... )",
+              sprintf("%s( ... )", fcn_name)
+            )
+            mdebugf("Transpiling an expression wrapped in %s", info)
+          }
+          call_pos <- c(2L, call_pos)
+          ready <- FALSE
+        }
+      }
+    }
+  }
+  mdebugf("Call position in expression: c(%s)", comma(call_pos))
+  mdebug_pop()
+
+  if (debug) {
+    mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(flavor), ns_name, fcn_name, sQuote(class(fcn)[1]))
+  }
+
+  ## Special case: A nested transpiler function?
+  if (inherits(fcn, "transpiler")) {
+    if (debug) {
+      mdebugf("Detected a nested transpiler function: %s::%s()", ns_name, fcn_name)
+    }
+    transpiler <- list(
+      label      = fcn_name,
+      transpiler = fcn
+    )
+
+    stopifnot(call_pos == 1L)
+    return(transpiler)
+  }
+
+  transpiler_sets <- get_transpilers(flavor)
+  transpilers <- transpiler_sets[[ns_name]]
+  if (is.null(transpilers)) {
+    if (!requireNamespace(ns_name)) {
+      stop(sprintf("Please install %s in order to %s %s::%s()",
+           sQuote(ns_name), what, ns_name, fcn_name))
+    }
+    req_pkgs <- append_transpilers_for_pkg(ns_name)
+    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
+    if (!all(okay)) {
+      pkgs <- req_pkgs[!okay]
+      stop(sprintf("Please install %s in order to %s %s::%s()",
+           commaq(pkgs), what, ns_name, fcn_name))
+    }
+    transpiler_sets <- get_transpilers(flavor)
+    transpilers <- transpiler_sets[[ns_name]]
+  }
+
+  if (debug) {
+    mdebugf("Namespaces registered with %s(): %s", what, commaq(names(transpiler_sets)))
+  }
+  
+  ## Is there a registered transpiler for the function?
+  if (is.null(transpilers)) {
+    stop(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
+  }
+
+  if (! fcn_name %in% names(transpilers)) {
+    stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
+  }
+  transpiler <- transpilers[[fcn_name]]
+  if (debug) {
+    mdebugf("Transpiler: %s", transpiler[["label"]])
+  }
+
+  if (length(call_pos) > 1L) {
+    if (debug) {
+      mdebug_push("Creating wrapper transpiler ...")
+    }
+    transpiler_inner <- transpiler[["transpiler"]]
+    transpiler <- list(
+      label      = sprintf("Apply transpiler to inner expression at c(%s)", comma(call_pos)),
+      transpiler = function(expr, ...) {
+        inner_pos <- call_pos[-length(call_pos)]         
+        expr_inner <- expr[[inner_pos]]
+        expr_inner <- transpiler_inner(expr_inner, ...)
+        expr[[inner_pos]] <- expr_inner
+        expr
+      }
+    )
+    if (debug) {
+      mprint(transpiler)
+      mdebug_pop()
+    }
+  }
+
+  if (debug) mdebugf_pop()
+
+  transpiler
+} ## get_transpiler()
+
+
+.env <- new.env()
+.env[["transpiler_db"]] <- list()
+
+get_transpilers <- function(flavor) {
+  .env[["transpiler_db"]][[flavor]]
+}
+
+append_transpilers <- function(flavor, ...) {
+  transpiler_db <- .env[["transpiler_db"]]
+  transpilers <- transpiler_db[[flavor]]
+  transpilers <- c(transpilers, ...)
+  transpiler_db[[flavor]] <- transpilers
+  .env[["transpiler_db"]] <- transpiler_db
+}
+
+
+list_transpilers <- function() {
+  data <- list()
+  db <- .env[["transpiler_db"]]
+  flavors <- names(db)
+  for (flavor in flavors) {
+    transpilers <- db[[flavor]]
+    pkgs <- unique(names(transpilers))
+    for (pkg in pkgs) {
+      idxs <- which(pkg == names(transpilers))
+      if (length(idxs) == 1) {
+        transpilers_pkg <- transpilers[[idxs]]
+      } else {
+        ## length(idxs) > 1 should not happend, but in case ...
+        transpilers_pkg <- list()
+        for (idx in idxs) {
+          transpilers_pkg <- c(transpilers_pkg, transpilers[[idx]])
+        }
+        drop <- duplicated(names(transpilers_pkg), fromLast = TRUE)
+        transpilers_pkg <- transpilers_pkg[!drop]
+      }
+      transpilers_pkg <- transpilers_pkg[order(names(transpilers_pkg))]
+      names <- names(transpilers_pkg)
+      labels <- vapply(transpilers_pkg, FUN = function(t) t$label, FUN.VALUE = "")
+      dd <- data.frame(flavor = flavor, package = pkg, fcn = names, description = labels)
+      data <- c(data, list(dd))
+    }
+  }
+  data <- Reduce(rbind, data)
+  rownames(data) <- NULL
+  data
+}

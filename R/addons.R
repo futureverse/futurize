@@ -37,6 +37,8 @@ make_addon_transpilers <- function(from_package, to_package, make_options) {
 } ## make_addon_transpilers()
 
 
+## FIXME: Generalize this such that we "register" transpiler functions,
+## which then this function looks up by package name
 append_transpilers_for_pkg <- function(pkg) {
   if (pkg == "foreach") {
     append_transpilers_for_doFuture()
