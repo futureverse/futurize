@@ -21,4 +21,6 @@
 
   ## Set future options based on environment variables
   update_package_options(debug = debug)
+
+  register_all_transpilers()
 } ## .onLoad()

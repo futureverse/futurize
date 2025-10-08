@@ -162,7 +162,16 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), flavor
       stop(sprintf("Please install %s in order to %s %s::%s()",
            sQuote(ns_name), what, ns_name, fcn_name))
     }
-    req_pkgs <- append_transpilers_for_pkg(ns_name)
+
+    ## Get transpiler package addons
+    fcns <- register_transpilers(ns_name, action = "get")
+    if (length(fcns) == 0L) {
+      stop("Unsupported package: ", sQuote(ns_name))
+    }
+    req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
+    req_pkgs <- unlist(req_pkgs, use.names = FALSE)
+    req_pkgs <- sort(unique(req_pkgs))
+
     okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
     if (!all(okay)) {
       pkgs <- req_pkgs[!okay]
@@ -264,3 +273,32 @@ list_transpilers <- function() {
   rownames(data) <- NULL
   data
 }
+
+
+register_transpilers <- local({
+  .db <- list()
+  function(pkg, fcn, action = c("add", "get", "list", "reset")) {
+    action <- match.arg(action, several.ok = FALSE)
+    if (action == "add") {
+      stopifnot(
+        is.character(pkg), length(pkg) >= 1L,
+        is.function(fcn)
+      )
+      fcns <- old_fcns <- .db[[pkg]]
+      fcns <- if (length(fcns) == 0) list(fcn) else c(fcns, list(fcn))
+      .db[[pkg]] <<- fcns
+      invisible(old_fcns)
+    } else if (action == "get") {
+      stopifnot(
+        is.character(pkg), length(pkg) == 1L
+      )
+      .db[[pkg]]
+    } else if (action == "list") {
+      .db
+    } else if (action == "reset") {
+      old_db <- .db
+      .db <<- list()
+      invisible(old_db)
+    }
+  }
+})

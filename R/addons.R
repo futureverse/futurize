@@ -37,32 +37,21 @@ make_addon_transpilers <- function(from_package, to_package, make_options) {
 } ## make_addon_transpilers()
 
 
-## FIXME: Generalize this such that we "register" transpiler functions,
-## which then this function looks up by package name
-append_transpilers_for_pkg <- function(pkg) {
-  if (pkg == "foreach") {
-    append_transpilers_for_doFuture()
-  } else if (pkg == "purrr") {
-    append_transpilers_for_furrr()
-  } else if (pkg == "crossmap") {
-    append_transpilers_for_crossmap()
-  } else if (pkg %in% c("base", "stats")) {
-    append_transpilers_for_future.apply()
-  } else if (pkg == "glmnet") {
-    append_transpilers_for_glmnet()
-  } else if (pkg == "boot") {
-    append_transpilers_for_boot()
-  } else if (pkg == "caret") {
-    append_transpilers_for_caret()
-  } else if (pkg == "lme4") {
-    append_transpilers_for_lme4()
-  } else if (pkg == "plyr") {
-    append_transpilers_for_plyr()
-  } else if (pkg == "tm") {
-    append_transpilers_for_tm()
-  } else if (pkg == "BiocParallel") {
-    append_transpilers_for_BiocParallel()
-  } else {
-    stop("Unsupported package: ", sQuote(pkg))
-  }
-}
+
+## This function registered functions that adds transpilers for specific
+## package, without loading those package.
+register_all_transpilers <- function() {
+  register_transpilers("base",         append_transpilers_for_future.apply)
+  register_transpilers("stats",        append_transpilers_for_future.apply)
+  register_transpilers("purrr",        append_transpilers_for_furrr)
+  register_transpilers("crossmap",     append_transpilers_for_crossmap)
+  register_transpilers("foreach",      append_transpilers_for_doFuture)
+  register_transpilers("BiocParallel", append_transpilers_for_BiocParallel)
+  
+  register_transpilers("glmnet",       append_transpilers_for_glmnet)
+  register_transpilers("boot",         append_transpilers_for_boot)
+  register_transpilers("caret",        append_transpilers_for_caret)
+  register_transpilers("lme4",         append_transpilers_for_lme4)
+  register_transpilers("plyr",         append_transpilers_for_plyr)
+  register_transpilers("tm",           append_transpilers_for_tm)
+} ## register_all_transpilers()
