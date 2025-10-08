@@ -114,7 +114,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
     ## 1b. If not a nested transpiler function, we're done here
     if (!inherits(transpile, "transpiler")) break
-    
+
     ## 1c. Generate transpiled expression of nested transpiler
     expr <- local({
       if (debug) mdebug_push("Apply nested transpiler ...")
@@ -131,9 +131,15 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
 
   ## 2. Transpile
-  if (debug) mdebug("Transpile call expression")
+  if (debug) {
+    mdebug_push("Transpile call expression ...")
+  }
+
   expr_futurized <- transpile(expr, options = options)
-  if (debug) mprint(expr_futurized)
+  if (debug) {
+    mprint(expr_futurized)
+    mdebug_pop()
+  }
 
 
   ## 3. Evaluate or return transpiled expression?

@@ -4,12 +4,33 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
     on.exit(mdebug_pop())
   }
 
-  call <- expr[[1]]
   
-  call_info <- parse_call(call, envir = envir, what = what, debug = debug)
-  fcn <- call_info[["fcn"]]
-  fcn_name <- call_info[["fcn_name"]]
-  ns_name <- call_info[["ns_name"]]
+  mdebug_push("Finding call to be futurized ...")
+  call_pos <- c(1L)
+  ready <- FALSE
+  while (!ready) {
+    call <- expr[[call_pos]]
+    if (debug) {
+      mdebug("Call:")
+      mprint(call)
+    }
+    call_info <- parse_call(call, envir = envir, what = what, debug = debug)
+    fcn <- call_info[["fcn"]]
+    fcn_name <- call_info[["fcn_name"]]
+    ns_name <- call_info[["ns_name"]]
+
+    ## Special case: `{ ... }`
+    if (identical(fcn, `{`)) {
+      if (debug) {
+        mdebug("Futurizing an expression wrapped in { ... }")
+      }
+      call_pos <- c(call_pos + 1L, 1L)
+    } else {
+      ready <- TRUE
+    }
+  }
+  mdebugf("Call position in expression: c(%s)", comma(call_pos))
+  mdebug_pop()
 
   if (debug) {
     mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(flavor), ns_name, fcn_name, sQuote(class(fcn)[1]))
@@ -17,9 +38,15 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
 
   ## Special case: A nested transpiler function?
   if (inherits(fcn, "transpiler")) {
+    if (debug) {
+      mdebugf("Detected a nested transpiler function: %s::%s()", ns_name, fcn_name)
+    }
     transpiler <- list(
+      label      = fcn_name,
       transpiler = fcn
     )
+
+    stopifnot(call_pos == 1L)
     return(transpiler)
   }
 
@@ -57,7 +84,28 @@ find_transpiler <- function(expr, envir = parent.frame(), flavor, what, debug = 
   if (debug) {
     mdebugf("Transpiler: %s", transpiler[["label"]])
   }
+
+  if (length(call_pos) > 1L) {
+    if (debug) {
+      mdebug_push("Creating wrapper transpiler ...")
+    }
+    transpiler_inner <- transpiler[["transpiler"]]
+    transpiler <- list(
+      label      = sprintf("Apply transpiler to inner expression at c(%s)", comma(call_pos)),
+      transpiler = function(expr, ...) {
+        expr_inner <- expr[[-call_pos[-1]]]
+        expr_inner <- transpiler_inner(expr_inner, ...)
+        expr[[-call_pos[-1]]] <- expr_inner
+        expr
+      }
+    )
+    if (debug) {
+      mprint(transpiler)
+      mdebug_pop()
+    }
+  }
+
   if (debug) mdebugf_pop()
-  
+
   transpiler
 } ## find_transpiler()
