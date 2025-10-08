@@ -11,6 +11,10 @@ stopifnot(identical(y, truth))
 y <- ( lapply(1, identity) ) |> futurize()
 stopifnot(identical(y, truth))
 
+## Wrapped in local( ... )
+y <- local( lapply(1, identity) ) |> futurize()
+stopifnot(identical(y, truth))
+
 ## Wrapped in { { ... } }
 y <- { { lapply(1, identity) } } |> futurize()
 stopifnot(identical(y, truth))
@@ -21,6 +25,14 @@ stopifnot(identical(y, truth))
 
 ## Wrapped in ( ( ... ) )
 y <- ( ( lapply(1, identity) ) ) |> futurize()
+stopifnot(identical(y, truth))
+
+## Wrapped in local({ ... })
+y <- local({ lapply(1, identity) }) |> futurize()
+stopifnot(identical(y, truth))
+
+## Wrapped in { local({ ... }) }
+y <- { local({ lapply(1, identity) }) } |> futurize()
 stopifnot(identical(y, truth))
 
 } ## if (requireNamespace("future.apply"))
