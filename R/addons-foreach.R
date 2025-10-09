@@ -64,7 +64,7 @@ append_transpilers_for_doFuture <- function() {
   transpilers <- list(transpilers)
   names(transpilers) <- "foreach"
 
-  append_transpilers("add-on", transpilers)
+  append_transpilers("futurize", "add-on", transpilers)
   
   ## Return required packages
   c(package)

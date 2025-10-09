@@ -155,7 +155,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
     return(transpiler)
   }
 
-  transpiler_sets <- get_transpilers(flavor)
+  transpiler_sets <- get_transpilers(class, flavor)
   transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
     if (!requireNamespace(ns_name)) {
@@ -164,13 +164,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
     }
 
     ## Get transpiler package addons
-    fcns <- add_transpilers_for_package(class, package = ns_name, action = "get")
-    if (length(fcns) == 0L) {
-      stop("Unsupported package: ", sQuote(ns_name))
-    }
-    req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
-    req_pkgs <- unlist(req_pkgs, use.names = FALSE)
-    req_pkgs <- sort(unique(req_pkgs))
+    req_pkgs <- transpilers_for_package(class, package = ns_name, action = "make")
 
     okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
     if (!all(okay)) {
@@ -178,7 +172,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
       stop(sprintf("Please install %s in order to %s %s::%s()",
            commaq(pkgs), what, ns_name, fcn_name))
     }
-    transpiler_sets <- get_transpilers(flavor)
+    transpiler_sets <- get_transpilers(class, flavor)
     transpilers <- transpiler_sets[[ns_name]]
   }
 
@@ -229,22 +223,30 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
 .env <- new.env()
 .env[["transpiler_db"]] <- list()
 
-get_transpilers <- function(flavor) {
-  .env[["transpiler_db"]][[flavor]]
+get_transpilers <- function(class, flavor) {
+  transpiler_db <- .env[["transpiler_db"]]
+  db <- transpiler_db[[class]]
+  if (is.null(db)) db <- list()
+  db[[flavor]]
 }
 
-append_transpilers <- function(flavor, ...) {
+append_transpilers <- function(class, flavor, ...) {
   transpiler_db <- .env[["transpiler_db"]]
-  transpilers <- transpiler_db[[flavor]]
+  db <- transpiler_db[[class]]
+  if (is.null(db)) db <- list()
+  transpilers <- db[[flavor]]
   transpilers <- c(transpilers, ...)
-  transpiler_db[[flavor]] <- transpilers
+  db[[flavor]] <- transpilers
+  transpiler_db[[class]] <- db
   .env[["transpiler_db"]] <- transpiler_db
 }
 
 
-list_transpilers <- function() {
+list_transpilers <- function(class) {
   data <- list()
-  db <- .env[["transpiler_db"]]
+  transpiler_db <- .env[["transpiler_db"]]
+  db <- transpiler_db[[class]]
+  if (is.null(db)) db <- list()
   flavors <- names(db)
   for (flavor in flavors) {
     transpilers <- db[[flavor]]
@@ -275,10 +277,10 @@ list_transpilers <- function() {
 }
 
 
-add_transpilers_for_package <- local({
+transpilers_for_package <- local({
   .db <- list()
   
-  function(class, package, fcn, action = c("add", "get", "list", "reset")) {
+  function(class, package, fcn, action = c("add", "make", "get", "list", "reset")) {
     stopifnot(is.character(class), length(class) == 1L, !is.na(class))
     action <- match.arg(action, several.ok = FALSE)
 
@@ -300,6 +302,18 @@ add_transpilers_for_package <- local({
         is.character(package), length(package) == 1L
       )
       db[[package]]
+    } else if (action == "make") {
+      stopifnot(
+        is.character(package), length(package) == 1L
+      )
+      fcns <- db[[package]]
+      if (length(fcns) == 0L) {
+        stop(sprintf("There are no %s transpilers for package %s", sQuote(class), sQuote(package)))
+      }
+      req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
+      req_pkgs <- unlist(req_pkgs, use.names = FALSE)
+      req_pkgs <- sort(unique(req_pkgs))
+      req_pkgs
     } else if (action == "list") {
       db
     } else if (action == "reset") {
