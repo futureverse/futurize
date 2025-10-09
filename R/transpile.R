@@ -164,13 +164,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
     }
 
     ## Get transpiler package addons
-    fcns <- add_transpilers_for_package(class, package = ns_name, action = "get")
-    if (length(fcns) == 0L) {
-      stop("Unsupported package: ", sQuote(ns_name))
-    }
-    req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
-    req_pkgs <- unlist(req_pkgs, use.names = FALSE)
-    req_pkgs <- sort(unique(req_pkgs))
+    req_pkgs <- transpilers_for_package(class, package = ns_name, action = "make")
 
     okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
     if (!all(okay)) {
@@ -275,10 +269,10 @@ list_transpilers <- function() {
 }
 
 
-add_transpilers_for_package <- local({
+transpilers_for_package <- local({
   .db <- list()
   
-  function(class, package, fcn, action = c("add", "get", "list", "reset")) {
+  function(class, package, fcn, action = c("add", "make", "get", "list", "reset")) {
     stopifnot(is.character(class), length(class) == 1L, !is.na(class))
     action <- match.arg(action, several.ok = FALSE)
 
@@ -300,6 +294,18 @@ add_transpilers_for_package <- local({
         is.character(package), length(package) == 1L
       )
       db[[package]]
+    } else if (action == "make") {
+      stopifnot(
+        is.character(package), length(package) == 1L
+      )
+      fcns <- db[[package]]
+      if (length(fcns) == 0L) {
+        stop(sprintf("There are no %s transpilers for package %s", sQuote(class), sQuote(package)))
+      }
+      req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
+      req_pkgs <- unlist(req_pkgs, use.names = FALSE)
+      req_pkgs <- sort(unique(req_pkgs))
+      req_pkgs
     } else if (action == "list") {
       db
     } else if (action == "reset") {
