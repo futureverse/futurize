@@ -22,7 +22,7 @@
 #' otherwise the transpiled expression.
 #'
 #' @keywords internal
-transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), flavor = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), debug = FALSE) {
+transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), class, flavor = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), debug = FALSE) {
   if (debug) {
     mdebug_push("transpile() ...")
     on.exit(mdebug_pop())
@@ -45,7 +45,7 @@ transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, 
   
   repeat {
     ## 1a. Get a matching transpiler
-    transpiler <- get_transpiler(expr, envir = envir, flavor = flavor, what = what, unwrap = unwrap, debug = debug)
+    transpiler <- get_transpiler(expr, envir = envir, class = class, flavor = flavor, what = what, unwrap = unwrap, debug = debug)
   
     transpile <- transpiler[["transpiler"]]
 
@@ -91,7 +91,7 @@ transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, 
 class(transpile) <- c("transpiler", class(transpile))
 
 
-get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), flavor, what, debug = FALSE) {
+get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class, flavor, what, debug = FALSE) {
   if (debug) {
     mdebug_push("get_transpiler() ...")
     on.exit(mdebug_pop())
@@ -164,7 +164,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), flavor
     }
 
     ## Get transpiler package addons
-    fcns <- register_transpilers(ns_name, action = "get")
+    fcns <- add_transpilers_for_package(class, package = ns_name, action = "get")
     if (length(fcns) == 0L) {
       stop("Unsupported package: ", sQuote(ns_name))
     }
@@ -275,29 +275,37 @@ list_transpilers <- function() {
 }
 
 
-register_transpilers <- local({
+add_transpilers_for_package <- local({
   .db <- list()
-  function(pkg, fcn, action = c("add", "get", "list", "reset")) {
+  
+  function(class, package, fcn, action = c("add", "get", "list", "reset")) {
+    stopifnot(is.character(class), length(class) == 1L, !is.na(class))
     action <- match.arg(action, several.ok = FALSE)
+
+    db <- .db[[class]]
+    if (is.null(db)) db <- list()
+    
     if (action == "add") {
       stopifnot(
-        is.character(pkg), length(pkg) >= 1L,
+        is.character(package), length(package) == 1L,
         is.function(fcn)
       )
-      fcns <- old_fcns <- .db[[pkg]]
+      fcns <- old_fcns <- db[[package]]
       fcns <- if (length(fcns) == 0) list(fcn) else c(fcns, list(fcn))
-      .db[[pkg]] <<- fcns
+      db[[package]] <- fcns
+      .db[[class]] <<- db
       invisible(old_fcns)
     } else if (action == "get") {
       stopifnot(
-        is.character(pkg), length(pkg) == 1L
+        is.character(package), length(package) == 1L
       )
-      .db[[pkg]]
+      db[[package]]
     } else if (action == "list") {
-      .db
+      db
     } else if (action == "reset") {
-      old_db <- .db
-      .db <<- list()
+      old_db <- db
+      db <- list()
+      .db[[class]] <<- db
       invisible(old_db)
     }
   }

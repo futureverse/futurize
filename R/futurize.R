@@ -90,7 +90,7 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
   flavor <- match.arg(flavor, several.ok = FALSE)
 
-  transpile(expr, substitute = FALSE, options = options, when = when && .transpile, eval = eval, flavor = flavor, envir = envir, what = "futurize", debug = debug)
+  transpile(expr, substitute = FALSE, options = options, when = when && .transpile, eval = eval, class = "futurize", flavor = flavor, envir = envir, what = "futurize", debug = debug)
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 
