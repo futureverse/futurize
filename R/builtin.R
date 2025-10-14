@@ -1,16 +1,3 @@
-if (FALSE) {
-  f_expr <- config[["f_expr"]]
-  reducer <- config[["reducer"]]
-  
-  fs <- eval(f_expr, envir = envir)
-  fs_chunks <- partition(fs)
-  vs_chunks <- value(fs_chunks)
-  vs_chunks <- do.call(c, args = vs_chunks)
-  vs <- do.call(reducer, args = vs_chunks)
-  vs
-} ## futurize()
-
-
 known_fcns <- list()
 known_fcns[["base"]] <- list(
   apply = c,
