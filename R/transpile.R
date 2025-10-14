@@ -91,6 +91,23 @@ transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, 
 class(transpile) <- c("transpiler", class(transpile))
 
 
+
+#' Get a registered transpiler for an R expression
+#' 
+#' @inheritParams transpile
+#' @inheritParams parse_call
+#' 
+#' @param expr The R expression, which contains an R symbol or an R call,
+#' to be transpiled.
+#'
+#' @return
+#' A transpiler, which is a named list with elements:
+#'
+#'  * `label` - a character string describing the transpiler
+#'
+#'  * `transpiler` - a function that takes an R expression and
+#'                   an optional argument `options`
+#' 
 get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class, flavor, what, debug = FALSE) {
   if (debug) {
     mdebug_push("get_transpiler() ...")

@@ -16,7 +16,12 @@ known_fcns[["base"]] <- list(
 registry <- list()
 registry[["built-in"]] <- known_fcns
 
-
+#' @inheritParams futurize
+#'
+#' @param fcn_name The name of the 'base' package function to futurize.
+#'
+#' @param fcn The 'base' package function to futurize.
+#'
 futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = "condition", envir = parent.frame()) {
   defaults <- formals(fcn)
 
@@ -119,4 +124,3 @@ futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = 
 
   list(f_expr = f_expr, reducer = reducer)
 } ## futurize_base()
-
