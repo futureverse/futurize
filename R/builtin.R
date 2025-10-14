@@ -124,3 +124,44 @@ futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = 
 
   list(f_expr = f_expr, reducer = reducer)
 } ## futurize_base()
+
+futurize_base_expr <- function(expr, fcn_name = fcn_name, fcn = fcn, stdout = TRUE, conditions = c("condition"), envir = parent.frame()) {
+  config <- futurize_base(expr, fcn_name = fcn_name, fcn = fcn, stdout = TRUE, conditions = c("condition"), envir = parent.frame())
+  f_expr <- config[["f_expr"]]
+  reducer <- config[["reducer"]]
+  bquote({
+    fs <- .(f_expr)
+    fs_chunks <- futurize::partition(fs)
+    vs_chunks <- future::value(fs_chunks)
+    vs_chunks <- do.call(c, args = vs_chunks)
+    vs <- do.call(.(reducer), args = vs_chunks)
+    vs
+  })
+}
+
+append_builtin_transpilers_for_base <- function() {
+  ## base::apply(), ...
+  transpilers <- list()
+
+  ## Create all transpilers
+  fcns <- known_fcns[["base"]]
+  for (fcn_name in names(fcns)) {
+    reducer <- fcns[[fcn_name]]
+    label <- sprintf("base::%s() transpiler", fcn_name)
+    make_transpiler_expr <- bquote(function(expr, options) {
+      fcn_name <- .(fcn_name)
+      fcn <- get(fcn_name, mode = "function", envir = baseenv())
+      futurize_base_expr(expr, fcn_name = fcn_name, fcn = fcn, stdout = TRUE, conditions = c("condition"), envir = parent.frame())
+    })
+    transpiler <- eval(make_transpiler_expr)
+    transpilers[[fcn_name]] <- list(
+      label = label,
+      transpiler = transpiler
+    )
+  } ## for (fcn_name ...)
+  str(transpilers)
+  append_transpilers("futurize", "built-in", list(base = transpilers))
+  
+  ## Return required packages
+  character(0L)
+}

@@ -11,6 +11,8 @@
 #'
 #' @param envir The environment where the expression should be evaluated.
 #'
+#' @param class The class of transpiler.
+#'
 #' @param flavor Flavor of the transpiler to use.
 #'
 #' @param unwrap (optional) A list of functions that should be considered
@@ -181,7 +183,10 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
     }
 
     ## Get transpiler package addons
-    req_pkgs <- transpilers_for_package(class, package = ns_name, action = "make")
+    req_pkgs <- transpilers_for_package(class = class, flavor = flavor, package = ns_name, action = "make", debug = debug)
+    if (debug) {
+      mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
+    }
 
     okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
     if (!all(okay)) {
@@ -207,7 +212,11 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
   }
   transpiler <- transpilers[[fcn_name]]
   if (debug) {
-    mdebugf("Transpiler: %s", transpiler[["label"]])
+    print(transpiler)
+    stopifnot(is.list(transpiler), "label" %in% names(transpiler), "transpiler" %in% names(transpiler))
+    mdebugf("Transpiler description: %s", transpiler[["label"]])
+    mdebug("Transpiler function:")
+    mprint(transpiler[["transpiler"]])
   }
 
   if (length(call_pos) > 1L) {
@@ -297,11 +306,21 @@ list_transpilers <- function(class) {
 transpilers_for_package <- local({
   .db <- list()
   
-  function(class, package, fcn, action = c("add", "make", "get", "list", "reset")) {
+  function(class, flavor = "default", package, fcn, action = c("add", "make", "get", "list", "reset"), debug = FALSE) {
     stopifnot(is.character(class), length(class) == 1L, !is.na(class))
+    stopifnot(is.character(flavor), length(flavor) == 1L, !is.na(flavor))
     action <- match.arg(action, several.ok = FALSE)
+    
+    if (debug) {
+      mdebugf_push("transpilers_for_package(action = %s) ...", sQuote(action))
+      mdebugf(" - class: %s", sQuote(class))
+      mdebugf(" - flavor: %s", sQuote(flavor))
+      on.exit(mdebug_pop())
+    }
 
-    db <- .db[[class]]
+    key <- sprintf("%s::%s", class, flavor)
+    
+    db <- .db[[key]]
     if (is.null(db)) db <- list()
     
     if (action == "add") {
@@ -309,23 +328,34 @@ transpilers_for_package <- local({
         is.character(package), length(package) == 1L,
         is.function(fcn)
       )
+      if (debug) {
+        mdebugf(" - package: %s", sQuote(package))
+      }
       fcns <- old_fcns <- db[[package]]
       fcns <- if (length(fcns) == 0) list(fcn) else c(fcns, list(fcn))
       db[[package]] <- fcns
-      .db[[class]] <<- db
+      .db[[key]] <<- db
       invisible(old_fcns)
     } else if (action == "get") {
+      if (debug) {
+        mdebugf(" - package: %s", sQuote(package))
+      }
       stopifnot(
         is.character(package), length(package) == 1L
       )
+      if (debug) mdebugf(" - package: %s", sQuote(package))
       db[[package]]
     } else if (action == "make") {
       stopifnot(
         is.character(package), length(package) == 1L
       )
+      if (debug) {
+        mdebugf(" - package: %s", sQuote(package))
+      }
       fcns <- db[[package]]
+      if (debug) mprint(list(fcns = fcns))
       if (length(fcns) == 0L) {
-        stop(sprintf("There are no %s transpilers for package %s", sQuote(class), sQuote(package)))
+        stop(sprintf("There are no factory functions for creating %s transpilers for package %s", sQuote(key), sQuote(package)))
       }
       req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
       req_pkgs <- unlist(req_pkgs, use.names = FALSE)
@@ -336,7 +366,7 @@ transpilers_for_package <- local({
     } else if (action == "reset") {
       old_db <- db
       db <- list()
-      .db[[class]] <<- db
+      .db[[key]] <<- db
       invisible(old_db)
     }
   }

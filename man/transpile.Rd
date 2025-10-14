@@ -30,6 +30,8 @@ other it is returned.}
 
 \item{envir}{The environment where the expression should be evaluated.}
 
+\item{class}{The class of transpiler.}
+
 \item{flavor}{Flavor of the transpiler to use.}
 
 \item{unwrap}{(optional) A list of functions that should be considered
