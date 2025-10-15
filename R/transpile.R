@@ -329,8 +329,7 @@ transpilers_for_package <- local({
     action <- match.arg(action, several.ok = FALSE)
     
     if (debug) {
-      mdebugf_push("transpilers_for_package(action = %s) ...", sQuote(action))
-      mdebugf(" - type: %s", sQuote(type))
+      mdebugf_push("transpilers_for_package(action = %s, type = %s) ...", sQuote(action), sQuote(type))
       on.exit(mdebug_pop())
     }
 

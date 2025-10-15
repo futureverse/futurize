@@ -34,6 +34,7 @@ futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = 
   unnamed <- setdiff(target_names, names)
   names[names == ""] <- unnamed
   names <- c("", names)
+  
   if (fcn_name %in% c("eapply")) {
     idx_env <- which(names == "env")
     stopifnot(length(idx_env) == 1L)

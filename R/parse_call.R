@@ -71,12 +71,19 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
     }
     fcn <- get(fcn_name, mode = "function", envir = envir, inherits = TRUE)
     env <- environment(fcn)
+
     if (is.null(env) && is.primitive(fcn)) {
       env <- baseenv()
     } else if (inherits(fcn, "standardGeneric")) {
       env <- parent.env(env)
     }
-    ns_name <- environmentName(env)
+    tenv <- env
+    repeat {
+      ns_name <- environmentName(tenv)
+      if (nzchar(ns_name)) break
+      tenv <- parent.env(tenv)
+    }
+    
     stopifnot(nzchar(ns_name))
     if (debug) {
       mdebugf("Function located in: %s", sQuote(ns_name))
