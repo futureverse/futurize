@@ -1,3 +1,4 @@
+#' @tags detritus-files
 if (requireNamespace("plyr")) {
 library(futurize)
 library(plyr)
