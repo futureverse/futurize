@@ -18,7 +18,9 @@ transpile(
 )
 }
 \arguments{
-\item{expr}{An \R expression, typically a function call to transpile.}
+\item{expr}{An \R expression, typically a function call to transpile.
+If FALSE, then the transpiler is disabled, and if TRUE, it is re-enabled.
+If NA, then TRUE is returned if the transpiler is enabled, otherwise FALSE.}
 
 \item{options}{(optional) Named options for the transpilation.}
 
@@ -38,6 +40,8 @@ Allows us to transpile expressions within \code{{ ... }} and \code{local( ... )}
 \value{
 Returns the value of the evaluated expression \code{expr} if \code{eval = TRUE},
 otherwise the transpiled expression.
+If \code{expr} is NA, then TRUE is returned if the transpiler is enabled,
+otherwise FALSE.
 }
 \description{
 Transpile an R expression

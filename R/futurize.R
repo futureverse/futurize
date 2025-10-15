@@ -79,18 +79,9 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     on.exit(mdebug_pop())
   }
 
-  ## Enable or disable transpiler, or query its state?
-  ## e.g. futurize(TRUE), futurize(FALSE), or futurize(NA)?
-  .transpile <- .package[[".futurize"]]
-  if (is.logical(expr) && length(expr) == 1L) {
-    if (is.na(expr)) return(.transpile)
-    .package[[".futurize"]] <- expr
-    return(invisible(.transpile))
-  }
-
   flavor <- match.arg(flavor, several.ok = FALSE)
 
-  transpile(expr, substitute = FALSE, options = options, when = when && .transpile, eval = eval, type = sprintf("futurize::%s", flavor), envir = envir, what = "futurize", debug = debug)
+  transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, type = sprintf("futurize::%s", flavor), envir = envir, what = "futurize", debug = debug)
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 
