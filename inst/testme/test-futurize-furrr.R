@@ -46,20 +46,7 @@ for (kk in seq_along(exprs)) {
   expr_f <- bquote(.(expr) |> futurize())
   res <- eval(expr_f)
 
-  ## From ?eapply: "Note that the order of the components is arbitrary
-  ## for hashed environments."
-  if (name == "eapply" && !is.null(names(truth))) res <- res[names(truth)]
-
-  validate <- TRUE
-  if (name == "eapply") {
-    if (is.null(names(truth))) {
-      validate <- FALSE
-    } else {
-      res <- res[names(truth)]
-    }
-  }
-  
-  if (validate && !identical(res, truth)) {
+  if (!identical(res, truth)) {
     str(list(truth = truth, res = res))
     stop("Not identical")
   } else {
