@@ -3,6 +3,7 @@
 S3method(partition,list)
 export(futurize)
 export(futurize_options)
+export(fz)
 export(parallelize)
 export(parallelize_options)
 export(partition)

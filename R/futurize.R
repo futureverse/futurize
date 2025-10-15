@@ -69,6 +69,7 @@
 #' @example incl/futurize.R
 #'
 #' @aliases parallelize
+#' @aliases fz
 #' @importFrom future future value
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, flavor = c("add-on", "built-in"), envir = parent.frame()) {
@@ -88,3 +89,6 @@ class(futurize) <- c("transpiler", class(futurize))
 
 #' @export
 parallelize <- futurize
+
+#' @export
+fz <- futurize
