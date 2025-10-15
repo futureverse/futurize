@@ -11,8 +11,7 @@ transpile(
   when = TRUE,
   eval = TRUE,
   envir = parent.frame(),
-  class,
-  flavor = "built-in",
+  type = "built-in",
   what = "transpile",
   unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity),
   debug = FALSE
@@ -30,9 +29,7 @@ other it is returned.}
 
 \item{envir}{The environment where the expression should be evaluated.}
 
-\item{class}{The class of transpiler.}
-
-\item{flavor}{Flavor of the transpiler to use.}
+\item{type}{Type of the transpiler to use.}
 
 \item{unwrap}{(optional) A list of functions that should be considered
 wrapping function, that the transpiler should unwrap ("enter"). This

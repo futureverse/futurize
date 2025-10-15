@@ -165,8 +165,8 @@ append_builtin_transpilers_for_base <- function() {
       transpiler = transpiler
     )
   } ## for (fcn_name ...)
-  str(transpilers)
-  append_transpilers("futurize", "built-in", list(base = transpilers))
+  
+  append_transpilers("futurize::built-in", list(base = transpilers))
   
   ## Return required packages
   character(0L)
