@@ -62,7 +62,7 @@ for (kk in seq_along(exprs)) {
 
   FUN <- FUN_no_rng
   truth <- eval(expr)
-
+  named_truth <- !is.null(names(truth))
   for (flavor in flavors) {
     if (flavor == "built-in") {
       if (name %in% c("replicate", "kernapply")) {
@@ -78,7 +78,7 @@ for (kk in seq_along(exprs)) {
 
     ## From ?eapply: "Note that the order of the components is arbitrary
     ## for hashed environments."
-    if (name == "eapply" && !is.null(names(truth))) res <- res[names(truth)]
+    if (name == "eapply" && named_truth) res <- res[names(truth)]
   
     validate <- TRUE
     if (name == "eapply") {
@@ -101,15 +101,17 @@ for (kk in seq_along(exprs)) {
       res2 <- eval(expr_f2)
     })
     print(out)
+    if (flavor == "built-in" && name == "eapply" && named_truth) res2 <- res2[names(truth)]
     stopifnot(
       identical(out, character(0L)),
-      (flavor == "built-in" && name == "eapply") || identical(res2, res)
+      identical(res2, res)
     )
     
     expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L, flavor = .(flavor)))
     res3 <- eval(expr_f3)
+    if (flavor == "built-in" && name == "eapply" && named_truth) res3 <- res3[names(truth)]
     stopifnot(
-      (flavor == "built-in" && name == "eapply") || identical(res3, res)
+      identical(res3, res)
     )
     
     message("Test with RNG:")
@@ -121,9 +123,10 @@ for (kk in seq_along(exprs)) {
       on.exit(options(opts))
       eval(expr_f4)
     })
+    if (flavor == "built-in" && name == "eapply" && named_truth) res4 <- res4[names(truth)]
     stopifnot(
       (flavor == "built-in" && name == "eapply") || identical(res4, truth),
-      (flavor == "built-in" && name == "eapply") || identical(res4, res)
+      identical(res4, res)
     )
   } ## for (flavor ...)
 } ## for (kk ...)
