@@ -51,6 +51,7 @@ exprs <- list(
   kernapply = quote( kernapply(x = X, k = k) )
 )
 
+flavors <- c("add-on", "built-in")
 for (kk in seq_along(exprs)) {
   name <- names(exprs)[kk]
   expr <- exprs[[kk]]
@@ -61,55 +62,73 @@ for (kk in seq_along(exprs)) {
 
   FUN <- FUN_no_rng
   truth <- eval(expr)
-  expr_f <- bquote(.(expr) |> futurize())
-  res <- eval(expr_f)
 
-  ## From ?eapply: "Note that the order of the components is arbitrary
-  ## for hashed environments."
-  if (name == "eapply" && !is.null(names(truth))) res <- res[names(truth)]
-
-  validate <- TRUE
-  if (name == "eapply") {
-    if (is.null(names(truth))) {
-      validate <- FALSE
-    } else {
-      res <- res[names(truth)]
+  for (flavor in flavors) {
+    if (flavor == "built-in") {
+      if (name %in% c("replicate", "kernapply")) {
+        message(sprintf("Skipping; not yet implemented for flavor = %s", sQuote(flavor)))
+        next
+      }
     }
-  }
   
-  if (validate && !identical(res, truth)) {
-    str(list(truth = truth, res = res))
-    stop("Not identical")
-  } else {
-    str(res)
-  }
+    FUN <- FUN_no_rng
+    
+    expr_f <- bquote(.(expr) |> futurize(flavor = .(flavor)))
+    res <- eval(expr_f)
 
-  out <- utils::capture.output({
-    expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L)))
-    res2 <- eval(expr_f2)
-  })
-  print(out)
-  stopifnot(identical(out, character(0L)))
-  stopifnot(identical(res2, res))
+    ## From ?eapply: "Note that the order of the components is arbitrary
+    ## for hashed environments."
+    if (name == "eapply" && !is.null(names(truth))) res <- res[names(truth)]
+  
+    validate <- TRUE
+    if (name == "eapply") {
+      if (is.null(names(truth))) {
+        validate <- FALSE
+      } else {
+        res <- res[names(truth)]
+      }
+    }
+    
+    if (validate && !identical(res, truth)) {
+      str(list(truth = truth, res = res))
+      stop("Not identical")
+    } else {
+      str(res)
+    }
 
-  expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L))
-  res3 <- eval(expr_f3)
-  stopifnot(identical(res3, res))
-
-  message("Test with RNG:")
-  FUN <- FUN_rng
-  expr_f4 <- bquote(.(expr) |> futurize(seed = TRUE))
-  print(expr_f4)
-  res4 <- local({
-    opts <- options(future.rng.onMisuse = "error")
-    on.exit(options(opts))
-    eval(expr_f4)
-  })
-  stopifnot(
-    identical(res4, res),
-    identical(res4, truth)
-  )
-}
+    out <- utils::capture.output({
+      expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L), flavor = .(flavor)))
+      res2 <- eval(expr_f2)
+    })
+    print(out)
+    stopifnot(
+      identical(out, character(0L)),
+      (flavor == "built-in" && name == "eapply") || identical(res2, res)
+    )
+    
+    expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L, flavor = .(flavor)))
+    res3 <- eval(expr_f3)
+    stopifnot(
+      (flavor == "built-in" && name == "eapply") || identical(res3, res)
+    )
+    
+    message("Test with RNG:")
+    FUN <- FUN_rng
+    if (flavor != "built-in" || ! name %in% c("lapply", "sapply", "vapply", "eapply")) {
+      expr_f4 <- bquote(.(expr) |> futurize(seed = TRUE, flavor = .(flavor)))
+      print(expr_f4)
+      res4 <- local({
+        opts <- options(future.rng.onMisuse = "error")
+        on.exit(options(opts))
+        eval(expr_f4)
+      })
+      stopifnot(
+        identical(res4, truth),
+        (flavor == "built-in" && name == "eapply") || identical(res4, res)
+      )
+    }
+  } ## for (flavor ...)
+} ## for (kk ...)
 
 message("futurize() for replicate() should default to seed = TRUE")
 y <- replicate(2, rnorm(1)) |> futurize()
