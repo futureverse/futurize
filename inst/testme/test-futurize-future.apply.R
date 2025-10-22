@@ -114,19 +114,17 @@ for (kk in seq_along(exprs)) {
     
     message("Test with RNG:")
     FUN <- FUN_rng
-    if (flavor != "built-in" || ! name %in% c("lapply", "sapply", "vapply", "eapply")) {
-      expr_f4 <- bquote(.(expr) |> futurize(seed = TRUE, flavor = .(flavor)))
-      print(expr_f4)
-      res4 <- local({
-        opts <- options(future.rng.onMisuse = "error")
-        on.exit(options(opts))
-        eval(expr_f4)
-      })
-      stopifnot(
-        identical(res4, truth),
-        (flavor == "built-in" && name == "eapply") || identical(res4, res)
-      )
-    }
+    expr_f4 <- bquote(.(expr) |> futurize(seed = TRUE, flavor = .(flavor)))
+    print(expr_f4)
+    res4 <- local({
+      opts <- options(future.rng.onMisuse = "error")
+      on.exit(options(opts))
+      eval(expr_f4)
+    })
+    stopifnot(
+      (flavor == "built-in" && name == "eapply") || identical(res4, truth),
+      (flavor == "built-in" && name == "eapply") || identical(res4, res)
+    )
   } ## for (flavor ...)
 } ## for (kk ...)
 

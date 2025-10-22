@@ -22,7 +22,7 @@ registry[["built-in"]] <- known_fcns
 #'
 #' @param fcn The 'base' package function to futurize.
 #'
-futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = "condition", envir = parent.frame()) {
+futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) {
   defaults <- formals(fcn)
 
   fcns <- known_fcns[["base"]]
@@ -120,9 +120,12 @@ futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = 
   f_FUN <- bquote(function(...) future::future(
     expr = .(FUN)(...),
     substitute = TRUE,
-    globals = TRUE,
-    stdout = .(stdout),
-    conditions = .(conditions),
+    globals = .(options[["globals"]]),
+    packages = .(options[["packages"]]),
+    stdout = .(options[["stdout"]]),
+    conditions = .(options[["conditions"]]),
+    seed = .(options[["seed"]]),
+    label = .(options[["label"]]),
     lazy = TRUE
   ))
 
@@ -132,8 +135,8 @@ futurize_base <- function(expr, fcn_name, fcn, ..., stdout = TRUE, conditions = 
   list(f_expr = f_expr, reducer = reducer)
 } ## futurize_base()
 
-futurize_base_expr <- function(expr, fcn_name = fcn_name, fcn = fcn, stdout = TRUE, conditions = c("condition"), envir = parent.frame()) {
-  config <- futurize_base(expr, fcn_name = fcn_name, fcn = fcn, stdout = TRUE, conditions = c("condition"), envir = parent.frame())
+futurize_base_expr <- function(expr, fcn_name, fcn, options, envir = parent.frame()) {
+  config <- futurize_base(expr, fcn_name = fcn_name, fcn = fcn, options = options, envir = parent.frame())
   f_expr <- config[["f_expr"]]
   reducer <- config[["reducer"]]
   bquote({
@@ -158,7 +161,7 @@ append_builtin_transpilers_for_base <- function() {
     make_transpiler_expr <- bquote(function(expr, options) {
       fcn_name <- .(fcn_name)
       fcn <- get(fcn_name, mode = "function", envir = baseenv())
-      futurize_base_expr(expr, fcn_name = fcn_name, fcn = fcn, stdout = TRUE, conditions = c("condition"), envir = parent.frame())
+      futurize_base_expr(expr, fcn_name = fcn_name, fcn = fcn, options = options, envir = parent.frame())
     })
     transpiler <- eval(make_transpiler_expr)
     transpilers[[fcn_name]] <- list(
