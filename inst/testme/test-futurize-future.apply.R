@@ -123,6 +123,7 @@ for (kk in seq_along(exprs)) {
       on.exit(options(opts))
       eval(expr_f4)
     })
+
     if (flavor == "built-in" && name == "eapply" && named_truth) res4 <- res4[names(truth)]
     stopifnot(
       (flavor == "built-in" && name == "eapply") || identical(res4, truth),

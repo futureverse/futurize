@@ -111,7 +111,7 @@ partition.list <- local({
       fs_first <- fs_chunk[[1]]
       expr <- fs_first[["expr"]]
       expr <- bquote({
-        genv <- globalenv()
+        genv <- environment()
         
         ## Assign constant globals
         for (name in names(globals_constant)) {
