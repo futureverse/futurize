@@ -52,50 +52,51 @@ exprs <- list(
 )
 
 flavors <- c("add-on", "built-in")
-for (kk in seq_along(exprs)) {
-  name <- names(exprs)[kk]
-  expr <- exprs[[kk]]
-  message()
-  message(sprintf("=== %s ==========================", name))
-  print(expr)
-  message(sprintf("---------------------------------"))
 
-  FUN <- FUN_no_rng
-  truth <- eval(expr)
-  named_truth <- !is.null(names(truth))
-
-  ## SPECIAL CASE: eapply() does not guarantee the order. To compare results
-  ## later, we sort the results by name if they exist, otherwise by value.
-  ## From ?eapply: "Note that the order of the components is arbitrary
-  ## for hashed environments."
-  if (name == "eapply" && !named_truth) {
-    truth <- truth[order(unlist(truth))]
-  }
-  
-  for (flavor in flavors) {
+for (flavor in flavors) {
+  for (kk in seq_along(exprs)) {
+    name <- names(exprs)[kk]
+    expr <- exprs[[kk]]
+    message()
+    message(sprintf("=== %s ==========================", name))
+    print(expr)
+    message(sprintf("---------------------------------"))
+    
     if (flavor == "built-in") {
       if (name %in% c("replicate", "kernapply")) {
-        message(sprintf("Skipping; not yet implemented for flavor = %s", sQuote(flavor)))
+        message(sprintf("Skipping %s() - not yet implemented for flavor = %s", name, sQuote(flavor)))
         next
       }
     }
   
     FUN <- FUN_no_rng
+    truth <- eval(expr)
+    named_truth <- !is.null(names(truth))
+  
+    ## SPECIAL CASE: eapply() does not guarantee the order. To compare results
+    ## later, we sort the results by name if they exist, otherwise by value.
+    ## From ?eapply: "Note that the order of the components is arbitrary
+    ## for hashed environments."
+    if (name == "eapply" && !named_truth) {
+      truth <- truth[order(unlist(truth))]
+    }
+    
+    FUN <- FUN_no_rng
     
     expr_f <- bquote(.(expr) |> futurize(flavor = .(flavor)))
     res <- eval(expr_f)
-
+  
     if (name == "eapply") {
       res <- res[if (named_truth) names(truth) else order(unlist(res))]
     }
     stopifnot(identical(res, truth))
-
+  
     out <- utils::capture.output({
       expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L), flavor = .(flavor)))
       res2 <- eval(expr_f2)
     })
     print(out)
-
+  
     if (name == "eapply") {
       res2 <- res2[if (named_truth) names(truth) else order(unlist(res2))]
     }
@@ -124,7 +125,7 @@ for (kk in seq_along(exprs)) {
       on.exit(options(opts))
       eval(expr_f4)
     })
-
+  
     if (name == "eapply") {
       res4 <- res4[if (named_truth) names(truth) else order(unlist(res4))]
     }
@@ -132,8 +133,8 @@ for (kk in seq_along(exprs)) {
       identical(res4, truth),
       identical(res4, res)
     )
-  } ## for (flavor ...)
-} ## for (kk ...)
+  } ## for (kk ...)
+} ## for (flavor ...)
 
 message("futurize() for replicate() should default to seed = TRUE")
 y <- replicate(2, rnorm(1)) |> futurize()
