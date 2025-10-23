@@ -63,6 +63,15 @@ for (kk in seq_along(exprs)) {
   FUN <- FUN_no_rng
   truth <- eval(expr)
   named_truth <- !is.null(names(truth))
+
+  ## SPECIAL CASE: eapply() does not guarantee the order. To compare results
+  ## later, we sort the results by name if they exist, otherwise by value.
+  ## From ?eapply: "Note that the order of the components is arbitrary
+  ## for hashed environments."
+  if (name == "eapply" && !named_truth) {
+    truth <- truth[order(unlist(truth))]
+  }
+  
   for (flavor in flavors) {
     if (flavor == "built-in") {
       if (name %in% c("replicate", "kernapply")) {
@@ -76,41 +85,33 @@ for (kk in seq_along(exprs)) {
     expr_f <- bquote(.(expr) |> futurize(flavor = .(flavor)))
     res <- eval(expr_f)
 
-    ## From ?eapply: "Note that the order of the components is arbitrary
-    ## for hashed environments."
-    if (name == "eapply" && named_truth) res <- res[names(truth)]
-  
-    validate <- TRUE
     if (name == "eapply") {
-      if (is.null(names(truth))) {
-        validate <- FALSE
-      } else {
-        res <- res[names(truth)]
-      }
+      res <- res[if (named_truth) names(truth) else order(unlist(res))]
     }
-    
-    if (validate && !identical(res, truth)) {
-      str(list(truth = truth, res = res))
-      stop("Not identical")
-    } else {
-      str(res)
-    }
+    stopifnot(identical(res, truth))
 
     out <- utils::capture.output({
       expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L), flavor = .(flavor)))
       res2 <- eval(expr_f2)
     })
     print(out)
-    if (flavor == "built-in" && name == "eapply" && named_truth) res2 <- res2[names(truth)]
+
+    if (name == "eapply") {
+      res2 <- res2[if (named_truth) names(truth) else order(unlist(res2))]
+    }
     stopifnot(
-      identical(out, character(0L)),
-      identical(res2, res)
+      identical(res2, truth),
+      identical(res2, res),
+      identical(out, character(0L))
     )
     
     expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L, flavor = .(flavor)))
     res3 <- eval(expr_f3)
-    if (flavor == "built-in" && name == "eapply" && named_truth) res3 <- res3[names(truth)]
+    if (name == "eapply") {
+      res3 <- res3[if (named_truth) names(truth) else order(unlist(res3))]
+    }
     stopifnot(
+      identical(res3, truth),
       identical(res3, res)
     )
     
@@ -124,9 +125,11 @@ for (kk in seq_along(exprs)) {
       eval(expr_f4)
     })
 
-    if (flavor == "built-in" && name == "eapply" && named_truth) res4 <- res4[names(truth)]
+    if (name == "eapply") {
+      res4 <- res4[if (named_truth) names(truth) else order(unlist(res4))]
+    }
     stopifnot(
-      (flavor == "built-in" && name == "eapply") || identical(res4, truth),
+      identical(res4, truth),
       identical(res4, res)
     )
   } ## for (flavor ...)
