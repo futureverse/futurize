@@ -35,7 +35,7 @@ futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) 
   names[names == ""] <- unnamed
   names <- c("", names)
 
-  f_expr_comment <- "## Generate futures"
+  f_expr_comment <- "## Generate lazy futures"
   reducer_comment <- "## Reduce values"
 
   if (fcn_name %in% c("eapply")) {
@@ -69,7 +69,7 @@ futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) 
 
     ## MAP FUNCTION
     ## Generate lapply()-based map function
-    f_expr_comment <- "## Generate futures using lapply()-based map function"
+    f_expr_comment <- "## Generate lazy futures using lapply()-based map function"
     expr[[1]] <- quote(lapply)
     names(expr)[idx_env] <- "X"
 
@@ -114,7 +114,7 @@ futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) 
     
     ## MAP FUNCTION
     if (fcn_name %in% c("vapply")) {
-      f_expr_comment <- "## Generate futures using lapply()-based map function"
+      f_expr_comment <- "## Generate lazy futures using lapply()-based map function"
       expr[[1]] <- quote(lapply)
       ## Drop unused arguments
       for (name in c("FUN.VALUE", "USE.NAMES")) {
@@ -126,7 +126,7 @@ futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) 
         }
       }
     } else {
-      f_expr_comment <- sprintf("## Generate futures using %s()-based map function", fcn_name)
+      f_expr_comment <- sprintf("## Generate lazy futures using %s()-based map function", fcn_name)
     }
   } else if (fcn_name %in% c("replicate")) {
     ## ARGUMENTS
@@ -143,7 +143,7 @@ futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) 
     }
     
     ## MAP FUNCTION
-    f_expr_comment <- "## Reduce values using lapply()"
+    f_expr_comment <- "## Generate lazy futures using lapply()-based map function with parallel RNG"
     expr[[1]] <- quote(lapply)
     n <- expr[[idx_n]]
     expr[[idx_n]] <- bquote(integer(.(n)))
@@ -160,6 +160,7 @@ futurize_base <- function(expr, fcn_name, fcn, options, envir = parent.frame()) 
         names <- names(expr)
       }
     }
+    options[["seed"]] <- TRUE
     
     ## REDUCE FUNCTION
     reducer_comment <- "## Reduce values using sapply()"
