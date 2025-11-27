@@ -1,4 +1,4 @@
-# Version 0.0.4-9000 (2025-10-07)
+# Version 0.0.5 (2025-11-26)
 
  * Add support for futurizing calls nested in, one or more layers, of
    `{ ... }`, `( ... )`, `local( ... )`, `I()`, and `identity()`, e.g.
@@ -76,26 +76,6 @@
 
  * Add support for **lme4**, e.g. `gm <- allFit(gm) |> futurize()`.
 
- * Argument `flavor = "add-on"` is the default for `futurize()`, which
-   transpiles the apply-like calls into corresponding
-   **future.apply**, **furrr**, and **doFuture** calls. This is the
-   current default, because those packages are very well tested, which
-   in turns means that using the `... |> futurize()` syntax is
-   effectively just syntactic sugar that guarantes identical behavior
-   to directly using the API of those packages. In contrast, the
-   `flavor = "built-in"` method do not rely on these
-   packages. Instead, they rely on a new powerful, generic mechanism
-   for partitioning a set of futures into chunks, where the futures in
-   each chunk are merged into a single future, which then are resolved
-   in parallel. This new approach makes it easier to stay true to, and
-   agile with original packages. For instance, the built-in transpiler
-   for **purrr** relies on **purrr** to generate the original set of
-   futures, and the only thing we have to implement is how to reduce
-   the results back to what **purrr** would return. When the built-in
-   implementation have proven to work well, we will consider making
-   them the new default, and we can start thinking about deprecated
-   **future.apply** and **furrr**.
-   
  
 # Version 0.0.1 (2025-03-07)
 

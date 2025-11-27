@@ -111,7 +111,7 @@ partition.list <- local({
       fs_first <- fs_chunk[[1]]
       expr <- fs_first[["expr"]]
       expr <- bquote({
-        genv <- globalenv()
+        genv <- environment()
         
         ## Assign constant globals
         for (name in names(globals_constant)) {
@@ -129,9 +129,10 @@ partition.list <- local({
       ## Use 'stdout', 'condition' etc. from the first future
       stdout <- fs_first[["stdout"]]
       conditions <- fs_first[["conditions"]]
+      seed <- fs_first[["seed"]]
       
       globals_chunk <- list(globals_constant = globals_constant, globals_unique = globals_unique)
-      future(expr, substitute = FALSE, globals = globals_chunk, packages = packages, stdout = stdout, conditions = conditions, lazy = TRUE)
+      future(expr, substitute = FALSE, globals = globals_chunk, packages = packages, stdout = stdout, conditions = conditions, seed = seed, lazy = TRUE)
     })
     
     fs_chunks

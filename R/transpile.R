@@ -1,6 +1,8 @@
 #' Transpile an R expression
 #'
 #' @param expr An \R expression, typically a function call to transpile.
+#' If FALSE, then the transpiler is disabled, and if TRUE, it is re-enabled.
+#' If NA, then TRUE is returned if the transpiler is enabled, otherwise FALSE.
 #'
 #' @param options (optional) Named options for the transpilation.
 #' 
@@ -11,7 +13,7 @@
 #'
 #' @param envir The environment where the expression should be evaluated.
 #'
-#' @param flavor Flavor of the transpiler to use.
+#' @param type Type of the transpiler to use.
 #'
 #' @param unwrap (optional) A list of functions that should be considered
 #' wrapping function, that the transpiler should unwrap ("enter"). This
@@ -20,78 +22,116 @@
 #' @returns
 #' Returns the value of the evaluated expression `expr` if `eval = TRUE`,
 #' otherwise the transpiled expression.
+#' If `expr` is NA, then TRUE is returned if the transpiler is enabled,
+#' otherwise FALSE.
 #'
 #' @keywords internal
-transpile <- function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), class, flavor = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), debug = FALSE) {
-  if (debug) {
-    mdebug_push("transpile() ...")
-    on.exit(mdebug_pop())
-  }
-
-  stopifnot(
-    is.logical(when), length(when) == 1L, !is.na(when)
-  )
-
-  ## Don't transpile, i.e. evaluate as-is?
-  if (!when) {
-    if (eval) {
-      if (debug) mdebug("Evaluate call expression")
-      return(eval(expr, envir = envir))
-    } else {
-      if (debug) mdebug("Return call expression")
-      return(expr)
-    }
-  }
+transpile <- local({
+  .enabled <- list()
   
-  repeat {
-    ## 1a. Get a matching transpiler
-    transpiler <- get_transpiler(expr, envir = envir, class = class, flavor = flavor, what = what, unwrap = unwrap, debug = debug)
-  
-    transpile <- transpiler[["transpiler"]]
-
-    ## 1b. If not a nested transpiler function, we're done here
-    if (!inherits(transpile, "transpiler")) break
-
-    ## 1c. Generate transpiled expression of nested transpiler
-    expr <- local({
-      if (debug) mdebug_push("Apply nested transpiler ...")
+  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), debug = FALSE) {
+    if (debug) {
+      mdebug_push("transpile() ...")
       on.exit(mdebug_pop())
-      if (debug) mprint(expr)
-      parts <- as.list(expr)
-      parts$eval <- FALSE
-      expr2 <- as.call(parts)
-      expr <- eval(expr2, envir = envir)
-      if (debug) mprint(expr)
-      expr
-    })
-  }
-
-
-  ## 2. Transpile
-  if (debug) {
-    mdebug_push("Transpile call expression ...")
-  }
-
-  expr_transpiled <- transpile(expr, options = options)
-  if (debug) {
-    mprint(expr_transpiled)
-    mdebug_pop()
-  }
-
-
-  ## 3. Evaluate or return transpiled expression?
-  if (eval) {
-    if (debug) mdebug("Evaluate transpiled call expression")
-    eval(expr_transpiled, envir = envir)
-  } else {
-    if (debug) mdebug("Return transpiled call expression")
-    expr_transpiled
-  }
-} ## transpile()
+    }
+  
+    stopifnot(
+      is.logical(when), length(when) == 1L, !is.na(when)
+    )
+  
+    ## Enable or disable transpiler, or query its state?
+    enabled <- .enabled[[type]]
+    if (is.null(enabled)) {
+      enabled <- TRUE
+      .enabled[[type]] <<- enabled
+    }
+    
+    ## e.g. transpile(TRUE), transpile(FALSE), or transpile(NA)?
+    if (is.logical(expr) && length(expr) == 1L) {
+      if (is.na(expr)) return(enabled)
+      old_enabled <- enabled
+      .enabled[[type]] <<- expr
+      return(invisible(old_enabled))
+    }
+  
+    ## Don't transpile, i.e. evaluate as-is?
+    if (!enabled || !when) {
+      if (eval) {
+        if (debug) mdebug("Evaluate call expression")
+        return(eval(expr, envir = envir))
+      } else {
+        if (debug) mdebug("Return call expression")
+        return(expr)
+      }
+    }
+    
+    repeat {
+      ## 1a. Get a matching transpiler
+      transpiler <- get_transpiler(expr, envir = envir, type = type, what = what, unwrap = unwrap, debug = debug)
+    
+      transpile <- transpiler[["transpiler"]]
+  
+      ## 1b. If not a nested transpiler function, we're done here
+      if (!inherits(transpile, "transpiler")) break
+  
+      ## 1c. Generate transpiled expression of nested transpiler
+      expr <- local({
+        if (debug) mdebug_push("Apply nested transpiler ...")
+        on.exit(mdebug_pop())
+        if (debug) mprint(expr)
+        parts <- as.list(expr)
+        parts$eval <- FALSE
+        expr2 <- as.call(parts)
+        expr <- eval(expr2, envir = envir)
+        if (debug) mprint(expr)
+        expr
+      })
+    }
+  
+  
+    ## 2. Transpile
+    if (debug) {
+      mdebug_push("Transpile call expression ...")
+    }
+  
+    expr_transpiled <- transpile(expr, options = options)
+    if (debug) {
+      mprint(expr_transpiled)
+      mdebug_pop()
+    }
+  
+  
+    ## 3. Evaluate or return transpiled expression?
+    if (eval) {
+      if (debug) mdebug("Evaluate transpiled call expression")
+      eval(expr_transpiled, envir = envir)
+    } else {
+      if (debug) mdebug("Return transpiled call expression")
+      expr_transpiled
+    }
+  } ## transpile()
+})
 class(transpile) <- c("transpiler", class(transpile))
 
 
-get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class, flavor, what, debug = FALSE) {
+
+#' Get a registered transpiler for an R expression
+#' 
+#' @inheritParams transpile
+#' @inheritParams parse_call
+#' 
+#' @param expr The R expression, which contains an R symbol or an R call,
+#' to be transpiled.
+#'
+#' @return
+#' A transpiler, which is a named list with elements:
+#'
+#'  * `label` - a character string describing the transpiler
+#'
+#'  * `transpiler` - a function that takes an R expression and
+#'                   an optional argument `options`
+#' 
+get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, what, debug = FALSE) {
   if (debug) {
     mdebug_push("get_transpiler() ...")
     on.exit(mdebug_pop())
@@ -138,7 +178,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
   mdebug_pop()
 
   if (debug) {
-    mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(flavor), ns_name, fcn_name, sQuote(class(fcn)[1]))
+    mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(type), ns_name, fcn_name, sQuote(class(fcn)[1]))
   }
 
   ## Special case: A nested transpiler function?
@@ -155,7 +195,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
     return(transpiler)
   }
 
-  transpiler_sets <- get_transpilers(class, flavor)
+  transpiler_sets <- get_transpilers(type)
   transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
     if (!requireNamespace(ns_name)) {
@@ -164,7 +204,10 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
     }
 
     ## Get transpiler package addons
-    req_pkgs <- transpilers_for_package(class, package = ns_name, action = "make")
+    req_pkgs <- transpilers_for_package(type = type, package = ns_name, action = "make", debug = debug)
+    if (debug) {
+      mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
+    }
 
     okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
     if (!all(okay)) {
@@ -172,7 +215,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
       stop(sprintf("Please install %s in order to %s %s::%s()",
            commaq(pkgs), what, ns_name, fcn_name))
     }
-    transpiler_sets <- get_transpilers(class, flavor)
+    transpiler_sets <- get_transpilers(type)
     transpilers <- transpiler_sets[[ns_name]]
   }
 
@@ -190,7 +233,10 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
   }
   transpiler <- transpilers[[fcn_name]]
   if (debug) {
-    mdebugf("Transpiler: %s", transpiler[["label"]])
+    stopifnot(is.list(transpiler), "label" %in% names(transpiler), "transpiler" %in% names(transpiler))
+    mdebugf("Transpiler description: %s", transpiler[["label"]])
+    mdebug("Transpiler function:")
+    mprint(transpiler[["transpiler"]])
   }
 
   if (length(call_pos) > 1L) {
@@ -223,33 +269,31 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), class,
 .env <- new.env()
 .env[["transpiler_db"]] <- list()
 
-get_transpilers <- function(class, flavor) {
+get_transpilers <- function(type) {
   transpiler_db <- .env[["transpiler_db"]]
-  db <- transpiler_db[[class]]
-  if (is.null(db)) db <- list()
-  db[[flavor]]
+  transpiler_db[[type]]
 }
 
-append_transpilers <- function(class, flavor, ...) {
+append_transpilers <- function(type, ...) {
   transpiler_db <- .env[["transpiler_db"]]
-  db <- transpiler_db[[class]]
-  if (is.null(db)) db <- list()
-  transpilers <- db[[flavor]]
+  transpilers <- transpiler_db[[type]]
   transpilers <- c(transpilers, ...)
-  db[[flavor]] <- transpilers
-  transpiler_db[[class]] <- db
+  transpiler_db[[type]] <- transpilers
   .env[["transpiler_db"]] <- transpiler_db
 }
 
 
-list_transpilers <- function(class) {
+list_transpilers <- function(pattern = NULL) {
   data <- list()
   transpiler_db <- .env[["transpiler_db"]]
   db <- transpiler_db[[class]]
   if (is.null(db)) db <- list()
-  flavors <- names(db)
-  for (flavor in flavors) {
-    transpilers <- db[[flavor]]
+  types <- names(db)
+  if (!is.null(pattern)) {
+    types <- grep(pattern, types, value = TRUE)
+  }
+  for (type in types) {
+    transpilers <- db[[type]]
     pkgs <- unique(names(transpilers))
     for (pkg in pkgs) {
       idxs <- which(pkg == names(transpilers))
@@ -267,7 +311,7 @@ list_transpilers <- function(class) {
       transpilers_pkg <- transpilers_pkg[order(names(transpilers_pkg))]
       names <- names(transpilers_pkg)
       labels <- vapply(transpilers_pkg, FUN = function(t) t$label, FUN.VALUE = "")
-      dd <- data.frame(flavor = flavor, package = pkg, fcn = names, description = labels)
+      dd <- data.frame(type = type, package = pkg, fcn = names, description = labels)
       data <- c(data, list(dd))
     }
   }
@@ -280,11 +324,16 @@ list_transpilers <- function(class) {
 transpilers_for_package <- local({
   .db <- list()
   
-  function(class, package, fcn, action = c("add", "make", "get", "list", "reset")) {
-    stopifnot(is.character(class), length(class) == 1L, !is.na(class))
+  function(type = "default", package, fcn, action = c("add", "make", "get", "list", "reset"), debug = FALSE) {
+    stopifnot(is.character(type), length(type) == 1L, !is.na(type))
     action <- match.arg(action, several.ok = FALSE)
+    
+    if (debug) {
+      mdebugf_push("transpilers_for_package(action = %s, type = %s) ...", sQuote(action), sQuote(type))
+      on.exit(mdebug_pop())
+    }
 
-    db <- .db[[class]]
+    db <- .db[[type]]
     if (is.null(db)) db <- list()
     
     if (action == "add") {
@@ -292,23 +341,34 @@ transpilers_for_package <- local({
         is.character(package), length(package) == 1L,
         is.function(fcn)
       )
+      if (debug) {
+        mdebugf(" - package: %s", sQuote(package))
+      }
       fcns <- old_fcns <- db[[package]]
       fcns <- if (length(fcns) == 0) list(fcn) else c(fcns, list(fcn))
       db[[package]] <- fcns
-      .db[[class]] <<- db
+      .db[[type]] <<- db
       invisible(old_fcns)
     } else if (action == "get") {
+      if (debug) {
+        mdebugf(" - package: %s", sQuote(package))
+      }
       stopifnot(
         is.character(package), length(package) == 1L
       )
+      if (debug) mdebugf(" - package: %s", sQuote(package))
       db[[package]]
     } else if (action == "make") {
       stopifnot(
         is.character(package), length(package) == 1L
       )
+      if (debug) {
+        mdebugf(" - package: %s", sQuote(package))
+      }
       fcns <- db[[package]]
+      if (debug) mprint(list(fcns = fcns))
       if (length(fcns) == 0L) {
-        stop(sprintf("There are no %s transpilers for package %s", sQuote(class), sQuote(package)))
+        stop(sprintf("There are no factory functions for creating %s transpilers for package %s", sQuote(type), sQuote(package)))
       }
       req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
       req_pkgs <- unlist(req_pkgs, use.names = FALSE)
@@ -319,7 +379,7 @@ transpilers_for_package <- local({
     } else if (action == "reset") {
       old_db <- db
       db <- list()
-      .db[[class]] <<- db
+      .db[[type]] <<- db
       invisible(old_db)
     }
   }

@@ -16,11 +16,6 @@
 #' @param eval If TRUE (default), the futurized expression is evaluated,
 #' other it is returned.
 #'
-#' @param flavor Flavor of futurize transpiler to use.
-#' If `"add-on"`, then registered transpilers for packages such as
-#' \pkg{future.apply} and \pkg{furrr} are used.
-#' If `"built-in"`, then built-in transpilers are used.
-#'
 #' @returns
 #' Returns the value of the evaluated expression `expr`.
 #'
@@ -69,9 +64,10 @@
 #' @example incl/futurize.R
 #'
 #' @aliases parallelize
+#' @aliases fz
 #' @importFrom future future value
 #' @export
-futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, flavor = c("add-on", "built-in"), envir = parent.frame()) {
+futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
   debug <- isTRUE(getOption("futurize.debug"))
   if (debug) {
@@ -79,21 +75,13 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     on.exit(mdebug_pop())
   }
 
-  ## Enable or disable transpiler, or query its state?
-  ## e.g. futurize(TRUE), futurize(FALSE), or futurize(NA)?
-  .transpile <- .package[[".futurize"]]
-  if (is.logical(expr) && length(expr) == 1L) {
-    if (is.na(expr)) return(.transpile)
-    .package[[".futurize"]] <- expr
-    return(invisible(.transpile))
-  }
-
-  flavor <- match.arg(flavor, several.ok = FALSE)
-
-  transpile(expr, substitute = FALSE, options = options, when = when && .transpile, eval = eval, class = "futurize", flavor = flavor, envir = envir, what = "futurize", debug = debug)
+  transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 
 
 #' @export
 parallelize <- futurize
+
+#' @export
+fz <- futurize

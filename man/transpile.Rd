@@ -11,15 +11,16 @@ transpile(
   when = TRUE,
   eval = TRUE,
   envir = parent.frame(),
-  class,
-  flavor = "built-in",
+  type = "built-in",
   what = "transpile",
   unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity),
   debug = FALSE
 )
 }
 \arguments{
-\item{expr}{An \R expression, typically a function call to transpile.}
+\item{expr}{An \R expression, typically a function call to transpile.
+If FALSE, then the transpiler is disabled, and if TRUE, it is re-enabled.
+If NA, then TRUE is returned if the transpiler is enabled, otherwise FALSE.}
 
 \item{options}{(optional) Named options for the transpilation.}
 
@@ -30,7 +31,7 @@ other it is returned.}
 
 \item{envir}{The environment where the expression should be evaluated.}
 
-\item{flavor}{Flavor of the transpiler to use.}
+\item{type}{Type of the transpiler to use.}
 
 \item{unwrap}{(optional) A list of functions that should be considered
 wrapping function, that the transpiler should unwrap ("enter"). This
@@ -39,6 +40,8 @@ Allows us to transpile expressions within \code{{ ... }} and \code{local( ... )}
 \value{
 Returns the value of the evaluated expression \code{expr} if \code{eval = TRUE},
 otherwise the transpiled expression.
+If \code{expr} is NA, then TRUE is returned if the transpiler is enabled,
+otherwise FALSE.
 }
 \description{
 Transpile an R expression

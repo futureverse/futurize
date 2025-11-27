@@ -92,7 +92,7 @@ append_transpilers_for_BiocParallel <- function() {
   transpilers <- list(transpilers)
   names(transpilers) <- package
 
-  append_transpilers("futurize", "add-on", transpilers)
+  append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
   c(package, "doFuture")

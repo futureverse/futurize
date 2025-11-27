@@ -1,4 +1,26 @@
-parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
+#' Parse an R call to be transpiled
+#'
+#' @param call An R symbol or an R call.
+#'
+#' @param envir The environment from which to search for the function that
+#' is called in the `call`.
+#'
+#' @param what A character string used in error messages describing what
+#' type of transpiler is used.
+#'
+#' @param debug If TRUE, output debug information.
+#'
+#' @return
+#' A names list with elements:
+#'
+#'  * `fcn`: the function called in the `call`
+#'
+#'  * `fcn_name`: the name of the function
+#'
+#'  * `ns_name`: the name of the namespace where the function lives
+#'
+#' @keywords internal
+parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug = FALSE) {
   if (debug) {
     mdebug_push("parse_call() ...")
     on.exit(mdebug_pop())
@@ -49,12 +71,19 @@ parse_call <- function(call, envir = parent.frame(), what, debug = FALSE) {
     }
     fcn <- get(fcn_name, mode = "function", envir = envir, inherits = TRUE)
     env <- environment(fcn)
+
     if (is.null(env) && is.primitive(fcn)) {
       env <- baseenv()
     } else if (inherits(fcn, "standardGeneric")) {
       env <- parent.env(env)
     }
-    ns_name <- environmentName(env)
+    tenv <- env
+    repeat {
+      ns_name <- environmentName(tenv)
+      if (nzchar(ns_name)) break
+      tenv <- parent.env(tenv)
+    }
+    
     stopifnot(nzchar(ns_name))
     if (debug) {
       mdebugf("Function located in: %s", sQuote(ns_name))
