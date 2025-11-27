@@ -1,9 +1,6 @@
 ## This function registered functions that adds transpilers for specific
 ## packages, without loading those packages.
 register_all_transpilers <- function() {
-  ## Built-in
-  transpilers_for_package("futurize::built-in", package = "base",       append_builtin_transpilers_for_base)
-  
   ## Add-ons
   transpilers_for_package("futurize::add-on", package = "base",         append_transpilers_for_future.apply)
   transpilers_for_package("futurize::add-on", package = "stats",        append_transpilers_for_future.apply)
