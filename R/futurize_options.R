@@ -25,7 +25,7 @@
 #'
 #' @aliases parallelize_options
 #' @export
-futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", gc = FALSE, earlySignal = FALSE, scheduling = 1.0, chunk.size = NULL, ...) {
+futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", gc = FALSE, scheduling = 1.0, chunk.size = NULL, ...) {
   args <- list(
            seed = seed,
         globals = globals,
@@ -33,7 +33,6 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
          stdout = stdout,
      conditions = conditions,
              gc = gc,
-    earlySignal = earlySignal,
                   ...
   )
   specified <- character(0L)
@@ -43,7 +42,6 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
   if (!missing(stdout)) specified <- c(specified, "stdout")
   if (!missing(conditions)) specified <- c(specified, "conditions")
   if (!missing(gc)) specified <- c(specified, "gc")
-  if (!missing(earlySignal)) specified <- c(specified, "earlySignal")
   specified <- c(specified, ...names())
   attr(args, "specified") <- specified
   args
