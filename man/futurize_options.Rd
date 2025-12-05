@@ -11,7 +11,6 @@ futurize_options(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  gc = FALSE,
   scheduling = 1,
   chunk.size = NULL,
   ...
@@ -66,12 +65,6 @@ memory consumed by captured conditions across futures.
 Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
-
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors,
-including the number of free workers.
-\emph{Some future backends may ignore this argument.}}
 
 \item{scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
