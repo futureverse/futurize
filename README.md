@@ -26,6 +26,7 @@ ys <- purrr::map(xs, sqrt) |> futurize()
 xs <- 1:10
 ys <- crossmap::xmap_dbl(xs, ~ .y * .x) |> futurize()
 
+library(foreach)
 xs <- 1:10
 ys <- foreach(x = xs) %do% { sqrt(x) } |> futurize()
 
@@ -54,9 +55,11 @@ You can also futurize calls to several packages (e.g. **boot**,
 built-in support for parallelization, e.g.
 
 ```r
+ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 
-b <- boot::boot(city, ratio, R = 999) |> futurize()
+ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
+b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
