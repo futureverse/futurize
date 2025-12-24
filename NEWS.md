@@ -1,6 +1,7 @@
 # Version (development version)
 
- * ...
+ * Error messages now distinguish between infix operators
+   (e.g. `%do%`) and functions (e.g. `lapply()`).
 
 
 # Version 0.0.5 (2025-11-26)
