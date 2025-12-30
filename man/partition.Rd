@@ -10,7 +10,7 @@ partition(x, ...)
 \method{partition}{list}(x, by = "expr", scheduling = 1, chunk_size = NULL, ...)
 }
 \arguments{
-\item{x}{A container of futures, e.g. a list.}
+\item{x}{A container of lazy futures, e.g. a list or an environment.}
 
 \item{by}{Named elements of the futures to partition futures by.}
 
@@ -22,11 +22,11 @@ If \code{2.0}, then each worker will process two futures
 (if there are enough elements in \code{X}).
 If \code{Inf} or \code{FALSE}, then one future per element of
 \code{X} is used.
-Only used if \code{future.chunk.size} is \code{NULL}.}
+Only used if \code{chunk_size} is \code{NULL}.}
 
 \item{chunk_size}{The average number of elements per future ("chunk").
 If \code{Inf}, then all elements are processed in a single future.
-If \code{NULL}, then argument \code{future.scheduling} is used.}
+If \code{NULL}, then argument \code{scheduling} is used.}
 
 \item{\ldots}{Currently not used.}
 }

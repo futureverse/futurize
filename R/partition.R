@@ -1,6 +1,6 @@
 #' Partition futures into equivalent classes
 #'
-#' @param x A container of futures, e.g. a list.
+#' @param x A container of lazy futures, e.g. a list or an environment.
 #'
 #' @param by Named elements of the futures to partition futures by.
 #'
@@ -14,11 +14,11 @@
 #'        (if there are enough elements in `X`).
 #'        If `Inf` or `FALSE`, then one future per element of
 #'        `X` is used.
-#'        Only used if `future.chunk.size` is `NULL`.
+#'        Only used if `chunk_size` is `NULL`.
 #'
 #' @param chunk_size The average number of elements per future ("chunk").
 #'        If `Inf`, then all elements are processed in a single future.
-#'        If `NULL`, then argument `future.scheduling` is used.
+#'        If `NULL`, then argument `scheduling` is used.
 #'
 #' @return
 #' Returns ...
@@ -126,7 +126,7 @@ partition.list <- local({
         })
       })
   
-      ## Use 'stdout', 'condition' etc. from the first future
+      ## Use 'stdout', 'condition' etc. from the first future in the chunk
       stdout <- fs_first[["stdout"]]
       conditions <- fs_first[["conditions"]]
       seed <- fs_first[["seed"]]
