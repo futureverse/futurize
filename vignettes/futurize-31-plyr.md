@@ -74,7 +74,6 @@ parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
 
-
 ```r
 plan(future.mirai::mirai_multisession)
 ```

@@ -60,7 +60,7 @@ library(futurize)
 library(caret)
 
 ctrl <- trainControl(method = "cv", number = 10)
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize() |> futurize()
+model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
@@ -75,7 +75,6 @@ computer and it works on all operating system. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)
