@@ -16,19 +16,15 @@ str(y)
 
 
 # ------------------------------------------
-# purrr map-reduce functions
+# purrr map-reduce functions with pipes
 # ------------------------------------------
 if (require("purrr") && requireNamespace("furrr", quietly = TRUE)) {
 
 # Sequential map()
-y <- map(xs, function(x) {
-  sum(x)
-})
+y <- xs |> map(sum)
    
 # Parallel version
-y <- map(xs, function(x) {
-  sum(x)
-}) |> futurize()
+y <- xs |> map(sum) |> futurize()
 str(y)
 
 } ## if (require ...)
