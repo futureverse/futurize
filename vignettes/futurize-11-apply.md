@@ -78,8 +78,6 @@ plan(future.batchtools::batchtools_slurm)
 ```
 
 
-
-
 # Supported Functions
 
 The `futurize()` function supports parallelization of the common base
@@ -98,6 +96,21 @@ The `rapply()` function is not supported by `futurize()`.
 The following **stats** package function is also supported:
 
  * `kernapply()`
+
+
+
+## Kernel smoothing
+
+```r
+library(futurize)
+plan(multisession)
+
+library(stats)
+
+xs <- datasets::EuStockMarkets
+k50 <- kernel("daniell", 50)
+xs_smooth <- kernapply(xs, k = k50) |> futurize()
+```
 
 
 [other parallel backends]: https://www.futureverse.org/backends.html
