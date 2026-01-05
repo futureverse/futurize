@@ -61,6 +61,15 @@ append_transpilers_for_doFuture <- function() {
     transpiler = transpiler
   )
 
+  for (name in c("%dofuture%", "%dopar%")) {
+    transpilers[[name]] <- list(
+      label = sprintf("foreach::foreach() %s { ... } - not supported", name),
+      transpiler = eval(bquote(function(...) {
+        stop(sprintf("Cannot futurize foreach::foreach() %s { ... } - use %%do%% instead", .(name)))
+      }))
+    )
+  }
+
   transpilers <- list(transpilers)
   names(transpilers) <- "foreach"
 
