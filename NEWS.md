@@ -1,5 +1,8 @@
 # Version (development version)
 
+ * Error messages now suggest to use `%do%` when trying to futurize
+   `foreach()` with `%dopar%` or `%dofuture%`.
+
  * Error messages now distinguish between infix operators
    (e.g. `%do%`) and functions (e.g. `lapply()`).
 
