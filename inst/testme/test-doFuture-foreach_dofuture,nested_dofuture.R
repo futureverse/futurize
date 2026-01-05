@@ -1,5 +1,6 @@
 #' @tags %dofuture%
 #' @tags sequential multisession cluster multicore
+#' @tags detritus-files
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
