@@ -43,4 +43,30 @@ stopifnot(identical(y, truth))
 y <- { local({ lapply(1, identity) }) } |> futurize()
 stopifnot(identical(y, truth))
 
+truth2 <- list(2, 3)
+
+## Wrapped in { x <- truth2; local({ ... }) }
+y <- { x <- truth2; lapply(x, identity) } |> futurize()
+stopifnot(identical(y, truth2))
+
+## Wrapped in { { { x <- truth2; local({ ... }) } } }
+y <- { { { x <- truth2; lapply(x, identity) } } } |> futurize()
+stopifnot(identical(y, truth2))
+
+## Wrapped in { ( { x <- truth2; local({ ... }) ) } }
+y <- { ( { x <- truth2; lapply(x, identity) } ) } |> futurize()
+stopifnot(identical(y, truth2))
+
+## Wrapped in { local({ x <- truth2; local({ ... }) }) }
+y <- { local({ x <- truth2; lapply(x, identity) }) } |> futurize()
+stopifnot(identical(y, truth2))
+
+## Wrapped in { local({ 42; x <- truth2; local({ ... }) } })
+y <- { local({ 42; x <- truth2; lapply(x, identity) }) } |> futurize()
+stopifnot(identical(y, truth2))
+
+## Wrapped in { 3.14; local({ 42; x <- truth2; local({ ... }) } })
+y <- { 3.14; local({ 42; x <- truth2; lapply(x, identity) }) } |> futurize()
+stopifnot(identical(y, truth2))
+
 } ## if (requireNamespace("future.apply"))
