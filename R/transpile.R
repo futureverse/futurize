@@ -138,46 +138,18 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   }
   
   mdebug_push("Finding call to be transpiled ...")
-  call_pos <- c(1L)
-  ready <- FALSE
-  while (!ready) {
-    if (debug) {
-      mdebugf("Call position in expression: c(%s)", comma(call_pos))
-    }
-    call <- expr[[call_pos]]
-    if (debug) {
-      mdebug("Call:")
-      mprint(call)
-    }
-    call_info <- parse_call(call, envir = envir, what = what, debug = debug)
-    fcn <- call_info[["fcn"]]
-    fcn_name <- call_info[["fcn_name"]]
-    ns_name <- call_info[["ns_name"]]
+  call_pos <- decend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
-    ready <- TRUE
-
-    ## Unwrap, e.g. {...}, (...), local(...)?
-    if (length(unwrap) > 0) {
-      for (wrapper in unwrap) {
-        if (identical(fcn, wrapper)) {
-          if (debug) {
-            info <- switch(fcn_name,
-              "{" = "{ ... }",
-              "(" = "( ... )",
-              sprintf("%s( ... )", fcn_name)
-            )
-            mdebugf("Transpiling an expression wrapped in %s", info)
-          }
-          call_pos <- c(2L, call_pos)
-          ready <- FALSE
-        }
-      }
-    }
-  }
-  mdebugf("Call position in expression: c(%s)", comma(call_pos))
-  mdebug_pop()
+  call <- expr[[call_pos]]
+  call_info <- parse_call(call, envir = envir, what = what, debug = debug)
+  fcn <- call_info[["fcn"]]
+  fcn_name <- call_info[["fcn_name"]]
+  ns_name <- call_info[["ns_name"]]
 
   if (debug) {
+    mdebugf("Position of call to be transpiled in expression: c(%s)", comma(call_pos))
+    mprint(call)
+    mdebug_pop()   
     mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(type), ns_name, fcn_name, sQuote(class(fcn)[1]))
   }
 
