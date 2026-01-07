@@ -172,8 +172,13 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
     if (!requireNamespace(ns_name)) {
-      stop(sprintf("Please install %s in order to %s %s::%s()",
-           sQuote(ns_name), what, ns_name, fcn_name))
+      info <- if (grepl("^%.*%$", fcn_name)) {
+        sprintf("%s::`%s`", ns_name, fcn_name)
+      } else {
+        sprintf("%s::%s()", ns_name, fcn_name)
+      }
+      stop(sprintf("Please install %s in order to %s %s",
+           sQuote(ns_name), what, info))
     }
 
     ## Get transpiler package addons
@@ -185,8 +190,13 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
     if (!all(okay)) {
       pkgs <- req_pkgs[!okay]
-      stop(sprintf("Please install %s in order to %s %s::%s()",
-           commaq(pkgs), what, ns_name, fcn_name))
+      info <- if (grepl("^%.*%$", fcn_name)) {
+        sprintf("%s::`%s`", ns_name, fcn_name)
+      } else {
+        sprintf("%s::%s()", ns_name, fcn_name)
+      }
+      stop(sprintf("Please install %s in order to %s %s",
+           commaq(pkgs), what, info))
     }
     transpiler_sets <- get_transpilers(type)
     transpilers <- transpiler_sets[[ns_name]]

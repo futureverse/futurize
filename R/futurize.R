@@ -14,7 +14,7 @@
 #' @param when If TRUE (default), the expression is futurized, otherwise not.
 #'
 #' @param eval If TRUE (default), the futurized expression is evaluated,
-#' other it is returned.
+#' otherwise it is returned.
 #'
 #' @returns
 #' Returns the value of the evaluated expression `expr`.

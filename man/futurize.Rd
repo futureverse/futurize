@@ -30,7 +30,7 @@ controlling how futures are resolved.}
 \item{when}{If TRUE (default), the expression is futurized, otherwise not.}
 
 \item{eval}{If TRUE (default), the futurized expression is evaluated,
-other it is returned.}
+otherwise it is returned.}
 
 \item{envir}{The \link{environment} from where global objects should be
 identified.}

@@ -11,22 +11,6 @@
 append_transpilers_for_doFuture <- function() {
   package <- "doFuture"
 
-  defaults <- names(formals(future.apply::future_lapply))
-
-  make_options <- function(options) {
-    ## Remap chunk_size -> chunk.size
-    if (length(options) > 0) {
-      names(options) <- sub("^chunk_size$", "chunk.size", names(options))
-    }
-  
-    names_options <- sprintf("future.%s", names(options))
-    keep <- intersect(defaults, names_options)
-    keep <- match(keep, table = names_options)
-    options <- options[keep]
-    options <- list(.options.future = options)
-    options
-  }
-
   transpiler <- eval(bquote(function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
@@ -49,11 +33,11 @@ append_transpilers_for_doFuture <- function() {
       expr <- expr2
     } else if (identical(fcn, as.symbol("%:%")) ||
                identical(fcn, quote(foreach::`%:%`))) {
-      options <- make_options(options)
+      options <- make_options_for_doFuture(options)
       parts <- c(as.list(expr[[2]][[3]]), options)
       expr[[2]][[3]] <- as.call(parts)
     } else {
-      options <- make_options(options)    
+      options <- make_options_for_doFuture(options)    
       parts <- c(as.list(expr[[2]]), options)
       expr[[2]] <- as.call(parts)
     }
@@ -84,3 +68,35 @@ append_transpilers_for_doFuture <- function() {
   ## Return required packages
   c(package)
 }
+
+
+make_options_for_doFuture <- local({
+  defaults <- NULL
+
+  function(options) {
+    ## Nothing to do?
+    if (length(options) == 0) return(options)
+
+    if (is.null(defaults)) {
+      ## The 'doFuture' package already imports 'future.apply'
+      defaults <<- names(formals(future.apply::future_lapply))
+    }
+
+    names <- names(options)
+    
+    ## Remap chunk_size -> chunk.size
+    idxs <- which(names == "chunk_size")
+    if (length(idxs) > 0) names[idxs] <- "chunk.size"
+
+    ## Remap future options for doFuture
+    names <- sprintf("future.%s", names)
+
+    ## Drop unknown future options silently
+    keep <- intersect(defaults, names)
+    idxs <- match(keep, table = names)
+    options <- options[idxs]
+    
+    list(.options.future = options)
+  }
+})
+
