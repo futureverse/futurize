@@ -41,10 +41,6 @@ append_transpilers_for_BiocParallel <- function() {
     })
   )
 
-  make_options <- function(options) {
-    options
-  }
-
   transpiler <- eval(bquote(function(expr, options = NULL) {
     stdout <- options[["stdout"]]
     if (isFALSE(stdout)) {
@@ -57,7 +53,7 @@ append_transpilers_for_BiocParallel <- function() {
     
     ## Update 'OPTS'
     idx_OPTS <- c(3, 2, 2)
-    template[[idx_OPTS]] <- make_options(options)
+    template[[idx_OPTS]] <- make_options_for_doFuture(options)
     
     ## Update 'EXPR'
     parts <- c(
