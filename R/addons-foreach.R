@@ -89,7 +89,7 @@ make_options_for_doFuture <- local({
     ## Remap future options for doFuture
     names <- sprintf("future.%s", names)
 
-    ## Drop unknown future options silently
+    ## Silently drop unknown future options
     keep <- intersect(defaults, names)
     idxs <- match(keep, table = names)
     options <- options[idxs]
