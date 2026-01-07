@@ -1,5 +1,8 @@
 # Version (development version)
 
+ * Add custom `print()` method for transpiled calls such that
+   attributes are displayed for arguments and their content.
+ 
  * Rename argument `chunk.size` to `chunk_size`.
 
  * Transpiler can now handle nested, complex wrapped expressions.

@@ -95,6 +95,7 @@ transpile <- local({
     }
   
     expr_transpiled <- transpile(expr, options = options)
+    class(expr_transpiled) <- c("transpiled_call", class(expr_transpiled))
     if (debug) {
       mprint(expr_transpiled)
       mdebug_pop()
