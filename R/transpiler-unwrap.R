@@ -35,3 +35,27 @@ decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap
   
   return(1L)
 } ## decend_wrappers()
+
+
+
+#' @export
+print.transpiled_call <- function(x, ...) {
+  stopifnot(inherits(x, "call"))
+
+  x_org <- x
+  
+  ## Make attributes are displayed
+  x <- lapply(x, FUN = function(x) {
+    if (is.language(x)) return(x)
+    attrs <- attributes(x)
+    if (is.null(attrs)) return(x)
+    code <- c("substitute(", deparse(x), ")")
+    x <- eval(parse(text = code))
+    x
+  })
+  x <- as.call(x)
+  
+  NextMethod()
+
+  invisible(x_org)
+}
