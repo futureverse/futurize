@@ -42,20 +42,18 @@ decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap
 print.transpiled_call <- function(x, ...) {
   stopifnot(inherits(x, "call"))
 
-  x_org <- x
-  
-  ## Make attributes are displayed
-  x <- lapply(x, FUN = function(x) {
-    if (is.language(x)) return(x)
-    attrs <- attributes(x)
-    if (is.null(attrs)) return(x)
-    code <- c("substitute(", deparse(x), ")")
-    x <- eval(parse(text = code))
-    x
-  })
-  x <- as.call(x)
+  ...x_org... <- x
+
+  ## Make sure attributes are displayed
+  ## Wooa; this might be more convoluted than writing a custom
+  ## print() method from scratch
+  ...x... <- as.list(x)
+  for (...kk... in seq_along(...x...)) {
+    ...x...[[...kk...]] <- eval(parse(text = c("substitute(", deparse(...x...[[...kk...]]), ")")), enclos = emptyenv())
+  }
+  x <- as.call(...x...)
   
   NextMethod()
 
-  invisible(x_org)
+  invisible(...x_org...)
 }
