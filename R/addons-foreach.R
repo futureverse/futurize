@@ -9,8 +9,6 @@
 #   })
 #
 append_transpilers_for_doFuture <- function() {
-  package <- "doFuture"
-
   transpiler <- eval(bquote(function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
@@ -66,7 +64,7 @@ append_transpilers_for_doFuture <- function() {
   append_transpilers("futurize::add-on", transpilers)
   
   ## Return required packages
-  c(package)
+  c("doFuture")
 }
 
 

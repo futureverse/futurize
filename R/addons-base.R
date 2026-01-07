@@ -3,6 +3,22 @@
 # future.apply::future_lapply(xs, fcn, ..., <future.* arguments>)
 #
 append_transpilers_for_future.apply <- function() {
+  ## base::apply(), ...
+  append_transpilers("futurize::add-on", make_addon_transpilers(
+    "base", "future.apply", make_options = make_options_for_future.apply)
+  )
+
+  ## stats::kernapply()
+  append_transpilers("futurize::add-on", make_addon_transpilers(
+    "stats", "future.apply", make_options = make_options_for_future.apply)
+  )
+
+  ## Return required packages
+  c("future.apply")
+}
+
+
+make_options_for_future.apply <- local({
   get_defaults <- function(fcn) {
     defaults <- formals(fcn)
     names <- setdiff(names(defaults), "future.envir")
@@ -10,11 +26,18 @@ append_transpilers_for_future.apply <- function() {
     defaults[keep]
   }
   
-  defaults_future_lapply <- get_defaults(future.apply::future_lapply)
+  defaults_base <- NULL
 
-  make_options <- function(options, fcn) {
+  function(options, fcn) {
+    ## Nothing to do?
+    if (length(options) == 0L) return(options)
+
+    if (is.null(defaults_base)) {
+      defaults_base <<- get_defaults(future.apply::future_lapply)
+    }
+
     ## Default future.* arguments
-    defaults <- c(defaults_future_lapply, get_defaults(fcn))
+    defaults <- c(defaults_base, get_defaults(fcn))
     keep <- !duplicated(names(defaults), fromLast = TRUE)
     defaults <- defaults[keep]
    
@@ -38,17 +61,4 @@ append_transpilers_for_future.apply <- function() {
     
     options
   }
-    
-  ## base::apply(), ...
-  append_transpilers("futurize::add-on", make_addon_transpilers(
-    "base", "future.apply", make_options = make_options)
-  )
-
-  ## stats::kernapply()
-  append_transpilers("futurize::add-on", make_addon_transpilers(
-    "stats", "future.apply", make_options = make_options)
-  )
-
-  ## Return required packages
-  c("future.apply")
-}
+})
