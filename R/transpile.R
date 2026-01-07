@@ -255,7 +255,7 @@ append_transpilers <- function(type, ...) {
 }
 
 
-list_transpilers <- function(pattern = NULL) {
+list_transpilers <- function(pattern = NULL, class) {
   data <- list()
   transpiler_db <- .env[["transpiler_db"]]
   db <- transpiler_db[[class]]

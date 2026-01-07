@@ -12,7 +12,7 @@ futurize_options(
   stdout = TRUE,
   conditions = "condition",
   scheduling = 1,
-  chunk.size = NULL,
+  chunk_size = NULL,
   ...
 )
 }
@@ -74,11 +74,11 @@ If \code{2.0}, then each worker will process two futures
 (if there are enough elements in \code{X}).
 If \code{Inf} or \code{FALSE}, then one future per element of
 \code{X} is used.
-Only used if \code{future.chunk.size} is \code{NULL}.}
+Only used if \code{chunk_size} is \code{NULL}.}
 
-\item{chunk.size}{The average number of elements per future ("chunk").
+\item{chunk_size}{The average number of elements per future ("chunk").
 If \code{Inf}, then all elements are processed in a single future.
-If \code{NULL}, then argument \code{future.scheduling} is used.}
+If \code{NULL}, then argument \code{scheduling} is used.}
 
 \item{\ldots}{Additional named options.}
 }

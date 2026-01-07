@@ -63,7 +63,7 @@ for (kk in seq_along(exprs)) {
   stopifnot(identical(out, character(0L)))
   stopifnot(identical(res2, res))
 
-  expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L))
+  expr_f3 <- bquote(.(expr) |> futurize(chunk_size = 1L))
   res3 <- eval(expr_f3)
   stopifnot(identical(res3, res))
 

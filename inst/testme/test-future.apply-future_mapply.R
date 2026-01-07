@@ -48,9 +48,9 @@ for (strategy in supportedStrategies()) {
   stopifnot(all.equal(y3, y2))
 
   word <- function(C, k) paste(rep.int(C, k), collapse = "")
-  for (chunk.size in list(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
+  for (chunk_size in list(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
     y0 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE)
-    y1 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE, future.chunk.size = chunk.size) |> futurize()
+    y1 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE) |> futurize(chunk_size = chunk_size)
     stopifnot(identical(y1, y0))
 
     dots <- list(LETTERS[1:5], 5:1)

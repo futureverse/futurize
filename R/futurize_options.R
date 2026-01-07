@@ -10,11 +10,11 @@
 #'        (if there are enough elements in `X`).
 #'        If `Inf` or `FALSE`, then one future per element of
 #'        `X` is used.
-#'        Only used if `future.chunk.size` is `NULL`.
+#'        Only used if `chunk_size` is `NULL`.
 #'
-#' @param chunk.size The average number of elements per future ("chunk").
+#' @param chunk_size The average number of elements per future ("chunk").
 #'        If `Inf`, then all elements are processed in a single future.
-#'        If `NULL`, then argument `future.scheduling` is used.
+#'        If `NULL`, then argument `scheduling` is used.
 #
 #' @param \ldots Additional named options.
 #'
@@ -25,13 +25,15 @@
 #'
 #' @aliases parallelize_options
 #' @export
-futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", scheduling = 1.0, chunk.size = NULL, ...) {
+futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", scheduling = 1.0, chunk_size = NULL, ...) {
   args <- list(
            seed = seed,
         globals = globals,
        packages = packages,
          stdout = stdout,
      conditions = conditions,
+     scheduling = scheduling,
+     chunk_size = chunk_size,
                   ...
   )
   specified <- character(0L)
@@ -40,6 +42,8 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
   if (!missing(packages)) specified <- c(specified, "packages")
   if (!missing(stdout)) specified <- c(specified, "stdout")
   if (!missing(conditions)) specified <- c(specified, "conditions")
+  if (!missing(scheduling)) specified <- c(specified, "scheduling")
+  if (!missing(chunk_size)) specified <- c(specified, "chunk_size")
   specified <- c(specified, ...names())
   attr(args, "specified") <- specified
   args
