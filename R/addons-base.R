@@ -17,9 +17,17 @@ append_transpilers_for_future.apply <- function() {
     defaults <- c(defaults_future_lapply, get_defaults(fcn))
     keep <- !duplicated(names(defaults), fromLast = TRUE)
     defaults <- defaults[keep]
-    
+   
     ## Specified future.* arguments
-    specified <- sprintf("future.%s", attr(options, "specified"))
+    specified <- attr(options, "specified")
+
+    ## Remap chunk_size -> chunk.size
+    if (length(specified) > 0) {
+      specified <- sub("^chunk_size$", "chunk.size", specified)
+      names(options) <- sub("^chunk_size$", "chunk.size", names(options))
+    }
+
+    specified <- sprintf("future.%s", specified)
     names <- setdiff(names(defaults), specified)
     names(options) <- sprintf("future.%s", names(options))
     for (name in names) options[[name]] <- defaults[[name]]

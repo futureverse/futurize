@@ -1,5 +1,7 @@
 # Version (development version)
 
+ * Rename argument `chunk.size` to `chunk_size`.
+
  * Transpiler can now handle nested, complex wrapped expressions.
  
  * Error messages now suggest to use `%do%` when trying to futurize

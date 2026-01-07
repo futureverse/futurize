@@ -106,7 +106,7 @@ for (flavor in flavors) {
       identical(out, character(0L))
     )
     
-    expr_f3 <- bquote(.(expr) |> futurize(chunk.size = 1L, flavor = .(flavor)))
+    expr_f3 <- bquote(.(expr) |> futurize(chunk_size = 1L, flavor = .(flavor)))
     res3 <- eval(expr_f3)
     if (name == "eapply") {
       res3 <- res3[if (named_truth) names(truth) else order(unlist(res3))]

@@ -86,7 +86,7 @@ for (strategy in supportedStrategies()) {
             globals    = TRUE,
             packages   = NULL,
             scheduling = 1.0,
-            chunk.size = NULL,
+            chunk_size = NULL,
             label      = "future_apply-%d"
           )
   print(z1)

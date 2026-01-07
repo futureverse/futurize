@@ -10,11 +10,17 @@
 #
 append_transpilers_for_doFuture <- function() {
   package <- "doFuture"
-  
+
+  defaults <- names(formals(future.apply::future_lapply))
+
   make_options <- function(options) {
+    ## Remap chunk_size -> chunk.size
+    if (length(options) > 0) {
+      names(options) <- sub("^chunk_size$", "chunk.size", names(options))
+    }
+  
     names_options <- sprintf("future.%s", names(options))
-    names <- names(formals(future.apply::future_lapply))
-    keep <- intersect(names, names_options)
+    keep <- intersect(defaults, names_options)
     keep <- match(keep, table = names_options)
     options <- options[keep]
     options <- list(.options.future = options)

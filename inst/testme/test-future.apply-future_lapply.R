@@ -1,3 +1,4 @@
+
 #' @tags future_lapply
 #' @tags listenv
 #' @tags sequential multisession multicore
@@ -128,7 +129,7 @@ message("*** future_lapply() - special cases ... DONE")
 message("*** future_lapply() - exceptions ...")
 
 res <- tryCatch({
-  lapply(1:3, FUN = identity, future.chunk.size = structure(1L, ordering = "invalid") |> futurize())
+  lapply(1:3, FUN = identity) |> futurize(chunk_size = structure(1L, ordering = "invalid"))
 }, error = identity)
 stopifnot(inherits(res, "error"))
 
