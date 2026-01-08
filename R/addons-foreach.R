@@ -31,11 +31,11 @@ append_transpilers_for_doFuture <- function() {
       expr <- expr2
     } else if (identical(fcn, as.symbol("%:%")) ||
                identical(fcn, quote(foreach::`%:%`))) {
-      options <- make_options_for_doFuture(options)
+      options <- make_options_for_doFuture(options, wrap = TRUE)
       parts <- c(as.list(expr[[2]][[3]]), options)
       expr[[2]][[3]] <- as.call(parts)
     } else {
-      options <- make_options_for_doFuture(options)    
+      options <- make_options_for_doFuture(options, wrap = TRUE)
       parts <- c(as.list(expr[[2]]), options)
       expr[[2]] <- as.call(parts)
     }
@@ -69,19 +69,24 @@ append_transpilers_for_doFuture <- function() {
 
 
 make_options_for_doFuture <- local({
-  defaults <- NULL
+  defaults_base <- NULL
 
-  function(options) {
+  function(options, defaults = NULL, wrap = TRUE) {
     ## Nothing to do?
-    if (length(options) == 0) return(options)
+    if (length(options) == 0 && length(defaults) == 0) return(options)
 
-    if (is.null(defaults)) {
+    if (is.null(defaults_base)) {
       ## The 'doFuture' package already imports 'future.apply'
-      defaults <<- names(formals(future.apply::future_lapply))
+      defaults_base <<- names(formals(future.apply::future_lapply))
+    }
+
+    if (length(defaults) > 0) {
+      names <- setdiff(names(defaults), attr(options, "specified"))
+      for (name in names) options[[name]] <- defaults[[name]]
     }
 
     names <- names(options)
-    
+
     ## Remap chunk_size -> chunk.size
     idxs <- which(names == "chunk_size")
     if (length(idxs) > 0) names[idxs] <- "chunk.size"
@@ -90,11 +95,13 @@ make_options_for_doFuture <- local({
     names <- sprintf("future.%s", names)
 
     ## Silently drop unknown future options
-    keep <- intersect(defaults, names)
+    keep <- intersect(defaults_base, names)
     idxs <- match(keep, table = names)
     options <- options[idxs]
     
-    list(.options.future = options)
+    if (wrap) options <- list(.options.future = options)
+
+    options
   }
 })
 

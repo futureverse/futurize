@@ -53,7 +53,7 @@ append_transpilers_for_BiocParallel <- function() {
     
     ## Update 'OPTS'
     idx_OPTS <- c(3, 2, 2)
-    template[[idx_OPTS]] <- make_options_for_doFuture(options)
+    template[[idx_OPTS]] <- make_options_for_doFuture(options, wrap = TRUE)
     
     ## Update 'EXPR'
     parts <- c(

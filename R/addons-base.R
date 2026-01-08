@@ -55,7 +55,7 @@ make_options_for_future.apply <- local({
     names(options) <- sprintf("future.%s", names(options))
     for (name in names) options[[name]] <- defaults[[name]]
 
-    ## Drop non-existing future.* arguments
+    ## Silently drop non-existing future options
     keep <- intersect(names(options), names(defaults))
     options <- options[keep]
     

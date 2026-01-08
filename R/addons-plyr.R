@@ -14,22 +14,12 @@ append_transpilers_for_plyr <- function() {
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), (EXPR))
   )
 
-  make_options <- function(options) {
-    names_options <- sprintf("future.%s", names(options))
-    names <- names(formals(future.apply::future_lapply))
-    keep <- intersect(names, names_options)
-    keep <- match(keep, table = names_options)
-    options <- options[keep]
-    options <- list(.options.future = options)
-    options
-  }
-
   transpiler <- eval(bquote(function(expr, options = NULL) {
     parts <- c(
       as.list(expr),
       .parallel = TRUE
     )
-    options <- make_options(options)
+    options <- make_options_for_doFuture(options, wrap = TRUE)
     parts[[".paropts"]] <- options
     template[[3]][[2]] <- as.call(parts)
     template
