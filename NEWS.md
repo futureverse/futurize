@@ -1,5 +1,7 @@
 # Version (development version)
 
+ * Add `supported_packages()`.
+ 
  * Add custom `print()` method for transpiled calls such that
    attributes are displayed for arguments and their content.
  

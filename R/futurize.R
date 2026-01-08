@@ -85,3 +85,19 @@ parallelize <- futurize
 
 #' @export
 fz <- futurize
+
+
+
+#' List packages supporting futurization
+#'
+#' @return
+#' A character vector of package names
+#'
+#' @example
+#' supported_packages()
+#'
+#' @export
+supported_packages <- function() {
+  db <- transpiler_packages(classes = c("futurize::add-on"))
+  sort(unique(db[["package"]]))
+}
