@@ -24,7 +24,7 @@ append_transpilers_for_caret <- function() {
     transpiler <- eval(bquote(function(expr, options = NULL) {
       ## Update 'OPTS'
       idx_OPTS <- c(3, 2, 2)
-      template[[idx_OPTS]] <- make_options_for_registerDoFuture(options, defaults = .(defaults), wrap = FALSE)
+      template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
       
       ## Update 'EXPR'
       parts <- c(
