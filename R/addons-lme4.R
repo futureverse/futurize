@@ -38,7 +38,7 @@ append_transpilers_for_lme4 <- function() {
 
     transpiler <- eval(bquote(function(expr, options = NULL) {
       ## Update 'OPTS'
-      template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options, defaults = .(defaults))
+      template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
   
       ## Update 'EXPR'
       parts <- c(
