@@ -29,20 +29,6 @@ append_transpilers_for_lme4 <- function() {
   template[[c(2,2,3,2)]] <- call
 
 
-  make_options <- function(options, defaults = NULL) {
-    if (length(defaults) > 0) {
-      names <- setdiff(names(defaults), attr(options, "specified"))
-      for (name in names) {
-        if (name == "packages") {
-          options[[name]] <- c(options[[name]], defaults[[name]])
-        } else {
-          options[[name]] <- defaults[[name]]
-        }
-      }
-    }
-    options
-  }
-  
   make_transpiler <- function(name) {
     defaults <- list()
     if (name == "allFit") {
@@ -52,7 +38,7 @@ append_transpilers_for_lme4 <- function() {
 
     transpiler <- eval(bquote(function(expr, options = NULL) {
       ## Update 'OPTS'
-      template[[idx_OPTS]] <- make_options(options, defaults = .(defaults))
+      template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options, defaults = .(defaults))
   
       ## Update 'EXPR'
       parts <- c(

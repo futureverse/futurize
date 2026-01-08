@@ -38,23 +38,9 @@ append_transpilers_for_tm <- function() {
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
   template[[c(2,4,2,2)]] <- call
 
-  make_options <- function(options, defaults = NULL) {
-    if (length(defaults) > 0) {
-      names <- setdiff(names(defaults), attr(options, "specified"))
-      for (name in names) {
-        if (name == "packages") {
-          options[[name]] <- c(options[[name]], defaults[[name]])
-        } else {
-          options[[name]] <- defaults[[name]]
-        }
-      }
-    }
-    options
-  }
-  
   make_transpiler <- function(name) {
     transpiler <- eval(bquote(function(expr, options = NULL) {
-      template[[idx_OPTS]] <- make_options(options, defaults = list(packages = "tm"))
+      template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options, defaults = list(packages = "tm"))
       template[[idx_EXPR]] <- expr
       template
     }))
