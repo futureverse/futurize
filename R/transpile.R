@@ -277,24 +277,24 @@ list_transpilers <- function(pattern = NULL, class) {
   }
   for (type in types) {
     transpilers <- db[[type]]
-    pkgs <- unique(names(transpilers))
-    for (pkg in pkgs) {
-      idxs <- which(pkg == names(transpilers))
+    fcns <- unique(names(transpilers))
+    for (fcn in fcns) {
+      idxs <- which(fcn == names(transpilers))
       if (length(idxs) == 1) {
-        transpilers_pkg <- transpilers[[idxs]]
+        transpilers_fcn <- transpilers[idxs]
       } else {
         ## length(idxs) > 1 should not happend, but in case ...
-        transpilers_pkg <- list()
+        transpilers_fcn <- list()
         for (idx in idxs) {
-          transpilers_pkg <- c(transpilers_pkg, transpilers[[idx]])
+          transpilers_fcn <- c(transpilers_fcn, transpilers[[idx]])
         }
-        drop <- duplicated(names(transpilers_pkg), fromLast = TRUE)
-        transpilers_pkg <- transpilers_pkg[!drop]
+        drop <- duplicated(names(transpilers_fcn), fromLast = TRUE)
+        transpilers_fcn <- transpilers_fcn[!drop]
       }
-      transpilers_pkg <- transpilers_pkg[order(names(transpilers_pkg))]
-      names <- names(transpilers_pkg)
-      labels <- vapply(transpilers_pkg, FUN = function(t) t$label, FUN.VALUE = "")
-      dd <- data.frame(type = type, package = pkg, fcn = names, description = labels)
+      transpilers_fcn <- transpilers_fcn[order(names(transpilers_fcn))]
+      names <- names(transpilers_fcn)
+      labels <- vapply(transpilers_fcn, FUN = function(t) t$label, FUN.VALUE = "")
+      dd <- data.frame(type = type, fcn = names, description = labels)
       data <- c(data, list(dd))
     }
   }
@@ -358,7 +358,7 @@ transpilers_for_package <- local({
       req_pkgs <- sort(unique(req_pkgs))
       req_pkgs
     } else if (action == "list") {
-      db
+      .db
     } else if (action == "reset") {
       old_db <- db
       db <- list()
@@ -367,3 +367,18 @@ transpilers_for_package <- local({
     }
   }
 })
+
+
+transpiler_packages <- function(classes = NULL) {
+  db <- transpilers_for_package(action = "list")
+  if (!is.null(classes)) {
+    db <- db[names(db) %in% classes]
+  }
+  transpilers <- data.frame(class = character(0L), package = character(0L))
+  for (class in names(db)) {
+    set <- db[[class]]
+    pkgs <- names(set)
+    transpilers <- rbind(transpilers, data.frame(class = class, package = pkgs))
+  }
+  transpilers
+}
