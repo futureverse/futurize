@@ -65,7 +65,6 @@
 #'
 #' @aliases parallelize
 #' @aliases fz
-#' @importFrom future future value
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
