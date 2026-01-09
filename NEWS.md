@@ -1,5 +1,7 @@
 # Version (development version)
 
+ * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
+
  * Add `supported_packages()` and `supported_package_functions()`.
  
  * Add custom `print()` method for transpiled calls such that
