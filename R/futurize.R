@@ -88,16 +88,60 @@ fz <- futurize
 
 
 
-#' List packages supporting futurization
+#' List packages and functions supporting futurization
+#'
+#' @param package A package name.
 #'
 #' @return
-#' A character vector of package names
+#' A character vector of package or function names
 #'
-#' @example
-#' supported_packages()
+#' @examples
+#' pkgs <- supported_packages()
+#' pkgs
+#'
+#' fcns <- supported_package_functions("base")
+#' fcns
 #'
 #' @export
 supported_packages <- function() {
   db <- transpiler_packages(classes = c("futurize::add-on"))
   sort(unique(db[["package"]]))
+}
+
+
+#' @rdname supported_packages
+#' @export
+supported_package_functions <- function(package) {
+  stopifnot(is.character(package), length(package) == 1L, !is.na(package), nzchar(package))
+  
+  db <- transpilers_for_package(action = "list")
+  classes <- c("futurize::add-on")
+  if (!is.null(classes)) {
+    db <- db[names(db) %in% classes]
+  }
+  classes <- names(db)
+
+  packages <- package
+  ## Special cases
+  if (package == "stats") packages <- c(packages, "base")
+  fcns <- lapply(classes, function(class) {
+    ## "Activate" packages
+    void <- lapply(packages, function(pkg) {
+      activators <- db[[class]][[pkg]]
+      lapply(activators, FUN = function(activator) activator())
+    })
+    transpilers <- get_transpilers(class)
+    transpilers <- transpilers[names(transpilers) == package]
+    names <- lapply(transpilers, FUN = names)
+    names <- unlist(names, use.names = FALSE)
+    names <- unique(sort(names))
+    names
+  })
+  fcns <- unlist(fcns, use.names = TRUE)
+
+  if (length(fcns) == 0) {
+    stop(sprintf("Package %s does not support futurization", sQuote(package)))
+  }
+
+  fcns
 }
