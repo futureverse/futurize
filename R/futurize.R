@@ -121,6 +121,10 @@ supported_package_functions <- function(package) {
   classes <- names(db)
 
   packages <- package
+  if (!requireNamespace(package, quietly = TRUE)) {
+    stop("Package is not installed: ", sQuote(package))
+  }
+  
   ## Special cases
   if (package == "stats") packages <- c(packages, "base")
   fcns <- lapply(classes, function(class) {
@@ -137,6 +141,12 @@ supported_package_functions <- function(package) {
     names
   })
   fcns <- unlist(fcns, use.names = TRUE)
+
+  ns <- getNamespace(package)
+  keep <- vapply(fcns, FUN.VALUE = FALSE, FUN = function(fcn) {
+    exists(fcn, mode = "function", envir = ns, inherits = FALSE)
+  })
+  fcns <- fcns[keep]
 
   if (length(fcns) == 0) {
     stop(sprintf("Package %s does not support futurization", sQuote(package)))
