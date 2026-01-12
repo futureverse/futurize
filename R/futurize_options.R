@@ -23,7 +23,6 @@
 #' Attribute `specified` is a character vector of future options
 #' that were explicitly specified.
 #'
-#' @aliases parallelize_options
 #' @export
 futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", scheduling = 1.0, chunk_size = NULL, ...) {
   args <- list(

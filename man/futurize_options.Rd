@@ -2,7 +2,6 @@
 % Please edit documentation in R/futurize_options.R
 \name{futurize_options}
 \alias{futurize_options}
-\alias{parallelize_options}
 \title{Options for how futures are partitioned and resolved}
 \usage{
 futurize_options(

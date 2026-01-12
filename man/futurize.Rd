@@ -2,7 +2,6 @@
 % Please edit documentation in R/futurize.R
 \name{futurize}
 \alias{futurize}
-\alias{parallelize}
 \alias{fz}
 \title{Evaluate common R functions in parallel}
 \usage{
