@@ -80,9 +80,6 @@ class(futurize) <- c("transpiler", class(futurize))
 
 
 #' @export
-parallelize <- futurize
-
-#' @export
 fz <- futurize
 
 

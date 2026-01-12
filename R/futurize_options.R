@@ -48,6 +48,3 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
   attr(args, "specified") <- specified
   args
 }
-
-#' @export
-parallelize_options <- futurize_options
