@@ -63,7 +63,6 @@
 #'
 #' @example incl/futurize.R
 #'
-#' @aliases parallelize
 #' @aliases fz
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
@@ -92,22 +91,22 @@ fz <- futurize
 #' A character vector of package or function names
 #'
 #' @examples
-#' pkgs <- supported_packages()
+#' pkgs <- futurize_supported_packages()
 #' pkgs
 #'
-#' fcns <- supported_package_functions("base")
+#' fcns <- futurize_supported_functions("base")
 #' fcns
 #'
 #' @export
-supported_packages <- function() {
+futurize_supported_packages <- function() {
   db <- transpiler_packages(classes = c("futurize::add-on"))
   sort(unique(db[["package"]]))
 }
 
 
-#' @rdname supported_packages
+#' @rdname futurize_supported_packages
 #' @export
-supported_package_functions <- function(package) {
+futurize_supported_functions <- function(package) {
   stopifnot(is.character(package), length(package) == 1L, !is.na(package), nzchar(package))
   
   db <- transpilers_for_package(action = "list")
