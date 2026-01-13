@@ -53,7 +53,7 @@ print.transpiled_call <- function(x, ...) {
       expr <- ...x...[[...kk...]]
       code <- c("substitute(", deparse(expr), ")")
       tryCatch({
-        eval(parse(text = code, enclos = emptyenv()))
+        eval(parse(text = code), enclos = emptyenv())
       }, error = function(e) {
         ## Some deparsed expression cannot be parsed
         expr
