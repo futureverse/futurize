@@ -171,7 +171,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   transpiler_sets <- get_transpilers(type)
   transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
-    if (!requireNamespace(ns_name)) {
+    if (!requireNamespace(ns_name, quietly = TRUE)) {
       info <- if (grepl("^%.*%$", fcn_name)) {
         sprintf("%s::`%s`", ns_name, fcn_name)
       } else {
@@ -187,7 +187,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
       mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
     }
 
-    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
+    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = TRUE)
     if (!all(okay)) {
       pkgs <- req_pkgs[!okay]
       info <- if (grepl("^%.*%$", fcn_name)) {
