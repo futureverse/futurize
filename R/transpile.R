@@ -29,7 +29,7 @@
 transpile <- local({
   .enabled <- list()
   
-  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
+  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
     if (debug) {
       mdebug_push("transpile() ...")
       on.exit(mdebug_pop())

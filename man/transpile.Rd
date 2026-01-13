@@ -14,7 +14,8 @@ transpile(
   type = "built-in",
   what = "transpile",
   unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity,
-    base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages),
+    base::invisible, base::suppressMessages, base::suppressWarnings,
+    base::suppressPackageStartupMessages),
   debug = FALSE
 )
 }
