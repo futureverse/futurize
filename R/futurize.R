@@ -61,6 +61,30 @@
 #' disable or enable futurization.
 #'
 #'
+#' @section Expression unwrapping:
+#' The transpilation mechanism includes logic to "unwrap" expressions
+#' enclosed in constructs such as `{ }`, `( )`, `local()`, `I()`,
+#' `identity()`, `invisible()`, `suppressMessages()`, and
+#' `suppressWarnings()`. The transpiler descends through wrapping
+#' constructs until it finds a transpilable expression, avoiding the
+#' need to place `futurize()` inside such constructs. This allows for
+#' patterns like:
+#'
+#' ```r
+#' y <- {
+#'   lapply(xs, fcn)
+#' } |> suppressMessages() |> futurize()
+#' ```
+#'
+#' avoiding having to write:
+#'
+#' ```r
+#' y <- {
+#'   lapply(xs, fcn) |> futurize()
+#' } |> suppressMessages()
+#' ```
+#'
+#'
 #' @example incl/futurize.R
 #'
 #' @aliases fz

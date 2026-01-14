@@ -79,6 +79,29 @@ futurization should be disabled and enabled. A package must \emph{never}
 disable or enable futurization.
 }
 
+\section{Expression unwrapping}{
+
+The transpilation mechanism includes logic to "unwrap" expressions
+enclosed in constructs such as \code{{ }}, \verb{( )}, \code{local()}, \code{I()},
+\code{identity()}, \code{invisible()}, \code{suppressMessages()}, and
+\code{suppressWarnings()}. The transpiler descends through wrapping
+constructs until it finds a transpilable expression, avoiding the
+need to place \code{futurize()} inside such constructs. This allows for
+patterns like:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
+  lapply(xs, fcn)
+\} |> suppressMessages() |> futurize()
+}\if{html}{\out{</div>}}
+
+avoiding having to write:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
+  lapply(xs, fcn) |> futurize()
+\} |> suppressMessages()
+}\if{html}{\out{</div>}}
+}
+
 \examples{
 xs <- list(1, 1:2, 1:2, 1:5)
 
