@@ -25,57 +25,62 @@ function. Easy!
 # TL;DR
 
 ```r
-library(mgcv)
 library(futurize)
 plan(multisession)
-
 library(mgcv)
 
-# Adopted from example("bam", package = "mgcv")
+## Adopted from example("bam", package = "mgcv")
 dat <- gamSim(1, n = 25000, dist = "normal", scale = 20)
 bs <- "cr"
 k <- 12
 
-b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) + 
+b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) +
              s(x3, bs = bs), data = dat) |> futurize()
 ```
 
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize **[mgcv]**
+This vignette demonstrates how to use this approach to parallelize **[mgcv]**
 functions such as `bam()`.
 
 
 # Background
 
-The `bam()` function can be used to fit GAMs for massive datasets
-("Big Additive Models") with many thousand of observations. It
-supports parallel processing by setting up a **parallel** cluster
-and passing it as argument `cluster`. This is abstracted away by
-**futurize** as:
+The **[mgcv]** package is one of the "recommended" packages in R. It
+provides methods for fitting Generalized Additive Models (GAMs). The
+`bam()` function can be used to fit GAMs for massive datasets
+("Big Additive Models") with many thousands of observations, making
+it an excellent candidate for parallelization.
+
+
+## Example: Fitting a Big Additive Model
+
+The `bam()` function supports parallel processing by setting up a
+**parallel** cluster and passing it as argument `cluster`. This is
+abstracted away by **futurize**:
 
 ```r
 library(mgcv)
 
-# Adopted from example("bam", package = "mgcv")
+## Adopted from example("bam", package = "mgcv")
 dat <- gamSim(1, n = 25000, dist = "normal", scale = 20)
 bs <- "cr"
 k <- 12
 
-b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) + 
+b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) +
              s(x3, bs = bs), data = dat) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
+workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
@@ -93,8 +98,7 @@ plan(future.batchtools::batchtools_slurm)
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **boot** functions are supported:
+The following **mgcv** functions are supported by `futurize()`:
 
 * `bam()`
 * `predict.bam()`

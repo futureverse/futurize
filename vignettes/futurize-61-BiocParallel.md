@@ -26,12 +26,17 @@ function. Easy!
 # TL;DR
 
 ```r
-library(BiocParallel)
 library(futurize)
 plan(multisession)
+library(BiocParallel)
+
+slow_fcn <- function(x) {
+  Sys.sleep(0.1)  # emulate work
+  x^2
+}
 
 xs <- 1:1000
-y <- bplapply(xs, slow_fcn) |> futurize()
+ys <- bplapply(xs, slow_fcn) |> futurize()
 ```
 
 
@@ -47,7 +52,7 @@ commonly used something like:
 ```r
 library(BiocParallel)
 xs <- 1:1000
-y <- bplapply(xs, slow_fcn)
+ys <- bplapply(xs, slow_fcn)
 ```
 
 The parallel backend is controlled by the `BiocParallel::register()`,
@@ -60,7 +65,7 @@ to pass the expression to `futurize()` as in:
 library(futurize)
 library(BiocParallel)
 xs <- 1:1000
-y <- bplapply(xs, slow_fcn) |> futurize()
+ys <- bplapply(xs, slow_fcn) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
