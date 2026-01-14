@@ -29,8 +29,13 @@ library(plyr)
 library(futurize)
 plan(multisession)
 
+slow_fcn <- function(x) {
+  Sys.sleep(0.1)  # emulate work
+  x^2
+}
+
 xs <- 1:1000
-y <- llply(xs, slow_fcn) |> futurize()
+ys <- llply(xs, slow_fcn) |> futurize()
 ```
 
 
@@ -48,7 +53,7 @@ the elements of a list and return a list. For example,
 ```r
 library(plyr)
 xs <- 1:1000
-y <- llply(xs, slow_fcn)
+ys <- llply(xs, slow_fcn)
 ```
 
 Here `llply()` evaluates sequentially, but we can easily make it to
@@ -58,7 +63,7 @@ evaluate parallelly, by using:
 library(futurize)
 library(plyr)
 xs <- 1:1000
-y <- xs |> llply(slow_fcn) |> futurize()
+ys <- xs |> llply(slow_fcn) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
@@ -91,7 +96,7 @@ library(plyr)
 library(futurize)
 plan(future.mirai::mirai_multisession)
 
-y <- llply(baseball, summary) |> futurize()
+ys <- llply(baseball, summary) |> futurize()
 ```
 
 
@@ -100,7 +105,7 @@ y <- llply(baseball, summary) |> futurize()
 The `futurize()` function supports parallelization of the common base
 R functions. The following **plyr** functions are supported:
 
-* `a_ply()`, `aaply()`, `adply()`, `alply()`,
+* `a_ply()`, `aaply()`, `adply()`, `alply()`
 * `d_ply()`, `daply()`, `ddply()`, `dlply()`
 * `l_ply()`, `laply()`, `ldply()`, `llply()`
 * `m_ply()`, `maply()`, `mdply()`, `mlply()`

@@ -25,53 +25,67 @@ function. Easy!
 # TL;DR
 
 ```r
-library(boot)
 library(futurize)
 plan(multisession)
+library(boot)
 
-ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
-b <- boot(city, ratio, R = 999, stype = "w") |> futurize()
+ratio <- function(pop, w) sum(w * pop$x) / sum(w * pop$u)
+b <- boot(bigcity, statistic = ratio, R = 999, stype = "w") |> futurize()
 ```
 
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize **[boot]**
-functions such as `boot()` and `tsboot()`.
+This vignette demonstrates how to use this approach to parallelize **[boot]**
+functions such as `boot()`, `censboot()`, and `tsboot()`.
 
 
 # Background
 
-The **boot** `llply()` function is commonly used to apply a function to
-the elements of a list and return a list. For example, 
+The **[boot]** package is one of the "recommended" R packages, meaning
+it is officially endorsed by the R Core Team, well maintained, and
+installed by default with R. The package generates bootstrap samples
+and provides statistical methods around them. Given the resampling
+nature of bootstrapping, the algorithms are excellent candidates for
+parallelization.
+
+
+## Example: Bootstrap sampling
+
+The core function `boot()` produces bootstrap samples of a statistic
+applied to data. For example, consider the `bigcity` dataset, which
+contains populations of 49 large U.S. cities in 1920 (`u`) and 1930
+(`x`):
 
 ```r
 library(boot)
 
-ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
-b <- boot(city, ratio, R = 999, stype = "w")
+## Draw 999 bootstrap samples of the population data. For each
+## sample, calculate the ratio of mean-1930 over mean-1920 populations
+ratio <- function(pop, w) sum(w * pop$x) / sum(w * pop$u)
+b <- boot(bigcity, statistic = ratio, R = 999, stype = "w")
 ```
 
-Here `boot()` evaluates sequentially, but we can easily make it to
-evaluate parallelly, by using:
+Here `boot()` evaluates sequentially, but we can easily make it
+evaluate in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
 library(boot)
 
-ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
-b <- boot(city, ratio, R = 999, stype = "w") |> futurize()
+ratio <- function(pop, w) sum(w * pop$x) / sum(w * pop$u)
+b <- boot(bigcity, statistic = ratio, R = 999, stype = "w") |> futurize()
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
+This will distribute the 999 bootstrap samples across the available
+parallel workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
@@ -86,26 +100,31 @@ and
 plan(future.batchtools::batchtools_slurm)
 ```
 
-Another example is:
+
+## Example: Time series bootstrap
+
+The `tsboot()` function generates bootstrap samples from time series
+data. For example, here we fit autoregressive models to bootstrap
+replicates of the `lynx` time series:
 
 ```r
-library(boot)
 library(futurize)
-plan(future.mirai::mirai_multisession)
+plan(multisession)
+library(boot)
 
-lynx.fun <- function(tsb) {
-     ar.fit <- ar(tsb, order.max = 25)
-     c(ar.fit$order, mean(tsb), tsb)
+## Fit AR models to bootstrap replicates of the lynx time series
+lynx_fun <- function(tsb) {
+    ar_fit <- ar(tsb, order.max = 25)
+    c(ar_fit$order, mean(tsb), tsb)
 }
 
-lynx.1 <- tsboot(log(lynx), lynx.fun, R = 99, l = 20, sim = "geom") |> futurize()
+lynx_boot <- tsboot(log(lynx), lynx_fun, R = 99, l = 20, sim = "geom") |> futurize()
 ```
 
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **boot** functions are supported:
+The following **boot** functions are supported by `futurize()`:
 
 * `boot()`
 * `censboot()`
