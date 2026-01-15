@@ -89,3 +89,8 @@ that were explicitly specified.
 \description{
 Options for how futures are partitioned and resolved
 }
+\examples{
+# Default futurize options
+str(futurize_options())
+
+}
