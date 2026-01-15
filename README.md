@@ -10,8 +10,9 @@ existing apply-like, map-reduce calls. All you need to know is that
 there is a single function called `futurize()` that will take care of
 everything. 
 
-It supports base R apply functions, **purrr**, **foreach**, **plyr**,
-and **BiocParallel**. Here are some examples how you could use it:
+It supports base R apply functions, **purrr**, **crossmap**, **plyr**,
+**foreach**, and **BiocParallel**. Here are some examples how you
+could use it:
 
 ```r
 library(futurize)
@@ -50,9 +51,10 @@ k <- kernel("daniell", 50)
 xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ```
 
-You can also futurize calls to several packages (e.g. **boot**,
-**caret**, **glmnet**, **lme4**, and **tm**) that have optional
-built-in support for parallelization, e.g.
+You can also futurize calls from a growing set of domain-specific
+packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**,
+and **tm**) that have optional built-in support for parallelization,
+e.g.
 
 ```r
 ctrl <- caret::trainControl(method = "cv", number = 10)
