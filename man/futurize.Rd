@@ -41,7 +41,7 @@ If \code{expr} is a TRUE or FALSE, then a logical is returned indicating
 whether futurization was previously enabled or disabled.
 }
 \description{
-\if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
+\if{html}{\figure{futurize-logo.png}{options: style='float: right;' alt='logo' width='120'}}
 }
 \section{Expression unwrapping}{
 

@@ -3,7 +3,7 @@
 </div>
 
 
-# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-magic-touch-parallelization-120x138.png" alt="The 'future' hexlogo" align="right"/>
+# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-logo.png" width="120px" alt="The 'future' hexlogo" align="right"/>
 
 The **futurize** package makes it extremely simple to parallelize your
 existing apply-like, map-reduce calls. All you need to know is that
@@ -53,8 +53,8 @@ xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 
 You can also futurize calls from a growing set of domain-specific
 packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**,
-and **tm**) that have optional built-in support for parallelization,
-e.g.
+and **tm**) that have optional built-in support for parallelization.
+Here are some examples:
 
 ```r
 ctrl <- caret::trainControl(method = "cv", number = 10)
@@ -66,6 +66,8 @@ b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
+
+b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 ```
