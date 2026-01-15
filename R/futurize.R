@@ -1,6 +1,6 @@
 #' Turn common R function calls into concurrent calls for parallel evaluation
 #'
-#' \if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
+#' \if{html}{\figure{futurize-logo.png}{options: style='float: right;' alt='logo' width='120'}}
 #'
 #' @inheritParams future::future
 #'

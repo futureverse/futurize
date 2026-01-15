@@ -61,3 +61,4 @@ Rplots.pdf$
 ^.issues
 ^last.dump*
 [.]Rdump
+^pkgdown/
