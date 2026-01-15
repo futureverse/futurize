@@ -52,7 +52,7 @@ register_vignette_engine_during_build_only <- function(pkgname) {
                 "<meta charset=\"UTF-8\">",
                 sprintf("<title>%s</title>", title),
                 "<style>",
-                readLines("incl/clean.css", warn = FALSE),
+                readLines("incl/extra.css", warn = FALSE),
                 "</style>",
                 "</head>",
                 "<body>", html, "</body>",
