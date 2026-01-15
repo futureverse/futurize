@@ -41,3 +41,4 @@ an optional argument \code{options}
 \description{
 Get a registered transpiler for an R expression
 }
+\keyword{internal}
