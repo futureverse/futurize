@@ -1,3 +1,8 @@
+# Version (development version)
+
+ * ...
+
+
 # Version 0.0.6 (2026-01-14)
 
  * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
