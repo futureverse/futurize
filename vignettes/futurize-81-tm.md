@@ -39,9 +39,6 @@ m <- tm_map(crude, content_transformer(tolower)) |> futurize()
 This vignette demonstrates how to use this approach to parallelize **[tm]**
 functions such as `tm_map()`.
 
-
-# Background
-
 The **[tm]** package provides a variety of text-mining methods. The
 `tm_map()` function applies transformations to a corpus of text
 documents, and `TermDocumentMatrix()` constructs document-term matrices.

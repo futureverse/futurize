@@ -44,9 +44,6 @@ ys <- llply(xs, slow_fcn) |> futurize()
 This vignette demonstrates how use this approach to parallelize **[plyr]**
 functions such as `llply()`, `maply()`, and `ddply()`.
 
-
-# Background
-
 The **plyr** `llply()` function is commonly used to apply a function to
 the elements of a list and return a list. For example, 
 
