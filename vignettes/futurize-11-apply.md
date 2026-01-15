@@ -27,8 +27,13 @@ function. Easy!
 library(futurize)
 plan(multisession)
 
+slow_fcn <- function(x) {
+  Sys.sleep(0.1)  # emulate work
+  x^2
+}
+
 xs <- 1:1000
-y <- lapply(xs, slow_fcn) |> futurize()
+ys <- lapply(xs, slow_fcn) |> futurize()
 ```
 
 
@@ -43,7 +48,7 @@ list, as in:
 
 ```r
 xs <- 1:1000
-y <- lapply(xs, slow_fcn)
+ys <- lapply(xs, slow_fcn)
 ```
 
 Here `lapply()` evaluates sequentially, but we can easily make it to
@@ -51,7 +56,7 @@ evaluate parallelly, by using:
 
 ```r
 library(futurize)
-y <- lapply(xs, slow_fcn) |> futurize()
+ys <- lapply(xs, slow_fcn) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
@@ -67,7 +72,6 @@ parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
 
-
 ```r
 plan(future.mirai::mirai_multisession)
 ```
@@ -78,6 +82,19 @@ and
 plan(future.batchtools::batchtools_slurm)
 ```
 
+
+## Kernel smoothing
+
+```r
+library(futurize)
+plan(multisession)
+
+library(stats)
+
+xs <- datasets::EuStockMarkets
+k50 <- kernel("daniell", 50)
+xs_smooth <- kernapply(xs, k = k50) |> futurize()
+```
 
 
 

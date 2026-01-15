@@ -1,12 +1,12 @@
-# lme4::allFit(...) =>
+# mgcv::bam(...) =>
 #
 # local({
 #   cl <- future::makeClusterFuture(<future arguments>)
-#   lme4::allFit(..., parallel = "snow", ncpus = 2L, cl = cl)
+#   mgcv::bam(..., cluster = cl)
 # })
 #
-append_transpilers_for_lme4 <- function() {
-  package <- "lme4"
+append_transpilers_for_mgcv <- function() {
+  package <- "mgcv"
 
   if (getRversion() < "4.4.0") {
     stop(sprintf("You are running R %s, but futurization of '%s' functions requires R (>= 4.4.0)", getRversion(), package))
@@ -29,32 +29,21 @@ append_transpilers_for_lme4 <- function() {
   template[[c(2,2,3,2)]] <- call
 
 
-  make_transpiler <- function(name) {
-    defaults <- list()
-    if (name == "allFit") {
-      defaults <- list(packages = "lme4")
-    }
+  transpiler <- eval(bquote(function(expr, options = NULL) {
     
+    ## Update 'OPTS'
+    template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options)
 
-    transpiler <- eval(bquote(function(expr, options = NULL) {
-      ## Update 'OPTS'
-      template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
-  
-      ## Update 'EXPR'
-      parts <- c(
-        as.list(expr),
-        parallel = "snow",
-        ncpus = 2L,   ## only used for test ncpus > 1
-        cl = quote(cl)
-      )
-      template[[idx_EXPR]] <- as.call(parts)
-      
-      template
-    }))
-    body(transpiler) <- body(transpiler)
+    ## Update 'EXPR'
+    parts <- c(
+      as.list(expr),
+      cluster = quote(cl)
+    )
+    template[[idx_EXPR]] <- as.call(parts)
     
-    transpiler
-  }
+    template
+  }))
+  body(transpiler) <- body(transpiler)
 
   transpilers <- list()
 
@@ -64,10 +53,10 @@ append_transpilers_for_lme4 <- function() {
   for (name in names) {
     if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      if ("parallel" %in% names(formals(fcn))) {
+      if ("cluster" %in% names(formals(fcn))) {
         transpilers[[name]] <- list(
           label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = make_transpiler(name)
+          transpiler = transpiler
         )
       }
     }

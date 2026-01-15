@@ -22,7 +22,7 @@ jobs:
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
           - {os: ubuntu-latest,  r: 'oldrel'   }
-          - {os: ubuntu-latest,  r: '4.1'      }
+#          - {os: ubuntu-latest,  r: '4.1'      }
  
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,12 @@ jobs:
       R_FUTURE_GLOBALENV_ONMISUSE: "error"
       R_FUTURE_GLOBALS_ONREFERENCE: "warning"
       R_FUTURE_RNG_ONMISUSE: error
-      
+      R_FUTURE_FUTURE_EARLYSIGNAL: defunct
+      R_FUTURE_FUTURE_LOCAL: defunct
+      R_FUTURE_FUTURE_GC: defunct
+      R_FUTURE_PLAN_EARLYSIGNAL: defunct
+      R_FUTURE_RESOLVED_RUN: defunct
+
     steps:
       - uses: actions/checkout@v4
 

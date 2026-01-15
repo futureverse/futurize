@@ -29,14 +29,10 @@ append_transpilers_for_boot <- function() {
   template[[c(2,2,3,2)]] <- call
 
 
-  make_options <- function(options) {
-    options
-  }
-
   transpiler <- eval(bquote(function(expr, options = NULL) {
     
     ## Update 'OPTS'
-    template[[idx_OPTS]] <- make_options(options)
+    template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options)
 
     ## Update 'EXPR'
     parts <- c(
@@ -76,3 +72,39 @@ append_transpilers_for_boot <- function() {
   ## Return required packages
   c(package, "future")
 }
+
+
+make_options_for_makeClusterFuture <- local({
+  get_defaults <- function(fcn) {
+    defaults <- names(formals(fcn))
+    excl <- c("expr", "substitute", "envir", "earlySignal", "gc", "...")
+    setdiff(defaults, excl)
+  }
+  
+  defaults_base <- NULL
+
+  function(options, defaults = NULL) {
+    ## Nothing to do?
+    if (length(options) == 0L && length(defaults) == 0L) return(options)
+
+    if (is.null(defaults_base)) {
+      defaults_base <<- get_defaults(future::future)
+    }
+
+    if (length(defaults) > 0) {
+      names <- setdiff(names(defaults), attr(options, "specified"))
+      for (name in names) {
+        if (name == "packages") {
+          options[[name]] <- c(options[[name]], defaults[[name]])
+        } else {
+          options[[name]] <- defaults[[name]]
+        }
+      }
+    }
+
+    options <- options[names(options) %in% defaults_base]
+
+    options
+  }
+})
+

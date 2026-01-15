@@ -26,12 +26,17 @@ function. Easy!
 # TL;DR
 
 ```r
-library(foreach)
 library(futurize)
 plan(multisession)
+library(foreach)
+
+slow_fcn <- function(x) {
+  Sys.sleep(0.1)  # emulate work
+  x^2
+}
 
 xs <- 1:1000
-y <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
+ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
 ```
 
 
@@ -44,7 +49,7 @@ functions such as `foreach()` and `times()` of the
 ```r
 library(foreach)
 xs <- 1:1000
-y <- foreach(x = xs) %do% slow_fcn(x)
+ys <- foreach(x = xs) %do% slow_fcn(x)
 ```
 
 This `foreach()` construct is resolved sequentially. We can use
@@ -56,7 +61,7 @@ to pass the expression to `futurize()` as in:
 library(futurize)
 library(foreach)
 xs <- 1:1000
-y <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
+ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
@@ -71,7 +76,6 @@ computer and it works on all operating system. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)
@@ -90,7 +94,7 @@ Here is another examples that parallelizes `times()` of the
 ```r
 library(futurize)
 library(foreach)
-y <- times(10) %do% rnorm(3) |> futurize()
+ys <- times(10) %do% rnorm(3) |> futurize()
 ```
 
 

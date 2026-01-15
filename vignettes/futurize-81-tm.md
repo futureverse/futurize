@@ -25,9 +25,9 @@ function. Easy!
 # TL;DR
 
 ```r
-library(tm)
 library(futurize)
 plan(multisession)
+library(tm)
 
 data("crude")
 m <- tm_map(crude, content_transformer(tolower)) |> futurize()
@@ -36,24 +36,33 @@ m <- tm_map(crude, content_transformer(tolower)) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize **[tm]**
+This vignette demonstrates how to use this approach to parallelize **[tm]**
 functions such as `tm_map()`.
 
+The **[tm]** package provides a variety of text-mining methods. The
+`tm_map()` function applies transformations to a corpus of text
+documents, and `TermDocumentMatrix()` constructs document-term matrices.
+When working with large corpora, these operations benefit greatly from
+parallelization.
 
-# Background
 
-The **tm** `tm_map()` function is commonly used to apply a function to
-the elements of a list and return a list. For example, 
+## Example: Transforming a text corpus
+
+The `tm_map()` function applies a transformation to each document in
+a corpus:
 
 ```r
 library(tm)
 
+## Load the crude oil news corpus
 data("crude")
+
+## Convert all text to lowercase
 m <- tm_map(crude, content_transformer(tolower))
 ```
 
-Here `tm()` evaluates sequentially, but we can easily make it to
-evaluate parallelly, by using:
+Here `tm_map()` evaluates sequentially, but we can easily make it
+evaluate in parallel by piping to `futurize()`:
 
 ```r
 library(tm)
@@ -64,19 +73,18 @@ data("crude")
 m <- tm_map(crude, content_transformer(tolower)) |> futurize()
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
+This will distribute the document transformations across the available
+parallel workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)
@@ -91,8 +99,7 @@ plan(future.batchtools::batchtools_slurm)
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **tm** functions are supported:
+The following **tm** functions are supported by `futurize()`:
 
 * `tm_map()`
 * `tm_index()`

@@ -25,16 +25,16 @@ function. Easy!
 # TL;DR
 
 ```r
-library(glmnet)
 library(futurize)
 plan(multisession)
+library(glmnet)
 
 n <- 1000
 p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq(nzc)] %*% beta
+fx <- x[, seq_along(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -44,32 +44,39 @@ cv <- cv.glmnet(x, y) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize **[glmnet]**
+This vignette demonstrates how to use this approach to parallelize **[glmnet]**
 functions such as `cv.glmnet()`.
 
+The **[glmnet]** package provides highly-optimized algorithms for fitting
+Generalized Linear Models (GLMs) with lasso and elastic-net regularization.
+Its `cv.glmnet()` function performs cross-validation to select the optimal
+regularization parameter, which is an excellent candidate for parallelization.
 
-# Background
 
-The **glmnet** `llply()` function is commonly used to apply a function to
-the elements of a list and return a list. For example, 
+## Example: Cross-validation for regularized regression
+
+The `cv.glmnet()` function fits models across multiple folds and lambda
+values. For example:
 
 ```r
 library(glmnet)
 
+## Generate simulated data
 n <- 1000
 p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq(nzc)] %*% beta
+fx <- x[, seq_along(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
+## Perform cross-validation to find optimal lambda
 cv <- cv.glmnet(x, y)
 ```
 
-Here `glmnet()` evaluates sequentially, but we can easily make it to
-evaluate parallelly, by using:
+Here `cv.glmnet()` evaluates sequentially, but we can easily make it
+evaluate in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
@@ -80,26 +87,25 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq(nzc)] %*% beta
+fx <- x[, seq_along(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
 cv <- cv.glmnet(x, y) |> futurize()
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
+This will distribute the cross-validation folds across the available
+parallel workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)
@@ -114,8 +120,7 @@ plan(future.batchtools::batchtools_slurm)
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **glmnet** functions are supported:
+The following **glmnet** functions are supported by `futurize()`:
 
 * `cv.glmnet()` with `seed = TRUE` as the default
 

@@ -29,7 +29,7 @@
 transpile <- local({
   .enabled <- list()
   
-  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::local, base::I, base::identity), debug = FALSE) {
+  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
     if (debug) {
       mdebug_push("transpile() ...")
       on.exit(mdebug_pop())
@@ -95,6 +95,7 @@ transpile <- local({
     }
   
     expr_transpiled <- transpile(expr, options = options)
+    class(expr_transpiled) <- c("transpiled_call", class(expr_transpiled))
     if (debug) {
       mprint(expr_transpiled)
       mdebug_pop()
@@ -138,46 +139,18 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   }
   
   mdebug_push("Finding call to be transpiled ...")
-  call_pos <- c(1L)
-  ready <- FALSE
-  while (!ready) {
-    if (debug) {
-      mdebugf("Call position in expression: c(%s)", comma(call_pos))
-    }
-    call <- expr[[call_pos]]
-    if (debug) {
-      mdebug("Call:")
-      mprint(call)
-    }
-    call_info <- parse_call(call, envir = envir, what = what, debug = debug)
-    fcn <- call_info[["fcn"]]
-    fcn_name <- call_info[["fcn_name"]]
-    ns_name <- call_info[["ns_name"]]
+  call_pos <- decend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
-    ready <- TRUE
-
-    ## Unwrap, e.g. {...}, (...), local(...)?
-    if (length(unwrap) > 0) {
-      for (wrapper in unwrap) {
-        if (identical(fcn, wrapper)) {
-          if (debug) {
-            info <- switch(fcn_name,
-              "{" = "{ ... }",
-              "(" = "( ... )",
-              sprintf("%s( ... )", fcn_name)
-            )
-            mdebugf("Transpiling an expression wrapped in %s", info)
-          }
-          call_pos <- c(2L, call_pos)
-          ready <- FALSE
-        }
-      }
-    }
-  }
-  mdebugf("Call position in expression: c(%s)", comma(call_pos))
-  mdebug_pop()
+  call <- expr[[call_pos]]
+  call_info <- parse_call(call, envir = envir, what = what, debug = debug)
+  fcn <- call_info[["fcn"]]
+  fcn_name <- call_info[["fcn_name"]]
+  ns_name <- call_info[["ns_name"]]
 
   if (debug) {
+    mdebugf("Position of call to be transpiled in expression: c(%s)", comma(call_pos))
+    mprint(call)
+    mdebug_pop()   
     mdebugf_push("Locating %s transpiler for %s::%s() of class %s ...", sQuote(type), ns_name, fcn_name, sQuote(class(fcn)[1]))
   }
 
@@ -198,9 +171,14 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   transpiler_sets <- get_transpilers(type)
   transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
-    if (!requireNamespace(ns_name)) {
-      stop(sprintf("Please install %s in order to %s %s::%s()",
-           sQuote(ns_name), what, ns_name, fcn_name))
+    if (!requireNamespace(ns_name, quietly = TRUE)) {
+      info <- if (grepl("^%.*%$", fcn_name)) {
+        sprintf("%s::`%s`", ns_name, fcn_name)
+      } else {
+        sprintf("%s::%s()", ns_name, fcn_name)
+      }
+      stop(sprintf("Please install %s in order to %s %s",
+           sQuote(ns_name), what, info))
     }
 
     ## Get transpiler package addons
@@ -209,11 +187,16 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
       mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
     }
 
-    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = FALSE)
+    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = TRUE)
     if (!all(okay)) {
       pkgs <- req_pkgs[!okay]
-      stop(sprintf("Please install %s in order to %s %s::%s()",
-           commaq(pkgs), what, ns_name, fcn_name))
+      info <- if (grepl("^%.*%$", fcn_name)) {
+        sprintf("%s::`%s`", ns_name, fcn_name)
+      } else {
+        sprintf("%s::%s()", ns_name, fcn_name)
+      }
+      stop(sprintf("Please install %s in order to %s %s",
+           commaq(pkgs), what, info))
     }
     transpiler_sets <- get_transpilers(type)
     transpilers <- transpiler_sets[[ns_name]]
@@ -283,7 +266,7 @@ append_transpilers <- function(type, ...) {
 }
 
 
-list_transpilers <- function(pattern = NULL) {
+list_transpilers <- function(pattern = NULL, class) {
   data <- list()
   transpiler_db <- .env[["transpiler_db"]]
   db <- transpiler_db[[class]]
@@ -294,24 +277,24 @@ list_transpilers <- function(pattern = NULL) {
   }
   for (type in types) {
     transpilers <- db[[type]]
-    pkgs <- unique(names(transpilers))
-    for (pkg in pkgs) {
-      idxs <- which(pkg == names(transpilers))
+    fcns <- unique(names(transpilers))
+    for (fcn in fcns) {
+      idxs <- which(fcn == names(transpilers))
       if (length(idxs) == 1) {
-        transpilers_pkg <- transpilers[[idxs]]
+        transpilers_fcn <- transpilers[idxs]
       } else {
         ## length(idxs) > 1 should not happend, but in case ...
-        transpilers_pkg <- list()
+        transpilers_fcn <- list()
         for (idx in idxs) {
-          transpilers_pkg <- c(transpilers_pkg, transpilers[[idx]])
+          transpilers_fcn <- c(transpilers_fcn, transpilers[[idx]])
         }
-        drop <- duplicated(names(transpilers_pkg), fromLast = TRUE)
-        transpilers_pkg <- transpilers_pkg[!drop]
+        drop <- duplicated(names(transpilers_fcn), fromLast = TRUE)
+        transpilers_fcn <- transpilers_fcn[!drop]
       }
-      transpilers_pkg <- transpilers_pkg[order(names(transpilers_pkg))]
-      names <- names(transpilers_pkg)
-      labels <- vapply(transpilers_pkg, FUN = function(t) t$label, FUN.VALUE = "")
-      dd <- data.frame(type = type, package = pkg, fcn = names, description = labels)
+      transpilers_fcn <- transpilers_fcn[order(names(transpilers_fcn))]
+      names <- names(transpilers_fcn)
+      labels <- vapply(transpilers_fcn, FUN = function(t) t$label, FUN.VALUE = "")
+      dd <- data.frame(type = type, fcn = names, description = labels)
       data <- c(data, list(dd))
     }
   }
@@ -375,7 +358,7 @@ transpilers_for_package <- local({
       req_pkgs <- sort(unique(req_pkgs))
       req_pkgs
     } else if (action == "list") {
-      db
+      .db
     } else if (action == "reset") {
       old_db <- db
       db <- list()
@@ -384,3 +367,18 @@ transpilers_for_package <- local({
     }
   }
 })
+
+
+transpiler_packages <- function(classes = NULL) {
+  db <- transpilers_for_package(action = "list")
+  if (!is.null(classes)) {
+    db <- db[names(db) %in% classes]
+  }
+  transpilers <- data.frame(class = character(0L), package = character(0L))
+  for (class in names(db)) {
+    set <- db[[class]]
+    pkgs <- names(set)
+    transpilers <- rbind(transpilers, data.frame(class = class, package = pkgs))
+  }
+  transpilers
+}

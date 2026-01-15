@@ -232,8 +232,8 @@ message("- approximately invariant to chunk size ...")
 maxSize <- sizes[["FUN"]] + sizes[["X"]] / length(X)
 options(future.globals.maxSize = maxSize)
 
-for (chunk.size in c(1L, 2L, 5L, 10L)) {
-  y <- lapply(X, FUN = FUN, future.chunk.size = chunk.size) |> futurize()
+for (chunk_size in c(1L, 2L, 5L, 10L)) {
+  y <- lapply(X, FUN = FUN) |> futurize(chunk_size = chunk_size)
   str(y)
   stopifnot(all(unlist(y) == maxSize))
   cat(sprintf("maxSize = %g bytes\nfuture.globals.maxSize = %g bytes\n",

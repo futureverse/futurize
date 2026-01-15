@@ -22,5 +22,6 @@
   ## Set future options based on environment variables
   update_package_options(debug = debug)
 
+  ## Register all futurize transpilers
   register_all_transpilers()
 } ## .onLoad()

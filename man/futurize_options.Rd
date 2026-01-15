@@ -2,7 +2,6 @@
 % Please edit documentation in R/futurize_options.R
 \name{futurize_options}
 \alias{futurize_options}
-\alias{parallelize_options}
 \title{Options for how futures are partitioned and resolved}
 \usage{
 futurize_options(
@@ -11,10 +10,8 @@ futurize_options(
   packages = NULL,
   stdout = TRUE,
   conditions = "condition",
-  gc = FALSE,
-  earlySignal = FALSE,
   scheduling = 1,
-  chunk.size = NULL,
+  chunk_size = NULL,
   ...
 )
 }
@@ -68,16 +65,6 @@ Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
-\item{gc}{If TRUE, the garbage collector run (in the process that
-evaluated the future) only after the value of the future is collected.
-Exactly when the values are collected may depend on various factors such
-as number of free workers and whether \code{earlySignal} is TRUE (more
-frequently) or FALSE (less frequently).
-\emph{Some future backends may ignore this argument.}}
-
-\item{earlySignal}{Specified whether conditions should be signaled as soon
-as possible or not.}
-
 \item{scheduling}{Average number of futures ("chunks") per worker.
 If \code{0.0}, then a single future is used to process all elements
 of \code{X}.
@@ -86,11 +73,11 @@ If \code{2.0}, then each worker will process two futures
 (if there are enough elements in \code{X}).
 If \code{Inf} or \code{FALSE}, then one future per element of
 \code{X} is used.
-Only used if \code{future.chunk.size} is \code{NULL}.}
+Only used if \code{chunk_size} is \code{NULL}.}
 
-\item{chunk.size}{The average number of elements per future ("chunk").
+\item{chunk_size}{The average number of elements per future ("chunk").
 If \code{Inf}, then all elements are processed in a single future.
-If \code{NULL}, then argument \code{future.scheduling} is used.}
+If \code{NULL}, then argument \code{scheduling} is used.}
 
 \item{\ldots}{Additional named options.}
 }

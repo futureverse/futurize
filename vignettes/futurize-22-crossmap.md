@@ -24,12 +24,12 @@ function. Easy!
 # TL;DR
 
 ```r
-library(crossmap)
 library(futurize)
 plan(multisession)
+library(crossmap)
 
 xs <- list(1:5, 1:5)
-y <- xmap(xs, ~ .y * .x) |> futurize()
+ys <- xmap(xs, ~ .y * .x) |> futurize()
 ```
 
 
@@ -38,16 +38,13 @@ y <- xmap(xs, ~ .y * .x) |> futurize()
 This vignette demonstrates how use this approach to parallelize
 **[crossmap]** functions such as `xmap()` and `xwalk()`.
 
-
-# Background
-
 The **crossmap** `xmap()` function can be used to iterate over every
 combination of elements in an input list. For example,
 
 ```r
 library(crossmap)
 xs <- list(1:5, 1:5)
-y <- xmap(xs, ~ .y * .x)
+ys <- xmap(xs, ~ .y * .x)
 ```
 
 Here `xmap()` evaluates sequentially over each combination of (.y, .x)
@@ -57,7 +54,7 @@ elements. We can easily make it to evaluate parallelly, by using:
 library(futurize)
 library(crossmap)
 xs <- list(1:5, 1:5)
-y <- xmap(xs, ~ .y * .x) |> futurize()
+ys <- xmap(xs, ~ .y * .x) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
@@ -72,7 +69,6 @@ computer and it works on all operating system. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)

@@ -1,3 +1,23 @@
+# Version 0.0.6 (2026-01-14)
+
+ * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
+
+ * Add `supported_packages()` and `supported_package_functions()`.
+ 
+ * Add custom `print()` method for transpiled calls such that
+   attributes are displayed for arguments and their content.
+ 
+ * Rename argument `chunk.size` to `chunk_size`.
+
+ * Transpiler can now handle nested, complex wrapped expressions.
+ 
+ * Error messages now suggest to use `%do%` when trying to futurize
+   `foreach()` with `%dopar%` or `%dofuture%`.
+
+ * Error messages now distinguish between infix operators
+   (e.g. `%do%`) and functions (e.g. `lapply()`).
+
+
 # Version 0.0.5 (2025-11-26)
 
  * Add support for futurizing calls nested in, one or more layers, of

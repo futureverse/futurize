@@ -16,14 +16,6 @@ append_transpilers_for_glmnet <- function() {
     })
   )
 
-  make_options <- function(options, defaults = NULL) {
-    if (length(defaults) > 0) {
-      names <- setdiff(names(defaults), attr(options, "specified"))
-      for (name in names) options[[name]] <- defaults[[name]]
-    }
-    options
-  }
-  
   make_transpiler <- function(name) {
     defaults <- list()
     if (name == "cv.glmnet") {
@@ -33,7 +25,7 @@ append_transpilers_for_glmnet <- function() {
     transpiler <- eval(bquote(function(expr, options = NULL) {
       ## Update 'OPTS'
       idx_OPTS <- c(3, 2, 2)
-      template[[idx_OPTS]] <- make_options(options, defaults = .(defaults))
+      template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
       
       ## Update 'EXPR'
       parts <- c(

@@ -67,7 +67,12 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
   if (is.null(namespace)) {
     if (debug) mdebug_push("Locate function ...")
     if (!exists(fcn_name, mode = "function", envir = envir, inherits = TRUE)) {
-      stop(sprintf("No such function: %s()", deparse(call)))
+      name <- deparse(call)
+      if (grepl("^%.*%$", name)) {
+        stop(sprintf("Unknown infix operator: %s", name))
+      } else {
+        stop(sprintf("Unknown function: %s()", name))
+      }
     }
     fcn <- get(fcn_name, mode = "function", envir = envir, inherits = TRUE)
     env <- environment(fcn)

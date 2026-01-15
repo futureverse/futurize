@@ -25,12 +25,17 @@ function. Easy!
 # TL;DR
 
 ```r
-library(purrr)
 library(futurize)
 plan(multisession)
+library(purrr)
+
+slow_fcn <- function(x) {
+  Sys.sleep(0.1)  # emulate work
+  x^2
+}
 
 xs <- 1:1000
-y <- xs |> map(slow_fcn) |> futurize()
+ys <- xs |> map(slow_fcn) |> futurize()
 ```
 
 
@@ -39,16 +44,13 @@ y <- xs |> map(slow_fcn) |> futurize()
 This vignette demonstrates how use this approach to parallelize **[purrr]**
 functions such as `map()`, `map_dbl()`, and `walk()`.
 
-
-# Background
-
 The **purrr** `map()` function is commonly used to apply a function to
 the elements of a vector or a list. For example, 
 
 ```r
 library(purrr)
 xs <- 1:1000
-y <- map(xs, slow_fcn)
+ys <- map(xs, slow_fcn)
 ```
 
 or equivalently using pipe syntax
@@ -56,7 +58,7 @@ or equivalently using pipe syntax
 ```r
 library(purrr)
 xs <- 1:1000
-y <- xs |> map(slow_fcn)
+ys <- xs |> map(slow_fcn)
 ```
 
 Here `map()` evaluates sequentially, but we can easily make it to
@@ -66,7 +68,7 @@ evaluate parallelly, by using:
 library(futurize)
 library(purrr)
 xs <- 1:1000
-y <- xs |> map(slow_fcn) |> futurize()
+ys <- xs |> map(slow_fcn) |> futurize()
 ```
 
 This will distribute the calculations across the available parallel
@@ -81,7 +83,6 @@ computer and it works on all operating system. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)
@@ -100,9 +101,9 @@ library(purrr)
 library(futurize)
 plan(future.mirai::mirai_multisession)
 
-y <- 1:10 |>
-       map(rnorm, n = 10) |> futurize(seed = TRUE) |>
-       map_dbl(mean) |> futurize()
+ys <- 1:10 |>
+        map(rnorm, n = 10) |> futurize(seed = TRUE) |>
+        map_dbl(mean) |> futurize()
 ```
 
 

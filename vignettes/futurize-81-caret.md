@@ -25,9 +25,9 @@ function. Easy!
 # TL;DR
 
 ```r
-library(caret)
 library(futurize)
 plan(multisession)
+library(caret)
 
 ctrl <- trainControl(method = "cv", number = 10)
 model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
@@ -36,46 +36,53 @@ model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> fut
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize **[caret]**
-functions such as `train()``.
+This vignette demonstrates how to use this approach to parallelize **[caret]**
+functions such as `train()`.
+
+The **[caret]** package provides a rich set of machine-learning tools
+with a unified API. The `train()` function fits models using
+cross-validation or bootstrap resampling, making it an excellent
+candidate for parallelization.
 
 
-# Background
+## Example: Training a random forest with cross-validation
 
-The **caret** `llply()` function is commonly used to apply a function to
-the elements of a list and return a list. For example, 
+The `train()` function fits models across multiple resampling
+iterations:
 
 ```r
 library(caret)
 
+## Set up 10-fold cross-validation
 ctrl <- trainControl(method = "cv", number = 10)
+
+## Train a random forest model
 model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
 ```
 
-Here `train()` evaluates sequentially, but we can easily make it to
-evaluate parallelly, by using:
+Here `train()` evaluates sequentially, but we can easily make it
+evaluate in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
 library(caret)
 
 ctrl <- trainControl(method = "cv", number = 10)
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize() |> futurize()
+model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
+This will distribute the cross-validation folds across the available
+parallel workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
-
 
 ```r
 plan(future.mirai::mirai_multisession)
@@ -90,11 +97,15 @@ plan(future.batchtools::batchtools_slurm)
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **caret** functions are supported:
+The following **caret** functions are supported by `futurize()`:
 
-* `allFit()`
-* `bootMer()`
+* `bag()`
+* `gafs()`
+* `nearZeroVar()`
+* `rfe()`
+* `safs()`
+* `sbf()`
+* `train()`
 
 
 [caret]: https://cran.r-project.org/package=caret

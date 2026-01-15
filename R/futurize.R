@@ -14,7 +14,7 @@
 #' @param when If TRUE (default), the expression is futurized, otherwise not.
 #'
 #' @param eval If TRUE (default), the futurized expression is evaluated,
-#' other it is returned.
+#' otherwise it is returned.
 #'
 #' @returns
 #' Returns the value of the evaluated expression `expr`.
@@ -61,11 +61,33 @@
 #' disable or enable futurization.
 #'
 #'
+#' @section Expression unwrapping:
+#' The transpilation mechanism includes logic to "unwrap" expressions
+#' enclosed in constructs such as `{ }`, `( )`, `local()`, `I()`,
+#' `identity()`, `invisible()`, `suppressMessages()`, and
+#' `suppressWarnings()`. The transpiler descends through wrapping
+#' constructs until it finds a transpilable expression, avoiding the
+#' need to place `futurize()` inside such constructs. This allows for
+#' patterns like:
+#'
+#' ```r
+#' y <- {
+#'   lapply(xs, fcn)
+#' } |> suppressMessages() |> futurize()
+#' ```
+#'
+#' avoiding having to write:
+#'
+#' ```r
+#' y <- {
+#'   lapply(xs, fcn) |> futurize()
+#' } |> suppressMessages()
+#' ```
+#'
+#'
 #' @example incl/futurize.R
 #'
-#' @aliases parallelize
 #' @aliases fz
-#' @importFrom future future value
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
@@ -79,9 +101,6 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 
-
-#' @export
-parallelize <- futurize
 
 #' @export
 fz <- futurize
