@@ -3,7 +3,7 @@
 </div>
 
 
-# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-logo.png" width="120px" alt="The 'future' hexlogo" align="right"/>
+# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-logo.png" style="width: 120px; margin: 2ex;" alt="The 'futurize' hexlogo" align="right"/>
 
 The **futurize** package makes it extremely simple to parallelize your
 existing apply-like, map-reduce calls. All you need to know is that
