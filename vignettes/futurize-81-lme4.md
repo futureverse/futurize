@@ -40,9 +40,6 @@ gm_all <- allFit(gm) |> futurize()
 This vignette demonstrates how to use this approach to parallelize **[lme4]**
 functions such as `allFit()` and `bootMer()`.
 
-
-# Background
-
 The **[lme4]** package fits linear and generalized linear mixed-effects
 models. Its `allFit()` function fits models using all available
 optimizers to check for convergence issues, and `bootMer()` performs

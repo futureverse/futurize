@@ -38,9 +38,6 @@ ys <- xmap(xs, ~ .y * .x) |> futurize()
 This vignette demonstrates how use this approach to parallelize
 **[crossmap]** functions such as `xmap()` and `xwalk()`.
 
-
-# Background
-
 The **crossmap** `xmap()` function can be used to iterate over every
 combination of elements in an input list. For example,
 

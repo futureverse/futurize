@@ -39,9 +39,6 @@ b <- boot(bigcity, statistic = ratio, R = 999, stype = "w") |> futurize()
 This vignette demonstrates how to use this approach to parallelize **[boot]**
 functions such as `boot()`, `censboot()`, and `tsboot()`.
 
-
-# Background
-
 The **[boot]** package is one of the "recommended" R packages, meaning
 it is officially endorsed by the R Core Team, well maintained, and
 installed by default with R. The package generates bootstrap samples

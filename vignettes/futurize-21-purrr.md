@@ -44,9 +44,6 @@ ys <- xs |> map(slow_fcn) |> futurize()
 This vignette demonstrates how use this approach to parallelize **[purrr]**
 functions such as `map()`, `map_dbl()`, and `walk()`.
 
-
-# Background
-
 The **purrr** `map()` function is commonly used to apply a function to
 the elements of a vector or a list. For example, 
 

@@ -47,9 +47,6 @@ cv <- cv.glmnet(x, y) |> futurize()
 This vignette demonstrates how to use this approach to parallelize **[glmnet]**
 functions such as `cv.glmnet()`.
 
-
-# Background
-
 The **[glmnet]** package provides highly-optimized algorithms for fitting
 Generalized Linear Models (GLMs) with lasso and elastic-net regularization.
 Its `cv.glmnet()` function performs cross-validation to select the optimal

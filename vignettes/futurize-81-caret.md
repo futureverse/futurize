@@ -39,9 +39,6 @@ model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> fut
 This vignette demonstrates how to use this approach to parallelize **[caret]**
 functions such as `train()`.
 
-
-# Background
-
 The **[caret]** package provides a rich set of machine-learning tools
 with a unified API. The `train()` function fits models using
 cross-validation or bootstrap resampling, making it an excellent

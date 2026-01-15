@@ -44,9 +44,6 @@ b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) +
 This vignette demonstrates how to use this approach to parallelize **[mgcv]**
 functions such as `bam()`.
 
-
-# Background
-
 The **[mgcv]** package is one of the "recommended" packages in R. It
 provides methods for fitting Generalized Additive Models (GAMs). The
 `bam()` function can be used to fit GAMs for massive datasets
