@@ -3,7 +3,7 @@
 \name{futurize}
 \alias{futurize}
 \alias{fz}
-\title{Evaluate common R functions in parallel}
+\title{Turn common R function calls into concurrent calls for parallel evaluation}
 \usage{
 futurize(
   expr,
@@ -43,6 +43,29 @@ whether futurization was previously enabled or disabled.
 \description{
 \if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
 }
+\section{Expression unwrapping}{
+
+The transpilation mechanism includes logic to "unwrap" expressions
+enclosed in constructs such as \code{{ }}, \verb{( )}, \code{local()}, \code{I()},
+\code{identity()}, \code{invisible()}, \code{suppressMessages()}, and
+\code{suppressWarnings()}. The transpiler descends through wrapping
+constructs until it finds a transpilable expression, avoiding the
+need to place \code{futurize()} inside such constructs. This allows for
+patterns like:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
+  lapply(xs, fcn)
+\} |> suppressMessages() |> futurize()
+}\if{html}{\out{</div>}}
+
+avoiding having to write:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
+  lapply(xs, fcn) |> futurize()
+\} |> suppressMessages()
+}\if{html}{\out{</div>}}
+}
+
 \section{Conditionally futurization}{
 
 It is possible to control whether futurization should take place at
@@ -77,29 +100,6 @@ To re-enable futurization, call \code{futurize(TRUE)}.
 Please note that it is only the end-user that may control whether
 futurization should be disabled and enabled. A package must \emph{never}
 disable or enable futurization.
-}
-
-\section{Expression unwrapping}{
-
-The transpilation mechanism includes logic to "unwrap" expressions
-enclosed in constructs such as \code{{ }}, \verb{( )}, \code{local()}, \code{I()},
-\code{identity()}, \code{invisible()}, \code{suppressMessages()}, and
-\code{suppressWarnings()}. The transpiler descends through wrapping
-constructs until it finds a transpilable expression, avoiding the
-need to place \code{futurize()} inside such constructs. This allows for
-patterns like:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
-  lapply(xs, fcn)
-\} |> suppressMessages() |> futurize()
-}\if{html}{\out{</div>}}
-
-avoiding having to write:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
-  lapply(xs, fcn) |> futurize()
-\} |> suppressMessages()
-}\if{html}{\out{</div>}}
 }
 
 \examples{
