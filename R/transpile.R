@@ -133,6 +133,7 @@ class(transpile) <- c("transpiler", class(transpile))
 #'                   an optional argument `options`
 #'
 #' @keywords internal
+#' @noRd
 get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, what, debug = FALSE) {
   if (debug) {
     mdebug_push("get_transpiler() ...")
