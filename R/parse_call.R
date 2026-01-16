@@ -11,7 +11,7 @@
 #' @param debug If TRUE, output debug information.
 #'
 #' @return
-#' A names list with elements:
+#' A named list with elements:
 #'
 #'  * `fcn`: the function called in the `call`
 #'

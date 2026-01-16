@@ -19,7 +19,7 @@
 #' @returns
 #' Returns the value of the evaluated expression `expr`.
 #'
-#' If `expr` is a TRUE or FALSE, then a logical is returned indicating 
+#' If `expr` is TRUE or FALSE, then a logical is returned indicating 
 #' whether futurization was previously enabled or disabled.
 #'
 #'
@@ -47,7 +47,7 @@
 #' ```
 #'
 #'
-#' @section Conditionally futurization:
+#' @section Conditional futurization:
 #' It is possible to control whether futurization should take place at
 #' run-time. For example,
 #'
@@ -55,7 +55,7 @@
 #' y <- lapply(xs, fun) |> futurize(when = { length(xs) >= 10 })
 #' ```
 #'
-#' will be futurized, unless `length(xs)` less than ten, in case it is
+#' will be futurized, unless `length(xs)` is less than ten, in which case it is
 #' evaluated as:
 #'
 #' ```r
@@ -73,7 +73,7 @@
 #' y <- lapply(xs, fun) |> futurize()
 #' ```
 #'
-#' is evaluates as:
+#' evaluates as:
 #'
 #' ```r
 #' y <- lapply(xs, fun)

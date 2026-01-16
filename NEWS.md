@@ -16,7 +16,7 @@
 
  * Transpiler can now handle nested, complex wrapped expressions.
  
- * Error messages now suggest to use `%do%` when trying to futurize
+ * Error messages now suggest using `%do%` when trying to futurize
    `foreach()` with `%dopar%` or `%dofuture%`.
 
  * Error messages now distinguish between infix operators
@@ -25,7 +25,7 @@
 
 # Version 0.0.5 (2025-11-26)
 
- * Add support for futurizing calls nested in, one or more layers, of
+ * Add support for futurizing calls nested in one or more layers of
    `{ ... }`, `( ... )`, `local( ... )`, `I()`, and `identity()`, e.g.
    `local({ lapply(x, f) }) |> futurize()` is the same as
    `local({ lapply(x, f) |> futurize() })`.
@@ -36,8 +36,8 @@
  * Handle nested transpilers.
 
  * Add `futurize(when = {condition})` for futurizing conditioned on an
-   R expression at run-time, e.g. `lapply(xs, fun) |> futurize(when =
-   (length(xs) > 10)).
+   R expression at runtime, e.g. `lapply(xs, fun) |> futurize(when =
+   (length(xs) > 10))`.
 
  * Add `futurize(FALSE)` and `futurize(TRUE)` for disabling and
    enabling futurizing of calls.
@@ -52,7 +52,7 @@
    iris, method = "rf", trControl = ctrl) |> futurize()`.
    
  * The default future options for `futurize()` are now customized such
-   they work in more cases, e.g. there is no need to declare `seed =
+   that they work in more cases, e.g. there is no need to declare `seed =
    TRUE` for `replicate(3, rnorm(1)) |> futurize()`.
 
  * `futurize()` gained argument `eval`, which can be used to return
@@ -109,7 +109,7 @@
  * Implemented a working proof-of-concept of a `futurize()` function
    that takes a call expression to any base-R apply function and
    transpiles it such that it runs in parallel via futures. This works
-   by the original map-reduce call is transpiled to evaluate each
+   by transpiling the original map-reduce call to evaluate each
    iteration via a lazy, vanilla future. These futures are then
    partitioned into chunks, where the number of chunks defaults to the
    number of parallel workers. The futures in each chunk are merged
