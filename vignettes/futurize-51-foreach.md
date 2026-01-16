@@ -42,7 +42,7 @@ ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize
+This vignette demonstrates how to use this approach to parallelize
 functions such as `foreach()` and `times()` of the
 **[foreach]** package. For example, consider:
 
@@ -72,7 +72,7 @@ plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and it works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
@@ -87,7 +87,7 @@ and
 plan(future.batchtools::batchtools_slurm)
 ```
 
-Here is another examples that parallelizes `times()` of the
+Here is another example that parallelizes `times()` of the
 **foreach** package via the futureverse ecosystem:
 
 

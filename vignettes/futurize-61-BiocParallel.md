@@ -42,7 +42,7 @@ ys <- bplapply(xs, slow_fcn) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize
+This vignette demonstrates how to use this approach to parallelize
 functions such as `bplapply()`, `bpmapply()`, and `bpvec()` in the
 **[BiocParallel]** package. For example, consider the `bplapply()`
 function. It works like base-R `lapply()`, but uses the
@@ -56,7 +56,7 @@ ys <- bplapply(xs, slow_fcn)
 ```
 
 The parallel backend is controlled by the `BiocParallel::register()`,
-similarly to how we use `future::plan()` in futureverse. We can use
+similar to how we use `future::plan()` in futureverse. We can use
 the **futurize** package to tell **BiocParallel** to hand over the
 orchestration of parallel tasks to futureverse. All we need to do is
 to pass the expression to `futurize()` as in:
@@ -76,7 +76,7 @@ plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and it works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
@@ -95,7 +95,7 @@ plan(future.batchtools::batchtools_slurm)
 # Supported Functions
 
 The `futurize()` function supports parallelization of all
-**BiocParallel** functions that takes argument
+**BiocParallel** functions that take argument
 `BPPARAM`. Specifically,
 
  * `bplapply()` and `.bplapply_impl()`

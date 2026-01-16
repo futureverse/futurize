@@ -39,7 +39,7 @@ ys <- lapply(xs, slow_fcn) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize
+This vignette demonstrates how to use this approach to parallelize
 functions such as `lapply()`, `tapply()`, `apply()`, and `replicate()`
 in the **base** package, and `kernapply()` in the **stats**
 package. For example, consider the base R `lapply()` function, which
@@ -51,8 +51,8 @@ xs <- 1:1000
 ys <- lapply(xs, slow_fcn)
 ```
 
-Here `lapply()` evaluates sequentially, but we can easily make it to
-evaluate parallelly, by using:
+Here `lapply()` evaluates sequentially, but we can easily make it
+evaluate in parallel, by using:
 
 ```r
 library(futurize)
@@ -67,7 +67,7 @@ plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and it works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.

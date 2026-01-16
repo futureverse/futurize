@@ -41,7 +41,7 @@ ys <- llply(xs, slow_fcn) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize **[plyr]**
+This vignette demonstrates how to use this approach to parallelize **[plyr]**
 functions such as `llply()`, `maply()`, and `ddply()`.
 
 The **plyr** `llply()` function is commonly used to apply a function to
@@ -53,8 +53,8 @@ xs <- 1:1000
 ys <- llply(xs, slow_fcn)
 ```
 
-Here `llply()` evaluates sequentially, but we can easily make it to
-evaluate parallelly, by using:
+Here `llply()` evaluates sequentially, but we can easily make it
+evaluate in parallel, by using:
 
 ```r
 library(futurize)
@@ -71,7 +71,7 @@ plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and it works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
@@ -99,8 +99,7 @@ ys <- llply(baseball, summary) |> futurize()
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **plyr** functions are supported:
+The `futurize()` function supports parallelization of the following **plyr** functions:
 
 * `a_ply()`, `aaply()`, `adply()`, `alply()`
 * `d_ply()`, `daply()`, `ddply()`, `dlply()`
