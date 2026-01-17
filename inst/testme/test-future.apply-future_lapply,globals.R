@@ -34,8 +34,10 @@ for (name in names(globals_set)) {
     }) |> futurize(globals = globals, packages = "utils")
   }, error = identity)
   print(y)
-  stopifnot((name == "A" && inherits(y, "error")) || 
-             identical(y, y_truth[[name]]))
+  if (! "covr" %in% loadedNamespaces()) {
+    stopifnot((name == "A" && inherits(y, "error")) || 
+               identical(y, y_truth[[name]]))
+  }
 }
 
 message("*** future_lapply() - globals ... DONE")
@@ -51,7 +53,9 @@ e <- 42
 res <- tryCatch({
   lapply(1:2, FUN = function(x) { 2 * e }) |> futurize(globals = structure(TRUE, ignore = "e"))
 }, error = identity)
-stopifnot(inherits(res, "error"))
+if (! "covr" %in% loadedNamespaces()) {
+  stopifnot(inherits(res, "error"))
+}
 
 message("*** future_lapply() - manual globals ... DONE")
 
@@ -127,7 +131,7 @@ for (strategy in supportedStrategies()) {
     function(b) 2 * a,
     function() b / 2,
     function() a + b,
-    function() nchar(toTitleCase("hello world"))
+    function() nchar(tools::toTitleCase("hello world"))
   )
   z0 <- lapply(X, FUN = function(f) f())
   str(z0)
@@ -172,7 +176,9 @@ for (strategy in supportedStrategies()) {
   a <- 0
   y <- lapply(1, FUN = function(x) a) |> futurize(globals = list(a = 42))
   str(y)
-  stopifnot(y[[1]] == 42)
+  if (! "covr" %in% loadedNamespaces()) {
+    stopifnot(y[[1]] == 42)
+  }
 } ## for (strategy ...)
 
 message("*** future_lapply() - tricky globals ... DONE")
@@ -230,6 +236,7 @@ stopifnot(all(sapply(y, FUN = identical, oMaxSize)))
 
 message("- approximately invariant to chunk size ...")
 maxSize <- sizes[["FUN"]] + sizes[["X"]] / length(X)
+if ("covr" %in% loadedNamespaces()) maxSize <- maxSize + 65e3
 options(future.globals.maxSize = maxSize)
 
 for (chunk_size in c(1L, 2L, 5L, 10L)) {
@@ -274,7 +281,9 @@ X <- list(function() 2 * ...future.elements_ii)
 res <- tryCatch({
   y <- lapply(X, FUN = function(f) f()) |> futurize()
 }, error = identity)
-stopifnot(inherits(res, "error"))
+if (! "covr" %in% loadedNamespaces()) {
+  stopifnot(inherits(res, "error"))
+}
 
 message("*** future_lapply() - globals exceptions ... DONE")
 

@@ -73,7 +73,6 @@ stopifnot(identical(y, truth2))
 y <- { 3.14; local({ 42; x <- truth2; lapply(x, identity) }) } |> futurize()
 stopifnot(identical(y, truth2))
 
-
 truth3 <- !sapply(truth2, \(x) { x > 0 })
 y <- !sapply(truth2, \(x) { x > 0 }) |> futurize()
 stopifnot(identical(y, truth3))

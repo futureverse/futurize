@@ -124,7 +124,7 @@ for (strategy in supportedStrategies()) {
     function(b) 2 * a,
     function() b / 2,
     function() a + b,
-    function() nchar(toTitleCase("hello world"))
+    function() nchar(tools::toTitleCase("hello world"))
   )
   z0 <- mapply(function(s, f) f() + s, s = seq_along(X), X)
   str(z0)
@@ -192,6 +192,7 @@ stopifnot(all(sapply(y, FUN = identical, oMaxSize)))
 message("- approximately invariant to chunk size ...")
 maxSize <- sizes[["FUN"]] + sizes[["X"]] / length(X)
 maxSize <- 4.0 * maxSize  ## Add a bit of leeway
+if ("covr" %in% loadedNamespaces()) maxSize <- maxSize + 50e3
 options(future.globals.maxSize = maxSize)
 
 for (chunk_size in c(1L, 2L, 5L, structure(10L, ordering = "random"))) {
@@ -230,7 +231,9 @@ X <- list(function() 2 * ...future.elements_ii)
 res <- tryCatch({
   y <- mapply(FUN = function(f) f(), X) |> futurize()
 }, error = identity)
-stopifnot(inherits(res, "error"))
+if (! "covr" %in% loadedNamespaces()) {
+  stopifnot(inherits(res, "error"))
+}
 
 message("*** future_mapply() - globals exceptions ... DONE")
 

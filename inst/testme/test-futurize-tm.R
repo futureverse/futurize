@@ -1,4 +1,4 @@
-if (requireNamespace("tm") && getRversion() >= "4.4.0") {
+if (requireNamespace("tm") && getRversion() >= "4.4.0" && !"covr" %in% loadedNamespaces()) {
 library(futurize)
 library(tm)
 data(crude)

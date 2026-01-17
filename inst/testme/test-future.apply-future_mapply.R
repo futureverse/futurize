@@ -212,6 +212,7 @@ for (strategy in supportedStrategies()) {
   message("- mapply(x, ...) |> futurize() where x[[i]] subsets via S3 method ...")
   x <- structure(list(a = 1, b = 2), class = "Foo")
   `[[.Foo` <- function(x, ...) 0
+  registerS3method("[[", class = "Foo", method = `[[.Foo`)
   y0 <- mapply(x, FUN = identity)
   stopifnot(identical(y0, c(a = 0, b = 0)))
   y1 <- mapply(x, FUN = identity) |> futurize()
