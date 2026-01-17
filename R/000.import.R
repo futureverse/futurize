@@ -16,7 +16,3 @@ import_from <- function(name, mode = "function", default = NULL, package) {
 import_future <- function(name, default = NULL) {
   import_from(name, default = default, package = "future")
 }
-
-import_future.apply <- function(name, default = NULL) {
-  import_from(name, default = default, package = "future.apply")
-}
