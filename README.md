@@ -5,10 +5,24 @@
 
 # futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-logo.png" style="width: 120px; margin: 2ex;" alt="The 'futurize' hexlogo" align="right"/>
 
+## TL;DR 
+
 The **futurize** package makes it extremely simple to parallelize your
-existing apply-like, map-reduce calls. All you need to know is that
+existing apply-like, map-reduce calls.  All you need to know is that
 there is a single function called `futurize()` that will take care of
-everything. 
+everything.
+
+```r
+y <- lapply(x, fcn) |> futurize()
+```
+
+The `futurize()` function parallelizes via **[futureverse]** meaning
+your code can take advantage of any **[supported future backend]**,
+may it be parallelization on your local computer, across multiple
+computers, in the cloud, or on high-performance compute (HPC) cluster.
+
+
+## Supported map-reduce packages
 
 It supports base R apply functions, **purrr**, **crossmap**, **plyr**,
 **foreach**, and **BiocParallel**. Here are some examples how you
@@ -51,6 +65,9 @@ k <- kernel("daniell", 50)
 xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ```
 
+
+## Supported domain-specific packages
+
 You can also futurize calls from a growing set of domain-specific
 packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**,
 and **tm**) that have optional built-in support for parallelization.
@@ -71,3 +88,6 @@ b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 ```
+
+[futureverse]: https://www.futureverse.org
+[supported future backend]: https://www.futureverse.org/backends.html
