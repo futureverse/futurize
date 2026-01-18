@@ -21,16 +21,15 @@ append_transpilers_for_glmnet <- function() {
     if (name == "cv.glmnet") {
       defaults <- list(seed = TRUE)
     }
-    
+
+    idx_OPTS <- c(3, 2, 2)
+    idx_EXPR <- c(3, 3)
+
     transpiler <- eval(bquote(function(expr, options = NULL) {
-      ## Handle 'covr'
-      is_covr <- (length(template[[c(3, 2)]]) > 2L)
-      if (is_covr) {
+      ## SPECIAL CASE: Are we running via 'covr'?
+      if (length(template[[c(3, 2)]]) > 2L) {
         idx_OPTS <- c(3, 2, 3, 3, 2)
         idx_EXPR <- c(3, 3, 3, 3)
-      } else {
-        idx_OPTS <- c(3, 2, 2)
-        idx_EXPR <- c(3, 3)
       }
       
       ## Update 'OPTS'
