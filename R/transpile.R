@@ -76,14 +76,18 @@ transpile <- local({
   
       ## 1c. Generate transpiled expression of nested transpiler
       expr <- local({
-        if (debug) mdebug_push("Apply nested transpiler ...")
-        on.exit(mdebug_pop())
-        if (debug) mprint(expr)
+        if (debug) {
+          mdebug_push("Apply nested transpiler ...")
+          on.exit({
+            print(expr)
+            mdebug_pop()
+          })
+          mprint(expr)
+        }
         parts <- as.list(expr)
         parts$eval <- FALSE
         expr2 <- as.call(parts)
         expr <- eval(expr2, envir = envir)
-        if (debug) mprint(expr)
         expr
       })
     }
@@ -96,6 +100,7 @@ transpile <- local({
   
     expr_transpiled <- transpile(expr, options = options)
     class(expr_transpiled) <- c("transpiled_call", class(expr_transpiled))
+    
     if (debug) {
       mprint(expr_transpiled)
       mdebug_pop()
@@ -138,9 +143,9 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   if (debug) {
     mdebug_push("get_transpiler() ...")
     on.exit(mdebug_pop())
+    mdebug_push("Finding call to be transpiled ...")
   }
   
-  mdebug_push("Finding call to be transpiled ...")
   call_pos <- decend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
   call <- expr[[call_pos]]
