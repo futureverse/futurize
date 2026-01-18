@@ -41,18 +41,27 @@ append_transpilers_for_BiocParallel <- function() {
     })
   )
 
+  idx_OPTS <- c(3, 2, 2)
+  idx_EXPR_stdout <- c(3, 3)
+  idx_EXPR_no_stdout <- c(3, 3, 3, 2, 5, 2)
+
+  if (length(template_stdout[[idx_EXPR_stdout]]) > 1) {
+    idx_OPTS <- c(3, 2, 3, 3, 2)
+    idx_EXPR_stdout <- c(3, 3, 3, 3)
+    idx_EXPR_no_stdout <- c(3, 3, 3, 3, 3, 2, 5, 3, 3, 2)
+  }
+
   transpiler <- eval(bquote(function(expr, options = NULL) {
     stdout <- options[["stdout"]]
     if (isFALSE(stdout)) {
       template <- template_no_stdout
-      idx_EXPR <- c(3, 3, 3, 2, 5, 2)
+      idx_EXPR <- idx_EXPR_no_stdout
     } else {
       template <- template_stdout
-      idx_EXPR <- c(3, 3)
+      idx_EXPR <- idx_EXPR_stdout
     }
     
     ## Update 'OPTS'
-    idx_OPTS <- c(3, 2, 2)
     template[[idx_OPTS]] <- make_options_for_doFuture(options, wrap = TRUE)
     
     ## Update 'EXPR'
