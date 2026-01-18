@@ -10,7 +10,9 @@
 #'
 #'  * `transpiler` - a function that takes an R expression and
 #'                   an optional argument `options`
-#' 
+#'
+#' @keywords internals
+#' @noRd
 make_addon_transpilers <- function(from_package, to_package, make_options) {
   call_template <- as.call(list(as.symbol("::"), as.symbol(to_package), as.symbol("<place-holder>")))
   make_call <- function(name) {

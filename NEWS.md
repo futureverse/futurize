@@ -1,6 +1,6 @@
-# Version (development version)
+# Version 0.1.0 (2026-01-18)
 
- * ...
+This is the first version submitted to CRAN.
 
 
 # Version 0.0.6 (2026-01-14)
