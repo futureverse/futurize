@@ -5,15 +5,15 @@
 
 # Version 0.0.6 (2026-01-14)
 
- * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
+## New Features
 
  * Add `supported_packages()` and `supported_package_functions()`.
  
+ * Rename argument `chunk.size` to `chunk_size`.
+
  * Add custom `print()` method for transpiled calls such that
    attributes are displayed for arguments and their content.
  
- * Rename argument `chunk.size` to `chunk_size`.
-
  * Transpiler can now handle nested, complex wrapped expressions.
  
  * Error messages now suggest using `%do%` when trying to futurize
@@ -22,8 +22,12 @@
  * Error messages now distinguish between infix operators
    (e.g. `%do%`) and functions (e.g. `lapply()`).
 
+ * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
+
 
 # Version 0.0.5 (2025-11-26)
+
+## New Features
 
  * Add support for futurizing calls nested in one or more layers of
    `{ ... }`, `( ... )`, `local( ... )`, `I()`, and `identity()`, e.g.
@@ -32,6 +36,8 @@
 
 
 # Version 0.0.4 (2025-09-26)
+
+## New Features
 
  * Handle nested transpilers.
 
@@ -48,9 +54,8 @@
  
 # Version 0.0.3 (2025-08-20)
 
- * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
-   iris, method = "rf", trControl = ctrl) |> futurize()`.
-   
+## New Features
+
  * The default future options for `futurize()` are now customized such
    that they work in more cases, e.g. there is no need to declare `seed =
    TRUE` for `replicate(3, rnorm(1)) |> futurize()`.
@@ -58,6 +63,9 @@
  * `futurize()` gained argument `eval`, which can be used to return
    the futurized expression instead of evaluating it.
 
+ * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
+   iris, method = "rf", trControl = ctrl) |> futurize()`.
+   
  * Add support for `times()` and `%:%` of **foreach**, which require
    special care when it comes to passing future options,
    e.g. `futurize(seed = FALSE)`.
@@ -65,16 +73,17 @@
 
 # Version 0.0.2 (2025-05-23)
 
- * The **futurize** package unifies our current **future.apply**,
-   **furrr**, and **doFuture** solutions into a minimal, unified
-   API. This means you no longer need to learn those future-specific
-   packages and their APIs, and all you need to know is the `... |>
-   futurize()` syntax.  The default behavior of `futurize()` is
-   sufficient for most use cases and users, but, if needed, it comes
-   with one unifying, unique set of arguments that can be used to
-   configure how the futures are resolved, how they are partitioned
-   into chunks, and how output and conditions are relayed, among other
-   things.
+The **futurize** package unifies our current **future.apply**,
+**furrr**, and **doFuture** solutions into a minimal, unified
+API. This means you no longer need to learn those future-specific
+packages and their APIs, and all you need to know is the `... |>
+futurize()` syntax.  The default behavior of `futurize()` is
+sufficient for most use cases and users, but, if needed, it comes with
+one unifying, unique set of arguments that can be used to configure
+how the futures are resolved, how they are partitioned into chunks,
+and how output and conditions are relayed, among other things.
+
+## New Features
 
  * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`,
    `y <- by(xs, idxs, fcn) |> futurize()`, and `xs <- kernapply(x, k)
