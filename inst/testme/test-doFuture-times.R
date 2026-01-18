@@ -1,7 +1,7 @@
 #' @tags %dopar%
 #' @tags sequential multisession cluster multicore
 
-if (requireNamespace("foreach") && requireNamespace("doFuture") && !"covr" %in% loadedNamespaces()) {
+if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 `%dofuture%` <- doFuture::`%dofuture%`

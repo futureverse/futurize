@@ -54,12 +54,10 @@ print(y)
 stopifnot(identical(y, y_truth))
 
 
-if (! "covr" %in% loadedNamespaces()) {
-  message("times(...) %do% |> futurize()")
-  y <- times(1L) %do% { 42L } |> futurize()
-  print(y)
-  stopifnot(identical(y, 42L))
-}
+message("times(...) %do% |> futurize()")
+y <- times(1L) %do% { 42L } |> futurize()
+print(y)
+stopifnot(identical(y, 42L))
 
 
 message("Non-supported %dopar% and %dofuture%")
@@ -76,11 +74,9 @@ y <- foreach(x = 1) %do% identity(x) |> futurize(options = list())
 
 plan(sequential)
 
-if (! "covr" %in% loadedNamespaces()) {
-  message("Special case: Zero futurize() options")
-  y <- times(1L) %do% { 42L } |> futurize(options = list())
-  print(y)
-  stopifnot(identical(y, 42L))
-}
+message("Special case: Zero futurize() options")
+y <- times(1L) %do% { 42L } |> futurize(options = list())
+print(y)
+stopifnot(identical(y, 42L))
 
 } ## if (requireNamespace("foreach") && requireNamespace("doFuture"))

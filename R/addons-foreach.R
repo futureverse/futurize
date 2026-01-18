@@ -26,7 +26,10 @@ append_transpilers_for_doFuture <- function() {
         on.exit(options(oopts))
         EXPR
       }))
-      expr2[[2]][[2]][[3]][[2]] <- options
+      ## Note: length(expr3) == 2L, except when using 'covr'
+      expr3 <- expr2[[2]][[2]][[3]]
+      expr3[[length(expr3)]] <- options
+      expr2[[2]][[2]][[3]] <- expr3
       expr2[[2]][[4]] <- expr
       expr <- expr2
     } else if (identical(fcn, as.symbol("%:%")) ||
@@ -104,4 +107,3 @@ make_options_for_doFuture <- local({
     options
   }
 })
-
