@@ -23,8 +23,17 @@ append_transpilers_for_glmnet <- function() {
     }
     
     transpiler <- eval(bquote(function(expr, options = NULL) {
+      ## Handle 'covr'
+      is_covr <- (length(template[[c(3, 2)]]) > 2L)
+      if (is_covr) {
+        idx_OPTS <- c(3, 2, 3, 3, 2)
+        idx_EXPR <- c(3, 3, 3, 3)
+      } else {
+        idx_OPTS <- c(3, 2, 2)
+        idx_EXPR <- c(3, 3)
+      }
+      
       ## Update 'OPTS'
-      idx_OPTS <- c(3, 2, 2)
       template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
       
       ## Update 'EXPR'
@@ -32,7 +41,6 @@ append_transpilers_for_glmnet <- function() {
         as.list(expr),
         parallel = TRUE
       )
-      idx_EXPR <- c(3, 3)
       template[[idx_EXPR]] <- as.call(parts)
       
       template

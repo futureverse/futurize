@@ -1,4 +1,4 @@
-if (requireNamespace("caret") && !"covr" %in% loadedNamespaces()) {
+if (requireNamespace("caret")) {
 library(futurize)
 library(caret)
 options(future.rng.onMisuse = "error")
