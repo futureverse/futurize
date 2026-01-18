@@ -17,9 +17,9 @@ The `futurize()` function parallelizes via **[futureverse]**, meaning
 your code can take advantage of any **[supported future backends]**,
 whether it be parallelization on your local computer, across multiple
 computers, in the cloud, or on a high-performance compute (HPC) cluster.
-The **futurize** package has only one hard dependency -- the
+The **futurize** package has only one hard dependency - the
 **[future]** package. All other dependencies are optional "buy-in"
-dependencies as shown in the below table.
+dependencies as shown in the below tables.
 
 
 ## Supported calls
