@@ -10,7 +10,6 @@ plan(multisession)
 y <- lapply(X = 1:3, FUN = function(x) { print(x) }) |> futurize(stdout = FALSE)
 print(y)
 
-
 xs <- list(aa = 1, bb = 1:2, cc = 1:10, dd = 1:5, .ee = -6:6)
 
 X <- EuStockMarkets[,1:2]
@@ -146,5 +145,8 @@ plan(sequential)
 message("futurize(seed = FALSE) gives RNG error with replicate()")
 y <- tryCatch(replicate(2, rnorm(1)) |> futurize(seed = FALSE), error = identity)
 stopifnot(inherits(y, "error"))
+
+message("Special case: Zero futurize() options")
+y <- lapply(1, identity) |> futurize(options = list())
 
 } ## if (requireNamespace("future.apply"))

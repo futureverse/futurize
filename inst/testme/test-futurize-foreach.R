@@ -20,13 +20,12 @@ if (! "covr" %in% loadedNamespaces()) {
 }
 print(y_truth)
 
-message("%do% |> futurize()")
+message("foreach(...) %do% |> futurize()")
 y <- foreach(x = 1:3, .combine = c) %do% {
   print(x)
   sqrt(x)
 } |> futurize()
 print(y)
-
 stopifnot(identical(y, y_truth))
 
 out <- utils::capture.output({
@@ -55,6 +54,14 @@ print(y)
 stopifnot(identical(y, y_truth))
 
 
+if (! "covr" %in% loadedNamespaces()) {
+  message("times(...) %do% |> futurize()")
+  y <- times(1L) %do% { 42L } |> futurize()
+  print(y)
+  stopifnot(identical(y, 42L))
+}
+
+
 message("Non-supported %dopar% and %dofuture%")
 res <- tryCatch({ foreach(x = 1) %dopar% x |> futurize() }, error = identity)
 print(res)
@@ -64,6 +71,16 @@ res <- tryCatch({ foreach(x = 1) %dofuture% x |> futurize() }, error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
+message("Special case: Zero futurize() options")
+y <- foreach(x = 1) %do% identity(x) |> futurize(options = list())
+
 plan(sequential)
+
+if (! "covr" %in% loadedNamespaces()) {
+  message("Special case: Zero futurize() options")
+  y <- times(1L) %do% { 42L } |> futurize(options = list())
+  print(y)
+  stopifnot(identical(y, 42L))
+}
 
 } ## if (requireNamespace("foreach") && requireNamespace("doFuture"))
