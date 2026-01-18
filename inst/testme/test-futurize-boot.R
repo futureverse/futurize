@@ -1,4 +1,4 @@
-if (requireNamespace("boot") && getRversion() >= "4.4.0" && !"covr" %in% loadedNamespaces()) {
+if (requireNamespace("boot") && getRversion() >= "4.4.0") {
 library(futurize)
 library(boot)
 options(future.rng.onMisuse = "error")

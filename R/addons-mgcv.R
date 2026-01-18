@@ -14,23 +14,31 @@ append_transpilers_for_mgcv <- function() {
 
   template <- quote(
     local({
-      cl <- do.call(makeClusterFuture, args = OPTS)
+      cl <- do.call(CALL, args = OPTS)
       oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
       on.exit(options(oopts))
       EXPR
     })
   )
+
+  idx_CALL <- c(2, 2, 3, 2)
   idx_OPTS <- c(2, 2, 3, 3)
   idx_EXPR <- c(2, 5)
 
+  ## SPECIAL CASE: Are we running under 'covr'?
+  if (length(template[[idx_CALL]]) > 1) {
+    idx_CALL <- c(2, 2, 3, 3, 3, 2)
+    idx_OPTS <- c(2, 2, 3, 3, 3, 3)
+    idx_EXPR <- c(2, 5, 3, 3)
+  }
+
   ## To please 'R CMD check' on R (< 4.4.0), where
   ## future::makeClusterFuture() is not available
+  
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
-  template[[c(2,2,3,2)]] <- call
-
+  template[[idx_CALL]] <- call
 
   transpiler <- eval(bquote(function(expr, options = NULL) {
-    
     ## Update 'OPTS'
     template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options)
 
