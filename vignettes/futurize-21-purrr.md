@@ -121,3 +121,4 @@ The `futurize()` function supports parallelization of the following **purrr** fu
 
 
 [purrr]: https://cran.r-project.org/package=purrr
+[other parallel backends]: https://www.futureverse.org/backends.html

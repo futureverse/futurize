@@ -109,3 +109,4 @@ The following **caret** functions are supported by `futurize()`:
 
 
 [caret]: https://cran.r-project.org/package=caret
+[other parallel backends]: https://www.futureverse.org/backends.html

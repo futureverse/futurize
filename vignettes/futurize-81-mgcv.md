@@ -102,3 +102,4 @@ The following **mgcv** functions are supported by `futurize()`:
 
 
 [mgcv]: https://cran.r-project.org/package=mgcv
+[other parallel backends]: https://www.futureverse.org/backends.html

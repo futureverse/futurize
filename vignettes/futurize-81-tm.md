@@ -54,7 +54,7 @@ a corpus:
 ```r
 library(tm)
 
-## Load the crude oil news corpus
+## Load the crude oil news corpus holding 20 documents
 data("crude")
 
 ## Convert all text to lowercase
@@ -107,3 +107,4 @@ The following **tm** functions are supported by `futurize()`:
 
 
 [tm]: https://cran.r-project.org/package=tm
+[other parallel backends]: https://www.futureverse.org/backends.html

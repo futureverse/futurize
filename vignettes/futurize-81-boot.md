@@ -129,3 +129,4 @@ The following **boot** functions are supported by `futurize()`:
 
 
 [boot]: https://cran.r-project.org/package=boot
+[other parallel backends]: https://www.futureverse.org/backends.html

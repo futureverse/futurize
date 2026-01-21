@@ -127,3 +127,4 @@ The following **lme4** functions are supported by `futurize()`:
 
 
 [lme4]: https://cran.r-project.org/package=lme4
+[other parallel backends]: https://www.futureverse.org/backends.html

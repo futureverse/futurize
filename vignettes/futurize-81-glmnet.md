@@ -126,3 +126,4 @@ The following **glmnet** functions are supported by `futurize()`:
 
 
 [glmnet]: https://cran.r-project.org/package=glmnet
+[other parallel backends]: https://www.futureverse.org/backends.html

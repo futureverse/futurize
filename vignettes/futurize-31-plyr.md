@@ -108,3 +108,4 @@ The `futurize()` function supports parallelization of the following **plyr** fun
 
 
 [plyr]: https://cran.r-project.org/package=plyr
+[other parallel backends]: https://www.futureverse.org/backends.html
