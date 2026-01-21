@@ -25,6 +25,10 @@ function. Easy!
 
 # TL;DR
 
+You can use **futurize** to make **[BiocParallel]** functions to
+parallelize via any of the [parallel backends] supported by
+Futureverse, e.g.
+
 ```r
 library(futurize)
 plan(multisession)
@@ -44,7 +48,7 @@ ys <- bplapply(xs, slow_fcn) |> futurize()
 
 This vignette demonstrates how to use this approach to parallelize
 functions such as `bplapply()`, `bpmapply()`, and `bpvec()` in the
-**[BiocParallel]** package. For example, consider the `bplapply()`
+**BiocParallel** package. For example, consider the `bplapply()`
 function. It works like base-R `lapply()`, but uses the
 **BiocParallel** framework to process the tasks concurrently. It is
 commonly used something like:
