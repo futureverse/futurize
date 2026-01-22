@@ -1,0 +1,20 @@
+pandoc: 3.1.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  futurize-11-apply: futurize-11-apply.html
+  futurize-21-purrr: futurize-21-purrr.html
+  futurize-22-crossmap: futurize-22-crossmap.html
+  futurize-31-plyr: futurize-31-plyr.html
+  futurize-51-foreach: futurize-51-foreach.html
+  futurize-61-BiocParallel: futurize-61-BiocParallel.html
+  futurize-81-boot: futurize-81-boot.html
+  futurize-81-caret: futurize-81-caret.html
+  futurize-81-glmnet: futurize-81-glmnet.html
+  futurize-81-lme4: futurize-81-lme4.html
+  futurize-81-mgcv: futurize-81-mgcv.html
+  futurize-81-tm: futurize-81-tm.html
+last_built: 2026-01-22T21:47Z
+urls:
+  reference: https://futurize.futureverse.org/reference
+  article: https://futurize.futureverse.org/articles
