@@ -1,0 +1,18 @@
+.logos {
+    float: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1ex;
+    line-height: 0.8;
+}
+
+.logos img {
+    width: 80px;
+    height: autox;
+}
+
+.logos span {
+    font-size: 200%;
+    font-weight: bold;
+}
