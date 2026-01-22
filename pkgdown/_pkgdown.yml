@@ -35,6 +35,8 @@ navbar:
         href: https://future.mirai.futureverse.org
       - text: future.tests 
         href: https://future.tests.futureverse.org
+      - text: futurize (map-reduce)
+        href: https://futurize.futureverse.org
       - text: globals 
         href: https://globals.futureverse.org
       - text: listenv 

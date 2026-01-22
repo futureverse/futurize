@@ -1,5 +1,5 @@
 <%
-pkgs_mapreduce <- c("future.apply", "doFuture", "furrr")
+pkgs_mapreduce <- c("futurize", "future.apply", "doFuture", "furrr")
 pkgs_backend <- c("future.batchtools", "future.callr", "future.mirai")
 pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressr", pkgs_mapreduce, pkgs_backend)
 pkgs_extra <- c("BiocParallel.FutureParam", "future.tools", "future.mapreduce", "marshal")
