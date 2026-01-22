@@ -6,7 +6,6 @@
 ^.make
 ^INSTALL[.]md$
 ^OVERVIEW[.]md$
-^README.*[.]md$
 ^CONDUCT[.]md$
 ^CONTRIBUTING[.]md$
 ^docs
@@ -61,3 +60,4 @@ Rplots.pdf$
 ^.issues
 ^last.dump*
 [.]Rdump
+^pkgdown/

@@ -19,9 +19,9 @@ futurize_options(
 \item{seed}{(optional) If TRUE, the random seed, that is, the state of the
 random number generator (RNG) will be set such that statistically sound
 random numbers are produced (also during parallelization).
-If FALSE (default), it is assumed that the future expression does neither
-need nor use random numbers generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integer)
+If FALSE (default), it is assumed that the future expression neither
+needs nor uses random number generation.
+To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
 or a regular RNG seed (a single integer).  If the latter, then a
 L'Ecuyer-CMRG seed will be automatically created based on the given seed.
 Furthermore, if FALSE, then the future will be monitored to make sure it
@@ -50,15 +50,15 @@ captured output across futures.
 Using \code{stdout = NA} fully avoids intercepting the standard output;
 behavior of such unhandled standard output depends on the future backend.}
 
-\item{conditions}{A character string of conditions classes to be captured
+\item{conditions}{A character string of condition classes to be captured
 and relayed.  The default is to relay all conditions, including messages
 and warnings.  To drop all conditions, use \code{conditions = character(0)}.
 Errors are always relayed.
 Attribute \code{exclude} can be used to ignore specific classes, e.g.
 \code{conditions = structure("condition", exclude = "message")} will capture
-all \code{condition} classes except those that inherits from the \code{message} class.
+all \code{condition} classes except those that inherit from the \code{message} class.
 Using \code{conditions = structure(..., drop = TRUE)} causes any captured
-conditions to be dropped from the future object as soon as it has
+conditions to be dropped from the future object as soon as they have
 been relayed, e.g. by \code{value(f)}. This can help decrease the overall
 memory consumed by captured conditions across futures.
 Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
@@ -88,4 +88,9 @@ that were explicitly specified.
 }
 \description{
 Options for how futures are partitioned and resolved
+}
+\examples{
+# Default futurize options
+str(futurize_options())
+
 }

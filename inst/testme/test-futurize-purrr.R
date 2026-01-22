@@ -86,5 +86,9 @@ for (kk in seq_along(exprs)) {
   )
 }
 
+message("Special case: Zero futurize() options")
+y <- map(1, identity) |> futurize(options = list())
+
+
 plan(sequential)
 } ## if (requireNamespace("purrr") && requireNamespace("furrr"))

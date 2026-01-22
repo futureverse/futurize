@@ -1,17 +1,55 @@
-<div id="badges"><!-- pkgdown markup -->
-<a href="https://github.com/HenrikBengtsson/futurize/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/futurize/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>
-</div>
+# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-logo.png" style="width: 120px; margin: 2ex;" alt="The 'futurize' hexlogo" align="right"/>
 
-
-# futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-magic-touch-parallelization-120x138.png" alt="The 'future' hexlogo" align="right"/>
+## TL;DR 
 
 The **futurize** package makes it extremely simple to parallelize your
-existing apply-like, map-reduce calls. All you need to know is that
-there is a single function called `futurize()` that will take care of
-everything. 
+existing map-reduce calls, but also a growing set of domain-specific
+calls.  All you need to know is that there is a single function called
+`futurize()` that will take care of everything, e.g.
 
-It supports base R apply functions, **purrr**, **foreach**, **plyr**,
-and **BiocParallel**. Here are some examples how you could use it:
+```r
+y <- lapply(x, fcn) |> futurize()
+y <- map(x, fcn) |> futurize()
+b <- boot(city, ratio, R = 999) |> futurize()
+```
+
+The `futurize()` function parallelizes via **[futureverse]**, meaning
+your code can take advantage of any **[supported future backends]**,
+whether it be parallelization on your local computer, across multiple
+computers, in the cloud, or on a high-performance compute (HPC) cluster.
+The **futurize** package has only one hard dependency - the
+**[future]** package. All other dependencies are optional "buy-in"
+dependencies as shown in the below tables.
+
+
+## Supported calls
+
+### Supported map-reduce packages
+
+The **futurize** package supports transpilation of functions from multiple packages. The tables below summarize the supported map-reduce and domain-specific functions, respectively.  To programmatically see which packages are currently supported, use:
+
+```r
+futurize_supported_packages()
+```
+To see which functions are supported for a specific package, use:
+
+```r
+futurize_supported_functions("caret")
+```
+
+| Package             | Functions                                                                                                          | Requires                 |
+|---------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------|
+| **base**          | `lapply()`, `sapply()`, `tapply()`, `vapply()`, `mapply()`, `.mapply()`, `Map()`, `eapply()`, `apply()`, `by()`, `replicate()`, `Filter()` | **[future.apply]** |
+| **stats**         | `kernapply()` | **[future.apply]** |
+| **[purrr]**     | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr]** |
+| **[crossmap]**  | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | (itself) |
+| **[foreach]**   | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }` | **[doFuture]** | 
+| **[plyr]**      | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]** | 
+| **[BiocParallel]** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                        | **[doFuture]** | 
+
+_Table: Map-reduce functions currently supported by `futurize()` for parallel transpilation._
+
+Here are some examples:
 
 ```r
 library(futurize)
@@ -50,9 +88,26 @@ k <- kernel("daniell", 50)
 xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ```
 
-You can also futurize calls to several packages (e.g. **boot**,
-**caret**, **glmnet**, **lme4**, and **tm**) that have optional
-built-in support for parallelization, e.g.
+
+### Supported domain-specific packages
+
+You can also futurize calls from a growing set of domain-specific
+packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**,
+and **tm**) that have optional built-in support for parallelization.
+
+
+| Package          | Functions                                                                 | Requires           |
+|------------------|---------------------------------------------------------------------------|--------------------|
+| **[boot]**   | `boot()`, `censboot()`, `tsboot()`                                        | **[future]**   |
+| **[caret]**  | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]** |
+| **[glmnet]** | `cv.glmnet()`                                                             | **[doFuture]** |
+| **[lme4]**   | `allFit()`, `bootMer()`                                                   | **[future]**   |
+| **[mgcv]**   | `bam()`, `predict.bam()`                                                  | **[future]**   |
+| **[tm]**     | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**   |
+
+_Table: Domain-specific functions currently supported by `futurize()` for parallel transpilation._
+
+Here are some examples:
 
 ```r
 ctrl <- caret::trainControl(method = "cv", number = 10)
@@ -65,5 +120,25 @@ cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
 
+b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
+
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 ```
+
+[futureverse]: https://www.futureverse.org
+[future]: https://future.futureverse.org
+[future.apply]: https://future.apply.futureverse.org
+[furrr]: https://furrr.futureverse.org
+[doFuture]: https://doFuture.futureverse.org
+[purrr]: https://cran.r-project.org/package=purrr
+[crossmap]: https://cran.r-project.org/package=crossmap
+[foreach]: https://cran.r-project.org/package=foreach
+[plyr]: https://cran.r-project.org/package=plyr
+[boot]: https://cran.r-project.org/package=boot
+[mgcv]: https://cran.r-project.org/package=mgcv
+[caret]: https://cran.r-project.org/package=caret
+[glmnet]: https://cran.r-project.org/package=glmnet
+[lme4]: https://cran.r-project.org/package=lme4
+[tm]: https://cran.r-project.org/package=tm
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
+[supported future backends]: https://www.futureverse.org/backends.html

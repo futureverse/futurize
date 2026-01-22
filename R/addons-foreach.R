@@ -17,27 +17,38 @@ append_transpilers_for_doFuture <- function() {
     ## times()?
     if (identical(fcn, as.symbol("times")) ||
         identical(fcn, quote(foreach::times))) {
-      ## Default to seed = TRUE
-      if (!"seed" %in% attr(options, "specified")) {
-        options[["seed"]] <- TRUE
-      }
       expr2 <- quote(local({
         oopts <- options(future.disposable = OPTS)
         on.exit(options(oopts))
         EXPR
       }))
-      expr2[[2]][[2]][[3]][[2]] <- options
-      expr2[[2]][[4]] <- expr
+      idx_OPTS <- c(2L, 2L, 3L, 2L)
+      idx_EXPR <- c(2L, 4L)
+      
+      ## SPECIAL CASE: Are we running via 'covr'?
+      if (length(expr2[[c(2L, 2L, 3L)]]) > 2L) {
+        idx_OPTS <- c(2L, 2L, 3L, 3L)
+      }
+      
+      ## Default to seed = TRUE
+      if (!"seed" %in% attr(options, "specified")) {
+        options[["seed"]] <- TRUE
+      }
+      
+      expr2[[idx_OPTS]] <- options
+      expr2[[idx_EXPR]] <- expr
       expr <- expr2
     } else if (identical(fcn, as.symbol("%:%")) ||
                identical(fcn, quote(foreach::`%:%`))) {
       options <- make_options_for_doFuture(options, wrap = TRUE)
-      parts <- c(as.list(expr[[2]][[3]]), options)
-      expr[[2]][[3]] <- as.call(parts)
+      idx_EXPR <- c(2L, 3L)
+      parts <- c(as.list(expr[[idx_EXPR]]), options)
+      expr[[idx_EXPR]] <- as.call(parts)
     } else {
       options <- make_options_for_doFuture(options, wrap = TRUE)
-      parts <- c(as.list(expr[[2]]), options)
-      expr[[2]] <- as.call(parts)
+      idx_EXPR <- c(2L)
+      parts <- c(as.list(expr[[idx_EXPR]]), options)
+      expr[[idx_EXPR]] <- as.call(parts)
     }
     expr
   }))
@@ -104,4 +115,3 @@ make_options_for_doFuture <- local({
     options
   }
 })
-

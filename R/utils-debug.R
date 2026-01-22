@@ -28,7 +28,6 @@ debug_indent <- local({
 .debug$stack <- list()
 
 mdebug_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   msg <- mdebug(..., debug = debug)
   debug_indent(+1)
   .debug$stack <- c(.debug$stack, msg)
@@ -36,7 +35,6 @@ mdebug_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 }
 
 mdebugf_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   msg <- mdebugf(..., debug = debug)
   debug_indent(+1)
   .debug$stack <- c(.debug$stack, msg)
@@ -44,7 +42,6 @@ mdebugf_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 }
 
 mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   n <- length(.debug$stack)
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
@@ -53,7 +50,6 @@ mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 }
 
 mdebugf_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   n <- length(.debug$stack)
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
@@ -62,7 +58,6 @@ mdebugf_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 }
 
 mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   prefix <- paste(prefix, debug_indent(), sep = "")
   msg <- paste(..., sep = "")
   message(sprintf("%s%s", prefix, msg))
@@ -71,7 +66,6 @@ mdebug <- function(..., prefix = now(), debug = isTRUE(getOption("futurize.debug
 
 mdebugf <- function(..., appendLF = TRUE,
                     prefix = now(), debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   prefix <- paste(prefix, debug_indent(), sep = "")
   msg <- sprintf(...)
   message(sprintf("%s%s", prefix, msg), appendLF = appendLF)
@@ -80,14 +74,6 @@ mdebugf <- function(..., appendLF = TRUE,
 
 #' @importFrom utils capture.output
 mprint <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
   prefix <- paste(prefix, debug_indent(), sep = "")
   message(paste(prefix, capture.output(print(...)), sep = "", collapse = "\n"), appendLF = appendLF)
-}
-
-#' @importFrom utils capture.output str
-mstr <- function(..., appendLF = TRUE, prefix = now(), debug = isTRUE(getOption("futurize.debug"))) {
-  if (!debug) return()
-  prefix <- paste(prefix, debug_indent(), sep = "")
-  message(paste(prefix, capture.output(str(...)), sep = "", collapse = "\n"), appendLF = appendLF)
 }

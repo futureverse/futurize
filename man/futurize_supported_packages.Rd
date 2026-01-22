@@ -13,7 +13,7 @@ futurize_supported_functions(package)
 \item{package}{A package name.}
 }
 \value{
-A character vector of package or function names
+A character vector of package or function names.
 }
 \description{
 List packages and functions supporting futurization

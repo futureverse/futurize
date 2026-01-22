@@ -11,7 +11,7 @@
 #' @param debug If TRUE, output debug information.
 #'
 #' @return
-#' A names list with elements:
+#' A named list with elements:
 #'
 #'  * `fcn`: the function called in the `call`
 #'
@@ -20,6 +20,7 @@
 #'  * `ns_name`: the name of the namespace where the function lives
 #'
 #' @keywords internal
+#' @noRd
 parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug = FALSE) {
   if (debug) {
     mdebug_push("parse_call() ...")

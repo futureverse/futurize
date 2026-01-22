@@ -1,6 +1,6 @@
-#' Evaluate common R functions in parallel
+#' Turn common R function calls into concurrent calls for parallel evaluation
 #'
-#' \if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
+#' \if{html}{\figure{futurize-logo.png}{options: style='float: right;' alt='logo' width='120'}}
 #'
 #' @inheritParams future::future
 #'
@@ -19,46 +19,8 @@
 #' @returns
 #' Returns the value of the evaluated expression `expr`.
 #'
-#' If `expr` is a TRUE or FALSE, then a logical is returned indicating 
+#' If `expr` is TRUE or FALSE, then a logical is returned indicating 
 #' whether futurization was previously enabled or disabled.
-#'
-#'
-#' @section Conditionally futurization:
-#' It is possible to control whether futurization should take place at
-#' run-time. For example,
-#'
-#' ```r
-#' y <- lapply(xs, fun) |> futurize(when = { length(xs) >= 10 })
-#' ```
-#'
-#' will be futurized, unless `length(xs)` less than ten, in case it is
-#' evaluated as:
-#'
-#' ```r
-#' y <- lapply(xs, fun)
-#' ```
-#'
-#' 
-#' @section Disable and re-enable all futurization:
-#' It is possible to globally disable the effect of all `futurize()` calls
-#' by calling `futurize(FALSE)`. The effect is as if `futurize()` was never
-#' applied. For example,
-#'
-#' ```r
-#' futurize(FALSE)
-#' y <- lapply(xs, fun) |> futurize()
-#' ```
-#'
-#' is evaluates as:
-#'
-#' ```r
-#' y <- lapply(xs, fun)
-#' ```
-#'
-#' To re-enable futurization, call `futurize(TRUE)`.
-#' Please note that it is only the end-user that may control whether
-#' futurization should be disabled and enabled. A package must _never_
-#' disable or enable futurization.
 #'
 #'
 #' @section Expression unwrapping:
@@ -83,6 +45,44 @@
 #'   lapply(xs, fcn) |> futurize()
 #' } |> suppressMessages()
 #' ```
+#'
+#'
+#' @section Conditional futurization:
+#' It is possible to control whether futurization should take place at
+#' run-time. For example,
+#'
+#' ```r
+#' y <- lapply(xs, fun) |> futurize(when = { length(xs) >= 10 })
+#' ```
+#'
+#' will be futurized, unless `length(xs)` is less than ten, in which case it is
+#' evaluated as:
+#'
+#' ```r
+#' y <- lapply(xs, fun)
+#' ```
+#'
+#'
+#' @section Disable and re-enable all futurization:
+#' It is possible to globally disable the effect of all `futurize()` calls
+#' by calling `futurize(FALSE)`. The effect is as if `futurize()` was never
+#' applied. For example,
+#'
+#' ```r
+#' futurize(FALSE)
+#' y <- lapply(xs, fun) |> futurize()
+#' ```
+#'
+#' evaluates as:
+#'
+#' ```r
+#' y <- lapply(xs, fun)
+#' ```
+#'
+#' To re-enable futurization, call `futurize(TRUE)`.
+#' Please note that it is only the end-user that may control whether
+#' futurization should be disabled and enabled. A package must _never_
+#' disable or enable futurization.
 #'
 #'
 #' @example incl/futurize.R

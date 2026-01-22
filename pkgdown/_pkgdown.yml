@@ -1,0 +1,69 @@
+url: https://futurize.futureverse.org
+
+home:
+  links:
+  - text: Roadmap/Milestones
+    href: https://github.com/futureverse/futurize/milestones
+  - text: The Futureverse Project
+    href: https://www.futureverse.org/
+  - text: Futureverse User Forum
+    href: https://github.com/futureverse/future/discussions
+
+navbar:
+  structure:
+    right: [search, futureverse, pkgs, cran, github, lightswitch]
+  components:
+    futureverse:
+      icon: fas fa-home
+      href: https://www.futureverse.org/
+    pkgs:
+      text: Packages
+      menu:
+      - text: doFuture (map-reduce)
+        href: https://doFuture.futureverse.org
+      - text: furrr (map-reduce)
+        href: https://furrr.futureverse.org
+      - text: future 
+        href: https://future.futureverse.org
+      - text: future.apply (map-reduce)
+        href: https://future.apply.futureverse.org
+      - text: future.batchtools (backend)
+        href: https://future.batchtools.futureverse.org
+      - text: future.callr (backend)
+        href: https://future.callr.futureverse.org
+      - text: future.mirai (backend)
+        href: https://future.mirai.futureverse.org
+      - text: future.tests 
+        href: https://future.tests.futureverse.org
+      - text: globals 
+        href: https://globals.futureverse.org
+      - text: listenv 
+        href: https://listenv.futureverse.org
+      - text: parallelly 
+        href: https://parallelly.futureverse.org
+      - text: progressr 
+        href: https://progressr.futureverse.org
+      - text: BiocParallel.FutureParam (experimental)
+        href: https://BiocParallel.FutureParam.futureverse.org
+      - text: future.tools (experimental)
+        href: https://future.tools.futureverse.org
+      - text: future.mapreduce (experimental)
+        href: https://future.mapreduce.futureverse.org
+      - text: marshal (experimental)
+        href: https://marshal.futureverse.org
+    cran:
+      icon: fab fa-r-project
+      href: https://cloud.r-project.org/package=futurize
+      
+search:
+  exclude: ['README_ja.md']
+  
+template:
+  params:
+    docsearch:
+      api_key: aa6e02fc501886fb0f7c91ac4e300456
+      index_name: futureverse
+      algoliaOptions: { 'facetFilters': ['project:futurize'] }
+    ganalytics: G-SB3EQSD9FR
+  bootstrap: 5
+  light-switch: true

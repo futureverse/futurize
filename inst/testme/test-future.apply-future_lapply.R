@@ -81,6 +81,7 @@ for (cores in 1:availCores) {
     message("- lapply(x, ...) |> futurize() where length(x) != length(as.list(x)) ...")
     x <- structure(list(a = 1, b = 2), class = "Foo")
     as.list.Foo <- function(x, ...) c(x, c = 3)
+    registerS3method("as.list", class = "Foo", method = as.list.Foo)
     y0 <- lapply(x, FUN = length)
     stopifnot(identical(y0, list(a = 1L, b = 1L, c = 1L)))
     y1 <- lapply(x, FUN = length) |> futurize()
@@ -88,8 +89,9 @@ for (cores in 1:availCores) {
     rm(list = "as.list.Foo")
     
     message("- lapply(x, ...) |> futurize() where x[[i]] subsets via S3 method ...")
-    x <- structure(list(a = 1, b = 2), class = "Foo")
-    `[[.Foo` <- function(x, ...) 0
+    x <- structure(list(a = 1, b = 2), class = "Bar")
+    `[[.Bar` <- function(x, ...) 0
+    registerS3method("[[", class = "Bar", method = `[[.Bar`)
     y0 <- lapply(x, FUN = identity)
     stopifnot(identical(y0, list(a = 0, b = 0)))
     y1 <- lapply(x, FUN = identity) |> futurize()

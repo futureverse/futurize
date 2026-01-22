@@ -9,15 +9,15 @@
 #' @param when If TRUE (default), the expression is transpiled, otherwise not.
 #'
 #' @param eval If TRUE (default), the transpiled expression is evaluated,
-#' other it is returned.
+#' otherwise it is returned.
 #'
 #' @param envir The environment where the expression should be evaluated.
 #'
 #' @param type Type of the transpiler to use.
 #'
 #' @param unwrap (optional) A list of functions that should be considered
-#' wrapping function, that the transpiler should unwrap ("enter"). This
-#' Allows us to transpile expressions within `{ ... }` and `local( ... )`.
+#' wrapping functions that the transpiler should unwrap ("enter"). This
+#' allows us to transpile expressions within `{ ... }` and `local( ... )`.
 #'
 #' @returns
 #' Returns the value of the evaluated expression `expr` if `eval = TRUE`,
@@ -76,14 +76,18 @@ transpile <- local({
   
       ## 1c. Generate transpiled expression of nested transpiler
       expr <- local({
-        if (debug) mdebug_push("Apply nested transpiler ...")
-        on.exit(mdebug_pop())
-        if (debug) mprint(expr)
+        if (debug) {
+          mdebug_push("Apply nested transpiler ...")
+          on.exit({
+            print(expr)
+            mdebug_pop()
+          })
+          mprint(expr)
+        }
         parts <- as.list(expr)
         parts$eval <- FALSE
         expr2 <- as.call(parts)
         expr <- eval(expr2, envir = envir)
-        if (debug) mprint(expr)
         expr
       })
     }
@@ -96,6 +100,7 @@ transpile <- local({
   
     expr_transpiled <- transpile(expr, options = options)
     class(expr_transpiled) <- c("transpiled_call", class(expr_transpiled))
+    
     if (debug) {
       mprint(expr_transpiled)
       mdebug_pop()
@@ -121,7 +126,7 @@ class(transpile) <- c("transpiler", class(transpile))
 #' @inheritParams transpile
 #' @inheritParams parse_call
 #' 
-#' @param expr The R expression, which contains an R symbol or an R call,
+#' @param expr The R expression, which contains an R symbol or an R call
 #' to be transpiled.
 #'
 #' @return
@@ -131,14 +136,16 @@ class(transpile) <- c("transpiler", class(transpile))
 #'
 #'  * `transpiler` - a function that takes an R expression and
 #'                   an optional argument `options`
-#' 
+#'
+#' @keywords internal
+#' @noRd
 get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, what, debug = FALSE) {
   if (debug) {
     mdebug_push("get_transpiler() ...")
     on.exit(mdebug_pop())
+    mdebug_push("Finding call to be transpiled ...")
   }
   
-  mdebug_push("Finding call to be transpiled ...")
   call_pos <- decend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
   call <- expr[[call_pos]]

@@ -3,7 +3,7 @@
 #' @param package A package name.
 #'
 #' @return
-#' A character vector of package or function names
+#' A character vector of package or function names.
 #'
 #' @examples
 #' pkgs <- futurize_supported_packages()

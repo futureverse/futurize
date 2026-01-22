@@ -35,7 +35,7 @@ ys <- xmap(xs, ~ .y * .x) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how use this approach to parallelize
+This vignette demonstrates how to use this approach to parallelize
 **[crossmap]** functions such as `xmap()` and `xwalk()`.
 
 The **crossmap** `xmap()` function can be used to iterate over every
@@ -48,7 +48,7 @@ ys <- xmap(xs, ~ .y * .x)
 ```
 
 Here `xmap()` evaluates sequentially over each combination of (.y, .x)
-elements. We can easily make it to evaluate parallelly, by using:
+elements. We can easily make it evaluate in parallel, by using:
 
 ```r
 library(futurize)
@@ -65,7 +65,7 @@ plan(multisession)
 ```
 
 The built-in `multisession` backend parallelizes on your local
-computer and it works on all operating system. There are [other
+computer and it works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to
 parallelize locally as well as distributed across remote machines,
 e.g.
@@ -83,8 +83,7 @@ plan(future.batchtools::batchtools_slurm)
 
 # Supported Functions
 
-The `futurize()` function supports parallelization of the common base
-R functions. The following **crossmap** functions are supported:
+The `futurize()` function supports parallelization of the following **crossmap** functions:
 
 * `imap_vec()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `xmap_vec()`
 * `xmap()`

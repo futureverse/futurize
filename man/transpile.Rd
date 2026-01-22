@@ -29,15 +29,15 @@ If NA, then TRUE is returned if the transpiler is enabled, otherwise FALSE.}
 \item{when}{If TRUE (default), the expression is transpiled, otherwise not.}
 
 \item{eval}{If TRUE (default), the transpiled expression is evaluated,
-other it is returned.}
+otherwise it is returned.}
 
 \item{envir}{The environment where the expression should be evaluated.}
 
 \item{type}{Type of the transpiler to use.}
 
 \item{unwrap}{(optional) A list of functions that should be considered
-wrapping function, that the transpiler should unwrap ("enter"). This
-Allows us to transpile expressions within \code{{ ... }} and \code{local( ... )}.}
+wrapping functions that the transpiler should unwrap ("enter"). This
+allows us to transpile expressions within \code{{ ... }} and \code{local( ... )}.}
 }
 \value{
 Returns the value of the evaluated expression \code{expr} if \code{eval = TRUE},

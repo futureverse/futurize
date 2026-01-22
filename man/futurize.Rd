@@ -3,7 +3,7 @@
 \name{futurize}
 \alias{futurize}
 \alias{fz}
-\title{Evaluate common R functions in parallel}
+\title{Turn common R function calls into concurrent calls for parallel evaluation}
 \usage{
 futurize(
   expr,
@@ -21,7 +21,7 @@ If FALSE, then futurization is disabled, and if TRUE, it is
 re-enabled.}
 
 \item{substitute}{If TRUE, argument \code{expr} is
-\code{\link[base]{substitute}()}:ed, otherwise not.}
+\code{\link[base]{substitute}()}:d, otherwise not.}
 
 \item{options, \ldots}{Named options, passed to \code{\link[=futurize_options]{futurize_options()}},
 controlling how futures are resolved.}
@@ -37,48 +37,12 @@ identified.}
 \value{
 Returns the value of the evaluated expression \code{expr}.
 
-If \code{expr} is a TRUE or FALSE, then a logical is returned indicating
+If \code{expr} is TRUE or FALSE, then a logical is returned indicating
 whether futurization was previously enabled or disabled.
 }
 \description{
-\if{html}{\figure{futurize-magic-touch-parallelization-120x138.png}{options: style='float: right;' alt='logo' width='120'}}
+\if{html}{\figure{futurize-logo.png}{options: style='float: right;' alt='logo' width='120'}}
 }
-\section{Conditionally futurization}{
-
-It is possible to control whether futurization should take place at
-run-time. For example,
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun) |> futurize(when = \{ length(xs) >= 10 \})
-}\if{html}{\out{</div>}}
-
-will be futurized, unless \code{length(xs)} less than ten, in case it is
-evaluated as:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun)
-}\if{html}{\out{</div>}}
-}
-
-\section{Disable and re-enable all futurization}{
-
-It is possible to globally disable the effect of all \code{futurize()} calls
-by calling \code{futurize(FALSE)}. The effect is as if \code{futurize()} was never
-applied. For example,
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{futurize(FALSE)
-y <- lapply(xs, fun) |> futurize()
-}\if{html}{\out{</div>}}
-
-is evaluates as:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun)
-}\if{html}{\out{</div>}}
-
-To re-enable futurization, call \code{futurize(TRUE)}.
-Please note that it is only the end-user that may control whether
-futurization should be disabled and enabled. A package must \emph{never}
-disable or enable futurization.
-}
-
 \section{Expression unwrapping}{
 
 The transpilation mechanism includes logic to "unwrap" expressions
@@ -100,6 +64,42 @@ avoiding having to write:
   lapply(xs, fcn) |> futurize()
 \} |> suppressMessages()
 }\if{html}{\out{</div>}}
+}
+
+\section{Conditional futurization}{
+
+It is possible to control whether futurization should take place at
+run-time. For example,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun) |> futurize(when = \{ length(xs) >= 10 \})
+}\if{html}{\out{</div>}}
+
+will be futurized, unless \code{length(xs)} is less than ten, in which case it is
+evaluated as:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun)
+}\if{html}{\out{</div>}}
+}
+
+\section{Disable and re-enable all futurization}{
+
+It is possible to globally disable the effect of all \code{futurize()} calls
+by calling \code{futurize(FALSE)}. The effect is as if \code{futurize()} was never
+applied. For example,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{futurize(FALSE)
+y <- lapply(xs, fun) |> futurize()
+}\if{html}{\out{</div>}}
+
+evaluates as:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fun)
+}\if{html}{\out{</div>}}
+
+To re-enable futurization, call \code{futurize(TRUE)}.
+Please note that it is only the end-user that may control whether
+futurization should be disabled and enabled. A package must \emph{never}
+disable or enable futurization.
 }
 
 \examples{
