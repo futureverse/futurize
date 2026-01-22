@@ -47,10 +47,12 @@ cv <- cv.glmnet(x, y) |> futurize()
 This vignette demonstrates how to use this approach to parallelize **[glmnet]**
 functions such as `cv.glmnet()`.
 
-The **[glmnet]** package provides highly-optimized algorithms for fitting
-Generalized Linear Models (GLMs) with lasso and elastic-net regularization.
-Its `cv.glmnet()` function performs cross-validation to select the optimal
-regularization parameter, which is an excellent candidate for parallelization.
+The **[glmnet]** package uses a highly optimized pathwise coordinate
+descent algorithm to efficiently compute the entire regularization
+path for penalized generalized linear models (Lasso, Ridge, Elastic
+Net).  Its `cv.glmnet()` function performs cross-validation to select
+the optimal regularization parameter, which is an excellent candidate
+for parallelization.
 
 
 ## Example: Cross-validation for regularized regression
