@@ -92,13 +92,14 @@ xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ### Supported domain-specific packages
 
 You can also futurize calls from a growing set of domain-specific
-packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**,
+packages (e.g. **boot**, **fwb**, **caret**, **glmnet**, **lme4**, **mgcv**,
 and **tm**) that have optional built-in support for parallelization.
 
 
 | Package          | Functions                                                                 | Requires           |
 |------------------|---------------------------------------------------------------------------|--------------------|
 | **[boot]**   | `boot()`, `censboot()`, `tsboot()`                                        | **[future]**   |
+| **[fwb]**    | `fwb()`, `vcovFWB()`                                                      | **[future]**   |
 | **[caret]**  | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]** |
 | **[glmnet]** | `cv.glmnet()`                                                             | **[doFuture]** |
 | **[lme4]**   | `allFit()`, `bootMer()`                                                   | **[future]**   |
@@ -115,6 +116,8 @@ model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
 
 ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
+
+f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -135,6 +138,7 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 [foreach]: https://cran.r-project.org/package=foreach
 [plyr]: https://cran.r-project.org/package=plyr
 [boot]: https://cran.r-project.org/package=boot
+[fwb]: https://ngreifer.github.io/fwb/
 [mgcv]: https://cran.r-project.org/package=mgcv
 [caret]: https://cran.r-project.org/package=caret
 [glmnet]: https://cran.r-project.org/package=glmnet
