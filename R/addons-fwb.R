@@ -1,29 +1,19 @@
 # fwb::fwb(...) =>
 #
 # local({
-#   cl <- future::makeClusterFuture(<future arguments>)
 #   fwb::fwb(..., cl = "future")
 # })
 #
 append_transpilers_for_fwb <- function() {
   package <- "fwb"
 
-  if (getRversion() < "4.4.0") {
-    stop(sprintf("You are running R %s, but futurization of '%s' functions requires R (>= 4.4.0)", getRversion(), package))
-  }
-
   template <- quote(
     local({
-      oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
-      on.exit(options(oopts))
       EXPR
     })
   )
 
-  idx_EXPR <- c(2, 4)
-
-  ## To please 'R CMD check' on R (< 4.4.0), where
-  ## future::makeClusterFuture() is not available
+  idx_EXPR <- c(2, 2)
 
   transpiler <- eval(bquote(function(expr, options = NULL) {
     ## Update 'EXPR'
