@@ -7,16 +7,33 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/futureverse/futurize/blob/HEAD/DESCRIPTION)
+[`inst/CITATION`](https://github.com/futureverse/futurize/blob/HEAD/inst/CITATION)
 
-Bengtsson H (2026). *futurize: Parallelize Common Functions via One
-Magic Function*. R package version 0.1.0-9004,
-<https://futurize.futureverse.org>.
+Henrik Bengtsson, A Unified Approach to Concurrent, Parallel Map-Reduce
+in R using Futures, arXiv (2026), https://arxiv.org/abs/2601.17578
 
-    @Manual{,
-      title = {futurize: Parallelize Common Functions via One Magic Function},
+    @Misc{Bengtsson-Futurize,
       author = {Henrik Bengtsson},
+      title = {A Unified Approach to Concurrent, Parallel Map-Reduce in R using Futures},
       year = {2026},
-      note = {R package version 0.1.0-9004},
-      url = {https://futurize.futureverse.org},
+      eprint = {2601.17578},
+      archiveprefix = {arXiv},
+      primaryclass = {cs.DC},
+      url = {https://arxiv.org/abs/2601.17578},
+    }
+
+Henrik Bengtsson, A Unifying Framework for Parallel and Distributed
+Processing in R using Futures, The R Journal (2021) 13:2, pages 208-227,
+doi:10.32614/RJ-2021-048
+
+    @Article{RJ-2021-048,
+      author = {Henrik Bengtsson},
+      title = {A Unifying Framework for Parallel and Distributed Processing in R using Futures},
+      year = {2021},
+      journal = {The R Journal},
+      doi = {10.32614/RJ-2021-048},
+      url = {https://doi.org/10.32614/RJ-2021-048},
+      pages = {208--227},
+      volume = {13},
+      number = {2},
     }
