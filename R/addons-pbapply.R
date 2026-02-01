@@ -1,8 +1,9 @@
-# pbapply::pblapply(xs, fcn) =>
+# pbapply::pblapply(xs, fcn, ...) =>
 #
 # local({
-#   options(future.disposable = <future arguments>)
-#   pbapply::pblapply(xs, fcn, cl = "future")
+#   options(future.disposable = structure(OPTS, dispose = FALSE))
+#   on.exit(options(future.disposable = NULL))
+#   pbapply::pblapply(xs, fcn, ..., cl = "future")
 # })
 #
 append_transpilers_for_pbapply <- function() {
@@ -11,20 +12,35 @@ append_transpilers_for_pbapply <- function() {
   template <- quote(
    local({
       ## This will be automatically consumed and removed by 'future.apply'
-      options(future.disposable = OPTS)
+      options(future.disposable = structure(OPTS, dispose = FALSE))
+      on.exit(options(future.disposable = NULL))
       EXPR
     })
   )
 
   transpiler <- eval(bquote(function(expr, options = NULL) {
-    names(options) <- gsub("chunk_size", "chunk.size", names(options), fixed = TRUE)
-    template[[c(2,2,2)]] <- options
+    ## Specified future.* arguments
+    specified <- attr(options, "specified")
+
+    names(options) <- sub("chunk_size", "chunk.size", names(options), fixed = TRUE)
+    
+    ## pbapply does not handle stdout, messages, and warnings, so disable
+    ## those by default
+    if (!"stdout" %in% specified) {
+      options$stdout <- FALSE
+    }
+    if (!"conditions" %in% specified) {
+      options$conditions <- structure(options$conditions,
+                               exclude = c("message", "warning"))
+    }
+
+    template[[c(2,2,2,2)]] <- options
     
     parts <- c(
       as.list(expr),
       cl = "future"
     )
-    template[[c(2,3)]] <- as.call(parts)
+    template[[c(2,4)]] <- as.call(parts)
     template
   }))
   body(transpiler) <- body(transpiler)
