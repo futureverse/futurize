@@ -45,6 +45,7 @@ futurize_supported_functions("caret")
 | **[crossmap]**  | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | (itself) |
 | **[foreach]**   | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }` | **[doFuture]** | 
 | **[plyr]**      | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]** | 
+| **[pbapply]**   | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | (itself) | 
 | **[BiocParallel]** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                        | **[doFuture]** | 
 
 _Table: Map-reduce functions currently supported by `futurize()` for parallel transpilation._
@@ -70,6 +71,9 @@ ys <- foreach(x = xs) %do% { sqrt(x) } |> futurize()
 
 xs <- 1:10
 ys <- plyr::llply(xs, sqrt) |> futurize()
+
+xs <- 1:10
+ys <- pbapply::pblapply(xs, sqrt) |> futurize()
 
 xs <- 1:10
 ys <- BiocParallel::bplapply(xs, sqrt) |> futurize()
@@ -133,6 +137,7 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 [purrr]: https://cran.r-project.org/package=purrr
 [crossmap]: https://cran.r-project.org/package=crossmap
 [foreach]: https://cran.r-project.org/package=foreach
+[pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
 [boot]: https://cran.r-project.org/package=boot
 [mgcv]: https://cran.r-project.org/package=mgcv

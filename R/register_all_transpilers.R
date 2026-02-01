@@ -4,7 +4,10 @@ register_all_transpilers <- function() {
   ## Map-reduce packages (base-R)
   transpilers_for_package("futurize::add-on", package = "base",         append_transpilers_for_future.apply)
   transpilers_for_package("futurize::add-on", package = "stats",        append_transpilers_for_future.apply)
-  
+
+  ## Map-reduce packages (future.apply)
+  transpilers_for_package("futurize::add-on", package = "pbapply",      append_transpilers_for_pbapply)
+
   ## Map-reduce packages (Tidyverse)
   transpilers_for_package("futurize::add-on", package = "purrr",        append_transpilers_for_furrr)
   transpilers_for_package("futurize::add-on", package = "crossmap",     append_transpilers_for_crossmap)
@@ -13,7 +16,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "foreach",      append_transpilers_for_doFuture)
   transpilers_for_package("futurize::add-on", package = "plyr",         append_transpilers_for_plyr)
   transpilers_for_package("futurize::add-on", package = "BiocParallel", append_transpilers_for_BiocParallel)
-  
+
   ## Domain-specific "recommended" packages
   transpilers_for_package("futurize::add-on", package = "boot",         append_transpilers_for_boot)
   transpilers_for_package("futurize::add-on", package = "mgcv",         append_transpilers_for_mgcv)
