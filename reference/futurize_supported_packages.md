@@ -26,8 +26,8 @@ A character vector of package or function names.
 pkgs <- futurize_supported_packages()
 pkgs
 #>  [1] "BiocParallel" "base"         "boot"         "caret"        "crossmap"    
-#>  [6] "foreach"      "glmnet"       "lme4"         "mgcv"         "plyr"        
-#> [11] "purrr"        "stats"        "tm"          
+#>  [6] "foreach"      "glmnet"       "lme4"         "mgcv"         "pbapply"     
+#> [11] "plyr"         "purrr"        "stats"        "tm"          
 
 fcns <- futurize_supported_functions("base")
 fcns

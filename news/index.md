@@ -1,5 +1,12 @@
 # Changelog
 
+## Version (development version)
+
+### New Features
+
+- Add support for the **pbapply** package,
+  e.g. `y <- pblapply(...) |> futurize()`.
+
 ## Version 0.1.0
 
 CRAN release: 2026-01-22
