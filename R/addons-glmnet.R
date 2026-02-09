@@ -8,11 +8,11 @@
 append_transpilers_for_glmnet <- function() {
   package <- "glmnet"
 
-  template <- quote(
+  template <- bquote_compile(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
-      options(future.disposable = OPTS)
-      EXPR
+      options(future.disposable = .(OPTS))
+      .(EXPR)
     })
   )
 
@@ -22,28 +22,19 @@ append_transpilers_for_glmnet <- function() {
       defaults <- list(seed = TRUE)
     }
 
-    idx_OPTS <- c(3, 2, 2)
-    idx_EXPR <- c(3, 3)
-
-    transpiler <- eval(bquote(function(expr, options = NULL) {
-      ## SPECIAL CASE: Are we running via 'covr'?
-      if (length(template[[c(3, 2)]]) > 2L) {
-        idx_OPTS <- c(3, 2, 3, 3, 2)
-        idx_EXPR <- c(3, 3, 3, 3)
-      }
-      
-      ## Update 'OPTS'
-      template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
-      
+    transpiler <- function(expr, options = NULL) {
       ## Update 'EXPR'
       parts <- c(
         as.list(expr),
         parallel = TRUE
       )
-      template[[idx_EXPR]] <- as.call(parts)
       
-      template
-    }))
+      ## Update 'OPTS'
+      bquote_apply(template,
+        OPTS = make_options_for_doFuture(options, defaults = defaults, wrap = FALSE),
+        EXPR = as.call(parts)
+      )
+    }
     body(transpiler) <- body(transpiler)
     
     transpiler

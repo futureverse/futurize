@@ -10,20 +10,19 @@
 append_transpilers_for_plyr <- function() {
   package <- "plyr"
   
-  template <- quote(
-    with(doFuture::registerDoFuture(flavor = "%dofuture%"), (EXPR))
+  template <- bquote_compile(
+    with(doFuture::registerDoFuture(flavor = "%dofuture%"), (.(EXPR)))
   )
 
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  transpiler <- function(expr, options = NULL) {
     parts <- c(
       as.list(expr),
       .parallel = TRUE
     )
     options <- make_options_for_doFuture(options, wrap = TRUE)
     parts[[".paropts"]] <- options
-    template[[3]][[2]] <- as.call(parts)
-    template
-  }))
+    bquote_apply(template, EXPR = as.call(parts))
+  }
   body(transpiler) <- body(transpiler)
 
   transpilers <- list()

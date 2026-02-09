@@ -8,26 +8,26 @@
 append_transpilers_for_BiocParallel <- function() {
   package <- "BiocParallel"
   
-  template_stdout <- quote(
+  template_stdout <- bquote_compile(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
-      options(future.disposable = OPTS)
-      EXPR
+      options(future.disposable = .(OPTS))
+      .(EXPR)
     })
   )
 
   ## WORKAROUNDS for BiocParallel
   ## https://github.com/Bioconductor/BiocParallel/issues/276
   ## https://github.com/Bioconductor/BiocParallel/issues/277
-  template_no_stdout <- quote(
+  template_no_stdout <- bquote_compile(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
-      options(future.disposable = OPTS)
+      options(future.disposable = .(OPTS))
       ...futurize.result <- tryCatch({
         ...futurize.nullcon <- file(nullfile(), open = "w")
         sink(file = ...futurize.nullcon, type = "output")
         sink(file = ...futurize.nullcon, type = "message")
-        withVisible(EXPR)
+        withVisible(.(EXPR))
       }, finally = {
         sink(NULL, type = "message")
         sink(NULL, type = "output")
@@ -41,38 +41,25 @@ append_transpilers_for_BiocParallel <- function() {
     })
   )
 
-  idx_OPTS <- c(3, 2, 2)
-  idx_EXPR_stdout <- c(3, 3)
-  idx_EXPR_no_stdout <- c(3, 3, 3, 2, 5, 2)
-
-  if (length(template_stdout[[idx_EXPR_stdout]]) > 1) {
-    idx_OPTS <- c(3, 2, 3, 3, 2)
-    idx_EXPR_stdout <- c(3, 3, 3, 3)
-    idx_EXPR_no_stdout <- c(3, 3, 3, 3, 3, 2, 5, 3, 3, 2)
-  }
-
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  transpiler <- function(expr, options = NULL) {
     stdout <- options[["stdout"]]
     if (isFALSE(stdout)) {
       template <- template_no_stdout
-      idx_EXPR <- idx_EXPR_no_stdout
     } else {
       template <- template_stdout
-      idx_EXPR <- idx_EXPR_stdout
     }
-    
-    ## Update 'OPTS'
-    template[[idx_OPTS]] <- make_options_for_doFuture(options, wrap = TRUE)
-    
-    ## Update 'EXPR'
+
     parts <- c(
       as.list(expr),
       BPPARAM = BiocParallel::DoparParam()
     )
-    template[[idx_EXPR]] <- as.call(parts)
-    
-    template
-  }))
+
+    ## Update 'OPTS'
+    bquote_apply(template,
+      OPTS = make_options_for_doFuture(options, wrap = TRUE),
+      EXPR = as.call(parts)
+    )
+  }
   body(transpiler) <- body(transpiler)
 
   transpilers <- list()

@@ -1,3 +1,7 @@
+#' @importFrom utils globalVariables
+globalVariables(".")
+globalVariables(c("CALL", "OPTS", "EXPR"))
+
 #' Efficient partial substitution in expressions
 #' 
 #' @param expr An bquoted R expression

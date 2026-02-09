@@ -9,16 +9,16 @@
 append_transpilers_for_pbapply <- function() {
   package <- "pbapply"
   
-  template <- quote(
+  template <- bquote_compile(
    local({
       ## This will be automatically consumed and removed by 'future.apply'
-      options(future.disposable = structure(OPTS, dispose = FALSE))
+      options(future.disposable = structure(.(OPTS), dispose = FALSE))
       on.exit(options(future.disposable = NULL))
-      EXPR
+      .(EXPR)
     })
   )
 
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  transpiler <- function(expr, options = NULL) {
     ## Specified future.* arguments
     specified <- attr(options, "specified")
 
@@ -34,15 +34,12 @@ append_transpilers_for_pbapply <- function() {
                                exclude = c("message", "warning"))
     }
 
-    template[[c(2,2,2,2)]] <- options
-    
     parts <- c(
       as.list(expr),
       cl = "future"
     )
-    template[[c(2,4)]] <- as.call(parts)
-    template
-  }))
+    bquote_apply(template, OPTS = options, EXPR = as.call(parts))
+  }
   body(transpiler) <- body(transpiler)
 
   transpilers <- list()
