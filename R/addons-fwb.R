@@ -1,7 +1,6 @@
 # fwb::fwb(...) =>
 #
 # local({
-#   cl <- future::makeClusterFuture(<future arguments>)
 #   fwb::fwb(..., cl = "future")
 # })
 #
