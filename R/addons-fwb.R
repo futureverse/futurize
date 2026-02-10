@@ -12,7 +12,11 @@ append_transpilers_for_fwb <- function() {
       ## This will be automatically consumed and removed by 'future.apply',
       ## which pblapply() calls, which fwb() calls.
       options(future.disposable = structure(.(OPTS), dispose = FALSE))
-      on.exit(options(future.disposable = NULL))
+      ...future_old_rngkind <- RNGkind("L'Ecuyer-CMRG")
+      on.exit({
+        do.call(RNGkind, args = as.list(...future_old_rngkind))
+        options(future.disposable = NULL)
+      })
       .(EXPR)
     })
   )
