@@ -9,44 +9,43 @@
 #   })
 #
 append_transpilers_for_doFuture <- function() {
+  template_dofuture <- bquote_compile(local({
+    oopts <- options(future.disposable = .(OPTS))
+    on.exit(options(oopts))
+    .(EXPR)
+  }))
+  
+  template_times <- bquote_compile(local({
+    oopts <- options(future.disposable = .(OPTS))
+    on.exit(options(oopts))
+    .(EXPR)
+  }))
+      
   transpiler <- eval(bquote(function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
     call <- expr[[2]]
     fcn <- call[[1]]
+    
     ## times()?
     if (identical(fcn, as.symbol("times")) ||
         identical(fcn, quote(foreach::times))) {
-      expr2 <- quote(local({
-        oopts <- options(future.disposable = OPTS)
-        on.exit(options(oopts))
-        EXPR
-      }))
-      idx_OPTS <- c(2L, 2L, 3L, 2L)
-      idx_EXPR <- c(2L, 4L)
-      
-      ## SPECIAL CASE: Are we running via 'covr'?
-      if (length(expr2[[c(2L, 2L, 3L)]]) > 2L) {
-        idx_OPTS <- c(2L, 2L, 3L, 3L)
-      }
-      
       ## Default to seed = TRUE
       if (!"seed" %in% attr(options, "specified")) {
         options[["seed"]] <- TRUE
       }
-      
-      expr2[[idx_OPTS]] <- options
-      expr2[[idx_EXPR]] <- expr
-      expr <- expr2
-    } else if (identical(fcn, as.symbol("%:%")) ||
-               identical(fcn, quote(foreach::`%:%`))) {
-      options <- make_options_for_doFuture(options, wrap = TRUE)
-      idx_EXPR <- c(2L, 3L)
-      parts <- c(as.list(expr[[idx_EXPR]]), options)
-      expr[[idx_EXPR]] <- as.call(parts)
+      expr <- bquote_apply(template_dofuture,
+        OPTS = options,
+        EXPR = expr
+      )
     } else {
       options <- make_options_for_doFuture(options, wrap = TRUE)
-      idx_EXPR <- c(2L)
+      if (identical(fcn, as.symbol("%:%")) ||
+               identical(fcn, quote(foreach::`%:%`))) {
+        idx_EXPR <- 2:3
+      } else {
+        idx_EXPR <- 2L
+      }
       parts <- c(as.list(expr[[idx_EXPR]]), options)
       expr[[idx_EXPR]] <- as.call(parts)
     }
