@@ -104,6 +104,7 @@ and **tm**) that have optional built-in support for parallelization.
 |------------------|---------------------------------------------------------------------------|--------------------|
 | **[boot]**   | `boot()`, `censboot()`, `tsboot()`                                        | **[future]**   |
 | **[caret]**  | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]** |
+| **[fwb]**    | `fwb()`, `vcovFWB()`                                                      | (itself)       |
 | **[glmnet]** | `cv.glmnet()`                                                             | **[doFuture]** |
 | **[lme4]**   | `allFit()`, `bootMer()`                                                   | **[future]**   |
 | **[mgcv]**   | `bam()`, `predict.bam()`                                                  | **[future]**   |
@@ -119,6 +120,8 @@ model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
 
 ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
+
+f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -145,5 +148,6 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 [glmnet]: https://cran.r-project.org/package=glmnet
 [lme4]: https://cran.r-project.org/package=lme4
 [tm]: https://cran.r-project.org/package=tm
+[fwb]: https://ngreifer.github.io/fwb/
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [supported future backends]: https://www.futureverse.org/backends.html
