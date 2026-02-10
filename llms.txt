@@ -106,8 +106,9 @@ xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ### Supported domain-specific packages
 
 You can also futurize calls from a growing set of domain-specific
-packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**, and
-**tm**) that have optional built-in support for parallelization.
+packages (e.g. **boot**, **fwb**, **caret**, **glmnet**, **lme4**,
+**mgcv**, and **tm**) that have optional built-in support for
+parallelization.
 
 | Package                                                 | Functions                                                                 | Requires                                         |
 |---------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
