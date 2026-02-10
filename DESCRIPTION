@@ -23,6 +23,7 @@ Suggests:
     lme4,
     mgcv,
     tm,
+    fwb,
     tools,
     commonmark,
     base64enc    
