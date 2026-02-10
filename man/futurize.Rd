@@ -177,3 +177,9 @@ str(y)
 
 } ## if (require ...)
 }
+\seealso{
+To see which CRAN and Bioconductor packages are supported, use
+\code{\link[=futurize_supported_packages]{futurize_supported_packages()}}.
+To see which functions a specific package supports, use
+\code{\link[=futurize_supported_functions]{futurize_supported_functions()}}.
+}

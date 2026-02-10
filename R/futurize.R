@@ -87,6 +87,12 @@
 #'
 #' @example incl/futurize.R
 #'
+#' @seealso
+#' To see which CRAN and Bioconductor packages are supported, use
+#' [futurize_supported_packages()].
+#' To see which functions a specific package supports, use
+#' [futurize_supported_functions()].
+#'
 #' @aliases fz
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
