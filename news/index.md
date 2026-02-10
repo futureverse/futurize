@@ -120,9 +120,8 @@ how output and conditions are relayed, among other things.
 - Add support for **BiocParallel**,
   e.g. `y <- bplapply(xs, fcn) |> futurize()`.
 
-- Add support for **boot**, e.g. \`b \<- boot(data, statistic, R =
-
-  1000. \|\> futurize()\`.
+- Add support for **boot**,
+  e.g. `b <- boot(data, statistic, R = 1000) |> futurize()`.
 
 - Add support for **glmnet**,
   e.g. `cv <- cv.glmnet(x, y) |> futurize()`.
