@@ -109,6 +109,13 @@ only the end-user that may control whether futurization should be
 disabled and enabled. A package must *never* disable or enable
 futurization.
 
+## See also
+
+To see which CRAN and Bioconductor packages are supported, use
+[`futurize_supported_packages()`](https://futurize.futureverse.org/reference/futurize_supported_packages.md).
+To see which functions a specific package supports, use
+[`futurize_supported_functions()`](https://futurize.futureverse.org/reference/futurize_supported_packages.md).
+
 ## Examples
 
 ``` r
