@@ -113,6 +113,7 @@ packages (e.g. **boot**, **caret**, **glmnet**, **lme4**, **mgcv**, and
 |---------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
 | **[boot](https://cran.r-project.org/package=boot)**     | `boot()`, `censboot()`, `tsboot()`                                        | **[future](https://future.futureverse.org)**     |
 | **[caret](https://cran.r-project.org/package=caret)**   | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[fwb](https://ngreifer.github.io/fwb/)**              | `fwb()`, `vcovFWB()`                                                      | (itself)                                         |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()`                                                             | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)**     | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**     |
 | **[mgcv](https://cran.r-project.org/package=mgcv)**     | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**     |
@@ -130,6 +131,8 @@ model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
 
 ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
+
+f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 

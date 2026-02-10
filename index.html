@@ -268,25 +268,32 @@
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr class="odd">
+<td><strong><a href="https://ngreifer.github.io/fwb/" class="external-link">fwb</a></strong></td>
+<td>
+<code>fwb()</code>, <code>vcovFWB()</code>
+</td>
+<td>(itself)</td>
+</tr>
+<tr class="even">
 <td><strong><a href="https://cran.r-project.org/package=glmnet" class="external-link">glmnet</a></strong></td>
 <td><code>cv.glmnet()</code></td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong><a href="https://cran.r-project.org/package=lme4" class="external-link">lme4</a></strong></td>
 <td>
 <code>allFit()</code>, <code>bootMer()</code>
 </td>
 <td><strong><a href="https://future.futureverse.org" class="external-link">future</a></strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong><a href="https://cran.r-project.org/package=mgcv" class="external-link">mgcv</a></strong></td>
 <td>
 <code>bam()</code>, <code>predict.bam()</code>
 </td>
 <td><strong><a href="https://future.futureverse.org" class="external-link">future</a></strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong><a href="https://cran.r-project.org/package=tm" class="external-link">tm</a></strong></td>
 <td>
 <code>TermDocumentMatrix()</code>, <code>tm_index()</code>, <code>tm_map()</code>
@@ -303,6 +310,8 @@
 <span></span>
 <span><span class="va">ratio</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">d</span>, <span class="va">w</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">u</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot</a></span><span class="op">(</span><span class="fu">boot</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/boot/man/bigcity.html" class="external-link">city</a></span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">fwb</span><span class="fu">::</span><span class="fu"><a href="https://ngreifer.github.io/fwb/reference/fwb.html" class="external-link">fwb</a></span><span class="op">(</span><span class="fu">boot</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/boot/man/bigcity.html" class="external-link">city</a></span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
