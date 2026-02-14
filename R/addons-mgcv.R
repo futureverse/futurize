@@ -39,7 +39,6 @@ append_transpilers_for_mgcv <- function() {
       EXPR = expr
     )
   }
-  body(transpiler) <- body(transpiler)
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
     if ("cluster" %in% names(formals(fcn))) {
@@ -49,9 +48,6 @@ append_transpilers_for_mgcv <- function() {
       )
     }
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 

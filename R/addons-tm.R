@@ -35,29 +35,22 @@ append_transpilers_for_tm <- function() {
   ## future::makeClusterFuture() is not available
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
 
-  make_transpiler <- function(name) {
-    transpiler <- function(expr, options = NULL) {
-      opts <- make_options_for_makeClusterFuture(options, defaults = list(packages = "tm"))
-      bquote_apply(template,
-        CALL = call,
-        OPTS = opts,
-        EXPR = expr
-      )
-    }
-    body(transpiler) <- body(transpiler)
-    transpiler
+  transpiler <- function(expr, options = NULL) {
+    opts <- make_options_for_makeClusterFuture(options, defaults = list(packages = "tm"))
+    bquote_apply(template,
+      CALL = call,
+      OPTS = opts,
+      EXPR = expr
+    )
   }
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
     if (!name %in% c("tm_map", "tm_index", "TermDocumentMatrix")) return(NULL)
     list(
       label = sprintf("%s::%s() ~> %s::%s()", package, name, package, name),
-      transpiler = make_transpiler(name)
+      transpiler = transpiler
     )
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 

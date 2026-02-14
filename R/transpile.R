@@ -426,8 +426,8 @@ append_call_arguments <- function(expr, ..., .args = list(...)) {
 #' `package` (character string), and `name` (character string).
 #'
 #' @return
-#' A names list of transpilers, where the names corresponds to function
-#' names exported by package `package` and transpilers are lists.
+#' A named list of named list of transpilers, where the names corresponds
+#' to function names exported by package `package` and transpilers are lists.
 #'
 #' @noRd
 make_package_transpilers <- function(package, FUN) {
@@ -440,5 +440,9 @@ make_package_transpilers <- function(package, FUN) {
       transpilers[[name]] <- FUN(fcn, package = package, name = name)
     }
   }
+
+  transpilers <- list(transpilers)
+  names(transpilers) <- package
+
   transpilers
 } ## make_package_transpilers()

@@ -26,13 +26,12 @@ append_transpilers_for_lme4 <- function() {
   
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
 
-  make_transpiler <- function(name) {
-    defaults <- list()
+  make_transpiler <- function(name, defaults = list()) {
     if (name == "allFit") {
       defaults <- list(packages = "lme4")
     }
     
-    transpiler <- function(expr, options = NULL) {
+    function(expr, options = NULL) {
       expr <- append_call_arguments(expr,
         parallel = "snow",
         ncpus = 2L,   ## only used for test ncpus > 1
@@ -47,9 +46,6 @@ append_transpilers_for_lme4 <- function() {
         EXPR = expr
       )
     }
-    body(transpiler) <- body(transpiler)
-    
-    transpiler
   }
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
@@ -60,9 +56,6 @@ append_transpilers_for_lme4 <- function() {
       )
     }
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 

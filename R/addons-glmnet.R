@@ -16,13 +16,12 @@ append_transpilers_for_glmnet <- function() {
     })
   )
 
-  make_transpiler <- function(name) {
-    defaults <- list()
+  make_transpiler <- function(name, defaults = list()) {
     if (name == "cv.glmnet") {
       defaults <- list(seed = TRUE)
     }
 
-    transpiler <- function(expr, options = NULL) {
+    function(expr, options = NULL) {
       expr <- append_call_arguments(expr,
         parallel = TRUE
       )
@@ -35,9 +34,6 @@ append_transpilers_for_glmnet <- function() {
         EXPR = expr
       )
     }
-    body(transpiler) <- body(transpiler)
-    
-    transpiler
   }
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
@@ -48,9 +44,6 @@ append_transpilers_for_glmnet <- function() {
       )
     }
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 

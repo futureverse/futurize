@@ -16,12 +16,8 @@ append_transpilers_for_caret <- function() {
     })
   )
 
-  make_transpiler <- function(name, args = list(parallel = TRUE)) {
-    defaults <- list(
-      seed = TRUE
-    )
-
-    transpiler <- function(expr, options = NULL) {
+  make_transpiler <- function(name, args = list(parallel = TRUE), defaults = list(seed = TRUE)) {
+    function(expr, options = NULL) {
       expr <- append_call_arguments(expr,
         .args = args
       )
@@ -34,9 +30,6 @@ append_transpilers_for_caret <- function() {
         EXPR = expr
       )
     }
-    body(transpiler) <- body(transpiler)
-    
-    transpiler
   }
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
@@ -59,9 +52,6 @@ append_transpilers_for_caret <- function() {
       }
     }
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 

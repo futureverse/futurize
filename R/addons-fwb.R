@@ -57,7 +57,6 @@ append_transpilers_for_fwb <- function() {
       EXPR = expr
     )
   }
-  body(transpiler) <- body(transpiler)
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
     if ("cl" %in% names(formals(fcn))) {
@@ -67,9 +66,6 @@ append_transpilers_for_fwb <- function() {
       )
     }
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 

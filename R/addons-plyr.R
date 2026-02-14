@@ -22,7 +22,6 @@ append_transpilers_for_plyr <- function() {
     )
     bquote_apply(template, EXPR = expr)
   }
-  body(transpiler) <- body(transpiler)
 
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
     if (".parallel" %in% names(formals(fcn))) {
@@ -32,9 +31,6 @@ append_transpilers_for_plyr <- function() {
       )
     }
   })
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
 
   append_transpilers("futurize::add-on", transpilers)
 
