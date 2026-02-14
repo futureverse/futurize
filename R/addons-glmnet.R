@@ -40,22 +40,14 @@ append_transpilers_for_glmnet <- function() {
     transpiler
   }
 
-  transpilers <- list()
-
-  ns <- getNamespace(package)
-  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
-  names <- exports
-  for (name in names) {
-    if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-      fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      if ("parallel" %in% names(formals(fcn))) {
-        transpilers[[name]] <- list(
-          label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = make_transpiler(name)
-        )
-      }
+  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+    if ("parallel" %in% names(formals(fcn))) {
+      list(
+        label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
+        transpiler = make_transpiler(name)
+      )
     }
-  }
+  })
 
   transpilers <- list(transpilers)
   names(transpilers) <- package

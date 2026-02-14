@@ -63,24 +63,16 @@ append_transpilers_for_BiocParallel <- function() {
   }
   body(transpiler) <- body(transpiler)
 
-  transpilers <- list()
-
-  ns <- getNamespace(package)
-  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
-  names <- exports
-  ## Exclude some BiocParallel functions
-  names <- setdiff(names, c("bpvectorize", "register"))
-  for (name in names) {
-    if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-      fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      if ("BPPARAM" %in% names(formals(fcn))) {
-        transpilers[[name]] <- list(
-          label = sprintf("%s::%s() ~> %s::%s(..., BPPARAM = BiocParallel::DoparParam())", package, name, package, name),
-          transpiler = transpiler
-        )
-      }
+  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+    ## Skip some BiocParallel functions
+    if (name %in% c("bpvectorize", "register")) return(NULL)
+    if ("BPPARAM" %in% names(formals(fcn))) {
+      list(
+        label = sprintf("%s::%s() ~> %s::%s(..., BPPARAM = BiocParallel::DoparParam())", package, name, package, name),
+        transpiler = transpiler
+      )
     }
-  }
+  })
 
   transpilers <- list(transpilers)
   names(transpilers) <- package

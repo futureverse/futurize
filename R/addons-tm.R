@@ -47,22 +47,13 @@ append_transpilers_for_tm <- function() {
     transpiler
   }
 
-  transpilers <- list()
-
-  ns <- getNamespace(package)
-#  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
-#  names <- exports
-  
-  names <- c("tm_map", "tm_index", "TermDocumentMatrix")
-  for (name in names) {
-    if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-      fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      transpilers[[name]] <- list(
-        label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-        transpiler = make_transpiler(name)
-      )
-    }
-  }
+  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+    if (!name %in% c("tm_map", "tm_index", "TermDocumentMatrix")) return(NULL)
+    list(
+      label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
+      transpiler = make_transpiler(name)
+    )
+  })
 
   transpilers <- list(transpilers)
   names(transpilers) <- package
