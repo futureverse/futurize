@@ -9,19 +9,13 @@
 #   })
 #
 append_transpilers_for_doFuture <- function() {
-  template_dofuture <- bquote_compile(local({
+  template <- bquote_compile(local({
     oopts <- options(future.disposable = .(OPTS))
     on.exit(options(oopts))
     .(EXPR)
   }))
   
-  template_times <- bquote_compile(local({
-    oopts <- options(future.disposable = .(OPTS))
-    on.exit(options(oopts))
-    .(EXPR)
-  }))
-      
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  transpiler <- function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
     call <- expr[[2]]
@@ -34,7 +28,7 @@ append_transpilers_for_doFuture <- function() {
       if (!"seed" %in% attr(options, "specified")) {
         options[["seed"]] <- TRUE
       }
-      expr <- bquote_apply(template_dofuture,
+      expr <- bquote_apply(template,
         OPTS = options,
         EXPR = expr
       )
@@ -52,8 +46,7 @@ append_transpilers_for_doFuture <- function() {
       )
     }
     expr
-  }))
-  body(transpiler) <- body(transpiler)
+  }
 
   transpilers <- list()
   transpilers[["%do%"]] <- list(

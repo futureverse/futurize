@@ -41,14 +41,10 @@ append_transpilers_for_BiocParallel <- function() {
 
   transpiler <- function(expr, options = NULL) {
     stdout <- options[["stdout"]]
-    if (isFALSE(stdout)) {
-      template <- template_no_stdout
-    } else {
-      template <- template_stdout
-    }
+    template <- if (isFALSE(stdout)) template_no_stdout else template_stdout
 
     expr <- append_call_arguments(expr,
-      BPPARAM = BiocParallel::DoparParam()
+      BPPARAM = quote(BiocParallel::DoparParam())
     )
 
     opts <- make_options_for_doFuture(options, wrap = TRUE)
