@@ -437,7 +437,7 @@ make_package_transpilers <- function(package, FUN) {
   for (name in exports) {
     if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      transpilers[[name]] <- FUN(fcn, package = package, name = name)
+      transpilers[[name]] <- FUN(fcn, name = name)
     }
   }
 

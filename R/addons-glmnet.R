@@ -6,8 +6,6 @@
 # })
 #
 append_transpilers_for_glmnet <- function() {
-  package <- "glmnet"
-
   template <- bquote_compile(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
@@ -36,10 +34,10 @@ append_transpilers_for_glmnet <- function() {
     }
   }
 
-  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+  transpilers <- make_package_transpilers("glmnet", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
       list(
-        label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
+        label = sprintf("glmnet::%s() ~> glmnet::%s(..., parallel = TRUE)", name, name),
         transpiler = make_transpiler(name)
       )
     }
@@ -48,5 +46,5 @@ append_transpilers_for_glmnet <- function() {
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "doFuture")
+  c("glmnet", "doFuture")
 }

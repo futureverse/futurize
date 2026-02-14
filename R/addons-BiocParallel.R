@@ -6,8 +6,6 @@
 # })
 #
 append_transpilers_for_BiocParallel <- function() {
-  package <- "BiocParallel"
-  
   template_stdout <- bquote_compile(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
@@ -62,12 +60,12 @@ append_transpilers_for_BiocParallel <- function() {
     )
   }
 
-  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+  transpilers <- make_package_transpilers("BiocParallel", FUN = function(fcn, name) {
     ## Skip some BiocParallel functions
     if (name %in% c("bpvectorize", "register")) return(NULL)
     if ("BPPARAM" %in% names(formals(fcn))) {
       list(
-        label = sprintf("%s::%s() ~> %s::%s(..., BPPARAM = BiocParallel::DoparParam())", package, name, package, name),
+        label = sprintf("BiocParallel::%s() ~> BiocParallel::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
         transpiler = transpiler
       )
     }
@@ -76,5 +74,5 @@ append_transpilers_for_BiocParallel <- function() {
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "doFuture")
+  c("BiocParallel", "doFuture")
 }

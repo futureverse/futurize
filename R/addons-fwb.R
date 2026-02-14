@@ -5,8 +5,6 @@
 # })
 #
 append_transpilers_for_fwb <- function() {
-  package <- "fwb"
-
   template <- bquote_compile(
    local({
       ## This will be automatically consumed and removed by 'future.apply',
@@ -58,10 +56,10 @@ append_transpilers_for_fwb <- function() {
     )
   }
 
-  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+  transpilers <- make_package_transpilers("fwb", FUN = function(fcn, name) {
     if ("cl" %in% names(formals(fcn))) {
       list(
-        label = sprintf("%s::%s() ~> %s::%s(..., cl = \"future\")", package, name, package, name),
+        label = sprintf("fwb::%s() ~> fwb::%s(..., cl = \"future\")", name, name),
         transpiler = transpiler
       )
     }
@@ -70,5 +68,5 @@ append_transpilers_for_fwb <- function() {
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "future")
+  c("fwb", "future")
 }

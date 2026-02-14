@@ -10,10 +10,8 @@
 # })
 #
 append_transpilers_for_tm <- function() {
-  package <- "tm"
-
   if (getRversion() < "4.4.0") {
-    stop(sprintf("You are running R %s, but futurization of '%s' functions requires R (>= 4.4.0)", getRversion(), package))
+    stop(sprintf("You are running R %s, but futurization of 'tm' functions requires R (>= 4.4.0)", getRversion()))
   }
 
   template <- bquote_compile(
@@ -44,10 +42,10 @@ append_transpilers_for_tm <- function() {
     )
   }
 
-  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+  transpilers <- make_package_transpilers("tm", FUN = function(fcn, name) {
     if (!name %in% c("tm_map", "tm_index", "TermDocumentMatrix")) return(NULL)
     list(
-      label = sprintf("%s::%s() ~> %s::%s()", package, name, package, name),
+      label = sprintf("tm::%s() ~> tm::%s()", name, name),
       transpiler = transpiler
     )
   })
@@ -55,5 +53,5 @@ append_transpilers_for_tm <- function() {
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "future")
+  c("tm", "future")
 }

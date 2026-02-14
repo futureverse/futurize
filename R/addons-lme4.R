@@ -6,10 +6,8 @@
 # })
 #
 append_transpilers_for_lme4 <- function() {
-  package <- "lme4"
-
   if (getRversion() < "4.4.0") {
-    stop(sprintf("You are running R %s, but futurization of '%s' functions requires R (>= 4.4.0)", getRversion(), package))
+    stop(sprintf("You are running R %s, but futurization of 'lme4' functions requires R (>= 4.4.0)", getRversion()))
   }
 
   template <- bquote_compile(
@@ -48,10 +46,10 @@ append_transpilers_for_lme4 <- function() {
     }
   }
 
-  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+  transpilers <- make_package_transpilers("lme4", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
       list(
-        label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
+        label = sprintf("lme4::%s() ~> lme4::%s(..., parallel = TRUE)", name, name),
         transpiler = make_transpiler(name)
       )
     }
@@ -60,5 +58,5 @@ append_transpilers_for_lme4 <- function() {
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "future")
+  c("lme4", "future")
 }

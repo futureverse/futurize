@@ -7,8 +7,6 @@
 # })
 #
 append_transpilers_for_pbapply <- function() {
-  package <- "pbapply"
-  
   template <- bquote_compile(
    local({
       ## This will be automatically consumed and removed by 'future.apply'
@@ -41,10 +39,10 @@ append_transpilers_for_pbapply <- function() {
     bquote_apply(template, OPTS = options, EXPR = expr)
   }
 
-  transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
+  transpilers <- make_package_transpilers("pbapply", FUN = function(fcn, name) {
     if ("cl" %in% names(formals(fcn))) {
       list(
-        label = sprintf("%s::%s() ~> %s::%s(..., cl = \"future\")", package, name, package, name),
+        label = sprintf("pbapply::%s() ~> pbapply::%s(..., cl = \"future\")", name, name),
         transpiler = transpiler
       )
     }
@@ -53,5 +51,5 @@ append_transpilers_for_pbapply <- function() {
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  package
+  c("pbapply")
 }
