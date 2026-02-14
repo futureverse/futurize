@@ -391,34 +391,6 @@ transpiler_packages <- function(classes = NULL) {
 }
 
 
-#' Append arguments to a call.
-#'
-#' @param expr An \R call expression.
-#'
-#' @param \ldots Named arguments to be appended.
-#'
-#' @return
-#' Return the expression with arguments appended.
-#'
-#' @examples
-#' call <- quote(my_fcn(x, y))
-#' print(call)
-#' #> my_fcn(x, y)
-#'
-#' call2 <- append_call_arguments(call, z = 42, w = quote(1 + 2))
-#' print(call2)
-#' #> my_fcn(x, y, z = 42, w = 1 + 2)
-#'
-#' @noRd
-append_call_arguments <- function(expr, ..., .args = list(...)) {
-  ## Update 'EXPR'
-  as.call(c(
-    as.list(expr),
-    .args
-  ))
-} ## append_call_arguments()
-
-
 
 #' @param package (character string) Package name.
 #'
