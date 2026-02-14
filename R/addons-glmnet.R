@@ -23,16 +23,16 @@ append_transpilers_for_glmnet <- function() {
     }
 
     transpiler <- function(expr, options = NULL) {
-      ## Update 'EXPR'
-      parts <- c(
-        as.list(expr),
+      expr <- append_call_arguments(expr,
         parallel = TRUE
       )
+
+      opts <- make_options_for_doFuture(options, defaults = defaults, wrap = FALSE)
       
       ## Update 'OPTS'
       bquote_apply(template,
-        OPTS = make_options_for_doFuture(options, defaults = defaults, wrap = FALSE),
-        EXPR = as.call(parts)
+        OPTS = opts,
+        EXPR = expr
       )
     }
     body(transpiler) <- body(transpiler)

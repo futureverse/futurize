@@ -27,16 +27,16 @@ append_transpilers_for_mgcv <- function() {
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
 
   transpiler <- function(expr, options = NULL) {
-    ## Update 'EXPR'
-    parts <- c(
-      as.list(expr),
+    expr <- append_call_arguments(expr,
       cluster = quote(cl)
     )
 
+    opts <- make_options_for_makeClusterFuture(options)
+    
     bquote_apply(template,
       CALL = call,
-      OPTS = make_options_for_makeClusterFuture(options),
-      EXPR = as.call(parts)
+      OPTS = opts,
+      EXPR = expr
     )
   }
   body(transpiler) <- body(transpiler)

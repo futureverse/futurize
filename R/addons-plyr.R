@@ -15,13 +15,12 @@ append_transpilers_for_plyr <- function() {
   )
 
   transpiler <- function(expr, options = NULL) {
-    parts <- c(
-      as.list(expr),
-      .parallel = TRUE
-    )
     options <- make_options_for_doFuture(options, wrap = TRUE)
-    parts[[".paropts"]] <- options
-    bquote_apply(template, EXPR = as.call(parts))
+    expr <- append_call_arguments(expr,
+      .parallel = TRUE,
+      .paropts = options
+    )
+    bquote_apply(template, EXPR = expr)
   }
   body(transpiler) <- body(transpiler)
 

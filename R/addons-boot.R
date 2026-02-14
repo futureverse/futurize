@@ -26,20 +26,20 @@ append_transpilers_for_boot <- function() {
   ## future::makeClusterFuture() is not available
   
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
-  
+
   transpiler <- function(expr, options = NULL) {
-    ## Update 'EXPR'
-    parts <- c(
-      as.list(expr),
+    expr <- append_call_arguments(expr,
       parallel = "snow",
       ncpus = 2L,   ## only used for test ncpus > 1
       cl = quote(cl)
     )
 
+    opts <- make_options_for_makeClusterFuture(options)
+
     bquote_apply(template,
       CALL = call,
-      OPTS = make_options_for_makeClusterFuture(options),
-      EXPR = as.call(parts)
+      OPTS = opts,
+      EXPR = expr
     )
   }
   body(transpiler) <- body(transpiler)

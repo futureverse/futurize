@@ -48,15 +48,13 @@ append_transpilers_for_fwb <- function() {
       }
     }
     
-    ## Update 'EXPR'
-    parts <- c(
-      as.list(expr),
+    expr <- append_call_arguments(expr,
       cl = "future"
     )
     
     bquote_apply(template,
       OPTS = options,
-      EXPR = as.call(parts)
+      EXPR = expr
     )
   }
   body(transpiler) <- body(transpiler)

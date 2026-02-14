@@ -34,11 +34,11 @@ append_transpilers_for_pbapply <- function() {
                                exclude = c("message", "warning"))
     }
 
-    parts <- c(
-      as.list(expr),
+    expr <- append_call_arguments(expr,
       cl = "future"
     )
-    bquote_apply(template, OPTS = options, EXPR = as.call(parts))
+
+    bquote_apply(template, OPTS = options, EXPR = expr)
   }
   body(transpiler) <- body(transpiler)
 

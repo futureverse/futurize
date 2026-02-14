@@ -46,8 +46,10 @@ append_transpilers_for_doFuture <- function() {
       } else {
         idx_EXPR <- 2L
       }
-      parts <- c(as.list(expr[[idx_EXPR]]), options)
-      expr[[idx_EXPR]] <- as.call(parts)
+
+      expr[[idx_EXPR]] <- append_call_arguments(expr[[idx_EXPR]],
+        .args = options
+      )
     }
     expr
   }))

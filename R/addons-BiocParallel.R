@@ -49,15 +49,16 @@ append_transpilers_for_BiocParallel <- function() {
       template <- template_stdout
     }
 
-    parts <- c(
-      as.list(expr),
+    expr <- append_call_arguments(expr,
       BPPARAM = BiocParallel::DoparParam()
     )
 
+    opts <- make_options_for_doFuture(options, wrap = TRUE)
+    
     ## Update 'OPTS'
     bquote_apply(template,
-      OPTS = make_options_for_doFuture(options, wrap = TRUE),
-      EXPR = as.call(parts)
+      OPTS = opts,
+      EXPR = expr
     )
   }
   body(transpiler) <- body(transpiler)
