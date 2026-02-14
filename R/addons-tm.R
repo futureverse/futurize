@@ -37,9 +37,10 @@ append_transpilers_for_tm <- function() {
 
   make_transpiler <- function(name) {
     transpiler <- function(expr, options = NULL) {
+      opts <- make_options_for_makeClusterFuture(options, defaults = list(packages = "tm"))
       bquote_apply(template,
         CALL = call,
-        OPTS = make_options_for_makeClusterFuture(options, defaults = list(packages = "tm")),
+        OPTS = opts,
         EXPR = expr
       )
     }
@@ -50,7 +51,7 @@ append_transpilers_for_tm <- function() {
   transpilers <- make_package_transpilers(package, FUN = function(fcn, package, name) {
     if (!name %in% c("tm_map", "tm_index", "TermDocumentMatrix")) return(NULL)
     list(
-      label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
+      label = sprintf("%s::%s() ~> %s::%s()", package, name, package, name),
       transpiler = make_transpiler(name)
     )
   })
