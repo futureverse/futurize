@@ -10,33 +10,9 @@ append_transpilers_for_mgcv <- function() {
     stop(sprintf("You are running R %s, but futurization of 'mgcv' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  template <- bquote_compile(
-    local({
-      cl <- do.call(.(CALL), args = .(OPTS))
-      oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
-      on.exit(options(oopts))
-      .(EXPR)
-    })
-  )
-
-  ## To please 'R CMD check' on R (< 4.4.0), where
-  ## future::makeClusterFuture() is not available
-  
-  call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
-
-  transpiler <- function(expr, options = NULL) {
-    expr <- append_call_arguments(expr,
-      cluster = quote(cl)
-    )
-
-    opts <- make_options_for_makeClusterFuture(options)
-    
-    bquote_apply(template,
-      CALL = call,
-      OPTS = opts,
-      EXPR = expr
-    )
-  }
+  transpiler <- make_futurize_for_makeClusterFuture(args = list(
+    cluster = quote(cl)
+  ))
 
   transpilers <- make_package_transpilers("mgcv", FUN = function(fcn, name) {
     if ("cluster" %in% names(formals(fcn))) {

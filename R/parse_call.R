@@ -113,7 +113,7 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
 #'
 #' @param expr An \R call expression.
 #'
-#' @param \ldots Named arguments to be appended.
+#' @param \ldots,.args Named arguments to be appended to the call expression.
 #'
 #' @return
 #' Return the expression with arguments appended.
