@@ -41,5 +41,5 @@ For example, if \code{R_FUTURIZE_DEBUG=true}, then option
 }
 
 \seealso{
-To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
+To set \R options or environment variables when \R starts (even before the \pkg{futurize} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
 }

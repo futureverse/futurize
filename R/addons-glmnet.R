@@ -15,10 +15,6 @@ append_transpilers_for_glmnet <- function() {
   )
 
   make_transpiler <- function(name, defaults = list()) {
-    if (name == "cv.glmnet") {
-      defaults <- list(seed = TRUE)
-    }
-
     function(expr, options = NULL) {
       expr <- append_call_arguments(expr,
         parallel = TRUE
@@ -36,9 +32,15 @@ append_transpilers_for_glmnet <- function() {
 
   transpilers <- make_package_transpilers("glmnet", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      if (name == "cv.glmnet") {
+        defaults <- list(seed = TRUE)
+      } else {
+        defaults <- list()
+      }
+      
       list(
         label = sprintf("glmnet::%s() ~> glmnet::%s(..., parallel = TRUE)", name, name),
-        transpiler = make_transpiler(name)
+        transpiler = make_transpiler(name, defaults = defaults)
       )
     }
   })

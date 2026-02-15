@@ -25,10 +25,6 @@ append_transpilers_for_lme4 <- function() {
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
 
   make_transpiler <- function(name, defaults = list()) {
-    if (name == "allFit") {
-      defaults <- list(packages = "lme4")
-    }
-    
     function(expr, options = NULL) {
       expr <- append_call_arguments(expr,
         parallel = "snow",
@@ -48,9 +44,15 @@ append_transpilers_for_lme4 <- function() {
 
   transpilers <- make_package_transpilers("lme4", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      if (name == "allFit") {
+        defaults <- list(packages = "lme4")
+      } else {
+        defaults <- list()
+      }
+    
       list(
         label = sprintf("lme4::%s() ~> lme4::%s(..., parallel = TRUE)", name, name),
-        transpiler = make_transpiler(name)
+        transpiler = make_transpiler(name, defaults = defaults)
       )
     }
   })
