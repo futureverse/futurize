@@ -33,7 +33,7 @@ if `R_FUTURIZE_DEBUG=true`, then option futurize.debug is set to `TRUE`
 ## See also
 
 To set R options or environment variables when R starts (even before the
-future package is loaded), see the
+futurize package is loaded), see the
 [Startup](https://rdrr.io/r/base/Startup.html) help page. The
 [startup](https://cran.r-project.org/package=startup) package provides a
 friendly mechanism for configuring R's startup process.
