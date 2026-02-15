@@ -8,7 +8,7 @@
 #' A transpiler function.
 #'
 #' @noRd
-make_futurize_for_makeClusterFuture <- function(defaults = list(), args = list()) {
+make_futurize_for_doFuture <- function(defaults = list(), args = list()) {
   template <- bquote_compile(
     with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
       ## This will be automatically removed by doFuture
@@ -29,5 +29,5 @@ make_futurize_for_makeClusterFuture <- function(defaults = list(), args = list()
       EXPR = expr
     )
   }
-} ## make_futurize_for_makeClusterFuture()
+} ## make_futurize_for_doFuture()
 
