@@ -23,8 +23,9 @@ register_all_transpilers <- function() {
 
   ## Domain-specific packages
   transpilers_for_package("futurize::add-on", package = "caret",        append_transpilers_for_caret)
+  transpilers_for_package("futurize::add-on", package = "fwb",          append_transpilers_for_fwb)
   transpilers_for_package("futurize::add-on", package = "glmnet",       append_transpilers_for_glmnet)
   transpilers_for_package("futurize::add-on", package = "lme4",         append_transpilers_for_lme4)
+  transpilers_for_package("futurize::add-on", package = "strucchange",  append_transpilers_for_strucchange)
   transpilers_for_package("futurize::add-on", package = "tm",           append_transpilers_for_tm)
-  transpilers_for_package("futurize::add-on", package = "fwb",          append_transpilers_for_fwb)
 } ## register_all_transpilers()

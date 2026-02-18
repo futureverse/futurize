@@ -24,7 +24,12 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   b <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE) |> futurize()
   print(b)
 
-  stopifnot(all_equal(b, b_truth, check.attributes = FALSE))
+  set.seed(42)
+  RNGkind("L'Ecuyer-CMRG")
+  b2 <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE, cl = "future")
+  print(b2)
+
+  stopifnot(all_equal(b, b2, check.attributes = FALSE))
 
   #vcovFWB
   fit <- lm(u ~ x, data = city)
@@ -41,6 +46,7 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   stopifnot(!isTRUE(all.equal(v_truth, v)))
 
   set.seed(42)
+  RNGkind("L'Ecuyer-CMRG")
   v2 <- vcovFWB(fit, R = 999, cl = "future")
   print(v2)
 

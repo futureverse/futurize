@@ -1,4 +1,4 @@
-if (requireNamespace("caret")) {
+if (requireNamespace("caret") && requireNamespace("randomForest")) {
 library(futurize)
 library(caret)
 options(future.rng.onMisuse = "error")
@@ -27,4 +27,4 @@ print(model)
 ## Cannot really compare results, because of different RNGs
 
 plan(sequential)
-} ## if (requireNamespace("caret"))
+} ## if (requireNamespace("caret") && requireNamespace("randomForest"))

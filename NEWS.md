@@ -8,6 +8,9 @@
  * Add support for domain-specific package **fwb**, e.g. `b <-
    fwb(data, statistic, R = 1000) |> futurize()`.
 
+ * Add support for domain-specific package **strucchange**,
+   e.g. `bp.nile <- breakpoints(Nile ~ 1) |> futurize()`.
+
 
 # Version 0.1.0 (2026-01-18)
 

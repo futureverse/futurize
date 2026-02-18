@@ -2,7 +2,7 @@
 #
 # with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
 #   options(future.disposable = <future arguments>)
-#   caret::train(..., parallel = TRUE)
+#   caret::train(...)
 # })
 #
 append_transpilers_for_caret <- function() {
@@ -12,15 +12,18 @@ append_transpilers_for_caret <- function() {
       if (name == "nearZeroVar") {
         list(
           label = sprintf("caret::%s() ~> caret::%s()", name, name),
-          transpiler = make_futurize_for_makeClusterFuture(defaults = list(seed = TRUE), args = list(foreach = TRUE))
+          transpiler = make_futurize_for_doFuture(defaults = list(seed = TRUE), args = list(foreach = TRUE))
         )
-      } else {
-        ## nnnControl() -> nnn()
-        basename <- sub("Control$", "", name)
-        if (exists(basename, mode = "function", envir = getNamespace("caret"), inherits = FALSE)) {
+      }
+    } else {
+      ## nnn() -> nnnControl()
+      nameControl <- sprintf("%sControl", name)
+      if (exists(nameControl, mode = "function", envir = getNamespace("caret"), inherits = FALSE)) {
+        fcnControl <- get(nameControl, mode = "function", envir = getNamespace("caret"), inherits = FALSE)
+        if ("allowParallel" %in% names(formals(fcnControl))) {
           list(
-            label = sprintf("caret::%s() ~> caret::%s()", basename, basename),
-            transpiler = make_futurize_for_makeClusterFuture(defaults = list(seed = TRUE), args = list(parallel = TRUE))
+            label = sprintf("caret::%s() ~> caret::%s()", name, name),
+            transpiler = make_futurize_for_doFuture(defaults = list(seed = TRUE))
           )
         }
       }
