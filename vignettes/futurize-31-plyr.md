@@ -5,7 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{plyr}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 

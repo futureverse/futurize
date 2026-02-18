@@ -6,7 +6,7 @@
 %\VignetteKeyword{Bioconductor}
 %\VignetteKeyword{foreach}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 

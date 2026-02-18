@@ -37,16 +37,16 @@ To see which functions are supported for a specific package, use:
 futurize_supported_functions("caret")
 ```
 
-| Package             | Functions                                                                                                          | Requires                 |
-|---------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------|
-| **base**          | `lapply()`, `sapply()`, `tapply()`, `vapply()`, `mapply()`, `.mapply()`, `Map()`, `eapply()`, `apply()`, `by()`, `replicate()`, `Filter()` | **[future.apply]** |
-| **stats**         | `kernapply()` | **[future.apply]** |
-| **[purrr]**     | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr]** |
-| **[crossmap]**  | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | (itself) |
-| **[foreach]**   | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }` | **[doFuture]** | 
-| **[plyr]**      | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]** | 
-| **[pbapply]**   | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | (itself) | 
-| **[BiocParallel]** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                        | **[doFuture]** | 
+| Package            | Functions                                                                                                          | Requires                 |
+|--------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------|
+| **base**           | `lapply()`, `sapply()`, `tapply()`, `vapply()`, `mapply()`, `.mapply()`, `Map()`, `eapply()`, `apply()`, `by()`, `replicate()`, `Filter()` | **[future.apply]** |
+| **stats**          | `kernapply()`                                                                                  | **[future.apply]** |
+| **[purrr]**        | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr]** |
+| **[crossmap]**     | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()`        | (itself)           |
+| **[foreach]**      | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }`                                          | **[doFuture]**     | 
+| **[plyr]**         | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]**     | 
+| **[pbapply]**      | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`              | (itself)           | 
+| **[BiocParallel]** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                          | **[doFuture]**     | 
 
 _Table: Map-reduce functions currently supported by `futurize()` for parallel transpilation._
 
@@ -100,15 +100,16 @@ packages (e.g. **boot**, **fwb**, **caret**, **glmnet**, **lme4**, **mgcv**,
 and **tm**) that have optional built-in support for parallelization.
 
 
-| Package      | Functions                                                                 | Requires       |
-|--------------|---------------------------------------------------------------------------|----------------|
-| **[boot]**   | `boot()`, `censboot()`, `tsboot()`                                        | **[future]**   |
-| **[caret]**  | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]** |
-| **[fwb]**    | `fwb()`, `vcovFWB()`                                                      | (itself)       |
-| **[glmnet]** | `cv.glmnet()`                                                             | **[doFuture]** |
-| **[lme4]**   | `allFit()`, `bootMer()`                                                   | **[future]**   |
-| **[mgcv]**   | `bam()`, `predict.bam()`                                                  | **[future]**   |
-| **[tm]**     | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**   |
+| Package           | Functions                                                                 | Requires       |
+|-------------------|---------------------------------------------------------------------------|----------------|
+| **[boot]**        | `boot()`, `censboot()`, `tsboot()`                                        | **[future]**   |
+| **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]** |
+| **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | (itself)       |
+| **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]** |
+| **[lme4]**        | `allFit()`, `bootMer()`                                                   | **[future]**   |
+| **[mgcv]**        | `bam()`, `predict.bam()`                                                  | **[future]**   |
+| **[strucchange]** | `breakpoints()`                                                           | **[doFuture]** |
+| **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**   |
 
 _Table: Domain-specific functions currently supported by `futurize()` for parallel transpilation._
 
@@ -129,6 +130,8 @@ m <- lme4::allFit(models) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
+bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
+  
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 ```
 
@@ -148,6 +151,7 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 [caret]: https://cran.r-project.org/package=caret
 [glmnet]: https://cran.r-project.org/package=glmnet
 [lme4]: https://cran.r-project.org/package=lme4
+[strucchange]: https://cran.r-project.org/package=strucchange
 [tm]: https://cran.r-project.org/package=tm
 [fwb]: https://ngreifer.github.io/fwb/
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/

@@ -5,7 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{boot}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 

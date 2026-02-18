@@ -4,7 +4,7 @@
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 

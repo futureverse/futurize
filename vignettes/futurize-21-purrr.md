@@ -5,7 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{purrr}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 

@@ -5,7 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{strucchange}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 

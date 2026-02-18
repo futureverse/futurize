@@ -5,7 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{glmnet}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 
