@@ -27,7 +27,8 @@ pkgs <- futurize_supported_packages()
 pkgs
 #>  [1] "BiocParallel" "base"         "boot"         "caret"        "crossmap"    
 #>  [6] "foreach"      "fwb"          "glmnet"       "lme4"         "mgcv"        
-#> [11] "pbapply"      "plyr"         "purrr"        "stats"        "tm"          
+#> [11] "pbapply"      "plyr"         "purrr"        "stats"        "strucchange" 
+#> [16] "tm"          
 
 fcns <- futurize_supported_functions("base")
 fcns

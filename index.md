@@ -110,15 +110,16 @@ packages (e.g. **boot**, **fwb**, **caret**, **glmnet**, **lme4**,
 **mgcv**, and **tm**) that have optional built-in support for
 parallelization.
 
-| Package                                                 | Functions                                                                 | Requires                                         |
-|---------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
-| **[boot](https://cran.r-project.org/package=boot)**     | `boot()`, `censboot()`, `tsboot()`                                        | **[future](https://future.futureverse.org)**     |
-| **[caret](https://cran.r-project.org/package=caret)**   | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[fwb](https://ngreifer.github.io/fwb/)**              | `fwb()`, `vcovFWB()`                                                      | (itself)                                         |
-| **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()`                                                             | **[doFuture](https://doFuture.futureverse.org)** |
-| **[lme4](https://cran.r-project.org/package=lme4)**     | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**     |
-| **[mgcv](https://cran.r-project.org/package=mgcv)**     | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**     |
-| **[tm](https://cran.r-project.org/package=tm)**         | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future](https://future.futureverse.org)**     |
+| Package                                                           | Functions                                                                 | Requires                                         |
+|-------------------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
+| **[boot](https://cran.r-project.org/package=boot)**               | `boot()`, `censboot()`, `tsboot()`                                        | **[future](https://future.futureverse.org)**     |
+| **[caret](https://cran.r-project.org/package=caret)**             | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[fwb](https://ngreifer.github.io/fwb/)**                        | `fwb()`, `vcovFWB()`                                                      | (itself)                                         |
+| **[glmnet](https://cran.r-project.org/package=glmnet)**           | `cv.glmnet()`                                                             | **[doFuture](https://doFuture.futureverse.org)** |
+| **[lme4](https://cran.r-project.org/package=lme4)**               | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**     |
+| **[mgcv](https://cran.r-project.org/package=mgcv)**               | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**     |
+| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()`                                                           | **[doFuture](https://doFuture.futureverse.org)** |
+| **[tm](https://cran.r-project.org/package=tm)**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future](https://future.futureverse.org)**     |
 
 *Table: Domain-specific functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -141,5 +142,7 @@ m <- lme4::allFit(models) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
+bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
+  
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 ```

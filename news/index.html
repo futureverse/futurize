@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9023</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-glmnet.html">Parallelize 'glmnet' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-lme4.html">Parallelize 'lme4' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-mgcv.html">Parallelize 'mgcv' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -86,6 +87,7 @@
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Add support for map-reduce package <strong>pbapply</strong>, e.g. <code>y &lt;-    pblapply(...)  |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;-    fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific package <strong>strucchange</strong>, e.g. <code>bp.nile &lt;- breakpoints(Nile ~ 1) |&gt; futurize()</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -17,8 +17,8 @@
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Parallelize Common Functions via One Magic Function">
-<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, glmnet, mgcv, lme4, tm, and fwb'.">
-<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, glmnet, mgcv, lme4, tm, and fwb'.">
+<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, fwb, glmnet, mgcv, lme4, strucchange, and tm'.">
+<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, fwb, glmnet, mgcv, lme4, strucchange, and tm'.">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9023</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +59,7 @@
     <li><a class="dropdown-item" href="articles/futurize-81-glmnet.html">Parallelize 'glmnet' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-lme4.html">Parallelize 'lme4' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-mgcv.html">Parallelize 'mgcv' functions</a></li>
+    <li><a class="dropdown-item" href="articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
   </ul>
 </li>
@@ -136,7 +137,7 @@
 <colgroup>
 <col width="12%">
 <col width="71%">
-<col width="15%">
+<col width="16%">
 </colgroup>
 <thead><tr class="header">
 <th>Package</th>
@@ -243,9 +244,9 @@
 <p>You can also futurize calls from a growing set of domain-specific packages (e.g. <strong>boot</strong>, <strong>fwb</strong>, <strong>caret</strong>, <strong>glmnet</strong>, <strong>lme4</strong>, <strong>mgcv</strong>, and <strong>tm</strong>) that have optional built-in support for parallelization.</p>
 <table class="table">
 <colgroup>
-<col width="13%">
-<col width="71%">
-<col width="15%">
+<col width="17%">
+<col width="68%">
+<col width="14%">
 </colgroup>
 <thead><tr class="header">
 <th>Package</th>
@@ -294,6 +295,11 @@
 <td><strong><a href="https://future.futureverse.org" class="external-link">future</a></strong></td>
 </tr>
 <tr class="odd">
+<td><strong><a href="https://cran.r-project.org/package=strucchange" class="external-link">strucchange</a></strong></td>
+<td><code>breakpoints()</code></td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr class="even">
 <td><strong><a href="https://cran.r-project.org/package=tm" class="external-link">tm</a></strong></td>
 <td>
 <code>TermDocumentMatrix()</code>, <code>tm_index()</code>, <code>tm_map()</code>
@@ -319,6 +325,8 @@
 <span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">mgcv</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">x0</span>, bs <span class="op">=</span> <span class="va">bs</span><span class="op">)</span> <span class="op">+</span> <span class="fu">s</span><span class="op">(</span><span class="va">x1</span>, bs <span class="op">=</span> <span class="va">bs</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu">strucchange</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">tm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tm/man/tm_map.html" class="external-link">tm_map</a></span><span class="op">(</span><span class="va">crude</span>, <span class="fu">content_transformer</span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
