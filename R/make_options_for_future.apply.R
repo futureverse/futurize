@@ -9,7 +9,7 @@ make_options_for_future.apply <- local({
   
   defaults_base <- NULL
 
-  function(options, fcn) {
+  function(options, fcn, defaults = NULL) {
     ## Nothing to do?
     if (length(options) == 0L) return(options)
 
@@ -18,7 +18,7 @@ make_options_for_future.apply <- local({
     }
 
     ## Default future.* arguments
-    defaults <- c(defaults_base, get_defaults(fcn))
+    defaults <- c(defaults_base, get_defaults(fcn), defaults)
     keep <- !duplicated(names(defaults), fromLast = TRUE)
     defaults <- defaults[keep]
    
@@ -31,7 +31,9 @@ make_options_for_future.apply <- local({
       names(options) <- sub("^chunk_size$", "chunk.size", names(options))
     }
 
+    ## Remap future options for future.apply
     specified <- sprintf("future.%s", specified)
+
     names <- setdiff(names(defaults), specified)
     names(options) <- sprintf("future.%s", names(options))
     for (name in names) options[[name]] <- defaults[[name]]

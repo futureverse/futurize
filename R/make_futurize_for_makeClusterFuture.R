@@ -1,4 +1,4 @@
-#' Create a futurize transpiler based of makeClusterFuture()
+#' Create a futurize transpiler based on makeClusterFuture()
 #' 
 #' @param expr An \R call expression.
 #'

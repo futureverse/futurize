@@ -1,4 +1,4 @@
-#' Create a futurize transpiler based of %dofuture%
+#' Create a futurize transpiler based on %dofuture%
 #' 
 #' @param expr An \R call expression.
 #'
