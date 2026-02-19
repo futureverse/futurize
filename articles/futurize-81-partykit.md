@@ -1,7 +1,7 @@
 # Parallelize 'partykit' functions
 
-![The 'partykit' image](../reference/figures/partykit-logo.png)+ ![The
-'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
+![The 'partykit' image](../reference/figures/cran-partykit-logo.svg)+
+![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into
