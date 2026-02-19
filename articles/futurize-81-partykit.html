@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize base-R apply functions • futurize</title>
+<title>Parallelize 'partykit' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize base-R apply functions">
+<meta property="og:title" content="Parallelize 'partykit' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -113,28 +113,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize base-R apply functions</h1>
+      <h1>Parallelize 'partykit' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-11-apply.md" class="external-link"><code>vignettes/futurize-11-apply.md</code></a></small>
-      <div class="d-none name"><code>futurize-11-apply.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-partykit.md" class="external-link"><code>vignettes/futurize-81-partykit.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-partykit.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize base-R apply functions}
+%\VignetteIndexEntry{Parallelize 'partykit' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
+%\VignetteKeyword{partykit}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/r-base-logo.svg" alt="The base-R logo"><span>+</span>
+<p><img src="../reference/figures/partykit-logo.png" alt="The 'partykit' image"><span>+</span>
 <img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
@@ -147,89 +148,60 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://partykit.r-forge.r-project.org/partykit/" class="external-link">partykit</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">slow_fcn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>  <span class="co"># emulate work</span></span>
-<span>  <span class="va">x</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span></span>
-<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">partykit</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette demonstrates how to use this approach to parallelize
-functions such as <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>,
-<code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code>, and <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate()</a></code> in the
-<strong>base</strong> package, and <code><a href="https://rdrr.io/r/stats/kernapply.html" class="external-link">kernapply()</a></code> in the
-<strong>stats</strong> package. For example, consider the base R
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> function, which is commonly used to apply a
-function to the elements of a vector or a list, as in:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span></span>
-<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> evaluates sequentially, but we can easily
-make it evaluate in parallel, by using:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
-<p>The built-in <code>multisession</code> backend parallelizes on your
-local computer and it works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
-backends</a> to choose from, including alternatives to parallelize
-locally as well as distributed across remote machines, e.g.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
-<p>and</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
+<p>The <strong><a href="https://cran.r-project.org/package=partykit" class="external-link">partykit</a></strong>
+package provides the <code>breakpoints()</code> function for estimating
+one or more change points in a data trace, e.g. in time-series data.</p>
 <div class="section level3">
-<h3 id="kernel-smoothing">Kernel smoothing<a class="anchor" aria-label="anchor" href="#kernel-smoothing"></a>
+<h3 id="example-conditional-random-forests-inference">Example: Conditional random forests inference<a class="anchor" aria-label="anchor" href="#example-conditional-random-forests-inference"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Example adopted from
+<code><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">help("cforest", package = "partykit")</a></code>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://partykit.r-forge.r-project.org/partykit/" class="external-link">partykit</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
+<span><span class="co">## basic example: conditional inference forest for cars data</span></span>
+<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu">datasets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/datasets/EuStockMarkets.html" class="external-link">EuStockMarkets</a></span></span>
-<span><span class="va">k50</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kernel.html" class="external-link">kernel</a></span><span class="op">(</span><span class="st">"daniell"</span>, <span class="fl">50</span><span class="op">)</span></span>
-<span><span class="va">xs_smooth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kernapply.html" class="external-link">kernapply</a></span><span class="op">(</span><span class="va">xs</span>, k <span class="op">=</span> <span class="va">k50</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">## prediction of fitted mean and visualization</span></span>
+<span><span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>speed <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span></span>
+<span><span class="va">nd</span><span class="op">$</span><span class="va">mean</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">cf</span>, newdata <span class="op">=</span> <span class="va">nd</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">mean</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">nd</span><span class="op">)</span></span></code></pre></div>
+<p>This will parallelize the computations of the variable selection
+criterion, given that we have set up parallel workers, e.g.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
+<p>The built-in <code>multisession</code> backend parallelizes on your
+local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
+backends</a> to choose from, including alternatives to parallelize
+locally as well as distributed across remote machines, e.g.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
+<p>and</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The <code><a href="../reference/futurize.html">futurize()</a></code> function supports parallelization of the
-common base R functions. The following <strong>base</strong> package
-functions are supported:</p>
+<p>The following <strong>partykit</strong> functions are supported by
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
+<li><code><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest()</a></code></li>
 <li>
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>,
-<code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>
+<code><a href="https://rdrr.io/pkg/partykit/man/ctree_control.html" class="external-link">ctree_control()</a></code>, <code><a href="https://rdrr.io/pkg/partykit/man/mob_control.html" class="external-link">mob_control()</a></code>,
+<code><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">varimp.cforest()</a></code>
 </li>
-<li>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">.mapply()</a></code>,
-<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>
-</li>
-<li><code><a href="https://rdrr.io/r/base/eapply.html" class="external-link">eapply()</a></code></li>
-<li><code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code></li>
-<li>
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate()</a></code> with <code>seed = TRUE</code> as the
-default</li>
-<li><code><a href="https://rdrr.io/r/base/by.html" class="external-link">by()</a></code></li>
-<li><code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter()</a></code></li>
-</ul>
-<p>The <code><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply()</a></code> function is not supported by
-<code><a href="../reference/futurize.html">futurize()</a></code>.</p>
-<p>The following <strong>stats</strong> package function is also
-supported:</p>
-<ul>
-<li><code><a href="https://rdrr.io/r/stats/kernapply.html" class="external-link">kernapply()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -33,8 +33,8 @@ tables.
 
 The **futurize** package supports transpilation of functions from
 multiple packages. The tables below summarize the supported map-reduce
-and domain-specific functions, respectively. To programmatically see
-which packages are currently supported, use:
+(Table 1) and domain-specific (Table 2) functions, respectively. To
+programmatically see which packages are currently supported, use:
 
 ``` r
 futurize_supported_packages()
@@ -57,7 +57,7 @@ futurize_supported_functions("caret")
 | **[pbapply](https://cran.r-project.org/package=pbapply)**           | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | (itself)                                                 |
 | **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **[doFuture](https://doFuture.futureverse.org)**         |
 
-*Table: Map-reduce functions currently supported by
+*Table 1: Map-reduce functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 for parallel transpilation.*
 
@@ -106,22 +106,21 @@ xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ### Supported domain-specific packages
 
 You can also futurize calls from a growing set of domain-specific
-packages (e.g. **boot**, **fwb**, **caret**, **glmnet**, **lme4**,
-**mgcv**, and **tm**) that have optional built-in support for
-parallelization.
+packages that have optional built-in support for parallelization.
 
-| Package                                                           | Functions                                                                 | Requires                                         |
-|-------------------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
-| **[boot](https://cran.r-project.org/package=boot)**               | `boot()`, `censboot()`, `tsboot()`                                        | **[future](https://future.futureverse.org)**     |
-| **[caret](https://cran.r-project.org/package=caret)**             | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[fwb](https://ngreifer.github.io/fwb/)**                        | `fwb()`, `vcovFWB()`                                                      | (itself)                                         |
-| **[glmnet](https://cran.r-project.org/package=glmnet)**           | `cv.glmnet()`                                                             | **[doFuture](https://doFuture.futureverse.org)** |
-| **[lme4](https://cran.r-project.org/package=lme4)**               | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**     |
-| **[mgcv](https://cran.r-project.org/package=mgcv)**               | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**     |
-| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()`                                                           | **[doFuture](https://doFuture.futureverse.org)** |
-| **[tm](https://cran.r-project.org/package=tm)**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future](https://future.futureverse.org)**     |
+| Package                                                           | Functions                                                                 | Requires                                                 |
+|-------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------|
+| **[boot](https://cran.r-project.org/package=boot)**               | `boot()`, `censboot()`, `tsboot()`                                        | **[future](https://future.futureverse.org)**             |
+| **[caret](https://cran.r-project.org/package=caret)**             | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)**         |
+| **[fwb](https://ngreifer.github.io/fwb/)**                        | `fwb()`, `vcovFWB()`                                                      | (itself)                                                 |
+| **[glmnet](https://cran.r-project.org/package=glmnet)**           | `cv.glmnet()`                                                             | **[doFuture](https://doFuture.futureverse.org)**         |
+| **[lme4](https://cran.r-project.org/package=lme4)**               | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**             |
+| **[mgcv](https://cran.r-project.org/package=mgcv)**               | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**             |
+| **[partykit](https://cran.r-project.org/package=partykit)**       | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply](https://future.apply.futureverse.org)** |
+| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()`                                                           | **[doFuture](https://doFuture.futureverse.org)**         |
+| **[tm](https://cran.r-project.org/package=tm)**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future](https://future.futureverse.org)**             |
 
-*Table: Domain-specific functions currently supported by
+*Table 2: Domain-specific functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 for parallel transpilation.*
 
@@ -141,6 +140,8 @@ cv <- glmnet::cv.glmnet(x, y) |> futurize()
 m <- lme4::allFit(models) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
+
+cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
@@ -191,6 +192,8 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
 - [Parallelize 'mgcv'
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
+- [Parallelize 'partykit'
+  functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
 - [Parallelize 'strucchange'
   functions](https://futurize.futureverse.org/articles/futurize-81-strucchange.md):
 - [Parallelize 'tm'

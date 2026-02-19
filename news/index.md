@@ -11,7 +11,10 @@
   e.g. `b <- fwb(data, statistic, R = 1000) |> futurize()`.
 
 - Add support for domain-specific package **strucchange**,
-  e.g. `bp.nile <- breakpoints(Nile ~ 1) |> futurize()`.
+  e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
+
+- Add support for domain-specific package **partykit**,
+  e.g. `cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()`.
 
 ## Version 0.1.0
 
