@@ -1,3 +1,7 @@
+<div id="badges"><!-- pkgdown markup -->
+<a href="https://CRAN.R-project.org/web/checks/check_results_futurize.html"><img border="0" src="https://www.r-pkg.org/badges/version/futurize" alt="CRAN check status"/></a> <a href="https://github.com/futureverse/futurize/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/futureverse/futurize/actions/workflows/R-CMD-check.yaml/badge.svg?branch=develop" alt="R CMD check status"/></a>     <a href="https://app.codecov.io/gh/futureverse/futurize"><img border="0" src="https://codecov.io/gh/futureverse/futurize/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
+</div>
+
 # futurize: Parallelize Common Functions via One Magic Function <img border="0" src="man/figures/futurize-logo.png" style="width: 120px; margin: 2ex;" alt="The 'futurize' hexlogo" align="right"/>
 
 ## TL;DR 
