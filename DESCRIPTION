@@ -9,7 +9,7 @@ License: GPL (>= 3)
 URL: https://futurize.futureverse.org, https://github.com/futureverse/futurize
 Depends:
     R (>= 4.1.0),
-    future (> 1.69.0)
+    future (>= 1.69.0)
 Suggests:
     future.apply (>= 1.20.2),
     foreach,
