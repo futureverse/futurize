@@ -10,11 +10,13 @@
 #' @noRd
 make_futurize_for_doFuture <- function(defaults = list(), args = list()) {
   template <- bquote_compile(
-    with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
-      ## This will be automatically removed by doFuture
-      options(future.disposable = .(OPTS))
-      .(EXPR)
-    })
+    with(doFuture::registerDoFuture(flavor = "%dofuture%"),
+      local({
+        options(future.disposable = structure(.(OPTS), dispose = FALSE))
+        on.exit(options(future.disposable = NULL))
+        .(EXPR)
+      })
+    )
   )
 
   function(expr, options = NULL) {
