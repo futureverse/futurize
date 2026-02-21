@@ -10,11 +10,14 @@
 - Add support for domain-specific package **fwb**,
   e.g. `b <- fwb(data, statistic, R = 1000) |> futurize()`.
 
-- Add support for domain-specific package **strucchange**,
-  e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
-
 - Add support for domain-specific package **partykit**,
   e.g. `cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()`.
+
+- Add support for domain-specific package **seriation**,
+  e.g. `o <- seriate_best(d_supreme) |> futurize()`.
+
+- Add support for domain-specific package **strucchange**,
+  e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
 
 ## Version 0.1.0
 

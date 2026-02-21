@@ -26,6 +26,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
 - [Parallelize 'partykit'
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
+- [Parallelize 'seriation'
+  functions](https://futurize.futureverse.org/articles/futurize-81-seriation.md):
 - [Parallelize 'strucchange'
   functions](https://futurize.futureverse.org/articles/futurize-81-strucchange.md):
 - [Parallelize 'tm'
