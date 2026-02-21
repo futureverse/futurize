@@ -117,6 +117,7 @@ packages that have optional built-in support for parallelization.
 | **[lme4](https://cran.r-project.org/package=lme4)**               | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**             |
 | **[mgcv](https://cran.r-project.org/package=mgcv)**               | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**             |
 | **[partykit](https://cran.r-project.org/package=partykit)**       | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply](https://future.apply.futureverse.org)** |
+| **[seriation](https://cran.r-project.org/package=seriation)**     | `seriate_best()`, `seriate_rep()`                                         | **[doFuture](https://doFuture.futureverse.org)**         |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()`                                                           | **[doFuture](https://doFuture.futureverse.org)**         |
 | **[tm](https://cran.r-project.org/package=tm)**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future](https://future.futureverse.org)**             |
 
@@ -142,6 +143,8 @@ m <- lme4::allFit(models) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+o <- seriation::seriate_best(d_supreme) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   

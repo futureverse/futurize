@@ -305,11 +305,18 @@
 <td><strong><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></strong></td>
 </tr>
 <tr class="even">
+<td><strong><a href="https://cran.r-project.org/package=seriation" class="external-link">seriation</a></strong></td>
+<td>
+<code>seriate_best()</code>, <code>seriate_rep()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr class="odd">
 <td><strong><a href="https://cran.r-project.org/package=strucchange" class="external-link">strucchange</a></strong></td>
 <td><code>breakpoints()</code></td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong><a href="https://cran.r-project.org/package=tm" class="external-link">tm</a></strong></td>
 <td>
 <code>TermDocumentMatrix()</code>, <code>tm_index()</code>, <code>tm_map()</code>
@@ -336,6 +343,8 @@
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">mgcv</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">x0</span>, bs <span class="op">=</span> <span class="va">bs</span><span class="op">)</span> <span class="op">+</span> <span class="fu">s</span><span class="op">(</span><span class="va">x1</span>, bs <span class="op">=</span> <span class="va">bs</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">partykit</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu">seriation</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seriation/man/seriate_best.html" class="external-link">seriate_best</a></span><span class="op">(</span><span class="va">d_supreme</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu">strucchange</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  </span>
