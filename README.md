@@ -112,6 +112,7 @@ packages that have optional built-in support for parallelization.
 | **[lme4]**        | `allFit()`, `bootMer()`                                                   | **[future]**       |
 | **[mgcv]**        | `bam()`, `predict.bam()`                                                  | **[future]**       |
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply]** |
+| **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()`                                                           | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
 
@@ -135,6 +136,8 @@ m <- lme4::allFit(models) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+o <- seriation::seriate_best(d_supreme) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
@@ -160,6 +163,7 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 [glmnet]: https://cran.r-project.org/package=glmnet
 [lme4]: https://cran.r-project.org/package=lme4
 [partykit]: https://cran.r-project.org/package=partykit
+[seriation]: https://cran.r-project.org/package=seriation
 [strucchange]: https://cran.r-project.org/package=strucchange
 [tm]: https://cran.r-project.org/package=tm
 [fwb]: https://ngreifer.github.io/fwb/
