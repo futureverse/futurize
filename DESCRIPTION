@@ -28,6 +28,7 @@ Suggests:
     lme4,
     mgcv,
     partykit,
+    seriation,
     strucchange,
     tm,
     tools,

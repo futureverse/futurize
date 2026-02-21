@@ -1,8 +1,10 @@
 # strucchange::train(...) =>
 #
-# with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
+# with(doFuture::registerDoFuture(flavor = "%dofuture%"), local({
+#   options(future.disposable = structure(OPTS, dispose = FALSE))
+#   on.exit(options(future.disposable = NULL))
 #   strucchange::breakpoints(..., hpc = "foreach")
-# })
+# }))
 #
 append_transpilers_for_strucchange <- function() {
   transpilers <- make_package_transpilers("strucchange", FUN = function(fcn, name) {
