@@ -1,3 +1,4 @@
+BiocGenerics
 BiocParallel
 CMRG
 HPC
@@ -14,15 +15,21 @@ futurization
 futurize
 futurized
 futurizing
+fwb
 glmnet
 globals
 lapply
 lme
 mgcv
 parallelization
+partykit
+pathwise
+pbapply
 plyr
 purrr
 scalable
+seriation
+strucchange
 tm
 transpilable
 transpilation
