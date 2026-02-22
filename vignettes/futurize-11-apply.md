@@ -118,4 +118,69 @@ The following **stats** package function is also supported:
  * `kernapply()`
 
 
+# Known issues
+
+The **[BiocGenerics]** package defines generic functions `lapply()`,
+`sapply()`, `mapply()`, and `tapply()`. These S4 generic functions
+overrides the non-generic, counterpart functions in the **base**
+package, which are only used as a fallback if there is no matching
+method. For example, in a vanilla R session we have that both of the
+following calls are identical:
+
+```r
+y_0 <- lapply(1:3, sqrt)
+y_1 <- base::lapply(1:3, sqrt)
+```
+
+However, if we attach the **BiocGenerics** package, we have that the
+following two calls are identical:
+
+```r
+library(BiocGenerics)
+y_2 <- lapply(1:3, sqrt)
+y_3 <- BiocGenerics::lapply(1:3, sqrt)
+```
+
+The reason is that `lapply()` here is no longer `base::lapply()`, but
+the one defined by **BiocGenerics**, which masks the one on
+**base**. We can see this with:
+
+```r
+find("lapply")
+#> [1] "package:BiocGenerics" "package:base" 
+```
+
+This matters in the context of **futurize**. In a vanilla R session,
+
+```r
+y <- lapply(1:3, sqrt) |> futurize()
+```
+
+is identical to
+
+```r
+y <- base::lapply(1:3, sqrt) |> futurize()
+```
+
+However, with **BiocGenerics** attached, it is instead identical to:
+
+```r
+y <- BiocGenerics::lapply(1:3, sqrt) |> futurize()
+```
+
+which results in:
+
+```
+Error in transpilers_for_package(type = type, package = ns_name, action = "make",  : 
+  There are no factory functions for creating 'futurize::add-on' transpilers for package 'BiocGenerics'
+```
+
+The solution is to specify that it is the **base** version we wish to futurize, i.e.
+
+```r
+y <- base::lapply(1:3, sqrt) |> futurize()
+```
+
+
 [other parallel backends]: https://www.futureverse.org/backends.html
+[BiocGenerics]: https://www.bioconductor.org/packages/BiocGenerics/
