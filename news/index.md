@@ -44,7 +44,8 @@ This is the first version submitted to CRAN.
   `%dopar%` or `%dofuture%`.
 
 - Error messages now distinguish between infix operators (e.g. `%do%`)
-  and functions (e.g. [`lapply()`](https://rdrr.io/r/base/lapply.html)).
+  and functions
+  (e.g. [`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)).
 
 - Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
 

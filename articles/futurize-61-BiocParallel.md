@@ -41,8 +41,8 @@ functions such as
 **BiocParallel** package. For example, consider the
 [`bplapply()`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)
 function. It works like base-R
-[`lapply()`](https://rdrr.io/r/base/lapply.html), but uses the
-**BiocParallel** framework to process the tasks concurrently. It is
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html), but uses
+the **BiocParallel** framework to process the tasks concurrently. It is
 commonly used something like:
 
 ``` r
