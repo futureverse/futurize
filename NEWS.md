@@ -1,6 +1,6 @@
 # Version (development version)
 
-## New Features
+## New Transpilers
 
  * Add support for map-reduce package **pbapply**, e.g. `y <-
    pblapply(...)  |> futurize()`.
@@ -17,7 +17,9 @@
  * Add support for domain-specific package **strucchange**,
    e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
 
- * Add support for disabling `futurize()` transpilation via R option
+## New Features
+
+* Add support for disabling `futurize()` transpilation via R option
    `futurize.enable`, which may be set via environment variable
    `R_FUTURIZE_ENABLE` when the package is loaded.
 
@@ -28,6 +30,10 @@ This is the first version submitted to CRAN.
 
 
 # Version 0.0.6 (2026-01-14)
+
+## New Transpilers
+
+ * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
 
 ## New Features
 
@@ -46,8 +52,6 @@ This is the first version submitted to CRAN.
  * Error messages now distinguish between infix operators
    (e.g. `%do%`) and functions (e.g. `lapply()`).
 
- * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
-
 
 # Version 0.0.5 (2025-11-26)
 
@@ -61,6 +65,11 @@ This is the first version submitted to CRAN.
 
 # Version 0.0.4 (2025-09-26)
 
+## New Transpilers
+
+ * Add support for **tm**, e.g. `m <- tm_map(crude,
+   content_transformer(tolower)) |> futurize()`.
+
 ## New Features
 
  * Handle nested transpilers.
@@ -72,11 +81,17 @@ This is the first version submitted to CRAN.
  * Add `futurize(FALSE)` and `futurize(TRUE)` for disabling and
    enabling futurizing of calls.
 
- * Add support for **tm**, e.g. `m <- tm_map(crude,
-   content_transformer(tolower)) |> futurize()`.
-
  
 # Version 0.0.3 (2025-08-20)
+
+## New Transpilers
+
+ * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
+   iris, method = "rf", trControl = ctrl) |> futurize()`.
+   
+ * Add support for `times()` and `%:%` of **foreach**, which require
+   special care when it comes to passing future options,
+   e.g. `futurize(seed = FALSE)`.
 
 ## New Features
 
@@ -86,13 +101,6 @@ This is the first version submitted to CRAN.
 
  * `futurize()` gained argument `eval`, which can be used to return
    the futurized expression instead of evaluating it.
-
- * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
-   iris, method = "rf", trControl = ctrl) |> futurize()`.
-   
- * Add support for `times()` and `%:%` of **foreach**, which require
-   special care when it comes to passing future options,
-   e.g. `futurize(seed = FALSE)`.
  
 
 # Version 0.0.2 (2025-05-23)
@@ -107,7 +115,7 @@ one unifying, unique set of arguments that can be used to configure
 how the futures are resolved, how they are partitioned into chunks,
 and how output and conditions are relayed, among other things.
 
-## New Features
+## New Transpilers
 
  * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`,
    `y <- by(xs, idxs, fcn) |> futurize()`, and `xs <- kernapply(x, k)
