@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(mgcv)
@@ -46,6 +47,7 @@ parallel processing by setting up a **parallel** cluster and passing it
 as argument `cluster`. This is abstracted away by **futurize**:
 
 ``` r
+
 library(mgcv)
 
 ## Adopted from example("bam", package = "mgcv")
@@ -61,6 +63,7 @@ This will distribute the calculations across the available parallel
 workers, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -71,12 +74,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

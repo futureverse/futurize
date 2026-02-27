@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 
@@ -39,6 +40,7 @@ which is commonly used to apply a function to the elements of a vector
 or a list, as in:
 
 ``` r
+
 xs <- 1:1000
 ys <- lapply(xs, slow_fcn)
 ```
@@ -48,6 +50,7 @@ evaluates sequentially, but we can easily make it evaluate in parallel,
 by using:
 
 ``` r
+
 library(futurize)
 ys <- lapply(xs, slow_fcn) |> futurize()
 ```
@@ -56,6 +59,7 @@ This will distribute the calculations across the available parallel
 workers, given that we have set parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -66,18 +70,21 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 
 ### Kernel smoothing
 
 ``` r
+
 library(futurize)
 plan(multisession)
 
@@ -132,6 +139,7 @@ matching method. For example, in a vanilla R session we have that both
 of the following calls are identical:
 
 ``` r
+
 y_0 <- lapply(1:3, sqrt)
 y_1 <- base::lapply(1:3, sqrt)
 ```
@@ -140,6 +148,7 @@ However, if we attach the **BiocGenerics** package, we have that the
 following two calls are identical:
 
 ``` r
+
 library(BiocGenerics)
 y_2 <- lapply(1:3, sqrt)
 y_3 <- BiocGenerics::lapply(1:3, sqrt)
@@ -152,6 +161,7 @@ the one defined by **BiocGenerics**, which masks the one on **base**. We
 can see this with:
 
 ``` r
+
 find("lapply")
 #> [1] "package:BiocGenerics" "package:base" 
 ```
@@ -159,18 +169,21 @@ find("lapply")
 This matters in the context of **futurize**. In a vanilla R session,
 
 ``` r
+
 y <- lapply(1:3, sqrt) |> futurize()
 ```
 
 is identical to
 
 ``` r
+
 y <- base::lapply(1:3, sqrt) |> futurize()
 ```
 
 However, with **BiocGenerics** attached, it is instead identical to:
 
 ``` r
+
 y <- BiocGenerics::lapply(1:3, sqrt) |> futurize()
 ```
 
@@ -183,5 +196,6 @@ The solution is to specify that it is the **base** version we wish to
 futurize, i.e.
 
 ``` r
+
 y <- base::lapply(1:3, sqrt) |> futurize()
 ```

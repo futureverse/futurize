@@ -18,6 +18,7 @@ functions to parallelize via any of the \[parallel backends\] supported
 by Futureverse, e.g.
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(BiocParallel)
@@ -46,6 +47,7 @@ the **BiocParallel** framework to process the tasks concurrently. It is
 commonly used something like:
 
 ``` r
+
 library(BiocParallel)
 xs <- 1:1000
 ys <- bplapply(xs, slow_fcn)
@@ -62,6 +64,7 @@ futureverse. All we need to do is to pass the expression to
 as in:
 
 ``` r
+
 library(futurize)
 library(BiocParallel)
 xs <- 1:1000
@@ -72,6 +75,7 @@ This will distribute the calculations across the available parallel
 workers, given that we have set parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -82,12 +86,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

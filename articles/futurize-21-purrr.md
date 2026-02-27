@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(purrr)
@@ -38,6 +39,7 @@ function is commonly used to apply a function to the elements of a
 vector or a list. For example,
 
 ``` r
+
 library(purrr)
 xs <- 1:1000
 ys <- map(xs, slow_fcn)
@@ -46,6 +48,7 @@ ys <- map(xs, slow_fcn)
 or equivalently using pipe syntax
 
 ``` r
+
 library(purrr)
 xs <- 1:1000
 ys <- xs |> map(slow_fcn)
@@ -55,6 +58,7 @@ Here [`map()`](https://purrr.tidyverse.org/reference/map.html) evaluates
 sequentially, but we can easily make it evaluate in parallel, by using:
 
 ``` r
+
 library(futurize)
 library(purrr)
 xs <- 1:1000
@@ -65,6 +69,7 @@ This will distribute the calculations across the available parallel
 workers, given that we have set parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -75,18 +80,21 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 
 Another example is:
 
 ``` r
+
 library(purrr)
 library(futurize)
 plan(future.mirai::mirai_multisession)

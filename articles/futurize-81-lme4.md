@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(lme4)
@@ -42,6 +43,7 @@ The [`allFit()`](https://rdrr.io/pkg/lme4/man/allFit.html) function fits
 a model with each available optimizer, which can be done in parallel:
 
 ``` r
+
 library(lme4)
 
 ## Fit a generalized linear mixed model
@@ -58,6 +60,7 @@ to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
+
 library(futurize)
 library(lme4)
 
@@ -70,6 +73,7 @@ This will distribute the optimizer fits across the available parallel
 workers, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -80,12 +84,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 
@@ -95,6 +101,7 @@ The [`bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html) function
 performs parametric bootstrap inference on fitted models:
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(lme4)

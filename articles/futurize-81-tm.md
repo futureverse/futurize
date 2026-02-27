@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(tm)
@@ -40,6 +41,7 @@ The [`tm_map()`](https://rdrr.io/pkg/tm/man/tm_map.html) function
 applies a transformation to each document in a corpus:
 
 ``` r
+
 library(tm)
 
 ## Load the crude oil news corpus holding 20 documents
@@ -55,6 +57,7 @@ to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
+
 library(tm)
 library(futurize)
 plan(multisession)
@@ -67,6 +70,7 @@ This will distribute the document transformations across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -77,12 +81,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

@@ -19,6 +19,11 @@
 - Add support for domain-specific package **strucchange**,
   e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
 
+- Add support for disabling
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  transpilation via R option `futurize.enable`, which may be set via
+  environment variable `R_FUTURIZE_ENABLE` when the package is loaded.
+
 ## Version 0.1.0
 
 CRAN release: 2026-01-22

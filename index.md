@@ -9,6 +9,7 @@ calls. All you need to know is that there is a single function called
 that will take care of everything, e.g.
 
 ``` r
+
 y <- lapply(x, fcn) |> futurize()
 y <- map(x, fcn) |> futurize()
 b <- boot(city, ratio, R = 999) |> futurize()
@@ -37,25 +38,27 @@ multiple packages. The tables below summarize the supported map-reduce
 programmatically see which packages are currently supported, use:
 
 ``` r
+
 futurize_supported_packages()
 ```
 
 To see which functions are supported for a specific package, use:
 
 ``` r
+
 futurize_supported_functions("caret")
 ```
 
-| Package                                                             | Functions                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Requires                                                 |
-|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
-| **base**                                                            | [`lapply()`](https://rdrr.io/r/base/lapply.html), [`sapply()`](https://rdrr.io/r/base/lapply.html), [`tapply()`](https://rdrr.io/r/base/tapply.html), [`vapply()`](https://rdrr.io/r/base/lapply.html), [`mapply()`](https://rdrr.io/r/base/mapply.html), [`.mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), [`eapply()`](https://rdrr.io/r/base/eapply.html), [`apply()`](https://rdrr.io/r/base/apply.html), [`by()`](https://rdrr.io/r/base/by.html), [`replicate()`](https://rdrr.io/r/base/lapply.html), [`Filter()`](https://rdrr.io/r/base/funprog.html) | **[future.apply](https://future.apply.futureverse.org)** |
-| **stats**                                                           | [`kernapply()`](https://rdrr.io/r/stats/kernapply.html)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **[future.apply](https://future.apply.futureverse.org)** |
-| **[purrr](https://cran.r-project.org/package=purrr)**               | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()`                                                                                                                                                                                                                                                                                                                                                                                                                                     | **[furrr](https://furrr.futureverse.org)**               |
-| **[crossmap](https://cran.r-project.org/package=crossmap)**         | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | (itself)                                                 |
-| **[foreach](https://cran.r-project.org/package=foreach)**           | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **[doFuture](https://doFuture.futureverse.org)**         |
-| **[plyr](https://cran.r-project.org/package=plyr)**                 | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | **[doFuture](https://doFuture.futureverse.org)**         |
-| **[pbapply](https://cran.r-project.org/package=pbapply)**           | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | (itself)                                                 |
-| **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **[doFuture](https://doFuture.futureverse.org)**         |
+| Package | Functions | Requires |
+|----|----|----|
+| **base** | [`lapply()`](https://rdrr.io/r/base/lapply.html), [`sapply()`](https://rdrr.io/r/base/lapply.html), [`tapply()`](https://rdrr.io/r/base/tapply.html), [`vapply()`](https://rdrr.io/r/base/lapply.html), [`mapply()`](https://rdrr.io/r/base/mapply.html), [`.mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), [`eapply()`](https://rdrr.io/r/base/eapply.html), [`apply()`](https://rdrr.io/r/base/apply.html), [`by()`](https://rdrr.io/r/base/by.html), [`replicate()`](https://rdrr.io/r/base/lapply.html), [`Filter()`](https://rdrr.io/r/base/funprog.html) | **[future.apply](https://future.apply.futureverse.org)** |
+| **stats** | [`kernapply()`](https://rdrr.io/r/stats/kernapply.html) | **[future.apply](https://future.apply.futureverse.org)** |
+| **[purrr](https://cran.r-project.org/package=purrr)** | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr](https://furrr.futureverse.org)** |
+| **[crossmap](https://cran.r-project.org/package=crossmap)** | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | (itself) |
+| **[foreach](https://cran.r-project.org/package=foreach)** | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[plyr](https://cran.r-project.org/package=plyr)** | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture](https://doFuture.futureverse.org)** |
+| **[pbapply](https://cran.r-project.org/package=pbapply)** | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | (itself) |
+| **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()` | **[doFuture](https://doFuture.futureverse.org)** |
 
 *Table 1: Map-reduce functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -64,6 +67,7 @@ for parallel transpilation.*
 Here are some examples:
 
 ``` r
+
 library(futurize)
 plan(multisession)
 
@@ -93,6 +97,7 @@ ys <- BiocParallel::bplapply(xs, sqrt) |> futurize()
 and
 
 ``` r
+
 ys <- replicate(3, rnorm(1)) |> futurize()
 
 y <- by(warpbreaks, warpbreaks[,"tension"],
@@ -108,18 +113,18 @@ xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 You can also futurize calls from a growing set of domain-specific
 packages that have optional built-in support for parallelization.
 
-| Package                                                           | Functions                                                                 | Requires                                                 |
-|-------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------|
-| **[boot](https://cran.r-project.org/package=boot)**               | `boot()`, `censboot()`, `tsboot()`                                        | **[future](https://future.futureverse.org)**             |
-| **[caret](https://cran.r-project.org/package=caret)**             | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)**         |
-| **[fwb](https://ngreifer.github.io/fwb/)**                        | `fwb()`, `vcovFWB()`                                                      | (itself)                                                 |
-| **[glmnet](https://cran.r-project.org/package=glmnet)**           | `cv.glmnet()`                                                             | **[doFuture](https://doFuture.futureverse.org)**         |
-| **[lme4](https://cran.r-project.org/package=lme4)**               | `allFit()`, `bootMer()`                                                   | **[future](https://future.futureverse.org)**             |
-| **[mgcv](https://cran.r-project.org/package=mgcv)**               | `bam()`, `predict.bam()`                                                  | **[future](https://future.futureverse.org)**             |
-| **[partykit](https://cran.r-project.org/package=partykit)**       | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply](https://future.apply.futureverse.org)** |
-| **[seriation](https://cran.r-project.org/package=seriation)**     | `seriate_best()`, `seriate_rep()`                                         | **[doFuture](https://doFuture.futureverse.org)**         |
-| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()`                                                           | **[doFuture](https://doFuture.futureverse.org)**         |
-| **[tm](https://cran.r-project.org/package=tm)**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future](https://future.futureverse.org)**             |
+| Package | Functions | Requires |
+|----|----|----|
+| **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | **[future](https://future.futureverse.org)** |
+| **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | (itself) |
+| **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()` | **[future](https://future.futureverse.org)** |
+| **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, `predict.bam()` | **[future](https://future.futureverse.org)** |
+| **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()` | **[future.apply](https://future.apply.futureverse.org)** |
+| **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | **[future](https://future.futureverse.org)** |
 
 *Table 2: Domain-specific functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -128,6 +133,7 @@ for parallel transpilation.*
 Here are some examples:
 
 ``` r
+
 ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 

@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(crossmap)
@@ -28,6 +29,7 @@ adds to the **\[purrr\]**-set of functions. For example,
 can apply a function to every combination of elements in a list, e.g.
 
 ``` r
+
 library(crossmap)
 
 # Multiply the 15 combinations of values in 1:3 and -2:2
@@ -52,6 +54,7 @@ into
 meaning you can do:
 
 ``` r
+
 library(futurize)
 
 # Multiply the 15 combinations of values in 1:3 and -2:2
@@ -65,6 +68,7 @@ call concurrently, which allows you to execute it on a set parallel
 workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -75,12 +79,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

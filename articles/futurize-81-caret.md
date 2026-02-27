@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(caret)
@@ -38,6 +39,7 @@ The [`train()`](https://rdrr.io/pkg/caret/man/train.html) function fits
 models across multiple resampling iterations:
 
 ``` r
+
 library(caret)
 
 ## Set up 10-fold cross-validation
@@ -53,6 +55,7 @@ to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
+
 library(futurize)
 library(caret)
 
@@ -64,6 +67,7 @@ This will distribute the cross-validation folds across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -74,12 +78,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

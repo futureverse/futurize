@@ -13,5 +13,7 @@
 - [`zzz-futurize.options`](https://futurize.futureverse.org/reference/zzz-futurize.options.md)
   [`futurize.options`](https://futurize.futureverse.org/reference/zzz-futurize.options.md)
   [`futurize.debug`](https://futurize.futureverse.org/reference/zzz-futurize.options.md)
+  [`futurize.enable`](https://futurize.futureverse.org/reference/zzz-futurize.options.md)
   [`R_FUTURIZE_DEBUG`](https://futurize.futureverse.org/reference/zzz-futurize.options.md)
+  [`R_FUTURIZE_ENABLE`](https://futurize.futureverse.org/reference/zzz-futurize.options.md)
   : Options used by futurize

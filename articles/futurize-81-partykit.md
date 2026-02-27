@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(partykit)
@@ -31,6 +32,7 @@ Example adopted from
 [`help("cforest", package = "partykit")`](https://rdrr.io/pkg/partykit/man/cforest.html):
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(partykit)
@@ -49,6 +51,7 @@ This will parallelize the computations of the variable selection
 criterion, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -59,12 +62,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

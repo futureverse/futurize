@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(boot)
@@ -43,6 +44,7 @@ consider the `bigcity` dataset, which contains populations of 49 large
 U.S. cities in 1920 (`u`) and 1930 (`x`):
 
 ``` r
+
 library(boot)
 
 ## Draw 999 bootstrap samples of the population data. For each
@@ -57,6 +59,7 @@ to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
+
 library(futurize)
 library(boot)
 
@@ -68,6 +71,7 @@ This will distribute the 999 bootstrap samples across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -78,12 +82,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 
@@ -95,6 +101,7 @@ fit autoregressive models to bootstrap replicates of the `lynx` time
 series:
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(boot)

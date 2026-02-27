@@ -13,6 +13,7 @@ logo](../reference/figures/future-logo.png)
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(foreach)
@@ -36,6 +37,7 @@ functions such as
 example, consider:
 
 ``` r
+
 library(foreach)
 xs <- 1:1000
 ys <- foreach(x = xs) %do% slow_fcn(x)
@@ -49,6 +51,7 @@ futureverse. All we need to do is to pass the expression to
 as in:
 
 ``` r
+
 library(futurize)
 library(foreach)
 xs <- 1:1000
@@ -59,6 +62,7 @@ This will distribute the calculations across the available parallel
 workers, given that we have set parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -69,12 +73,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 
@@ -83,6 +89,7 @@ Here is another example that parallelizes
 **foreach** package via the futureverse ecosystem:
 
 ``` r
+
 library(futurize)
 library(foreach)
 ys <- times(10) %do% rnorm(3) |> futurize()

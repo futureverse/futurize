@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,11 +87,12 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Add support for map-reduce package <strong>pbapply</strong>, e.g. <code>y &lt;-    pblapply(...)  |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;-    fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>partykit</strong>, e.g. <code>cf &lt;-    partykit::cforest(dist ~ speed, data = cars) |&gt; futurize()</code>.</p></li>
+<ul><li><p>Add support for map-reduce package <strong>pbapply</strong>, e.g. <code>y &lt;- pblapply(...)  |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;- fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific package <strong>partykit</strong>, e.g. <code>cf &lt;- partykit::cforest(dist ~ speed, data = cars) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>seriation</strong>, e.g. <code>o &lt;- seriate_best(d_supreme) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>strucchange</strong>, e.g. <code>bp &lt;- breakpoints(Nile ~ 1) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for disabling <code><a href="../reference/futurize.html">futurize()</a></code> transpilation via R option <code>futurize.enable</code>, which may be set via environment variable <code>R_FUTURIZE_ENABLE</code> when the package is loaded.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -123,18 +124,18 @@
 <div class="section level3">
 <h3 id="new-features-0-0-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-4"></a></h3>
 <ul><li><p>Handle nested transpilers.</p></li>
-<li><p>Add <code>futurize(when = {condition})</code> for futurizing conditioned on an R expression at runtime, e.g. <code>lapply(xs, fun) |&gt; futurize(when =    (length(xs) &gt; 10))</code>.</p></li>
+<li><p>Add <code>futurize(when = {condition})</code> for futurizing conditioned on an R expression at runtime, e.g. <code>lapply(xs, fun) |&gt; futurize(when = (length(xs) &gt; 10))</code>.</p></li>
 <li><p>Add <code>futurize(FALSE)</code> and <code>futurize(TRUE)</code> for disabling and enabling futurizing of calls.</p></li>
-<li><p>Add support for <strong>tm</strong>, e.g. <code>m &lt;- tm_map(crude,    content_transformer(tolower)) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for <strong>tm</strong>, e.g. <code>m &lt;- tm_map(crude, content_transformer(tolower)) |&gt; futurize()</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.3" id="version-003">Version 0.0.3<a class="anchor" aria-label="anchor" href="#version-003"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-3">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-3"></a></h3>
-<ul><li><p>The default future options for <code><a href="../reference/futurize.html">futurize()</a></code> are now customized such that they work in more cases, e.g. there is no need to declare <code>seed =    TRUE</code> for <code>replicate(3, rnorm(1)) |&gt; futurize()</code>.</p></li>
+<ul><li><p>The default future options for <code><a href="../reference/futurize.html">futurize()</a></code> are now customized such that they work in more cases, e.g. there is no need to declare <code>seed = TRUE</code> for <code>replicate(3, rnorm(1)) |&gt; futurize()</code>.</p></li>
 <li><p><code><a href="../reference/futurize.html">futurize()</a></code> gained argument <code>eval</code>, which can be used to return the futurized expression instead of evaluating it.</p></li>
-<li><p>Add support for <strong>caret</strong>, e.g. <code>model &lt;- train(Species ~ ., data =    iris, method = "rf", trControl = ctrl) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for <strong>caret</strong>, e.g. <code>model &lt;- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for <code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">times()</a></code> and <code>%:%</code> of <strong>foreach</strong>, which require special care when it comes to passing future options, e.g. <code>futurize(seed = FALSE)</code>.</p></li>
 </ul></div>
 </div>
@@ -143,14 +144,14 @@
 <p>The <strong>futurize</strong> package unifies our current <strong>future.apply</strong>, <strong>furrr</strong>, and <strong>doFuture</strong> solutions into a minimal, unified API. This means you no longer need to learn those future-specific packages and their APIs, and all you need to know is the <code>... |&gt; futurize()</code> syntax. The default behavior of <code><a href="../reference/futurize.html">futurize()</a></code> is sufficient for most use cases and users, but, if needed, it comes with one unifying, unique set of arguments that can be used to configure how the futures are resolved, how they are partitioned into chunks, and how output and conditions are relayed, among other things.</p>
 <div class="section level3">
 <h3 id="new-features-0-0-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-2"></a></h3>
-<ul><li><p>Add support for base R, e.g. <code>y &lt;- lapply(xs, fcn) |&gt; futurize()</code>, <code>y &lt;- by(xs, idxs, fcn) |&gt; futurize()</code>, and <code>xs &lt;- kernapply(x, k)    |&gt; futurize()</code>.</p></li>
+<ul><li><p>Add support for base R, e.g. <code>y &lt;- lapply(xs, fcn) |&gt; futurize()</code>, <code>y &lt;- by(xs, idxs, fcn) |&gt; futurize()</code>, and <code>xs &lt;- kernapply(x, k) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for <strong>purrr</strong>, e.g. <code>y &lt;- map(xs, fcn) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for <strong>crossmap</strong>, e.g. <code>y &lt;- xmap_dbl(xs, fcn) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>foreach</strong>, e.g. <code>y &lt;- foreach(x = xs) %do% {    fcn(x) } |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>plyr</strong>, e.g. <code>y &lt;- llply(xs, fcn) |&gt;    futurize()</code>.</p></li>
-<li><p>Add support for <strong>BiocParallel</strong>, e.g. <code>y &lt;- bplapply(xs, fcn) |&gt;    futurize()</code>.</p></li>
+<li><p>Add support for <strong>foreach</strong>, e.g. <code>y &lt;- foreach(x = xs) %do% { fcn(x) } |&gt; futurize()</code>.</p></li>
+<li><p>Add support for <strong>plyr</strong>, e.g. <code>y &lt;- llply(xs, fcn) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for <strong>BiocParallel</strong>, e.g. <code>y &lt;- bplapply(xs, fcn) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for <strong>boot</strong>, e.g. <code>b &lt;- boot(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>glmnet</strong>, e.g. <code>cv &lt;- cv.glmnet(x, y) |&gt;    futurize()</code>.</p></li>
+<li><p>Add support for <strong>glmnet</strong>, e.g. <code>cv &lt;- cv.glmnet(x, y) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for <strong>lme4</strong>, e.g. <code>gm &lt;- allFit(gm) |&gt; futurize()</code>.</p></li>
 </ul></div>
 </div>

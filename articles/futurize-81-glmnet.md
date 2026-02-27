@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(futurize)
 plan(multisession)
 library(glmnet)
@@ -51,6 +52,7 @@ function fits models across multiple folds and lambda values. For
 example:
 
 ``` r
+
 library(glmnet)
 
 ## Generate simulated data
@@ -74,6 +76,7 @@ by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
+
 library(futurize)
 library(glmnet)
 
@@ -93,6 +96,7 @@ This will distribute the cross-validation folds across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -103,12 +107,14 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 

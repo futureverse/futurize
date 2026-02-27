@@ -1,8 +1,8 @@
 # Options used by futurize
 
 Below are the R options and environment variables that are used by the
-futurize package and packages enhancing it.  
-  
+futurize package and packages enhancing it.\
+\
 *WARNING: Note that the names and the default values of these options
 may change in future versions of the package. Please use with care until
 further notice.*

@@ -12,6 +12,7 @@ function. Easy!
 ## TL;DR
 
 ``` r
+
 library(plyr)
 library(futurize)
 plan(multisession)
@@ -38,6 +39,7 @@ function is commonly used to apply a function to the elements of a list
 and return a list. For example,
 
 ``` r
+
 library(plyr)
 xs <- 1:1000
 ys <- llply(xs, slow_fcn)
@@ -47,6 +49,7 @@ Here [`llply()`](https://rdrr.io/pkg/plyr/man/llply.html) evaluates
 sequentially, but we can easily make it evaluate in parallel, by using:
 
 ``` r
+
 library(futurize)
 library(plyr)
 xs <- 1:1000
@@ -57,6 +60,7 @@ This will distribute the calculations across the available parallel
 workers, given that we have set parallel workers, e.g.
 
 ``` r
+
 plan(multisession)
 ```
 
@@ -67,18 +71,21 @@ including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
 ``` r
+
 plan(future.mirai::mirai_multisession)
 ```
 
 and
 
 ``` r
+
 plan(future.batchtools::batchtools_slurm)
 ```
 
 Another example is:
 
 ``` r
+
 library(plyr)
 library(futurize)
 plan(future.mirai::mirai_multisession)
