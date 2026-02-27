@@ -29,7 +29,7 @@
 transpile <- local({
   .enabled <- list()
   
-  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
+  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), disable = FALSE, type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
     if (debug) {
       mdebug_push("transpile() ...")
       on.exit(mdebug_pop())
@@ -55,7 +55,7 @@ transpile <- local({
     }
   
     ## Don't transpile, i.e. evaluate as-is?
-    if (!enabled || !when) {
+    if (!enabled || !when || disable) {
       if (eval) {
         if (debug) mdebug("Evaluate call expression")
         return(eval(expr, envir = envir))
@@ -64,7 +64,7 @@ transpile <- local({
         return(expr)
       }
     }
-    
+
     repeat {
       ## 1a. Get a matching transpiler
       transpiler <- get_transpiler(expr, envir = envir, type = type, what = what, unwrap = unwrap, debug = debug)

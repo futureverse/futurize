@@ -11,6 +11,7 @@ transpile(
   when = TRUE,
   eval = TRUE,
   envir = parent.frame(),
+  disable = FALSE,
   type = "built-in",
   what = "transpile",
   unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity,

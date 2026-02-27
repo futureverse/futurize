@@ -34,8 +34,10 @@
 #' futurize.options 
 #'
 #' futurize.debug
+#' futurize.enable
 #'
 #' R_FUTURIZE_DEBUG
+#' R_FUTURIZE_ENABLE
 #'
 #' @name zzz-futurize.options 
 NULL
@@ -45,6 +47,6 @@ update_package_option <- import_future("update_package_option")
 
 ## Set future options based on environment variables
 update_package_options <- function(debug = FALSE) {
+  update_package_option("futurize.enable", mode = "logical", default = TRUE, debug = debug)
 }
-
 

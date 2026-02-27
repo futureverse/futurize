@@ -4,7 +4,9 @@
 \alias{zzz-futurize.options}
 \alias{futurize.options}
 \alias{futurize.debug}
+\alias{futurize.enable}
 \alias{R_FUTURIZE_DEBUG}
+\alias{R_FUTURIZE_ENABLE}
 \title{Options used by futurize}
 \description{
 Below are the \R options and environment variables that are used by the
