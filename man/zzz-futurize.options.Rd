@@ -16,7 +16,7 @@ Below are the \R options and environment variables that are used by the
 change in future versions of the package.  Please use with care until
 further notice.}
 }
-\section{Packages must not change future options}{
+\section{Packages must not change futurize options}{
 
 
 Just like for other R options, as a package developer you must \emph{not} change
@@ -29,6 +29,14 @@ undo your changes immediately afterward.
 
 \describe{
 \item{\option{futurize.debug}:}{(logical) If \code{TRUE}, extensive debug messages are generated. (Default: \code{FALSE})}
+}
+}
+
+\section{Options for controlling futurization}{
+
+\describe{
+\item{\option{futurize.enable}:}{(logical) If \code{TRUE} (default),
+\code{futurize()} transpilation will be applied, otherwise not.
 }
 }
 

@@ -7,7 +7,7 @@
 #'  change in future versions of the package.  Please use with care until
 #'  further notice._
 #'
-#' @section Packages must not change future options:
+#' @section Packages must not change futurize options:
 #'
 #' Just like for other R options, as a package developer you must _not_ change
 #' any of the below `futurize.*` options.  Only the end-user should set these.
@@ -17,6 +17,12 @@
 #' @section Options for debugging:
 #' \describe{
 #'  \item{\option{futurize.debug}:}{(logical) If `TRUE`, extensive debug messages are generated. (Default: `FALSE`)}
+#' }
+#'
+#' @section Options for controlling futurization:
+#' \describe{
+#'  \item{\option{futurize.enable}:}{(logical) If `TRUE` (default),
+#'    `futurize()` transpilation will be applied, otherwise not.
 #' }
 #'
 #' @section Environment variables that set R options:
