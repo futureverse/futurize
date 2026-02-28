@@ -28,6 +28,15 @@ the cloud, or on a high-performance compute (HPC) cluster. The
 dependencies are optional “buy-in” dependencies as shown in the below
 tables.
 
+In addition to getting access to all future-based parallel backends, by
+using
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+you also get access to all the benefits that comes with **futureverse**.
+Notably, if the function you parallelize output messages and warnings,
+they will be relayed from the parallel worker to your main R session,
+just as you get when running sequentially. This is particularly useful
+when troubleshooting or debugging.
+
 ## Supported calls
 
 ### Supported map-reduce packages

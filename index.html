@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9033</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9034</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,6 +124,7 @@
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">map</span><span class="op">(</span><span class="va">x</span>, <span class="va">fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">boot</span><span class="op">(</span><span class="va">city</span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="reference/futurize.html">futurize()</a></code> function parallelizes via <strong><a href="https://www.futureverse.org" class="external-link">futureverse</a></strong>, meaning your code can take advantage of any <strong><a href="https://www.futureverse.org/backends.html" class="external-link">supported future backends</a></strong>, whether it be parallelization on your local computer, across multiple computers, in the cloud, or on a high-performance compute (HPC) cluster. The <strong>futurize</strong> package has only one hard dependency - the <strong><a href="https://future.futureverse.org" class="external-link">future</a></strong> package. All other dependencies are optional “buy-in” dependencies as shown in the below tables.</p>
+<p>In addition to getting access to all future-based parallel backends, by using <code><a href="reference/futurize.html">futurize()</a></code> you also get access to all the benefits that comes with <strong>futureverse</strong>. Notably, if the function you parallelize output messages and warnings, they will be relayed from the parallel worker to your main R session, just as you get when running sequentially. This is particularly useful when troubleshooting or debugging.</p>
 </div>
 <div class="section level2">
 <h2 id="supported-calls">Supported calls<a class="anchor" aria-label="anchor" href="#supported-calls"></a>
