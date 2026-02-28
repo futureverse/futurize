@@ -115,6 +115,7 @@ packages that have optional built-in support for parallelization.
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()`                                                           | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
+| **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**      |
 
 _Table 2: Domain-specific functions currently supported by `futurize()` for parallel transpilation._
 
@@ -142,6 +143,8 @@ o <- seriation::seriate_best(d_supreme) |> futurize()
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
+
+tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
 ```
 
 
@@ -151,21 +154,22 @@ m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 [future.apply]: https://future.apply.futureverse.org
 [furrr]: https://furrr.futureverse.org
 [doFuture]: https://doFuture.futureverse.org
-[purrr]: https://cran.r-project.org/package=purrr
+[TSP]: https://cran.r-project.org/package=TSP
+[boot]: https://cran.r-project.org/package=boot
+[caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
 [foreach]: https://cran.r-project.org/package=foreach
-[pbapply]: https://cran.r-project.org/package=pbapply
-[plyr]: https://cran.r-project.org/package=plyr
-[boot]: https://cran.r-project.org/package=boot
 [fwb]: https://ngreifer.github.io/fwb/
-[mgcv]: https://cran.r-project.org/package=mgcv
-[caret]: https://cran.r-project.org/package=caret
+[fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
 [lme4]: https://cran.r-project.org/package=lme4
+[mgcv]: https://cran.r-project.org/package=mgcv
 [partykit]: https://cran.r-project.org/package=partykit
+[pbapply]: https://cran.r-project.org/package=pbapply
+[plyr]: https://cran.r-project.org/package=plyr
+[purrr]: https://cran.r-project.org/package=purrr
 [seriation]: https://cran.r-project.org/package=seriation
 [strucchange]: https://cran.r-project.org/package=strucchange
 [tm]: https://cran.r-project.org/package=tm
-[fwb]: https://ngreifer.github.io/fwb/
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [supported future backends]: https://www.futureverse.org/backends.html

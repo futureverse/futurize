@@ -9,13 +9,16 @@
    fwb(data, statistic, R = 1000) |> futurize()`.
 
  * Add support for domain-specific package **partykit**, e.g. `cf <-
-   partykit::cforest(dist ~ speed, data = cars) |> futurize()`.
+   cforest(dist ~ speed, data = cars) |> futurize()`.
 
  * Add support for domain-specific package **seriation**,
    e.g. `o <- seriate_best(d_supreme) |> futurize()`.
    
  * Add support for domain-specific package **strucchange**,
    e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
+
+ * Add support for domain-specific package **TSP**, e.g. `tour <-
+   solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()`.
 
 ## New Features
 
