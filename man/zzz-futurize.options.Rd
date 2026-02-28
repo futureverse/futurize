@@ -36,7 +36,7 @@ undo your changes immediately afterward.
 
 \describe{
 \item{\option{futurize.enable}:}{(logical) If \code{TRUE} (default),
-\code{futurize()} transpilation will be applied, otherwise not.
+\code{futurize()} transpilation will be applied, otherwise not.}
 }
 }
 

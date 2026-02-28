@@ -22,7 +22,7 @@
 #' @section Options for controlling futurization:
 #' \describe{
 #'  \item{\option{futurize.enable}:}{(logical) If `TRUE` (default),
-#'    `futurize()` transpilation will be applied, otherwise not.
+#'    `futurize()` transpilation will be applied, otherwise not.}
 #' }
 #'
 #' @section Environment variables that set R options:
