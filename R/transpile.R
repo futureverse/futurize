@@ -405,7 +405,7 @@ transpiler_packages <- function(classes = NULL) {
 make_package_transpilers <- function(package, FUN) {
   transpilers <- list()
   ns <- getNamespace(package)
-  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
+  exports <- names(getNamespaceInfo(ns, "exports"))
   for (name in exports) {
     if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
