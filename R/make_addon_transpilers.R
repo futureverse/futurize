@@ -22,7 +22,7 @@ make_addon_transpilers <- function(from_package, to_package, make_options) {
   }
 
   transpilers <- list()
-  
+
   exports <- names(getNamespaceInfo(to_package, "exports"))
   names <- grep("^future_", exports, value = TRUE)
   for (name in names) {

@@ -397,16 +397,28 @@ transpiler_packages <- function(classes = NULL) {
 #' @param FUN A functions taking arguments `fcn` (a function),
 #' `package` (character string), and `name` (character string).
 #'
+#' @param export (logical) If TRUE, exported functions are considered.
+#'
+#' @param s3methods (logical) If TRUE, registered S3 methods are considered.
+#'
 #' @return
 #' A named list of named list of transpilers, where the names corresponds
-#' to function names exported by package `package` and transpilers are lists.
+#' to function names of the package `package` and transpilers are lists.
 #'
 #' @noRd
-make_package_transpilers <- function(package, FUN) {
+make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = FALSE) {
   transpilers <- list()
   ns <- getNamespace(package)
-  exports <- names(getNamespaceInfo(ns, "exports"))
-  for (name in exports) {
+
+  names <- character(0L)
+  if (exports) {
+    names <- c(names, names(getNamespaceInfo(ns, "exports")))
+  }
+  if (s3methods) {
+    names <- c(names, getNamespaceInfo(ns, "S3methods")[,3])
+  }
+  
+  for (name in names) {
     if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
       fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
       transpilers[[name]] <- FUN(fcn, name = name)
