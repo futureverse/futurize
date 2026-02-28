@@ -25,6 +25,14 @@ The **futurize** package has only one hard dependency - the
 **[future]** package. All other dependencies are optional "buy-in"
 dependencies as shown in the below tables.
 
+In addition to getting access to all future-based parallel backends,
+by using `futurize()` you also get access to all the benefits that
+comes with **futureverse**. Notably, if the function you parallelize
+output messages and warnings, they will be relayed from the parallel
+worker to your main R session, just as you get when running
+sequentially. This is particularly useful when troubleshooting or
+debugging.
+
 
 ## Supported calls
 
