@@ -6,11 +6,6 @@ options(future.rng.onMisuse = "error")
 plan(multisession)
 
 data("USCA50")
-methods <- c("identity", "random", "nearest_insertion", "cheapest_insertion", "farthest_insertion", "arbitrary_insertion", "nn", "repetitive_nn", "two_opt", "sa")
-
-## calculate tours
-tours <- lapply(methods, FUN = function(m) solve_TSP(USCA50, method = m))
-names(tours) <- methods
 
 RNGkind("L'Ecuyer-CMRG")
 

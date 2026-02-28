@@ -29,6 +29,7 @@ library(futurize)
 plan(multisession)
 library(TSP)
 
+data("USCA50")
 tour <- solve_TSP(USCA50, method = "nn", rep = 10L) |> futurize()
 ```
 
@@ -47,14 +48,17 @@ plan(multisession)
 library(TSP)
 
 data("USCA50")
-methods <- c("identity", "random", "nearest_insertion", "cheapest_insertion", "farthest_insertion", "arbitrary_insertion", "nn", "repetitive_nn", "two_opt", "
-sa")
+methods <- c(
+  "identity", "random", "nearest_insertion", "cheapest_insertion",
+  "farthest_insertion", "arbitrary_insertion", "nn", "repetitive_nn", 
+  "two_opt", "sa"
+)
 
-## calculate tours
-tours <- lapply(methods, FUN = function(m) solve_TSP(USCA50, method = m))
+## calculate tours - each tour in parallel
+tours <- lapply(methods, FUN = function(m) {
+  solve_TSP(USCA50, rep = 10L, method = m) |> futurize()
+})
 names(tours) <- methods
-
-tours$'nn+rep_10' <- solve_TSP(USCA50, method = "nn", rep = 10L) |> futurize()
 ```
 
 This will parallelize the computations, given that we have set up
