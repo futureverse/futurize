@@ -17,6 +17,7 @@ library(futurize)
 plan(multisession)
 library(TSP)
 
+data("USCA50")
 tour <- solve_TSP(USCA50, method = "nn", rep = 10L) |> futurize()
 ```
 
