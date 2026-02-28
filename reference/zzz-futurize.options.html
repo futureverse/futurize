@@ -104,7 +104,7 @@ further notice.</em></p>
 
 
     <div class="section level2">
-    <h2 id="packages-must-not-change-future-options">Packages must not change future options<a class="anchor" aria-label="anchor" href="#packages-must-not-change-future-options"></a></h2>
+    <h2 id="packages-must-not-change-futurize-options">Packages must not change futurize options<a class="anchor" aria-label="anchor" href="#packages-must-not-change-futurize-options"></a></h2>
 
 
 
@@ -123,19 +123,21 @@ undo your changes immediately afterward.</p>
 
 </dl></div>
     <div class="section level2">
-    <h2 id="environment-variables-that-set-r-options">Environment variables that set R options<a class="anchor" aria-label="anchor" href="#environment-variables-that-set-r-options"></a></h2>
+    <h2 id="options-for-controlling-futurization">Options for controlling futurization<a class="anchor" aria-label="anchor" href="#options-for-controlling-futurization"></a></h2>
 
 
-<p>All of the above <span style="R">R</span> <span class="option">futurize.*</span> options can be set by corresponding
+<dl><dt><span class="option">futurize.enable</span>:</dt>
+<dd><p>(logical) If <code>TRUE</code> (default),
+<code><a href="futurize.html">futurize()</a></code> transpilation will be applied, otherwise not.</p></dd>
+
+
+</dl><p>Environment variables that set R optionsAll of the above <span style="R">R</span> <span class="option">futurize.*</span> options can be set by corresponding
 environment variable <code class="env">R_FUTURIZE_*</code> <em>when the <span class="pkg">futurize</span> package is
 loaded</em>. This means that those environment variables must be set before
 the <span class="pkg">futurize</span> package is loaded in order to have an effect.
 For example, if <code>R_FUTURIZE_DEBUG=true</code>, then option
 <span class="option">futurize.debug</span> is set to <code>TRUE</code> (logical).</p>
-    </div>
-    <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>To set <span style="R">R</span> options or environment variables when <span style="R">R</span> starts (even before the <span class="pkg">futurize</span> package is loaded), see the <a href="https://rdrr.io/r/base/Startup.html" class="external-link">Startup</a> help page.  The <a href="https://cran.r-project.org/package=startup" class="external-link"><span class="pkg">startup</span></a> package provides a friendly mechanism for configuring <span style="R">R</span>'s startup process.</p></div>
+<p>To set <span style="R">R</span> options or environment variables when <span style="R">R</span> starts (even before the <span class="pkg">futurize</span> package is loaded), see the <a href="https://rdrr.io/r/base/Startup.html" class="external-link">Startup</a> help page.  The <a href="https://cran.r-project.org/package=startup" class="external-link"><span class="pkg">startup</span></a> package provides a friendly mechanism for configuring <span style="R">R</span>'s startup process.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

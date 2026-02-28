@@ -7,7 +7,7 @@ futurize package and packages enhancing it.\
 may change in future versions of the package. Please use with care until
 further notice.*
 
-## Packages must not change future options
+## Packages must not change futurize options
 
 Just like for other R options, as a package developer you must *not*
 change any of the below `futurize.*` options. Only the end-user should
@@ -21,16 +21,20 @@ sure to undo your changes immediately afterward.
   (logical) If `TRUE`, extensive debug messages are generated. (Default:
   `FALSE`)
 
-## Environment variables that set R options
+## Options for controlling futurization
 
-All of the above R futurize.\* options can be set by corresponding
-environment variable `R_FUTURIZE_*` *when the futurize package is
-loaded*. This means that those environment variables must be set before
-the futurize package is loaded in order to have an effect. For example,
-if `R_FUTURIZE_DEBUG=true`, then option futurize.debug is set to `TRUE`
-(logical).
+- futurize.enable::
 
-## See also
+  (logical) If `TRUE` (default),
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  transpilation will be applied, otherwise not.
+
+Environment variables that set R optionsAll of the above R futurize.\*
+options can be set by corresponding environment variable `R_FUTURIZE_*`
+*when the futurize package is loaded*. This means that those environment
+variables must be set before the futurize package is loaded in order to
+have an effect. For example, if `R_FUTURIZE_DEBUG=true`, then option
+futurize.debug is set to `TRUE` (logical).
 
 To set R options or environment variables when R starts (even before the
 futurize package is loaded), see the
