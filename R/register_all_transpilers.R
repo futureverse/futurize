@@ -31,4 +31,5 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "strucchange",  append_transpilers_for_strucchange)
   transpilers_for_package("futurize::add-on", package = "tm",           append_transpilers_for_tm)
   transpilers_for_package("futurize::add-on", package = "TSP",          append_transpilers_for_TSP)
+  transpilers_for_package("futurize::add-on", package = "vegan",        append_transpilers_for_vegan)
 } ## register_all_transpilers()

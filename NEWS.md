@@ -20,6 +20,9 @@
  * Add support for domain-specific package **TSP**, e.g. `tour <-
    solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()`.
 
+ * Add support for domain-specific package **vegan**, e.g. `md <-
+   mrpp(dune, Management) |> futurize()`.
+
 ## New Features
 
 * Add support for disabling `futurize()` transpilation via R option

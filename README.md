@@ -124,6 +124,10 @@ packages that have optional built-in support for parallelization.
 | **[strucchange]** | `breakpoints()`                                                           | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**      |
+| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future]**      |
+
+
+
 
 _Table 2: Domain-specific functions currently supported by `futurize()` for parallel transpilation._
 
@@ -153,6 +157,8 @@ bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
+
+md <- vegan::mrpp(dune, Management) |> futurize()
 ```
 
 
@@ -179,5 +185,6 @@ tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
 [seriation]: https://cran.r-project.org/package=seriation
 [strucchange]: https://cran.r-project.org/package=strucchange
 [tm]: https://cran.r-project.org/package=tm
+[vegan]: https://cran.r-project.org/package=vegan
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [supported future backends]: https://www.futureverse.org/backends.html
