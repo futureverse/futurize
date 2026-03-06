@@ -12,6 +12,7 @@ append_transpilers_for_mice <- function() {
   )
 
   transpiler <- function(expr, options = NULL) {
+    expr[[1]] <- quote(mice::futuremice)
     expr <- append_call_arguments(expr,
       future.plan = quote(old_plan),
       globals = options[["globals"]],

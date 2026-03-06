@@ -29,7 +29,7 @@ library(futurize)
 plan(multisession)
 library(mice)
 
-imp <- mice(nhanes, m = 5, printFlag = FALSE) |> futurize()
+imp <- mice(nhanes, m = 5) |> futurize()
 ```
 
 
@@ -55,7 +55,7 @@ values in three of its four variables:
 ```r
 library(mice)
 
-imp <- mice(nhanes, m = 5, printFlag = FALSE)
+imp <- mice(nhanes, m = 5)
 ```
 
 Here `mice()` evaluates the `m = 5` imputations sequentially, but we
@@ -65,7 +65,7 @@ can easily make it evaluate them in parallel by piping to `futurize()`:
 library(futurize)
 library(mice)
 
-imp <- mice(nhanes, m = 5, printFlag = FALSE) |> futurize()
+imp <- mice(nhanes, m = 5) |> futurize()
 ```
 
 This will distribute the imputations across the available parallel
