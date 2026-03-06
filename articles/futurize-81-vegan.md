@@ -83,7 +83,6 @@ The following **vegan** functions are supported by
 - [`adonis()`](https://vegandevs.github.io/vegan/reference/vegan-defunct.html)
 - [`adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html)
 - [`anosim()`](https://vegandevs.github.io/vegan/reference/anosim.html)
-- [`cascadeKM()`](https://vegandevs.github.io/vegan/reference/cascadeKM.html)
 - [`estaccumR()`](https://vegandevs.github.io/vegan/reference/specpool.html)
 - [`mantel()`](https://vegandevs.github.io/vegan/reference/mantel.html)
 - [`mantel.partial()`](https://vegandevs.github.io/vegan/reference/mantel.html)
