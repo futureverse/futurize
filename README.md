@@ -124,7 +124,7 @@ packages that have optional built-in support for parallelization.
 | **[strucchange]** | `breakpoints()`                                                           | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**      |
-| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future]**      |
+| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future]**      |
 
 
 

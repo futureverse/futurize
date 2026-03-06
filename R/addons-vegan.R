@@ -15,6 +15,9 @@ append_transpilers_for_vegan <- function() {
     ## package are currently not supported
     if (name %in% c("anova.cca")) return()
 
+    ## Until vegan has fixed https://github.com/vegandevs/vegan/issues/771
+    if (name %in% c("cascadeKM")) return()
+
     defaults <- list()
     if (name %in% ("cascadeKM")) defaults$seed <- TRUE
 

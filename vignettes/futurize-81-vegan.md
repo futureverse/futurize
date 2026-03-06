@@ -87,7 +87,6 @@ The following **vegan** functions are supported by `futurize()`:
 * `adonis()`
 * `adonis2()`
 * `anosim()`
-* `cascadeKM()`
 * `estaccumR()`
 * `mantel()`
 * `mantel.partial()`
