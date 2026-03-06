@@ -128,8 +128,8 @@ packages that have optional built-in support for parallelization.
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | (itself) |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()` | **[future](https://future.futureverse.org)** |
-| **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()` | **[future](https://future.futureverse.org)** |
+| **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) for ‘merMod’ | **[future](https://future.futureverse.org)** |
+| **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | **[future](https://future.futureverse.org)** |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` | **[doFuture](https://doFuture.futureverse.org)** |

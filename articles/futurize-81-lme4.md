@@ -121,3 +121,5 @@ The following **lme4** functions are supported by
 
 - [`allFit()`](https://rdrr.io/pkg/lme4/man/allFit.html)
 - [`bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html)
+- [`influence()`](https://rdrr.io/r/stats/lm.influence.html) for
+  ‘merMod’
