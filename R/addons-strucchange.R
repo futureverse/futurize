@@ -1,4 +1,4 @@
-# strucchange::train(...) =>
+# strucchange::breakpoints(...) =>
 #
 # with(doFuture::registerDoFuture(flavor = "%dofuture%"), local({
 #   options(future.disposable = structure(OPTS, dispose = FALSE))
@@ -7,8 +7,8 @@
 # }))
 #
 append_transpilers_for_strucchange <- function() {
-  transpilers <- make_package_transpilers("strucchange", FUN = function(fcn, name) {
-    if (name == "breakpoints") {
+  transpilers <- make_package_transpilers("strucchange", s3methods = TRUE, FUN = function(fcn, name) {
+    if (name == "breakpoints.formula") {
       list(
         label = sprintf("strucchange::%s() ~> strucchange::%s()", name, name),
         transpiler = make_futurize_for_doFuture(args = list(hpc = "foreach"))

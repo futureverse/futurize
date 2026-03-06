@@ -31,7 +31,8 @@ find_s3_method <- function(fcn, fcn_name, call, envir, debug = FALSE) {
   if (is.null(matched_call)) return(NULL)
 
   dispatch_expr <- matched_call[[dispatch_arg_name]]
-  if (is.null(dispatch_expr) || !is.symbol(dispatch_expr)) return(NULL)
+  if (is.null(dispatch_expr)) return(NULL)
+  if (!is.symbol(dispatch_expr) && !is.call(dispatch_expr)) return(NULL)
 
   ## Evaluate the dispatch argument to get its class
   dispatch_obj <- tryCatch(
