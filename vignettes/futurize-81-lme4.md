@@ -125,6 +125,7 @@ The following **lme4** functions are supported by `futurize()`:
 * `allFit()`
 * `bootMer()`
 * `influence()` for 'merMod'
+* `profile()` for 'merMod'
 
 
 [lme4]: https://cran.r-project.org/package=lme4

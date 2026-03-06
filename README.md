@@ -117,10 +117,10 @@ packages that have optional built-in support for parallelization.
 | **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | (itself)           |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
-| **[lme4]**        | `allFit()`, `bootMer()`, `influence()` for 'merMod'                       | **[future]**       |
+| **[lme4]**        | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | **[future]**       |
 | **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | **[future]**       |
 | **[mice]**        | `mice()`                                                                  | (itself)           |
-| **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply]** |
+| **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |

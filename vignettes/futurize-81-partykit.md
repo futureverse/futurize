@@ -88,7 +88,9 @@ plan(future.batchtools::batchtools_slurm)
 The following **partykit** functions are supported by `futurize()`:
 
 * `cforest()`
-* `ctree_control()`, `mob_control()`, `varimp.cforest()`
+* `ctree_control()`
+* `mob_control()`
+* `varimp()` for `cforest`
 
 
 [partykit]: https://cran.r-project.org/package=partykit
