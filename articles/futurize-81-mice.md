@@ -17,7 +17,7 @@ library(futurize)
 plan(multisession)
 library(mice)
 
-imp <- mice(nhanes, m = 5, printFlag = FALSE) |> futurize()
+imp <- mice(nhanes, m = 5) |> futurize()
 ```
 
 ## Introduction
@@ -46,7 +46,7 @@ four variables:
 
 library(mice)
 
-imp <- mice(nhanes, m = 5, printFlag = FALSE)
+imp <- mice(nhanes, m = 5)
 ```
 
 Here [`mice()`](https://amices.org/mice/reference/mice.html) evaluates
@@ -59,7 +59,7 @@ them in parallel by piping to
 library(futurize)
 library(mice)
 
-imp <- mice(nhanes, m = 5, printFlag = FALSE) |> futurize()
+imp <- mice(nhanes, m = 5) |> futurize()
 ```
 
 This will distribute the imputations across the available parallel
