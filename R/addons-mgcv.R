@@ -16,6 +16,10 @@ append_transpilers_for_mgcv <- function() {
 
   transpilers <- make_package_transpilers("mgcv", FUN = function(fcn, name) {
     if ("cluster" %in% names(formals(fcn))) {
+      ## FIXME: Until S3 methods with a generic in another package is
+      ## supported ...
+      if (name %in% c("predict.bam")) return()
+      
       list(
         label = sprintf("mgcv::%s() ~> mgcv::%s(..., parallel = TRUE)", name, name),
         transpiler = transpiler
