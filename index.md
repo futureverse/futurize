@@ -130,6 +130,7 @@ packages that have optional built-in support for parallelization.
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) for ‘merMod’ | **[future](https://future.futureverse.org)** |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | **[future](https://future.futureverse.org)** |
+| **[mice](https://cran.r-project.org/package=mice)** | `mice()` | (itself) |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
@@ -156,6 +157,8 @@ f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
+
+imp <- mice::mice(nhanes, m = 5) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 

@@ -27,8 +27,9 @@ pkgs <- futurize_supported_packages()
 pkgs
 #>  [1] "BiocParallel" "TSP"          "base"         "boot"         "caret"       
 #>  [6] "crossmap"     "foreach"      "fwb"          "glmnet"       "lme4"        
-#> [11] "mgcv"         "partykit"     "pbapply"      "plyr"         "purrr"       
-#> [16] "seriation"    "stats"        "strucchange"  "tm"           "vegan"       
+#> [11] "mgcv"         "mice"         "partykit"     "pbapply"      "plyr"        
+#> [16] "purrr"        "seriation"    "stats"        "strucchange"  "tm"          
+#> [21] "vegan"       
 
 fcns <- futurize_supported_functions("base")
 fcns

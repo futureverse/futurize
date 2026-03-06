@@ -24,6 +24,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
 - [Parallelize 'mgcv'
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
+- [Parallelize 'mice'
+  functions](https://futurize.futureverse.org/articles/futurize-81-mice.md):
 - [Parallelize 'partykit'
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
 - [Parallelize 'seriation'
