@@ -119,6 +119,7 @@ packages that have optional built-in support for parallelization.
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[lme4]**        | `allFit()`, `bootMer()`, `influence()` for 'merMod'                       | **[future]**       |
 | **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | **[future]**       |
+| **[mice]**        | `mice()`                                                                  | (itself)           |
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
@@ -142,6 +143,8 @@ f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
+
+imp <- mice::mice(nhanes, m = 5) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
@@ -175,6 +178,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [glmnet]: https://cran.r-project.org/package=glmnet
 [lme4]: https://cran.r-project.org/package=lme4
 [mgcv]: https://cran.r-project.org/package=mgcv
+[mice]: https://cran.r-project.org/package=mice
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr

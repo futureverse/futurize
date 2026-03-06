@@ -26,6 +26,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "fwb",          append_transpilers_for_fwb)
   transpilers_for_package("futurize::add-on", package = "glmnet",       append_transpilers_for_glmnet)
   transpilers_for_package("futurize::add-on", package = "lme4",         append_transpilers_for_lme4)
+  transpilers_for_package("futurize::add-on", package = "mice",         append_transpilers_for_mice)
   transpilers_for_package("futurize::add-on", package = "partykit",     append_transpilers_for_partykit)
   transpilers_for_package("futurize::add-on", package = "seriation",    append_transpilers_for_seriation)
   transpilers_for_package("futurize::add-on", package = "strucchange",  append_transpilers_for_strucchange)
