@@ -91,4 +91,3 @@ The following **mgcv** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`bam()`](https://rdrr.io/pkg/mgcv/man/bam.html)
-- [`predict.bam()`](https://rdrr.io/pkg/mgcv/man/predict.bam.html)
