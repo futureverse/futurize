@@ -46,7 +46,9 @@ futurize_options(
 - packages:
 
   (optional) a character vector specifying packages to be attached in
-  the R environment evaluating the future.
+  the R environment evaluating the future, *in addition to packages
+  required by global variables* specified or identified via argument
+  `globals`.
 
 - stdout:
 

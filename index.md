@@ -135,6 +135,7 @@ packages that have optional built-in support for parallelization.
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | **[future](https://future.futureverse.org)** |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future](https://future.futureverse.org)** |
 
 *Table 2: Domain-specific functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)

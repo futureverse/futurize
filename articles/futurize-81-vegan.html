@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'strucchange' functions • futurize</title>
+<title>Parallelize 'vegan' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'strucchange' functions">
+<meta property="og:title" content="Parallelize 'vegan' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -116,29 +116,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'strucchange' functions</h1>
+      <h1>Parallelize 'vegan' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-strucchange.md" class="external-link"><code>vignettes/futurize-81-strucchange.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-strucchange.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-vegan.md" class="external-link"><code>vignettes/futurize-81-vegan.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-vegan.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'strucchange' functions}
+%\VignetteIndexEntry{Parallelize 'vegan' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{strucchange}
+%\VignetteKeyword{vegan}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/cran-strucchange-logo.svg" alt="The 'strucchange' image"><span>+</span>
+<p><img src="../reference/figures/cran-vegan-logo.svg" alt="The 'vegan' logo"><span>+</span>
 <img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
@@ -151,48 +151,38 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">strucchange</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Nile"</span><span class="op">)</span></span>
-<span><span class="va">bp.nile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
+<span><span class="va">dune.mrpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dune.env</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong><a href="https://cran.r-project.org/package=strucchange" class="external-link">strucchange</a></strong>
-package provides the <code><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints()</a></code> function for estimating
-one or more change points in a data trace, e.g. in time-series data.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=vegan" class="external-link">vegan</a></strong>
+package provides methods for community and vegetation ecologists. Some
+of the functions has built-in support for parallelization, which the
+<strong>futurize</strong> simplifies further.</p>
 <div class="section level3">
-<h3 id="example-finding-breakpoints-in-time-series-data">Example: Finding breakpoints in time-series data<a class="anchor" aria-label="anchor" href="#example-finding-breakpoints-in-time-series-data"></a>
+<h3 id="example">Example:<a class="anchor" aria-label="anchor" href="#example"></a>
 </h3>
+<p>Example adopted from
+<code><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">help("mrpp", package = "vegan")</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">strucchange</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## UK Seatbelt data: a SARIMA(1,0,0)(1,0,0)_12 model</span></span>
-<span><span class="co">## (fitted by OLS) is used and reveals (at least) two</span></span>
-<span><span class="co">## breakpoints - one in 1973 associated with the oil crisis and</span></span>
-<span><span class="co">## one in 1983 due to the introduction of compulsory</span></span>
-<span><span class="co">## wearing of seatbelts in the UK.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"UKDriverDeaths"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">seatbelt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">UKDriverDeaths</span><span class="op">)</span></span>
-<span><span class="va">seatbelt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">seatbelt</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lag.html" class="external-link">lag</a></span><span class="op">(</span><span class="va">seatbelt</span>, k <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lag.html" class="external-link">lag</a></span><span class="op">(</span><span class="va">seatbelt</span>, k <span class="op">=</span> <span class="op">-</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">seatbelt</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"ylag1"</span>, <span class="st">"ylag12"</span><span class="op">)</span></span>
-<span><span class="va">seatbelt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">seatbelt</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>, <span class="fl">1</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1984</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">seatbelt</span><span class="op">[</span>,<span class="st">"y"</span><span class="op">]</span>, ylab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">log</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span><span class="op">(</span><span class="va">casualties</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## testing</span></span>
-<span><span class="va">re.seat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/efp.html" class="external-link">efp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">ylag1</span> <span class="op">+</span> <span class="va">ylag12</span>, data <span class="op">=</span> <span class="va">seatbelt</span>, type <span class="op">=</span> <span class="st">"RE"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">re.seat</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## dating</span></span>
-<span><span class="va">bp.seat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">ylag1</span> <span class="op">+</span> <span class="va">ylag12</span>, data <span class="op">=</span> <span class="va">seatbelt</span>, h <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">bp.seat</span>, breaks <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p>This will parallelize the dynamic programming algorithm used by
-algorithm for computing the optimal breakpoints, given that we have set
-up parallel workers, e.g.</p>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
+<span><span class="va">dune.mrpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dune.env</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<p>This will parallelize the computations, given that we have set up
+parallel workers, e.g.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>The built-in <code>multisession</code> backend parallelizes on your
@@ -209,10 +199,21 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>strucchange</strong> functions are supported by
+<p>The following <strong>vegan</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/vegan-defunct.html" class="external-link">adonis()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/adonis.html" class="external-link">adonis2()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/anosim.html" class="external-link">anosim()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/cascadeKM.html" class="external-link">cascadeKM()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/specpool.html" class="external-link">estaccumR()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">mantel()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">mantel.partial()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/metaMDS.html" class="external-link">metaMDSiter()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/oecosimu.html" class="external-link">oecosimu()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/ordihull.html" class="external-link">ordiareatest()</a></code></li>
+<li><code><a href="https://vegandevs.github.io/vegan/reference/simper.html" class="external-link">simper()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

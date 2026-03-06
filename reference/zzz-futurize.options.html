@@ -23,7 +23,7 @@ further notice."><!-- Global site tag (gtag.js) - Google Analytics --><script as
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9034</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9037</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,7 @@ further notice."><!-- Global site tag (gtag.js) - Google Analytics --><script as
     <li><a class="dropdown-item" href="../articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-TSP.html">Parallelize 'TSP' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -131,13 +132,21 @@ undo your changes immediately afterward.</p>
 <code><a href="futurize.html">futurize()</a></code> transpilation will be applied, otherwise not.</p></dd>
 
 
-</dl><p>Environment variables that set R optionsAll of the above <span style="R">R</span> <span class="option">futurize.*</span> options can be set by corresponding
+</dl></div>
+    <div class="section level2">
+    <h2 id="environment-variables-that-set-r-options">Environment variables that set R options<a class="anchor" aria-label="anchor" href="#environment-variables-that-set-r-options"></a></h2>
+
+
+<p>All of the above <span style="R">R</span> <span class="option">futurize.*</span> options can be set by corresponding
 environment variable <code class="env">R_FUTURIZE_*</code> <em>when the <span class="pkg">futurize</span> package is
 loaded</em>. This means that those environment variables must be set before
 the <span class="pkg">futurize</span> package is loaded in order to have an effect.
 For example, if <code>R_FUTURIZE_DEBUG=true</code>, then option
 <span class="option">futurize.debug</span> is set to <code>TRUE</code> (logical).</p>
-<p>To set <span style="R">R</span> options or environment variables when <span style="R">R</span> starts (even before the <span class="pkg">futurize</span> package is loaded), see the <a href="https://rdrr.io/r/base/Startup.html" class="external-link">Startup</a> help page.  The <a href="https://cran.r-project.org/package=startup" class="external-link"><span class="pkg">startup</span></a> package provides a friendly mechanism for configuring <span style="R">R</span>'s startup process.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>To set <span style="R">R</span> options or environment variables when <span style="R">R</span> starts (even before the <span class="pkg">futurize</span> package is loaded), see the <a href="https://rdrr.io/r/base/Startup.html" class="external-link">Startup</a> help page.  The <a href="https://cran.r-project.org/package=startup" class="external-link"><span class="pkg">startup</span></a> package provides a friendly mechanism for configuring <span style="R">R</span>'s startup process.</p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

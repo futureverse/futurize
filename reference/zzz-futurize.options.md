@@ -29,12 +29,16 @@ sure to undo your changes immediately afterward.
   [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
   transpilation will be applied, otherwise not.
 
-Environment variables that set R optionsAll of the above R futurize.\*
-options can be set by corresponding environment variable `R_FUTURIZE_*`
-*when the futurize package is loaded*. This means that those environment
-variables must be set before the futurize package is loaded in order to
-have an effect. For example, if `R_FUTURIZE_DEBUG=true`, then option
-futurize.debug is set to `TRUE` (logical).
+## Environment variables that set R options
+
+All of the above R futurize.\* options can be set by corresponding
+environment variable `R_FUTURIZE_*` *when the futurize package is
+loaded*. This means that those environment variables must be set before
+the futurize package is loaded in order to have an effect. For example,
+if `R_FUTURIZE_DEBUG=true`, then option futurize.debug is set to `TRUE`
+(logical).
+
+## See also
 
 To set R options or environment variables when R starts (even before the
 futurize package is loaded), see the

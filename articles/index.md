@@ -34,3 +34,5 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-tm.md):
 - [Parallelize 'TSP'
   functions](https://futurize.futureverse.org/articles/futurize-81-TSP.md):
+- [Parallelize 'vegan'
+  functions](https://futurize.futureverse.org/articles/futurize-81-vegan.md):
