@@ -34,5 +34,22 @@ print(gm_all)
 message("Comparing results:")
 stopifnot(all_equal(gm_all, gm_all_truth))
 
+
+if (utils::packageVersion("lme4") >= "2.0.1") {
+  ## influence.merMod() via stats::influence() S3 generic dispatch
+  ## Adopted from example("influence.merMod", package = "lme4")
+  fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+  stopifnot(inherits(fm1, "merMod"))
+  
+  message("Ordinary processing:")
+  inf_truth <- influence(fm1, groups = "Subject")
+  
+  message("Futurized processing:")
+  inf <- influence(fm1, groups = "Subject") |> futurize()
+  
+  message("Comparing results:")
+  stopifnot(all.equal(inf, inf_truth))
+}
+
 plan(sequential)
 } ## if (requireNamespace("lme4"))

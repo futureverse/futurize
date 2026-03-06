@@ -1,5 +1,10 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Add support for futurizing S3 methods where the S3 generic is
+   defined in another package.
+
 ## New Transpilers
 
  * Add support for map-reduce package **pbapply**, e.g. `y <-

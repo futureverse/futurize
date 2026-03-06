@@ -117,8 +117,8 @@ packages that have optional built-in support for parallelization.
 | **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | (itself)           |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
-| **[lme4]**        | `allFit()`, `bootMer()`                                                   | **[future]**       |
-| **[mgcv]**        | `bam()`                                                                   | **[future]**       |
+| **[lme4]**        | `allFit()`, `bootMer()`, `influence()` for 'merMod'                       | **[future]**       |
+| **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | **[future]**       |
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()`                                                           | **[doFuture]**     |

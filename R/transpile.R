@@ -120,6 +120,42 @@ transpile <- local({
 class(transpile) <- c("transpiler", class(transpile))
 
 
+#' Finds transpiler for S3 method for S3 generic function call and object
+#'
+#' @inheritParams find_s3_method
+#'
+#' @param type
+#'
+#' @return
+#' A transpiler function, or NULL if none exists.
+#'
+#' @noRd
+find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = FALSE) {
+  method <- find_s3_method(fcn, fcn_name = fcn_name, call = call, envir = envir, debug = debug)
+  if (is.null(method)) return(NULL)
+
+  pkg <- method[["package"]]
+  name <- method[["name"]]
+
+  ## Look up registered transpiler for the package of the S3 method
+  transpiler_sets <- get_transpilers(type)
+  transpilers <- transpiler_sets[[pkg]]
+
+  ## If non-existing, retry by first trying to register transpilers for the package
+  if (is.null(transpilers)) {
+    transpilers <- tryCatch({
+      transpilers_for_package(type = type, package = pkg, action = "make", debug = debug)
+      transpiler_sets <- get_transpilers(type)
+      transpiler_sets[[pkg]]
+    }, error = function(e) NULL)
+  }
+
+  ## No transpilers registered for this package?
+  if (is.null(transpilers)) return(NULL)
+
+  transpilers[[name]]
+} ## find_s3_method_transpiler()
+
 
 #' Get a registered transpiler for an R expression
 #' 
@@ -214,14 +250,24 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   }
   
   ## Is there a registered transpiler for the function?
-  if (is.null(transpilers)) {
-    stop(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
+  if (is.null(transpilers) || ! fcn_name %in% names(transpilers)) {
+    ## Fallback: S3 generic dispatching to a method in another package
+    ## Note: 'call' is expr[[call_pos]] = the function head symbol, not the
+    ## full call. The full call expression including arguments is needed for
+    ## match.call(), so we reconstruct it here.
+    full_call <- if (length(call_pos) == 1L) expr else expr[[call_pos[-length(call_pos)]]]
+    if (is_s3_generic(fcn)) {
+      transpiler <- find_s3_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+    }
+    if (is.null(transpiler)) {
+      if (is.null(transpilers)) {
+        stop(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
+      }
+      stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
+    }
+  } else {
+    transpiler <- transpilers[[fcn_name]]
   }
-
-  if (! fcn_name %in% names(transpilers)) {
-    stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
-  }
-  transpiler <- transpilers[[fcn_name]]
   if (debug) {
     stopifnot(is.list(transpiler), "label" %in% names(transpiler), "transpiler" %in% names(transpiler))
     mdebugf("Transpiler description: %s", transpiler[["label"]])

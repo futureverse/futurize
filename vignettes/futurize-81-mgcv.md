@@ -98,6 +98,7 @@ plan(future.batchtools::batchtools_slurm)
 The following **mgcv** functions are supported by `futurize()`:
 
 * `bam()`
+* `predict()` for 'bam'
 
 
 [mgcv]: https://cran.r-project.org/package=mgcv

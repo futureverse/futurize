@@ -5,19 +5,26 @@
 #   lme4::allFit(..., parallel = "snow", ncpus = 2L, cl = cl)
 # })
 #
+# lme4:::influence.merMod(...) [via stats::influence()] =>
+#
+# local({
+#   cl <- future::makeClusterFuture(<future arguments>)
+#   stats::influence(..., parallel = "snow", ncpus = 2L, cl = cl)
+# })
+#
 append_transpilers_for_lme4 <- function() {
   if (getRversion() < "4.4.0") {
     stop(sprintf("You are running R %s, but futurization of 'lme4' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  transpilers <- make_package_transpilers("lme4", FUN = function(fcn, name) {
+  transpilers <- make_package_transpilers("lme4", s3methods = TRUE, FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
-      if (name == "allFit") {
+      if (name %in% c("allFit", "influence.merMod")) {
         defaults <- list(packages = "lme4")
       } else {
         defaults <- list()
       }
-    
+
       list(
         label = sprintf("lme4::%s() ~> lme4::%s(..., parallel = TRUE)", name, name),
         transpiler = make_futurize_for_makeClusterFuture(defaults = defaults, args = list(
@@ -28,7 +35,7 @@ append_transpilers_for_lme4 <- function() {
       )
     }
   })
-  
+
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
