@@ -121,13 +121,10 @@ packages that have optional built-in support for parallelization.
 | **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | **[future]**       |
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()`       | **[future.apply]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
-| **[strucchange]** | `breakpoints()`                                                           | **[doFuture]**     |
+| **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
-| **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**      |
+| **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**     |
 | **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future]**      |
-
-
-
 
 _Table 2: Domain-specific functions currently supported by `futurize()` for parallel transpilation._
 

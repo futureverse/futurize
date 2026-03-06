@@ -99,7 +99,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **strucchange** functions are supported by `futurize()`:
 
-* `breakpoints()`
+* `breakpoints()` for 'formula'
 
 
 [strucchange]: https://cran.r-project.org/package=strucchange
