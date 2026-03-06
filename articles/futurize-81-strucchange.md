@@ -93,3 +93,4 @@ The following **strucchange** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`breakpoints()`](https://rdrr.io/pkg/strucchange/man/breakpoints.html)
+  for ‘formula’

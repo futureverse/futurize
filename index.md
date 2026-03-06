@@ -132,7 +132,7 @@ packages that have optional built-in support for parallelization.
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | **[future](https://future.futureverse.org)** |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp.cforest()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | **[future](https://future.futureverse.org)** |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future](https://future.futureverse.org)** |
