@@ -168,4 +168,6 @@ bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
+
+md <- vegan::mrpp(dune, Management) |> futurize()
 ```
