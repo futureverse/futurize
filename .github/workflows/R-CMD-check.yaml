@@ -21,7 +21,7 @@ jobs:
           - {os: macOS-latest,   r: 'release'  }
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
-          - {os: ubuntu-latest,  r: 'release', without_suggests: true  }
+          - {os: ubuntu-latest,  r: 'release', without_suggests: 'true'  }
           - {os: ubuntu-latest,  r: 'oldrel'   }
 #          - {os: ubuntu-latest,  r: '4.1'      }
  
