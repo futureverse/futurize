@@ -90,4 +90,6 @@ The following **vegan** functions are supported by
 - [`mrpp()`](https://vegandevs.github.io/vegan/reference/mrpp.html)
 - [`oecosimu()`](https://vegandevs.github.io/vegan/reference/oecosimu.html)
 - [`ordiareatest()`](https://vegandevs.github.io/vegan/reference/ordihull.html)
+- [`permutest()`](https://vegandevs.github.io/vegan/reference/anova.cca.html)
+  for ‘betadisper’, and ‘cca’
 - [`simper()`](https://vegandevs.github.io/vegan/reference/simper.html)

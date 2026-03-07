@@ -123,3 +123,4 @@ The following **lme4** functions are supported by
 - [`bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html)
 - [`influence()`](https://rdrr.io/r/stats/lm.influence.html) for
   ‘merMod’
+- [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’

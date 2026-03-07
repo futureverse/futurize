@@ -79,6 +79,7 @@ The following **partykit** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`cforest()`](https://rdrr.io/pkg/partykit/man/cforest.html)
-- [`ctree_control()`](https://rdrr.io/pkg/partykit/man/ctree_control.html),
-  [`mob_control()`](https://rdrr.io/pkg/partykit/man/mob_control.html),
-  [`varimp.cforest()`](https://rdrr.io/pkg/partykit/man/varimp.html)
+- [`ctree_control()`](https://rdrr.io/pkg/partykit/man/ctree_control.html)
+- [`mob_control()`](https://rdrr.io/pkg/partykit/man/mob_control.html)
+- [`varimp()`](https://rdrr.io/pkg/partykit/man/varimp.html) for
+  `cforest`
