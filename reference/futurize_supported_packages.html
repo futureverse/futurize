@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9050</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9054</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,9 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A character vector of package or function names.</p>
+    <p>A character vector of package or function names.
+<code>futurize_supported_functions()</code> produces an error if packages
+required by the futurize transpiler are not installed.</p>
     </div>
 
     <div class="section level2">
@@ -122,10 +124,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "plyr"         "purrr"        "seriation"    "stats"        "strucchange" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [21] "tm"           "vegan"       </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fcns</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_functions</span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fcns</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"future.apply"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">fcns</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_functions</span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fcns</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] ".mapply"   "Filter"    "Map"       "apply"     "by"        "eapply"   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "lapply"    "mapply"    "replicate" "sapply"    "tapply"    "vapply"   </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"doFuture"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">fcns</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_functions</span><span class="op">(</span><span class="st">"foreach"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fcns</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "%do%"    "%dopar%"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

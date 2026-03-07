@@ -66,7 +66,7 @@ futurize_supported_functions("caret")
 | **[crossmap](https://cran.r-project.org/package=crossmap)** | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | \- |
 | **[foreach](https://cran.r-project.org/package=foreach)** | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[plyr](https://cran.r-project.org/package=plyr)** | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture](https://doFuture.futureverse.org)** |
-| **[pbapply](https://cran.r-project.org/package=pbapply)** | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | \- |
+| **[pbapply](https://cran.r-project.org/package=pbapply)** | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()` | **[doFuture](https://doFuture.futureverse.org)** |
 
 *Table 1: Map-reduce functions currently supported by

@@ -19,6 +19,8 @@ futurize_supported_functions(package)
 ## Value
 
 A character vector of package or function names.
+`futurize_supported_functions()` produces an error if packages required
+by the futurize transpiler are not installed.
 
 ## Examples
 
@@ -31,8 +33,16 @@ pkgs
 #> [16] "plyr"         "purrr"        "seriation"    "stats"        "strucchange" 
 #> [21] "tm"           "vegan"       
 
-fcns <- futurize_supported_functions("base")
-fcns
+if (requireNamespace("future.apply")) {
+  fcns <- futurize_supported_functions("base")
+  print(fcns)
+}
 #>  [1] ".mapply"   "Filter"    "Map"       "apply"     "by"        "eapply"   
 #>  [7] "lapply"    "mapply"    "replicate" "sapply"    "tapply"    "vapply"   
+
+if (requireNamespace("doFuture")) {
+  fcns <- futurize_supported_functions("foreach")
+  print(fcns)
+}
+#> [1] "%do%"    "%dopar%"
 ```
