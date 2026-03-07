@@ -63,10 +63,10 @@ futurize_supported_functions("caret")
 | **base** | [`lapply()`](https://rdrr.io/r/base/lapply.html), [`sapply()`](https://rdrr.io/r/base/lapply.html), [`tapply()`](https://rdrr.io/r/base/tapply.html), [`vapply()`](https://rdrr.io/r/base/lapply.html), [`mapply()`](https://rdrr.io/r/base/mapply.html), [`.mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), [`eapply()`](https://rdrr.io/r/base/eapply.html), [`apply()`](https://rdrr.io/r/base/apply.html), [`by()`](https://rdrr.io/r/base/by.html), [`replicate()`](https://rdrr.io/r/base/lapply.html), [`Filter()`](https://rdrr.io/r/base/funprog.html) | **[future.apply](https://future.apply.futureverse.org)** |
 | **stats** | [`kernapply()`](https://rdrr.io/r/stats/kernapply.html) | **[future.apply](https://future.apply.futureverse.org)** |
 | **[purrr](https://cran.r-project.org/package=purrr)** | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr](https://furrr.futureverse.org)** |
-| **[crossmap](https://cran.r-project.org/package=crossmap)** | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | (itself) |
+| **[crossmap](https://cran.r-project.org/package=crossmap)** | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()` | \- |
 | **[foreach](https://cran.r-project.org/package=foreach)** | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[plyr](https://cran.r-project.org/package=plyr)** | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture](https://doFuture.futureverse.org)** |
-| **[pbapply](https://cran.r-project.org/package=pbapply)** | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | (itself) |
+| **[pbapply](https://cran.r-project.org/package=pbapply)** | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()` | \- |
 | **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()` | **[doFuture](https://doFuture.futureverse.org)** |
 
 *Table 1: Map-reduce functions currently supported by
@@ -124,20 +124,20 @@ packages that have optional built-in support for parallelization.
 
 | Package | Functions | Requires |
 |----|----|----|
-| **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | **[future](https://future.futureverse.org)** |
+| **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | \- |
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | (itself) |
+| **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | `"confint()` and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | **[future](https://future.futureverse.org)** |
-| **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | **[future](https://future.futureverse.org)** |
-| **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | **[future](https://future.futureverse.org)** |
-| **[mice](https://cran.r-project.org/package=mice)** | `mice()` | (itself) |
+| **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | `"confint()` and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
+| **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
+| **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
+| **[mice](https://cran.r-project.org/package=mice)** | `mice()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
-| **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | **[future](https://future.futureverse.org)** |
+| **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’, `simper()` | **[future](https://future.futureverse.org)** |
+| **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’, `simper()` | \- |
 
 *Table 2: Domain-specific functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
