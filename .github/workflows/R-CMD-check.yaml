@@ -36,7 +36,7 @@ jobs:
       ## R CMD check
       _R_CHECK_CRAN_INCOMING_: false
       _R_CHECK_MATRIX_DATA_: true
-      _R_CHECK_SUGGESTS_ONLY_: true
+      _R_CHECK_SUGGESTS_ONLY_: ${{ matrix.config.without_suggests && 'false' || 'true' }}
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
       RCMDCHECK_ERROR_ON: note
@@ -64,6 +64,7 @@ jobs:
           
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          dependencies: '"hard"'
           extra-packages: |
             any::rcmdcheck
             any::remotes
@@ -82,7 +83,7 @@ jobs:
             suggests <- gsub("\\s+.*", "", trimws(suggests))
             loc <- dirname(find.package(suggests))
             suggests <- suggests[loc %in% .libPaths()[1]]
-            remove.packages(suggests)
+            if (length(suggests) > 0) remove.packages(suggests)
           }
         shell: Rscript {0}
 
