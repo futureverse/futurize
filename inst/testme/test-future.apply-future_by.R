@@ -2,6 +2,8 @@
 #' @tags listenv
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 library(listenv)
 
@@ -87,3 +89,5 @@ if (require("datasets") && require("stats")) { ## warpbreaks & lm()
 } ## if (require("stats"))
 
 message("*** future_by() ... DONE")
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

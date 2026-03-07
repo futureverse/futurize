@@ -1,6 +1,8 @@
 #' @tags future_apply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_apply() ...")
@@ -134,4 +136,4 @@ stopifnot(inherits(res, "error"))
 
 message("*** future_apply() ... DONE")
 
-
+} ## if (requireNamespace("future.apply", quietly = TRUE))

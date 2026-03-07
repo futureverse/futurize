@@ -1,6 +1,8 @@
 #' @tags future_lapply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** Options in nested parallelization ...")
@@ -45,3 +47,5 @@ for (cores in 1:availCores) {
 } ## for (cores in ...)
 
 message("*** Options in nested parallelization ... done")
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

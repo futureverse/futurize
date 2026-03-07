@@ -1,6 +1,8 @@
 #' @tags future_eapply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_eapply() ...")
@@ -37,3 +39,5 @@ for (strategy in supportedStrategies()) {
 message("*** future_eapply() ... DONE")
 
 
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

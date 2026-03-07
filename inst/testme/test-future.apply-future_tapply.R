@@ -1,6 +1,8 @@
 #' @tags future_tapply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 library("datasets") ## warpbreaks, iris
@@ -183,3 +185,5 @@ res <- tryCatch({
 stopifnot(inherits(res, "error"))
 
 message("*** future_tapply() ... DONE")
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

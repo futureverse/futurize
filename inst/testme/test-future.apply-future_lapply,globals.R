@@ -1,6 +1,8 @@
 #' @tags future_lapply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 library(tools) ## toTitleCase()
 
@@ -288,3 +290,5 @@ if (! "covr" %in% loadedNamespaces()) {
 message("*** future_lapply() - globals exceptions ... DONE")
 
 
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

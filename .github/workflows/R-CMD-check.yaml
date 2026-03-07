@@ -65,7 +65,6 @@ jobs:
           
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          dependencies: ${{ matrix.config.without_suggests && '"hard"' || '"all"' }}
           extra-packages: |
             any::rcmdcheck
             any::remotes

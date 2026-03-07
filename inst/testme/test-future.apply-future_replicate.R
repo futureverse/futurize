@@ -1,3 +1,6 @@
+
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_replicate() ...")
@@ -38,3 +41,5 @@ for (strategy in supportedStrategies()) {
 message("*** future_replicate() ... DONE")
 
 
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

@@ -3,6 +3,8 @@
 #' @tags detritus-files
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 if (packageVersion("future") > "1.49.0" && isTRUE(getOption("future.globals.keepWhere"))) {
 
   library(futurize)
@@ -45,3 +47,5 @@ if (packageVersion("future") > "1.49.0" && isTRUE(getOption("future.globals.keep
   }
 
 } ## if (packageVersion("future") > ...)
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

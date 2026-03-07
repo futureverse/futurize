@@ -3,6 +3,8 @@
 #' @tags listenv
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 library(listenv)
 
@@ -138,3 +140,5 @@ stopifnot(inherits(res, "error"))
 message("*** future_lapply() - exceptions ... DONE")
 
 message("*** future_lapply() ... DONE")
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

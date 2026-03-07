@@ -2,6 +2,8 @@
 #' @tags detritus-files
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_vapply() ...")
@@ -171,3 +173,5 @@ for (strategy in supportedStrategies()) {
 
 
 message("*** future_vapply() ... DONE")
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))
