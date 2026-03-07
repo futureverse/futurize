@@ -21,7 +21,7 @@ jobs:
           - {os: macOS-latest,   r: 'release'  }
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
-          - {os: ubuntu-latest,  r: 'release', without_suggests: 'true'  }
+          - {os: ubuntu-latest,  r: 'release', without_suggests: true  }
           - {os: ubuntu-latest,  r: 'oldrel'   }
 #          - {os: ubuntu-latest,  r: '4.1'      }
  
@@ -74,16 +74,15 @@ jobs:
           install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
 
       - name: Remove suggested packages
-        if: matrix.config.without_suggests == "true"
+        if: ${{ matrix.config.without_suggests }}
         run: |
-          dcf <- read.dcf("DESCRIPTION")
-          suggests <- dcf[,"Suggests"]
-          suggests <- strsplit(suggests, split = ",", fixed = TRUE)[[1]]
-          suggests <- gsub("[(][^)]*[)]", "", suggests)
-          suggests <- gsub("[[:space:]]", "", suggests)
-          loc <- dirname(find.package(suggests))
-          suggests <- suggests[loc %in% .libPaths()[1]]
-          remove.packages(suggests)
+          suggests <- read.dcf("DESCRIPTION", fields = "Suggests")
+          if (!is.na(suggests)) {
+            suggests <- gsub("\\s+.*", "", trimws(suggests))
+            loc <- dirname(find.package(suggests))
+            suggests <- suggests[loc %in% .libPaths()[1]]
+            remove.packages(suggests)
+          }
         shell: Rscript {0}
 
       - name: Session info
