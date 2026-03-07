@@ -109,8 +109,6 @@ print(res)
 stopifnot(all_equal_ignore_call(res, res_truth))
 
 
-## https://github.com/vegandevs/vegan/issues/771
-if ("cascadeKM" %in% futurize_supported_functions("vegan")) {
 message("*** cascadeKM()")
 
 ## Adopted from example("cascadeKM", package = "vegan")
@@ -127,7 +125,6 @@ res_truth$partition <- res$partition <- NULL
 res_truth$size <- sort(res_truth$size)
 res$size <- sort(res$size)
 stopifnot(all_equal_ignore_call(res, res_truth))
-} ## if ("cascadeKM" %in% futurize_supported_functions("vegan"))
 
 
 message("*** estaccumR()")
