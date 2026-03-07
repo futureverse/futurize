@@ -26,10 +26,10 @@ A character vector of package or function names.
 pkgs <- futurize_supported_packages()
 pkgs
 #>  [1] "BiocParallel" "TSP"          "base"         "boot"         "caret"       
-#>  [6] "crossmap"     "foreach"      "fwb"          "glmnet"       "lme4"        
-#> [11] "mgcv"         "mice"         "partykit"     "pbapply"      "plyr"        
-#> [16] "purrr"        "seriation"    "stats"        "strucchange"  "tm"          
-#> [21] "vegan"       
+#>  [6] "crossmap"     "foreach"      "fwb"          "glmmTMB"      "glmnet"      
+#> [11] "lme4"         "mgcv"         "mice"         "partykit"     "pbapply"     
+#> [16] "plyr"         "purrr"        "seriation"    "stats"        "strucchange" 
+#> [21] "tm"           "vegan"       
 
 fcns <- futurize_supported_functions("base")
 fcns

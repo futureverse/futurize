@@ -18,6 +18,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-boot.md):
 - [Parallelize 'caret'
   functions](https://futurize.futureverse.org/articles/futurize-81-caret.md):
+- [Parallelize 'glmmTMB'
+  functions](https://futurize.futureverse.org/articles/futurize-81-glmmTMB.md):
 - [Parallelize 'glmnet'
   functions](https://futurize.futureverse.org/articles/futurize-81-glmnet.md):
 - [Parallelize 'lme4'

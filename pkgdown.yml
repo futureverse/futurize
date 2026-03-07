@@ -10,6 +10,7 @@ articles:
   futurize-61-BiocParallel: futurize-61-BiocParallel.html
   futurize-81-boot: futurize-81-boot.html
   futurize-81-caret: futurize-81-caret.html
+  futurize-81-glmmTMB: futurize-81-glmmTMB.html
   futurize-81-glmnet: futurize-81-glmnet.html
   futurize-81-lme4: futurize-81-lme4.html
   futurize-81-mgcv: futurize-81-mgcv.html
@@ -20,7 +21,7 @@ articles:
   futurize-81-tm: futurize-81-tm.html
   futurize-81-TSP: futurize-81-TSP.html
   futurize-81-vegan: futurize-81-vegan.html
-last_built: 2026-03-07T01:35Z
+last_built: 2026-03-07T04:05Z
 urls:
   reference: https://futurize.futureverse.org/reference
   article: https://futurize.futureverse.org/articles
