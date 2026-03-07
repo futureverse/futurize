@@ -452,7 +452,7 @@ transpiler_packages <- function(classes = NULL) {
 #' to function names of the package `package` and transpilers are lists.
 #'
 #' @noRd
-make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = FALSE) {
+make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = TRUE) {
   transpilers <- list()
   ns <- getNamespace(package)
 

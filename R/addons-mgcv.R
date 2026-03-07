@@ -14,7 +14,7 @@ append_transpilers_for_mgcv <- function() {
     cluster = quote(cl)
   ))
 
-  transpilers <- make_package_transpilers("mgcv", s3methods = TRUE, FUN = function(fcn, name) {
+  transpilers <- make_package_transpilers("mgcv", FUN = function(fcn, name) {
     if ("cluster" %in% names(formals(fcn))) {
       list(
         label = sprintf("mgcv::%s() ~> mgcv::%s(..., parallel = TRUE)", name, name),

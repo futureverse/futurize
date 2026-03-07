@@ -17,7 +17,7 @@ append_transpilers_for_lme4 <- function() {
     stop(sprintf("You are running R %s, but futurization of 'lme4' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  transpilers <- make_package_transpilers("lme4", s3methods = TRUE, FUN = function(fcn, name) {
+  transpilers <- make_package_transpilers("lme4", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
       if (name %in% c("allFit", "influence.merMod")) {
         defaults <- list(packages = "lme4")
