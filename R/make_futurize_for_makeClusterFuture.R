@@ -4,7 +4,7 @@
 #'
 #' @param args Named arguments to be appended to the call expression.
 #'
-#' @param template Customized template.
+#' @param template An optional custom template.
 #'
 #' @returns
 #' A transpiler function.

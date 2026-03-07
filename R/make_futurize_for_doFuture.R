@@ -1,23 +1,23 @@
 #' Create a futurize transpiler based on %dofuture%
-#' 
-#' @param expr An \R call expression.
 #'
-#' @param \ldots,.args Named arguments to be appended to the call expression.
+#' @inheritParams make_futurize_for_makeClusterFuture
 #'
 #' @returns
 #' A transpiler function.
 #'
 #' @noRd
-make_futurize_for_doFuture <- function(defaults = list(), args = list()) {
-  template <- bquote_compile(
-    with(doFuture::registerDoFuture(flavor = "%dofuture%"),
-      local({
-        options(future.disposable = structure(.(OPTS), dispose = FALSE))
-        on.exit(options(future.disposable = NULL))
-        .(EXPR)
-      })
+make_futurize_for_doFuture <- function(defaults = list(), args = list(), template = NULL) {
+  if (is.null(template)) {
+    template <- bquote_compile(
+      with(doFuture::registerDoFuture(flavor = "%dofuture%"),
+        local({
+          options(future.disposable = structure(.(OPTS), dispose = FALSE))
+          on.exit(options(future.disposable = NULL))
+          .(EXPR)
+        })
+      )
     )
-  )
+  }
 
   function(expr, options = NULL) {
     expr <- append_call_arguments(expr,
