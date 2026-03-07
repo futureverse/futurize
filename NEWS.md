@@ -13,6 +13,9 @@
  * Add support for domain-specific package **fwb**, e.g. `b <-
    fwb(data, statistic, R = 1000) |> futurize()`.
 
+ * Add support for domain-specific package **glmmTMB**, e.g. `ci <-
+   confint(m, method = "profile") |> futurize()`.
+
  * Add support for domain-specific package **mice**, e.g. `imp <-
    mice(nhanes, m = 5) |> futurize()`.
 

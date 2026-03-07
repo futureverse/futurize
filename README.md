@@ -117,6 +117,7 @@ packages that have optional built-in support for parallelization.
 | **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | (itself)           |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
+| **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | **[future]**      |
 | **[lme4]**        | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | **[future]**       |
 | **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | **[future]**       |
 | **[mice]**        | `mice()`                                                                  | (itself)           |
@@ -178,6 +179,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [fwb]: https://ngreifer.github.io/fwb/
 [fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
+[glmmTMB]: https://cran.r-project.org/package=glmmTMB
 [lme4]: https://cran.r-project.org/package=lme4
 [mgcv]: https://cran.r-project.org/package=mgcv
 [mice]: https://cran.r-project.org/package=mice

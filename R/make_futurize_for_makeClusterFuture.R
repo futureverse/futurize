@@ -2,21 +2,25 @@
 #' 
 #' @param expr An \R call expression.
 #'
-#' @param \ldots,.args Named arguments to be appended to the call expression.
+#' @param args Named arguments to be appended to the call expression.
+#'
+#' @param template Customized template.
 #'
 #' @returns
 #' A transpiler function.
 #'
 #' @noRd
-make_futurize_for_makeClusterFuture <- function(defaults = list(), args = list()) {
-  template <- bquote_compile(
-    local({
-      cl <- do.call(.(CALL), args = .(OPTS))
-      oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
-      on.exit(options(oopts))
-      .(EXPR)
-    })
-  )
+make_futurize_for_makeClusterFuture <- function(defaults = list(), args = list(), template = NULL) {
+  if (is.null(template)) {
+    template <- bquote_compile(
+      local({
+        cl <- do.call(.(CALL), args = .(OPTS))
+        oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
+        on.exit(options(oopts))
+        .(EXPR)
+      })
+    )
+  }
 
   ## To please 'R CMD check' on R (< 4.4.0), where
   ## future::makeClusterFuture() is not available
