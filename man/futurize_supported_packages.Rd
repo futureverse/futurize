@@ -14,6 +14,8 @@ futurize_supported_functions(package)
 }
 \value{
 A character vector of package or function names.
+\code{futurize_supported_functions()} produces an error if packages
+required by the futurize transpiler are not installed.
 }
 \description{
 List packages and functions supporting futurization
@@ -22,7 +24,14 @@ List packages and functions supporting futurization
 pkgs <- futurize_supported_packages()
 pkgs
 
-fcns <- futurize_supported_functions("base")
-fcns
+if (requireNamespace("future.apply")) {
+  fcns <- futurize_supported_functions("base")
+  print(fcns)
+}
+
+if (requireNamespace("doFuture")) {
+  fcns <- futurize_supported_functions("foreach")
+  print(fcns)
+}
 
 }
