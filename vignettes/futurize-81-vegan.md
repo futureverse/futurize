@@ -94,6 +94,7 @@ The following **vegan** functions are supported by `futurize()`:
 * `mrpp()`
 * `oecosimu()`
 * `ordiareatest()`
+* `permutest()` for 'betadisper', and 'cca'
 * `simper()`
 
 [vegan]: https://cran.r-project.org/package=vegan

@@ -125,7 +125,9 @@ packages that have optional built-in support for parallelization.
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**     |
-| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `simper()` | **[future]**      |
+| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca', `simper()` | **[future]**      |
+
+
 
 _Table 2: Domain-specific functions currently supported by `futurize()` for parallel transpilation._
 
