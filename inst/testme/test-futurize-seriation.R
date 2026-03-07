@@ -1,4 +1,4 @@
-if (requireNamespace("seriation")) {
+if (requireNamespace("seriation") && requireNamespace("doFuture")) {
 library(futurize)
 library(seriation)
 options(future.rng.onMisuse = "error")

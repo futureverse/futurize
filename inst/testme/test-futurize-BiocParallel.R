@@ -1,4 +1,4 @@
-if (requireNamespace("BiocParallel") && !"covr" %in% loadedNamespaces()) {
+if (requireNamespace("BiocParallel") && requireNamespace("doFuture") && !"covr" %in% loadedNamespaces()) {
 library(futurize)
 library(BiocParallel)
 options(future.rng.onMisuse = "error")

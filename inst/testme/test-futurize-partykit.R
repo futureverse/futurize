@@ -1,4 +1,4 @@
-if (requireNamespace("partykit")) {
+if (requireNamespace("partykit") && requireNamespace("future.apply")) {
 library(futurize)
 library(partykit)
 options(future.rng.onMisuse = "error")

@@ -1,4 +1,4 @@
-if (requireNamespace("strucchange")) {
+if (requireNamespace("strucchange") && requireNamespace("doFuture")) {
 library(futurize)
 library(strucchange)
 options(future.rng.onMisuse = "error")

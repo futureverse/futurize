@@ -1,4 +1,4 @@
-if (requireNamespace("TSP")) {
+if (requireNamespace("TSP") && requireNamespace("doFuture")) {
 library(futurize)
 library(TSP)
 options(future.rng.onMisuse = "error")

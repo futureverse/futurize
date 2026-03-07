@@ -1,5 +1,5 @@
 #' @tags detritus-files
-if (requireNamespace("pbapply")) {
+if (requireNamespace("pbapply") && requireNamespace("future.apply")) {
 library(futurize)
 library(pbapply)
 options(future.rng.onMisuse = "error")
@@ -86,4 +86,4 @@ for (kk in seq_along(exprs)) {
 
 
 plan(sequential)
-} ## if (requireNamespace("pbapply"))
+} ## if (requireNamespace("pbapply") && requireNamespace("future.apply"))

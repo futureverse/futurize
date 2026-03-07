@@ -1,4 +1,4 @@
-if (requireNamespace("caret") && requireNamespace("randomForest")) {
+if (requireNamespace("caret") && requireNamespace("randomForest") && requireNamespace("doFuture")) {
 library(futurize)
 library(caret)
 options(future.rng.onMisuse = "error")

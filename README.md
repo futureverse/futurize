@@ -57,7 +57,7 @@ futurize_supported_functions("caret")
 | **[crossmap]**     | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()`        | -                  |
 | **[foreach]**      | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }`                                          | **[doFuture]**     | 
 | **[plyr]**         | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]**     | 
-| **[pbapply]**      | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`              | -                  |
+| **[pbapply]**      | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`              | **[future.apply]** |
 | **[BiocParallel]** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                          | **[doFuture]**     | 
 
 _Table 1: Map-reduce functions currently supported by `futurize()` for parallel transpilation._

@@ -1,5 +1,5 @@
 #' @tags detritus-files
-if (requireNamespace("plyr")) {
+if (requireNamespace("plyr") && requireNamespace("doFuture")) {
 library(futurize)
 library(plyr)
 options(future.rng.onMisuse = "error")
