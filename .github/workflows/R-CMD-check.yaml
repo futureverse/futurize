@@ -21,7 +21,7 @@ jobs:
           - {os: macOS-latest,   r: 'release'  }
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
-          - {os: ubuntu-latest,  r: 'release', without_suggests: true  }
+          - {os: ubuntu-latest,  r: 'release', without_suggests: true, label: 'w/out suggests' }
           - {os: ubuntu-latest,  r: 'oldrel'   }
 #          - {os: ubuntu-latest,  r: '4.1'      }
  
@@ -72,8 +72,9 @@ jobs:
       - name: Install package itself (special case)
         run: |
           install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
+        shell: Rscript {0}
 
-      - name: Remove suggested packages
+      - name: Remove suggested packages (optional)
         if: ${{ matrix.config.without_suggests }}
         run: |
           suggests <- read.dcf("DESCRIPTION", fields = "Suggests")
