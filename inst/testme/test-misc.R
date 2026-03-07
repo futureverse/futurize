@@ -119,6 +119,3 @@ ts <- futurize:::transpilers_for_package(type = "unknown", package = "base", fcn
 str(ts)
 res <- tryCatch(futurize:::transpilers_for_package(type = "unknown", package = "unknown", action = "make", debug = TRUE), error = identity)
 str(res)
-
-
-

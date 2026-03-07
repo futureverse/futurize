@@ -9,3 +9,10 @@ for (pkg in c(pkgs, "future", "aNonExistingPackage")) {
   print(fcns)
 }
 
+## Assert that there are not clashes between supported packages
+pkgs <- futurize::futurize_supported_packages()
+for (pkg in rep(pkgs, times = 2L)) {
+  cat(sprintf("Package %s:\n", pkg))
+  fcns <- futurize::futurize_supported_functions(pkg)
+  print(fcns)
+}

@@ -458,10 +458,22 @@ make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = F
 
   names <- character(0L)
   if (exports) {
-    names <- c(names, names(getNamespaceInfo(ns, "exports")))
+    exports <- names(getNamespaceInfo(ns, "exports"))
+    names <- c(names, exports)
   }
   if (s3methods) {
-    names <- c(names, getNamespaceInfo(ns, "S3methods")[,3])
+    s3methods <- getNamespaceInfo(ns, "S3methods")[,3]
+    if (!is.character(s3methods)) {
+      ## Note, although 's3methods' is typically a character vector, it
+      ## might also be a list. For example, loadNamespace("strucchange")
+      ## results in a character vector, but if we then load
+      ## loadNamespace("partykit"), the registered S3 methods for
+      ## 'strucchange' becomes a list with two function objects appended
+      ## at the very end.
+      s3methods <- s3methods[vapply(s3methods, FUN.VALUE = FALSE, FUN = is.character)]
+      s3methods <- unlist(s3methods, use.names = FALSE)
+    }
+    names <- c(names, s3methods)
   }
   
   for (name in names) {
