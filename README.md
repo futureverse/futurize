@@ -54,10 +54,10 @@ futurize_supported_functions("caret")
 | **base**           | `lapply()`, `sapply()`, `tapply()`, `vapply()`, `mapply()`, `.mapply()`, `Map()`, `eapply()`, `apply()`, `by()`, `replicate()`, `Filter()` | **[future.apply]** |
 | **stats**          | `kernapply()`                                                                                  | **[future.apply]** |
 | **[purrr]**        | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr]** |
-| **[crossmap]**     | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()`        | (itself)           |
+| **[crossmap]**     | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()`        | -                  |
 | **[foreach]**      | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }`                                          | **[doFuture]**     | 
 | **[plyr]**         | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]**     | 
-| **[pbapply]**      | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`              | (itself)           | 
+| **[pbapply]**      | `pblapply()`, `pbsapply()` and variants, `pbby()`, `pbreplicate()` and `pbwalk()`              | -                  |
 | **[BiocParallel]** | `bplapply()`, `bpmapply()`, `bpvec()`, `bpiterate()`, `bpaggregate()`                          | **[doFuture]**     | 
 
 _Table 1: Map-reduce functions currently supported by `futurize()` for parallel transpilation._
@@ -113,20 +113,20 @@ packages that have optional built-in support for parallelization.
 
 | Package           | Functions                                                                 | Requires           |
 |-------------------|---------------------------------------------------------------------------|--------------------|
-| **[boot]**        | `boot()`, `censboot()`, `tsboot()`                                        | **[future]**       |
+| **[boot]**        | `boot()`, `censboot()`, `tsboot()`                                        | -                  |
 | **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
-| **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | (itself)           |
+| **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | -                  |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
-| **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | **[future]**      |
-| **[lme4]**        | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | **[future]**       |
-| **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | **[future]**       |
-| **[mice]**        | `mice()`                                                                  | (itself)           |
+| **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
+| **[lme4]**        | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
+| **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | -                  |
+| **[mice]**        | `mice()`                                                                  | -                  |
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
-| **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | **[future]**       |
+| **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**     |
-| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca', `simper()` | **[future]**      |
+| **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca', `simper()` | -                  |
 
 
 
