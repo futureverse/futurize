@@ -15,14 +15,11 @@ make_options_for_doFuture <- local({
       for (name in names) options[[name]] <- defaults[[name]]
     }
 
-    names <- names(options)
-
     ## Remap chunk_size -> chunk.size
-    idxs <- which(names == "chunk_size")
-    if (length(idxs) > 0) names[idxs] <- "chunk.size"
+    names(options) <- sub("^chunk_size$", "chunk.size", names(options))
 
     ## Remap future options for doFuture
-    names <- sprintf("future.%s", names)
+    names <- sprintf("future.%s", names(options))
 
     ## Silently drop unknown future options
     keep <- intersect(defaults_base, names)

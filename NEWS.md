@@ -36,9 +36,14 @@
 
 ## New Features
 
-* Add support for disabling `futurize()` transpilation via R option
+ * Add support for disabling `futurize()` transpilation via R option
    `futurize.enable`, which may be set via environment variable
    `R_FUTURIZE_ENABLE` when the package is loaded.
+
+## Bug Fixes
+
+ * `futurize()` option `chunk_size` was silently ignored for
+   transpilers relying on **doFuture**.
 
 
 # Version 0.1.0 (2026-01-18)
