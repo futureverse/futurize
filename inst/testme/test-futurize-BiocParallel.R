@@ -1,4 +1,4 @@
-if (requireNamespace("BiocParallel") && requireNamespace("doFuture") && !"covr" %in% loadedNamespaces()) {
+if (requireNamespace("BiocParallel") && requireNamespace("doFuture")) {
 library(futurize)
 library(BiocParallel)
 options(future.rng.onMisuse = "error")
@@ -22,7 +22,7 @@ FUN_rng <- function(x, na.rm = TRUE) {
   a <- 1:5
   add <- NULL
   if (length(x) == 2) add <- list(C = 42)
-  median(c(a, x), na.rm = na.rm)
+  invisible(median(c(a, x), na.rm = na.rm))
 }
 
 es <- as.environment(xs)
