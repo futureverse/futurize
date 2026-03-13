@@ -43,6 +43,12 @@
   transpilation via R option `futurize.enable`, which may be set via
   environment variable `R_FUTURIZE_ENABLE` when the package is loaded.
 
+### Bug Fixes
+
+- [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  option `chunk_size` was silently ignored for transpilers relying on
+  **doFuture**.
+
 ## Version 0.1.0
 
 CRAN release: 2026-01-22
