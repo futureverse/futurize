@@ -43,6 +43,7 @@ mdebugf_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 
 mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
   n <- length(.debug$stack)
+  if (n == 0) stop("Called mdebug_pop() on an empty debug stack")
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
   debug_indent(-1)
@@ -51,6 +52,7 @@ mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 
 mdebugf_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
   n <- length(.debug$stack)
+  if (n == 0) stop("Called mdebug_pop() on an empty debug stack")
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
   debug_indent(-1)

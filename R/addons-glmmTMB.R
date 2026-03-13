@@ -14,8 +14,8 @@ append_transpilers_for_glmmTMB <- function() {
     local({
       ## WORKAROUND: https://github.com/glmmTMB/glmmTMB/issues/1265
       base_attach <- base::attach # silence R CMD check
-      base_attach(list(new_cl = FALSE), name = "glmmTLB:patch")
-      on.exit(detach("glmmTLB:patch"))
+      base_attach(list(new_cl = FALSE), name = "glmmTMB:patch")
+      on.exit(detach("glmmTMB:patch"))
       
       cl <- do.call(.(CALL), args = .(OPTS))
       oopts <- options(future.ClusterFuture.clusterEvalQ = "error")

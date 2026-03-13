@@ -258,6 +258,8 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     full_call <- if (length(call_pos) == 1L) expr else expr[[call_pos[-length(call_pos)]]]
     if (is_s3_generic(fcn)) {
       transpiler <- find_s3_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+    } else {
+      transpiler <- NULL
     }
     if (is.null(transpiler)) {
       if (is.null(transpilers)) {

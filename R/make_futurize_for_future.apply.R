@@ -26,7 +26,6 @@ make_futurize_for_future.apply <- function(defaults = list(), args = list(), tem
     names(opts) <- sub("^future[.]", "", names(opts))
     
     bquote_apply(template,
-      CALL = call,
       OPTS = opts,
       EXPR = expr
     )
