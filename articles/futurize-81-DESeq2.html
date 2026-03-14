@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'TSP' functions • futurize</title>
+<title>Parallelize 'DESeq2' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'TSP' functions">
+<meta property="og:title" content="Parallelize 'DESeq2' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -119,30 +119,30 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'TSP' functions</h1>
+      <h1>Parallelize 'DESeq2' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-TSP.md" class="external-link"><code>vignettes/futurize-81-TSP.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-TSP.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-DESeq2.md" class="external-link"><code>vignettes/futurize-81-DESeq2.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-DESeq2.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'TSP' functions}
+%\VignetteIndexEntry{Parallelize 'DESeq2' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{TSP}
+%\VignetteKeyword{Bioconductor}
+%\VignetteKeyword{DESeq2}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/TSP-logo.svg" alt="The 'TSP' hexlogo"><span>+</span>
-<img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
+<p><img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
 <p>The <strong>futurize</strong> package allows you to easily turn
@@ -154,61 +154,68 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mhahsler/TSP" class="external-link">TSP</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thelovelab/DESeq2" class="external-link">DESeq2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"USCA50"</span><span class="op">)</span></span>
-<span><span class="va">tour</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/TSP/man/solve_TSP.html" class="external-link">solve_TSP</a></span><span class="op">(</span><span class="va">USCA50</span>, method <span class="op">=</span> <span class="st">"nn"</span>, rep <span class="op">=</span> <span class="fl">10L</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html" class="external-link">DESeqDataSetFromMatrix</a></span><span class="op">(</span><span class="va">countData</span>, <span class="va">colData</span>, design <span class="op">=</span> <span class="op">~</span> <span class="va">condition</span><span class="op">)</span></span>
+<span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong><a href="https://cran.r-project.org/package=TSP" class="external-link">TSP</a></strong> package
-provides algorithms for solving the traveling salesperson problem
-(TSP).</p>
+<p>This vignette demonstrates how to use this approach to parallelize
+the <strong><a href="https://bioconductor.org/packages/DESeq2/" class="external-link">DESeq2</a></strong>
+<code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq()</a></code> function.</p>
+<p>The <strong><a href="https://bioconductor.org/packages/DESeq2/" class="external-link">DESeq2</a></strong>
+Bioconductor package provides methods to test for differential
+expression in RNA-seq data. The main function <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq()</a></code> runs
+a pipeline of gene-wise dispersion estimation, fitting, and statistical
+testing, which can be parallelized across genes.</p>
 <div class="section level3">
-<h3 id="example">Example:<a class="anchor" aria-label="anchor" href="#example"></a>
+<h3 id="example-running-deseq-in-parallel">Example: Running DESeq in parallel<a class="anchor" aria-label="anchor" href="#example-running-deseq-in-parallel"></a>
 </h3>
-<p>Example adopted from
-<code>help("solve_RSP", package = "TSP")</code>:</p>
+<p>The <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq()</a></code> function performs the full differential
+expression analysis:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mhahsler/TSP" class="external-link">TSP</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thelovelab/DESeq2" class="external-link">DESeq2</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"USCA50"</span><span class="op">)</span></span>
-<span><span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"identity"</span>, <span class="st">"random"</span>, <span class="st">"nearest_insertion"</span>, <span class="st">"cheapest_insertion"</span>,</span>
-<span>  <span class="st">"farthest_insertion"</span>, <span class="st">"arbitrary_insertion"</span>, <span class="st">"nn"</span>, <span class="st">"repetitive_nn"</span>, </span>
-<span>  <span class="st">"two_opt"</span>, <span class="st">"sa"</span></span>
+<span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html" class="external-link">DESeqDataSetFromMatrix</a></span><span class="op">(</span></span>
+<span>  countData <span class="op">=</span> <span class="va">counts</span>,</span>
+<span>  colData <span class="op">=</span> <span class="va">col_data</span>,</span>
+<span>  design <span class="op">=</span> <span class="op">~</span> <span class="va">condition</span></span>
 <span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## calculate tours - each tour in parallel</span></span>
-<span><span class="va">tours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/TSP/man/solve_TSP.html" class="external-link">solve_TSP</a></span><span class="op">(</span><span class="va">USCA50</span>, rep <span class="op">=</span> <span class="fl">10L</span>, method <span class="op">=</span> <span class="va">m</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tours</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">methods</span></span></code></pre></div>
-<p>This will parallelize the computations, given that we have set up
-parallel workers, e.g.</p>
+<span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/results.html" class="external-link">results</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq()</a></code> runs sequentially, but we can easily make
+it run in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/results.html" class="external-link">results</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the work across the available parallel workers,
+given that we have set up parallel workers, e.g.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
 backends</a> to choose from, including alternatives to parallelize
 locally as well as distributed across remote machines, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
 <p>and</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>TSP</strong> functions are supported by
+<p>The following <strong>DESeq2</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/TSP/man/solve_TSP.html" class="external-link">solve_TSP()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/DESeq2/man/lfcShrink.html" class="external-link">lfcShrink()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/DESeq2/man/results.html" class="external-link">results()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

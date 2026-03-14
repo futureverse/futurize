@@ -126,6 +126,7 @@ packages that have optional built-in support for parallelization.
 |----|----|----|
 | **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | \- |
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[DESeq2](https://bioconductor.org/packages/DESeq2/)** | `DESeq()`, `lfcShrink()`, `results()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | `"confint()` and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
@@ -154,6 +155,8 @@ ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+dds <- DESeq2::DESeq(dds) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -216,6 +219,8 @@ md <- vegan::mrpp(dune, Management) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-boot.md):
 - [Parallelize 'caret'
   functions](https://futurize.futureverse.org/articles/futurize-81-caret.md):
+- [Parallelize 'DESeq2'
+  functions](https://futurize.futureverse.org/articles/futurize-81-DESeq2.md):
 - [Parallelize 'glmmTMB'
   functions](https://futurize.futureverse.org/articles/futurize-81-glmmTMB.md):
 - [Parallelize 'glmnet'

@@ -27,11 +27,11 @@ by the futurize transpiler are not installed.
 ``` r
 pkgs <- futurize_supported_packages()
 pkgs
-#>  [1] "BiocParallel" "TSP"          "base"         "boot"         "caret"       
-#>  [6] "crossmap"     "foreach"      "fwb"          "glmmTMB"      "glmnet"      
-#> [11] "lme4"         "mgcv"         "mice"         "partykit"     "pbapply"     
-#> [16] "plyr"         "purrr"        "seriation"    "stats"        "strucchange" 
-#> [21] "tm"           "vegan"       
+#>  [1] "BiocParallel" "DESeq2"       "TSP"          "base"         "boot"        
+#>  [6] "caret"        "crossmap"     "foreach"      "fwb"          "glmmTMB"     
+#> [11] "glmnet"       "lme4"         "mgcv"         "mice"         "partykit"    
+#> [16] "pbapply"      "plyr"         "purrr"        "seriation"    "stats"       
+#> [21] "strucchange"  "tm"           "vegan"       
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9058</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9059</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-boot.html">Parallelize 'boot' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-caret.html">Parallelize 'caret' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-DESeq2.html">Parallelize 'DESeq2' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-glmmTMB.html">Parallelize 'glmmTMB' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-glmnet.html">Parallelize 'glmnet' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-lme4.html">Parallelize 'lme4' functions</a></li>
@@ -96,6 +97,7 @@
 <div class="section level3">
 <h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
 <ul><li><p>Add support for map-reduce package <strong>pbapply</strong>, e.g. <code>y &lt;- pblapply(...)  |&gt; futurize()</code>.</p></li>
+<li><p>Add support for Bioconductor package <strong>DESeq2</strong>, e.g. <code>dds &lt;- DESeq(dds) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;- fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>glmmTMB</strong>, e.g. <code>ci &lt;- confint(m, method = "profile") |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>mice</strong>, e.g. <code>imp &lt;- mice(nhanes, m = 5) |&gt; futurize()</code>.</p></li>
