@@ -42,11 +42,30 @@ performs the full differential expression analysis:
 
 library(DESeq2)
 
+# Simulate data
+n_genes <- 100L
+n_samples <- 8L
+counts <- matrix(
+  as.integer(runif(n_genes * n_samples, min = 0, max = 1000)),
+  nrow = n_genes,
+  ncol = n_samples,
+  dimnames = list(
+    paste0("gene", seq_len(n_genes)),
+    paste0("sample", seq_len(n_samples))
+  )
+)
+ 
+col_data <- data.frame(
+  condition = factor(rep(c("control", "treated"), each = n_samples / 2L)),
+  row.names = colnames(counts)
+)
+
 dds <- DESeqDataSetFromMatrix(
   countData = counts,
   colData = col_data,
   design = ~ condition
 )
+
 dds <- DESeq(dds)
 res <- results(dds)
 ```
