@@ -10,6 +10,9 @@
  * Add support for map-reduce package **pbapply**, e.g. `y <-
    pblapply(...)  |> futurize()`.
 
+ * Add support for Bioconductor package **DESeq2**, e.g. `dds <-
+   DESeq(dds) |> futurize()`.
+
  * Add support for domain-specific package **fwb**, e.g. `b <-
    fwb(data, statistic, R = 1000) |> futurize()`.
 

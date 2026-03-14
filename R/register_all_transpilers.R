@@ -21,6 +21,9 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "boot",         append_transpilers_for_boot)
   transpilers_for_package("futurize::add-on", package = "mgcv",         append_transpilers_for_mgcv)
 
+  ## Bioconductor packages
+  transpilers_for_package("futurize::add-on", package = "DESeq2",       append_transpilers_for_DESeq2)
+
   ## Domain-specific packages
   transpilers_for_package("futurize::add-on", package = "caret",        append_transpilers_for_caret)
   transpilers_for_package("futurize::add-on", package = "fwb",          append_transpilers_for_fwb)

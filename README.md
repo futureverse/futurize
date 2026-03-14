@@ -115,6 +115,7 @@ packages that have optional built-in support for parallelization.
 |-------------------|---------------------------------------------------------------------------|--------------------|
 | **[boot]**        | `boot()`, `censboot()`, `tsboot()`                                        | -                  |
 | **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
+| **[DESeq2]**      | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | -                  |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
@@ -142,6 +143,8 @@ ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+dds <- DESeq2::DESeq(dds) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -175,6 +178,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [boot]: https://cran.r-project.org/package=boot
 [caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
+[DESeq2]: https://bioconductor.org/packages/DESeq2/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
 [fwb]: https://ngreifer.github.io/fwb/
