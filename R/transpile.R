@@ -157,6 +157,33 @@ find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = 
 } ## find_s3_method_transpiler()
 
 
+find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = FALSE) {
+  method <- find_s4_method(fcn, fcn_name = fcn_name, call = call, envir = envir, debug = debug)
+  if (is.null(method)) return(NULL)
+
+  pkg <- method[["package"]]
+  name <- method[["name"]]
+
+  ## Look up registered transpiler for the package of the S4 method
+  transpiler_sets <- get_transpilers(type)
+  transpilers <- transpiler_sets[[pkg]]
+
+  ## If non-existing, retry by first trying to register transpilers for the package
+  if (is.null(transpilers)) {
+    transpilers <- tryCatch({
+      transpilers_for_package(type = type, package = pkg, action = "make", debug = debug)
+      transpiler_sets <- get_transpilers(type)
+      transpiler_sets[[pkg]]
+    }, error = function(e) NULL)
+  }
+
+  ## No transpilers registered for this package?
+  if (is.null(transpilers)) return(NULL)
+
+  transpilers[[name]]
+} ## find_s4_method_transpiler()
+
+
 #' Get a registered transpiler for an R expression
 #' 
 #' @inheritParams transpile
@@ -225,24 +252,32 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     }
 
     ## Get transpiler package addons
-    req_pkgs <- transpilers_for_package(type = type, package = ns_name, action = "make", debug = debug)
-    if (debug) {
-      mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
-    }
-
-    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = TRUE)
-    if (!all(okay)) {
-      pkgs <- req_pkgs[!okay]
-      info <- if (grepl("^%.*%$", fcn_name)) {
-        sprintf("%s::`%s`", ns_name, fcn_name)
-      } else {
-        sprintf("%s::%s()", ns_name, fcn_name)
+    ## tryCatch() is needed for cases where a package re-exports a generic
+    ## from another package, e.g. scater::runPCA() is a re-export of
+    ## BiocSingular::runPCA()
+    req_pkgs <- tryCatch(
+      transpilers_for_package(type = type, package = ns_name, action = "make", debug = debug),
+      error = function(e) NULL
+    )
+    if (!is.null(req_pkgs)) {
+      if (debug) {
+        mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
       }
-      stop(sprintf("Please install %s in order to %s %s",
-           commaq(pkgs), what, info))
+
+      okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = TRUE)
+      if (!all(okay)) {
+        pkgs <- req_pkgs[!okay]
+        info <- if (grepl("^%.*%$", fcn_name)) {
+          sprintf("%s::`%s`", ns_name, fcn_name)
+        } else {
+          sprintf("%s::%s()", ns_name, fcn_name)
+        }
+        stop(sprintf("Please install %s in order to %s %s",
+             commaq(pkgs), what, info))
+      }
+      transpiler_sets <- get_transpilers(type)
+      transpilers <- transpiler_sets[[ns_name]]
     }
-    transpiler_sets <- get_transpilers(type)
-    transpilers <- transpiler_sets[[ns_name]]
   }
 
   if (debug) {
@@ -258,6 +293,8 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     full_call <- if (length(call_pos) == 1L) expr else expr[[call_pos[-length(call_pos)]]]
     if (is_s3_generic(fcn)) {
       transpiler <- find_s3_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+    } else if (inherits(fcn, "standardGeneric")) {
+      transpiler <- find_s4_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
     } else {
       transpiler <- NULL
     }

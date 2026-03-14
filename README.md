@@ -123,6 +123,7 @@ packages that have optional built-in support for parallelization.
 | **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | -                  |
 | **[mice]**        | `mice()`                                                                  | -                  |
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
+| **[scater]**      | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
@@ -145,6 +146,8 @@ b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 dds <- DESeq2::DESeq(dds) |> futurize()
+
+sce <- scater::runPCA(sce) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -181,7 +184,6 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
-[fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
 [lme4]: https://cran.r-project.org/package=lme4
@@ -191,6 +193,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
 [purrr]: https://cran.r-project.org/package=purrr
+[scater]: https://bioconductor.org/packages/scater/
 [seriation]: https://cran.r-project.org/package=seriation
 [strucchange]: https://cran.r-project.org/package=strucchange
 [tm]: https://cran.r-project.org/package=tm

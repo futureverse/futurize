@@ -23,6 +23,7 @@ register_all_transpilers <- function() {
 
   ## Bioconductor packages
   transpilers_for_package("futurize::add-on", package = "DESeq2",       append_transpilers_for_DESeq2)
+  transpilers_for_package("futurize::add-on", package = "scater",       append_transpilers_for_scater)
 
   ## Domain-specific packages
   transpilers_for_package("futurize::add-on", package = "caret",        append_transpilers_for_caret)
