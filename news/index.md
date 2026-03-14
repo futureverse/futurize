@@ -7,6 +7,9 @@
 - Add support for futurizing S3 methods where the S3 generic is defined
   in another package.
 
+- Add support for futurizing S4 methods where the S4 generic is defined
+  in another package.
+
 ### New Transpilers
 
 - Add support for map-reduce package **pbapply**,
@@ -14,6 +17,9 @@
 
 - Add support for Bioconductor package **DESeq2**,
   e.g. `dds <- DESeq(dds) |> futurize()`.
+
+- Add support for Bioconductor package **scater**,
+  e.g. `sce <- runPCA(sce) |> futurize()`.
 
 - Add support for domain-specific package **fwb**,
   e.g. `b <- fwb(data, statistic, R = 1000) |> futurize()`.

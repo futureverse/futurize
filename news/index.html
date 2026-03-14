@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9059</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9060</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-mgcv.html">Parallelize 'mgcv' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-mice.html">Parallelize 'mice' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-partykit.html">Parallelize 'partykit' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-scater.html">Parallelize 'scater' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-seriation.html">Parallelize 'seriation' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
@@ -92,12 +93,14 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>Add support for futurizing S3 methods where the S3 generic is defined in another package.</li>
+<ul><li><p>Add support for futurizing S3 methods where the S3 generic is defined in another package.</p></li>
+<li><p>Add support for futurizing S4 methods where the S4 generic is defined in another package.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
 <ul><li><p>Add support for map-reduce package <strong>pbapply</strong>, e.g. <code>y &lt;- pblapply(...)  |&gt; futurize()</code>.</p></li>
 <li><p>Add support for Bioconductor package <strong>DESeq2</strong>, e.g. <code>dds &lt;- DESeq(dds) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for Bioconductor package <strong>scater</strong>, e.g. <code>sce &lt;- runPCA(sce) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;- fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>glmmTMB</strong>, e.g. <code>ci &lt;- confint(m, method = "profile") |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>mice</strong>, e.g. <code>imp &lt;- mice(nhanes, m = 5) |&gt; futurize()</code>.</p></li>

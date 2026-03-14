@@ -134,6 +134,7 @@ packages that have optional built-in support for parallelization.
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[mice](https://cran.r-project.org/package=mice)** | `mice()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
+| **[scater](https://bioconductor.org/packages/scater/)** | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
@@ -157,6 +158,8 @@ b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 dds <- DESeq2::DESeq(dds) |> futurize()
+
+sce <- scater::runPCA(sce) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 

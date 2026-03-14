@@ -32,6 +32,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-mice.md):
 - [Parallelize 'partykit'
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
+- [Parallelize 'scater'
+  functions](https://futurize.futureverse.org/articles/futurize-81-scater.md):
 - [Parallelize 'seriation'
   functions](https://futurize.futureverse.org/articles/futurize-81-seriation.md):
 - [Parallelize 'strucchange'
