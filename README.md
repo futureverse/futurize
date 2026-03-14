@@ -124,6 +124,7 @@ packages that have optional built-in support for parallelization.
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
+| **[tidy]**        | `fit_resamples()`, `last_fit()`, `tune_bayes()`, `tune_grid()`            | -                  |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**     |
 | **[vegan]**       | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca', `simper()` | -                  |
@@ -156,7 +157,9 @@ cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 o <- seriation::seriate_best(d_supreme) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
-  
+
+f <- tune::fit_resamples(wf, resamples = folds) |> futurize()
+
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
@@ -177,7 +180,6 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [crossmap]: https://cran.r-project.org/package=crossmap
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
-[fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
 [lme4]: https://cran.r-project.org/package=lme4
@@ -189,6 +191,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [purrr]: https://cran.r-project.org/package=purrr
 [seriation]: https://cran.r-project.org/package=seriation
 [strucchange]: https://cran.r-project.org/package=strucchange
+[tidy]: https://cran.r-project.org/package=tidy
 [tm]: https://cran.r-project.org/package=tm
 [vegan]: https://cran.r-project.org/package=vegan
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/

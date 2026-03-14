@@ -28,6 +28,9 @@
  * Add support for domain-specific package **strucchange**,
    e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
 
+ * Add support for domain-specific package **tune**, e.g. `f <-
+   fit_resamples(wf, resamples = folds) |> futurize()`.
+
  * Add support for domain-specific package **TSP**, e.g. `tour <-
    solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()`.
 
