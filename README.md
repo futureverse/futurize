@@ -119,7 +119,7 @@ packages that have optional built-in support for parallelization.
 | **[fgsea]**       | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | -                  |
 | **[GenomicAlignments]** | `summarizeOverlaps()`                                                | **[doFuture]**     |
-| **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
+| **[glmnet]**      | `cv.glmnet()`                                                             | -                  |
 | **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
 | **[GSVA]**        | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
 | **[lme4]**        | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |

@@ -1,6 +1,6 @@
 #' @tags detritus-files
 
-if (requireNamespace("glmnet") && requireNamespace("doFuture")) {
+if (requireNamespace("glmnet")) {
 library(futurize)
 library(glmnet)
 options(future.rng.onMisuse = "error")
