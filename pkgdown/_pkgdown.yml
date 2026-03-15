@@ -11,8 +11,71 @@ home:
 
 navbar:
   structure:
+    left: [intro, reference, articles-mapreduce, articles-cran, articles-bioc, news]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
+    articles-mapreduce:
+      text: Map Reduce
+      menu:
+      - text: Map-reduce packages supporting futurize()
+      - text: Parallelize base-R apply functions
+        href: articles/futurize-11-apply.html
+      - text: Parallelize 'purrr' functions
+        href: articles/futurize-21-purrr.html
+      - text: Parallelize 'crossmap' functions
+        href: articles/futurize-22-crossmap.html
+      - text: Parallelize 'plyr' functions
+        href: articles/futurize-31-plyr.html
+      - text: Parallelize 'foreach' functions
+        href: articles/futurize-51-foreach.html
+      - text: Parallelize 'BiocParallel' functions
+        href: articles/futurize-61-BiocParallel.html
+    articles-cran:
+      text: CRAN focus
+      menu:
+      - text: CRAN packages supporting futurize()
+      - text: Parallelize 'boot' functions
+        href: articles/futurize-81-boot.html
+      - text: Parallelize 'caret' functions
+        href: articles/futurize-81-caret.html
+      - text: Parallelize 'glmnet' functions
+        href: articles/futurize-81-glmnet.html
+      - text: Parallelize 'glmmTMB' functions
+        href: articles/futurize-81-glmmTMB.html
+      - text: Parallelize 'lme4' functions
+        href: articles/futurize-81-lme4.html
+      - text: Parallelize 'mgcv' functions
+        href: articles/futurize-81-mgcv.html
+      - text: Parallelize 'mice' functions
+        href: articles/futurize-81-mice.html
+      - text: Parallelize 'partykit' functions
+        href: articles/futurize-81-partykit.html
+      - text: Parallelize 'seriation' functions
+        href: articles/futurize-81-seriation.html
+      - text: Parallelize 'strucchange' functions
+        href: articles/futurize-81-strucchange.html
+      - text: Parallelize 'tm' functions
+        href: articles/futurize-81-tm.html
+      - text: Parallelize 'TSP' functions
+        href: articles/futurize-81-TSP.html
+      - text: Parallelize 'vegan' functions
+        href: articles/futurize-81-vegan.html
+    articles-bioc:
+      text: Bioc focus
+      menu:
+      - text: Bioconductor packages supporting futurize()
+      - text: Parallelize 'BiocParallel' functions
+        href: articles/futurize-61-BiocParallel.html
+      - text: Parallelize 'DESeq2' functions
+        href: articles/futurize-81-DESeq2.html
+      - text: Parallelize 'fgsea' functions
+        href: articles/futurize-81-fgsea.html
+      - text: Parallelize 'scater' functions
+        href: articles/futurize-81-scater.html
+
+    news:
+      text: News
+      href: news/index.html
     futureverse:
       icon: fas fa-home
       href: https://www.futureverse.org/
