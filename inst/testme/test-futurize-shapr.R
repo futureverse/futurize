@@ -1,4 +1,4 @@
-if (requireNamespace("shapr") && requireNamespace("future.apply")) {
+if (requireNamespace("shapr")) {
   library(futurize)
   library(shapr)
   options(future.rng.onMisuse = "error")
@@ -21,8 +21,6 @@ if (requireNamespace("shapr") && requireNamespace("future.apply")) {
   ## -------------------------------------------------------
   ## explain()
   ## -------------------------------------------------------
-
-  ## Truth (shapr already uses future_lapply internally)
   set.seed(42)
   result_truth <- shapr::explain(
     model = model,
@@ -64,4 +62,4 @@ if (requireNamespace("shapr") && requireNamespace("future.apply")) {
 
 
   plan(sequential)
-} ## if (requireNamespace("shapr") && requireNamespace("future.apply"))
+} ## if (requireNamespace("shapr"))

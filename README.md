@@ -127,7 +127,7 @@ packages that have optional built-in support for parallelization.
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
 | **[scater]**      | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
-| **[shapr]**       | `explain()`, `explain_forecast()`                                         | **[future.apply]** |
+| **[shapr]**       | `explain()`, `explain_forecast()`                                         | -                  |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**     |
