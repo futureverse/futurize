@@ -68,7 +68,11 @@ sce2$group <- factor(rep(c("A", "B"), each = n_cells / 2L))
 
 result_truth <- getVarianceExplained(sce2, variables = "group")
 
+counters <- plan("backend")[["counters"]]
 result <- getVarianceExplained(sce2, variables = "group") |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 stopifnot(all.equal(result, result_truth))
 
 plan(sequential)
