@@ -131,6 +131,7 @@ packages that have optional built-in support for parallelization.
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | `"confint()` and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
+| **[GSVA](https://bioconductor.org/packages/GSVA/)** | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[mice](https://cran.r-project.org/package=mice)** | `mice()` | \- |
@@ -163,6 +164,8 @@ res <- fgsea::fgsea(pathways, stats) |> futurize()
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
+
+es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
 

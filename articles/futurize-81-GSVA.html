@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'fgsea' functions • futurize</title>
+<title>Parallelize 'GSVA' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'fgsea' functions">
+<meta property="og:title" content="Parallelize 'GSVA' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -136,24 +136,24 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'fgsea' functions</h1>
+      <h1>Parallelize 'GSVA' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-fgsea.md" class="external-link"><code>vignettes/futurize-81-fgsea.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-fgsea.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-GSVA.md" class="external-link"><code>vignettes/futurize-81-GSVA.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-GSVA.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'fgsea' functions}
+%\VignetteIndexEntry{Parallelize 'GSVA' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
 %\VignetteKeyword{Bioconductor}
-%\VignetteKeyword{fgsea}
+%\VignetteKeyword{GSVA}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
@@ -171,49 +171,54 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/" class="external-link">fgsea</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rcastelo/GSVA" class="external-link">GSVA</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">stats</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html" class="external-link">gsvaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-the <strong><a href="https://bioconductor.org/packages/fgsea/" class="external-link">fgsea</a></strong>
+the <strong><a href="https://bioconductor.org/packages/GSVA/" class="external-link">GSVA</a></strong>
 functions.</p>
-<p>The <strong><a href="https://bioconductor.org/packages/fgsea/" class="external-link">fgsea</a></strong>
-Bioconductor package implements fast preranked gene set enrichment
-analysis (GSEA). The main functions <code><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea()</a></code>,
-<code><a href="https://rdrr.io/pkg/fgsea/man/fgseaMultilevel.html" class="external-link">fgseaMultilevel()</a></code>, and <code><a href="https://rdrr.io/pkg/fgsea/man/fgseaSimple.html" class="external-link">fgseaSimple()</a></code> perform
-permutation-based enrichment testing, which can be parallelized across
-gene sets.</p>
+<p>The <strong><a href="https://bioconductor.org/packages/GSVA/" class="external-link">GSVA</a></strong>
+Bioconductor package implements gene set variation analysis, a
+non-parametric, unsupervised method for estimating variation of gene set
+enrichment through the samples of an expression data set. The main
+function <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code> computes enrichment scores for each gene
+set and sample, which can be parallelized across gene sets.</p>
 <div class="section level3">
-<h3 id="example-running-fgseasimple-in-parallel">Example: Running fgseaSimple() in parallel<a class="anchor" aria-label="anchor" href="#example-running-fgseasimple-in-parallel"></a>
+<h3 id="example-running-gsva-in-parallel">Example: Running gsva() in parallel<a class="anchor" aria-label="anchor" href="#example-running-gsva-in-parallel"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/fgsea/man/fgseaSimple.html" class="external-link">fgseaSimple()</a></code> function performs permutation-based
-gene set enrichment analysis:</p>
+<p>The <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code> function computes gene set enrichment scores
+using different methods depending on the parameter object passed to
+it:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ctlab/fgsea/" class="external-link">fgsea</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rcastelo/GSVA" class="external-link">GSVA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create example data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">1000L</span></span>
-<span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">200L</span></span>
+<span><span class="va">n_samples</span> <span class="op">&lt;-</span> <span class="fl">120L</span></span>
+<span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_genes</span> <span class="op">*</span> <span class="va">n_samples</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n_genes</span>, ncol <span class="op">=</span> <span class="va">n_samples</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sample"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_samples</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pathways</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  pathway1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">50L</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  pathway2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">100L</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  pathway3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">150L</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">geneSets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  geneSet1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">30L</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  geneSet2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">50L</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  geneSet3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">40L</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgseaSimple.html" class="external-link">fgseaSimple</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">stats</span>, nperm <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/fgsea/man/fgseaSimple.html" class="external-link">fgseaSimple()</a></code> runs sequentially, but we can easily
-make it run in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html" class="external-link">gsvaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code> runs sequentially, but we can easily make it
+run in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgseaSimple.html" class="external-link">fgseaSimple</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">stats</span>, nperm <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -228,20 +233,33 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="other-enrichment-methods">Other enrichment methods<a class="anchor" aria-label="anchor" href="#other-enrichment-methods"></a>
+</h3>
+<p>GSVA supports multiple enrichment methods through different parameter
+objects. All of them can be parallelized with
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## ssGSEA method</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/ssgseaParam-class.html" class="external-link">ssgseaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## PLAGE method</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/plageParam-class.html" class="external-link">plageParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Combined z-score method</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/zscoreParam-class.html" class="external-link">zscoreParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>fgsea</strong> functions are supported by
+<p>The following <strong>GSVA</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/fgsea/man/fgseaMultilevel.html" class="external-link">fgseaMultilevel()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/fgsea/man/fgseaSimple.html" class="external-link">fgseaSimple()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/fgsea/man/fgseaLabel.html" class="external-link">fgseaLabel()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/fgsea/man/geseca.html" class="external-link">geseca()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/fgsea/man/gesecaSimple.html" class="external-link">gesecaSimple()</a></code></li>
-<li><code>collapsePathwaysGeseca()</code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaRanks()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaScores()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/spatCor.html" class="external-link">spatCor()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

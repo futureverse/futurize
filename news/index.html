@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9061</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9062</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-DESeq2.html">Parallelize 'DESeq2' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-fgsea.html">Parallelize 'fgsea' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-GSVA.html">Parallelize 'GSVA' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-scater.html">Parallelize 'scater' functions</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
@@ -118,6 +119,7 @@
 <li><p>Add support for Bioconductor package <strong>fgsea</strong>, e.g. <code>res &lt;- fgsea(pathways, stats) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;- fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>glmmTMB</strong>, e.g. <code>ci &lt;- confint(m, method = "profile") |&gt; futurize()</code>.</p></li>
+<li><p>Add support for Bioconductor package <strong>GSVA</strong>, e.g. <code>es &lt;- gsva(gsvaParam(expr, geneSets)) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>mice</strong>, e.g. <code>imp &lt;- mice(nhanes, m = 5) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>partykit</strong>, e.g. <code>cf &lt;- cforest(dist ~ speed, data = cars) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for Bioconductor package <strong>scater</strong>, e.g. <code>sce &lt;- runPCA(sce) |&gt; futurize()</code>.</p></li>

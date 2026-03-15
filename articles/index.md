@@ -26,6 +26,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-glmmTMB.md):
 - [Parallelize 'glmnet'
   functions](https://futurize.futureverse.org/articles/futurize-81-glmnet.md):
+- [Parallelize 'GSVA'
+  functions](https://futurize.futureverse.org/articles/futurize-81-GSVA.md):
 - [Parallelize 'lme4'
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
 - [Parallelize 'mgcv'
