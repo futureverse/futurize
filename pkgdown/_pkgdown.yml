@@ -70,6 +70,8 @@ navbar:
         href: articles/futurize-81-DESeq2.html
       - text: Parallelize 'fgsea' functions
         href: articles/futurize-81-fgsea.html
+      - text: Parallelize 'GSVA' functions
+        href: articles/futurize-81-GSVA.html
       - text: Parallelize 'scater' functions
         href: articles/futurize-81-scater.html
 

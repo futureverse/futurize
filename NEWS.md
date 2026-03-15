@@ -31,6 +31,9 @@
  * Add support for domain-specific package **glmmTMB**, e.g. `ci <-
    confint(m, method = "profile") |> futurize()`.
 
+ * Add support for Bioconductor package **GSVA**, e.g. `es <-
+   gsva(gsvaParam(expr, geneSets)) |> futurize()`.
+
  * Add support for domain-specific package **mice**, e.g. `imp <-
    mice(nhanes, m = 5) |> futurize()`.
 

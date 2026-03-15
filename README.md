@@ -120,6 +120,7 @@ packages that have optional built-in support for parallelization.
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | -                  |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
+| **[GSVA]**        | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
 | **[lme4]**        | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
 | **[mgcv]**        | `bam()`, `predict()` for 'bam'                                            | -                  |
 | **[mice]**        | `mice()`                                                                  | -                  |
@@ -151,6 +152,8 @@ res <- fgsea::fgsea(pathways, stats) |> futurize()
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
+
+es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
 
@@ -190,6 +193,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
+[GSVA]: https://bioconductor.org/packages/GSVA/
 [lme4]: https://cran.r-project.org/package=lme4
 [mgcv]: https://cran.r-project.org/package=mgcv
 [mice]: https://cran.r-project.org/package=mice
