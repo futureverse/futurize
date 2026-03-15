@@ -116,6 +116,7 @@ packages that have optional built-in support for parallelization.
 | **[boot]**        | `boot()`, `censboot()`, `tsboot()`                                        | -                  |
 | **[caret]**       | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
 | **[DESeq2]**      | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
+| **[fgsea]**       | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | -                  |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
@@ -143,11 +144,11 @@ model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
 ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 
-f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
-
 dds <- DESeq2::DESeq(dds) |> futurize()
 
-sce <- scater::runPCA(sce) |> futurize()
+res <- fgsea::fgsea(pathways, stats) |> futurize()
+
+f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -158,6 +159,8 @@ imp <- mice::mice(nhanes, m = 5) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+sce <- scater::runPCA(sce) |> futurize()
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
 
@@ -182,6 +185,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
+[fgsea]: https://bioconductor.org/packages/fgsea/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
