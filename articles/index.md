@@ -22,6 +22,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-DESeq2.md):
 - [Parallelize 'fgsea'
   functions](https://futurize.futureverse.org/articles/futurize-81-fgsea.md):
+- [Parallelize 'GenomicAlignments'
+  functions](https://futurize.futureverse.org/articles/futurize-81-GenomicAlignments.md):
 - [Parallelize 'glmmTMB'
   functions](https://futurize.futureverse.org/articles/futurize-81-glmmTMB.md):
 - [Parallelize 'glmnet'

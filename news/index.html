@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9063</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9066</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-DESeq2.html">Parallelize 'DESeq2' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-fgsea.html">Parallelize 'fgsea' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-GenomicAlignments.html">Parallelize 'GenomicAlignments' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-GSVA.html">Parallelize 'GSVA' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-scater.html">Parallelize 'scater' functions</a></li>
   </ul></li>
@@ -115,20 +116,21 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
-<ul><li><p>Add support for map-reduce package <strong>pbapply</strong>, e.g. <code>y &lt;- pblapply(...)  |&gt; futurize()</code>.</p></li>
-<li><p>Add support for Bioconductor package <strong>DESeq2</strong>, e.g. <code>dds &lt;- DESeq(dds) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for Bioconductor package <strong>fgsea</strong>, e.g. <code>res &lt;- fgsea(pathways, stats) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>fwb</strong>, e.g. <code>b &lt;- fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>glmmTMB</strong>, e.g. <code>ci &lt;- confint(m, method = "profile") |&gt; futurize()</code>.</p></li>
-<li><p>Add support for Bioconductor package <strong>GSVA</strong>, e.g. <code>es &lt;- gsva(gsvaParam(expr, geneSets)) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>mice</strong>, e.g. <code>imp &lt;- mice(nhanes, m = 5) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>partykit</strong>, e.g. <code>cf &lt;- cforest(dist ~ speed, data = cars) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for Bioconductor package <strong>scater</strong>, e.g. <code>sce &lt;- runPCA(sce) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>seriation</strong>, e.g. <code>o &lt;- seriate_best(d_supreme) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for CRAN package <strong>shapr</strong>, e.g. <code>result &lt;- explain(model, x_explain, x_train, approach, phi0) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>strucchange</strong>, e.g. <code>bp &lt;- breakpoints(Nile ~ 1) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>TSP</strong>, e.g. <code>tour &lt;- solve_TSP(USCA50, method = "nn", rep = 10) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for domain-specific package <strong>vegan</strong>, e.g. <code>md &lt;- mrpp(dune, Management) |&gt; futurize()</code>.</p></li>
+<ul><li><p>Add support for map-reduce CRAN package <strong>pbapply</strong>, e.g. <code>y &lt;- pblapply(...)  |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific Bioconductor package <strong>DESeq2</strong>, e.g. <code>dds &lt;- DESeq(dds) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific Bioconductor package <strong>fgsea</strong>, e.g. <code>res &lt;- fgsea(pathways, stats) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific Bioconductor package <strong>GenomicAlignments</strong>, e.g. <code>se &lt;- summarizeOverlaps(features, bam_files) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>fwb</strong>, e.g. <code>b &lt;- fwb(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>glmmTMB</strong>, e.g. <code>ci &lt;- confint(m, method = "profile") |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific Bioconductor package <strong>GSVA</strong>, e.g. <code>es &lt;- gsva(gsvaParam(expr, geneSets)) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>mice</strong>, e.g. <code>imp &lt;- mice(nhanes, m = 5) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>partykit</strong>, e.g. <code>cf &lt;- cforest(dist ~ speed, data = cars) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific Bioconductor package <strong>scater</strong>, e.g. <code>sce &lt;- runPCA(sce) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>seriation</strong>, e.g. <code>o &lt;- seriate_best(d_supreme) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>shapr</strong>, e.g. <code>result &lt;- explain(model, x_explain, x_train, approach, phi0) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>strucchange</strong>, e.g. <code>bp &lt;- breakpoints(Nile ~ 1) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>TSP</strong>, e.g. <code>tour &lt;- solve_TSP(USCA50, method = "nn", rep = 10) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>vegan</strong>, e.g. <code>md &lt;- mrpp(dune, Management) |&gt; futurize()</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
@@ -144,7 +146,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.6" id="version-006">Version 0.0.6<a class="anchor" aria-label="anchor" href="#version-006"></a></h2>
 <div class="section level3">
 <h3 id="new-transpilers-0-0-6">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-0-0-6"></a></h3>
-<ul><li>Add support for <strong>mgcv</strong>, e.g. <code>b &lt;- bam(...) |&gt; futurize()</code>.</li>
+<ul><li>Add support for domain-specific CRAN package <strong>mgcv</strong>, e.g. <code>b &lt;- bam(...) |&gt; futurize()</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-0-6">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-6"></a></h3>
@@ -167,7 +169,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.4" id="version-004">Version 0.0.4<a class="anchor" aria-label="anchor" href="#version-004"></a></h2>
 <div class="section level3">
 <h3 id="new-transpilers-0-0-4">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-0-0-4"></a></h3>
-<ul><li>Add support for <strong>tm</strong>, e.g. <code>m &lt;- tm_map(crude, content_transformer(tolower)) |&gt; futurize()</code>.</li>
+<ul><li>Add support for domain-specific CRAN package <strong>tm</strong>, e.g. <code>m &lt;- tm_map(crude, content_transformer(tolower)) |&gt; futurize()</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-0-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-4"></a></h3>
@@ -180,7 +182,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.3" id="version-003">Version 0.0.3<a class="anchor" aria-label="anchor" href="#version-003"></a></h2>
 <div class="section level3">
 <h3 id="new-transpilers-0-0-3">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-0-0-3"></a></h3>
-<ul><li><p>Add support for <strong>caret</strong>, e.g. <code>model &lt;- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |&gt; futurize()</code>.</p></li>
+<ul><li><p>Add support for domain-specific CRAN package <strong>caret</strong>, e.g. <code>model &lt;- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for <code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">times()</a></code> and <code>%:%</code> of <strong>foreach</strong>, which require special care when it comes to passing future options, e.g. <code>futurize(seed = FALSE)</code>.</p></li>
 </ul></div>
 <div class="section level3">
@@ -195,14 +197,14 @@
 <div class="section level3">
 <h3 id="new-transpilers-0-0-2">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-0-0-2"></a></h3>
 <ul><li><p>Add support for base R, e.g. <code>y &lt;- lapply(xs, fcn) |&gt; futurize()</code>, <code>y &lt;- by(xs, idxs, fcn) |&gt; futurize()</code>, and <code>xs &lt;- kernapply(x, k) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>purrr</strong>, e.g. <code>y &lt;- map(xs, fcn) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>crossmap</strong>, e.g. <code>y &lt;- xmap_dbl(xs, fcn) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>foreach</strong>, e.g. <code>y &lt;- foreach(x = xs) %do% { fcn(x) } |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>plyr</strong>, e.g. <code>y &lt;- llply(xs, fcn) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>BiocParallel</strong>, e.g. <code>y &lt;- bplapply(xs, fcn) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>boot</strong>, e.g. <code>b &lt;- boot(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>glmnet</strong>, e.g. <code>cv &lt;- cv.glmnet(x, y) |&gt; futurize()</code>.</p></li>
-<li><p>Add support for <strong>lme4</strong>, e.g. <code>gm &lt;- allFit(gm) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for map-reduce CRAN package <strong>purrr</strong>, e.g. <code>y &lt;- map(xs, fcn) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for map-reduce CRAN package <strong>crossmap</strong>, e.g. <code>y &lt;- xmap_dbl(xs, fcn) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for map-reduce CRAN package <strong>foreach</strong>, e.g. <code>y &lt;- foreach(x = xs) %do% { fcn(x) } |&gt; futurize()</code>.</p></li>
+<li><p>Add support for map-reduce CRAN package <strong>plyr</strong>, e.g. <code>y &lt;- llply(xs, fcn) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for map-reduce Bioconductor package <strong>BiocParallel</strong>, e.g. <code>y &lt;- bplapply(xs, fcn) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>boot</strong>, e.g. <code>b &lt;- boot(data, statistic, R = 1000) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>glmnet</strong>, e.g. <code>cv &lt;- cv.glmnet(x, y) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for domain-specific CRAN package <strong>lme4</strong>, e.g. <code>gm &lt;- allFit(gm) |&gt; futurize()</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

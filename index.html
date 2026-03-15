@@ -17,8 +17,8 @@
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Parallelize Common Functions via One Magic Function">
-<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, DESeq2, fgsea, fwb, glmmTMB, glmnet, GSVA, lme4, mgcv, mice, partykit, scater, seriation, shapr, strucchange, tm, TSP, and vegan'.">
-<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, DESeq2, fgsea, fwb, glmmTMB, glmnet, GSVA, lme4, mgcv, mice, partykit, scater, seriation, shapr, strucchange, tm, TSP, and vegan'.">
+<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, DESeq2, fgsea, fwb, GenomicAlignments, glmmTMB, glmnet, GSVA, lme4, mgcv, mice, partykit, scater, seriation, shapr, strucchange, tm, TSP, and vegan'.">
+<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, DESeq2, fgsea, fwb, GenomicAlignments, glmmTMB, glmnet, GSVA, lme4, mgcv, mice, partykit, scater, seriation, shapr, strucchange, tm, TSP, and vegan'.">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9063</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9066</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +84,7 @@
     <li><a class="dropdown-item" href="articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-DESeq2.html">Parallelize 'DESeq2' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-fgsea.html">Parallelize 'fgsea' functions</a></li>
+    <li><a class="dropdown-item" href="articles/futurize-81-GenomicAlignments.html">Parallelize 'GenomicAlignments' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-GSVA.html">Parallelize 'GSVA' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-scater.html">Parallelize 'scater' functions</a></li>
   </ul>
@@ -317,6 +318,11 @@
 <td>-</td>
 </tr>
 <tr>
+<td><strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong></td>
+<td><code>summarizeOverlaps()</code></td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
 <td><strong><a href="https://cran.r-project.org/package=glmnet" class="external-link">glmnet</a></strong></td>
 <td><code>cv.glmnet()</code></td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
@@ -376,7 +382,7 @@
 <td>
 <code>explain()</code>, <code>explain_forecast()</code>
 </td>
-<td><strong><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></strong></td>
+<td>-</td>
 </tr>
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=strucchange" class="external-link">strucchange</a></strong></td>
@@ -399,8 +405,7 @@
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=vegan" class="external-link">vegan</a></strong></td>
 <td>
-<code>adonis()</code>, <code>adonis2()</code>, <code>anosim()</code>, <code>cascadeKM()</code>, <code>estaccumR()</code>, <code>mantel()</code>, <code>mantel.partial()</code>, <code>metaMDSiter()</code>, <code>mrpp()</code>, <code>oecosimu()</code>, <code>ordiareatest()</code>, <code>permutest()</code> for ‘betadisper’, and ‘cca’, <code>simper()</code>
-</td>
+<code>adonis()</code>, <code>adonis2()</code>, <code>anosim()</code>, <code>cascadeKM()</code>, <code>estaccumR()</code>, <code>mantel()</code>, <code>mantel.partial()</code>, <code>metaMDSiter()</code>, <code>mrpp()</code>, <code>oecosimu()</code>, <code>ordiareatest()</code>, <code>permutest()</code> for ‘betadisper’, and ‘cca’</td>
 <td>-</td>
 </tr>
 </tbody>
@@ -419,6 +424,8 @@
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">fgsea</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">stats</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">fwb</span><span class="fu">::</span><span class="fu"><a href="https://ngreifer.github.io/fwb/reference/fwb.html" class="external-link">fwb</a></span><span class="op">(</span><span class="fu">boot</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/boot/man/bigcity.html" class="external-link">city</a></span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu">GenomicAlignments</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>

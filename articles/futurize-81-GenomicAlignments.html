@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'partykit' functions • futurize</title>
+<title>Parallelize 'GenomicAlignments' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'partykit' functions">
+<meta property="og:title" content="Parallelize 'GenomicAlignments' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -55,7 +55,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
   </ul>
 </li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-cran-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">CRAN focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-cran-focus">
 <li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
@@ -75,7 +75,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
   </ul>
 </li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-bioc-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Bioc focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-bioc-focus">
 <li><h6 class="dropdown-header" data-toc-skip>Bioconductor packages supporting futurize()</h6></li>
@@ -138,30 +138,30 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'partykit' functions</h1>
+      <h1>Parallelize 'GenomicAlignments' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-partykit.md" class="external-link"><code>vignettes/futurize-81-partykit.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-partykit.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-GenomicAlignments.md" class="external-link"><code>vignettes/futurize-81-GenomicAlignments.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-GenomicAlignments.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'partykit' functions}
+%\VignetteIndexEntry{Parallelize 'GenomicAlignments' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{partykit}
+%\VignetteKeyword{Bioconductor}
+%\VignetteKeyword{GenomicAlignments}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/cran-partykit-logo.svg" alt="The 'partykit' image"><span>+</span>
-<img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
+<p><img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
 <p>The <strong>futurize</strong> package allows you to easily turn
@@ -173,61 +173,67 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://partykit.r-forge.r-project.org/partykit/" class="external-link">partykit</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicAlignments" class="external-link">GenomicAlignments</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">partykit</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong><a href="https://cran.r-project.org/package=partykit" class="external-link">partykit</a></strong>
-package provides the <code>breakpoints()</code> function for estimating
-one or more change points in a data trace, e.g. in time-series data.</p>
+<p>This vignette demonstrates how to use this approach to parallelize
+the <strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong>
+functions.</p>
+<p>The <strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong>
+Bioconductor package provides efficient representation and manipulation
+of short genomic alignments. The <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code>
+function counts the number of reads that map to each feature (e.g. gene
+or exon) from one or more BAM files. When called with a
+<code>BamFileList</code>, the work is distributed across BAM files using
+<code><a href="https://rdrr.io/pkg/BiocParallel/man/bplapply.html" class="external-link">bplapply()</a></code>, which can be parallelized.</p>
 <div class="section level3">
-<h3 id="example-conditional-random-forests-inference">Example: Conditional random forests inference<a class="anchor" aria-label="anchor" href="#example-conditional-random-forests-inference"></a>
+<h3 id="example-running-summarizeoverlaps-in-parallel">Example: Running summarizeOverlaps() in parallel<a class="anchor" aria-label="anchor" href="#example-running-summarizeoverlaps-in-parallel"></a>
 </h3>
-<p>Example adopted from
-<code><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">help("cforest", package = "partykit")</a></code>:</p>
+<p>The <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code> function counts reads
+overlapping genomic features across multiple BAM files:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://partykit.r-forge.r-project.org/partykit/" class="external-link">partykit</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicAlignments" class="external-link">GenomicAlignments</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Rsamtools" class="external-link">Rsamtools</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## basic example: conditional inference forest for cars data</span></span>
-<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">bam_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rsamtools/man/BamFile-class.html" class="external-link">BamFileList</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample1.bam"</span>, <span class="st">"sample2.bam"</span>, <span class="st">"sample3.bam"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chr1"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/IRanges-constructor.html" class="external-link">IRanges</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">2000</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">1500</span>, <span class="fl">2500</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## prediction of fitted mean and visualization</span></span>
-<span><span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>speed <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span></span>
-<span><span class="va">nd</span><span class="op">$</span><span class="va">mean</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">cf</span>, newdata <span class="op">=</span> <span class="va">nd</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">mean</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">nd</span><span class="op">)</span></span></code></pre></div>
-<p>This will parallelize the computations of the variable selection
-criterion, given that we have set up parallel workers, e.g.</p>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code> processes BAM files
+sequentially, but we can easily make it process them in parallel by
+piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the BAM file processing across the available
+parallel workers, given that we have set up parallel workers, e.g.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
 backends</a> to choose from, including alternatives to parallelize
 locally as well as distributed across remote machines, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
 <p>and</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>partykit</strong> functions are supported by
-<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<p>The following <strong>GenomicAlignments</strong> functions are
+supported by <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/partykit/man/ctree_control.html" class="external-link">ctree_control()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/partykit/man/mob_control.html" class="external-link">mob_control()</a></code></li>
-<li>
-<code><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">varimp()</a></code> for <code>cforest</code>
-</li>
+<li><code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
