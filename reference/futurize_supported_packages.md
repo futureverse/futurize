@@ -28,10 +28,10 @@ by the futurize transpiler are not installed.
 pkgs <- futurize_supported_packages()
 pkgs
 #>  [1] "BiocParallel" "DESeq2"       "TSP"          "base"         "boot"        
-#>  [6] "caret"        "crossmap"     "foreach"      "fwb"          "glmmTMB"     
-#> [11] "glmnet"       "lme4"         "mgcv"         "mice"         "partykit"    
-#> [16] "pbapply"      "plyr"         "purrr"        "scater"       "seriation"   
-#> [21] "stats"        "strucchange"  "tm"           "vegan"       
+#>  [6] "caret"        "crossmap"     "fgsea"        "foreach"      "fwb"         
+#> [11] "glmmTMB"      "glmnet"       "lme4"         "mgcv"         "mice"        
+#> [16] "partykit"     "pbapply"      "plyr"         "purrr"        "scater"      
+#> [21] "seriation"    "stats"        "strucchange"  "tm"           "vegan"       
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

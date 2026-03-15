@@ -10,6 +10,13 @@
 - Add support for futurizing S4 methods where the S4 generic is defined
   in another package.
 
+### New Features
+
+- Add support for disabling
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  transpilation via R option `futurize.enable`, which may be set via
+  environment variable `R_FUTURIZE_ENABLE` when the package is loaded.
+
 ### New Transpilers
 
 - Add support for map-reduce package **pbapply**,
@@ -18,8 +25,8 @@
 - Add support for Bioconductor package **DESeq2**,
   e.g. `dds <- DESeq(dds) |> futurize()`.
 
-- Add support for Bioconductor package **scater**,
-  e.g. `sce <- runPCA(sce) |> futurize()`.
+- Add support for Bioconductor package **fgsea**,
+  e.g. `res <- fgsea(pathways, stats) |> futurize()`.
 
 - Add support for domain-specific package **fwb**,
   e.g. `b <- fwb(data, statistic, R = 1000) |> futurize()`.
@@ -33,6 +40,9 @@
 - Add support for domain-specific package **partykit**,
   e.g. `cf <- cforest(dist ~ speed, data = cars) |> futurize()`.
 
+- Add support for Bioconductor package **scater**,
+  e.g. `sce <- runPCA(sce) |> futurize()`.
+
 - Add support for domain-specific package **seriation**,
   e.g. `o <- seriate_best(d_supreme) |> futurize()`.
 
@@ -44,13 +54,6 @@
 
 - Add support for domain-specific package **vegan**,
   e.g. `md <- mrpp(dune, Management) |> futurize()`.
-
-### New Features
-
-- Add support for disabling
-  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
-  transpilation via R option `futurize.enable`, which may be set via
-  environment variable `R_FUTURIZE_ENABLE` when the package is loaded.
 
 ### Bug Fixes
 

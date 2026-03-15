@@ -33,7 +33,7 @@ data. The main function
 of gene-wise dispersion estimation, fitting, and statistical testing,
 which can be parallelized across genes.
 
-### Example: Running DESeq in parallel
+### Example: Running DESeq() in parallel
 
 The [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) function
 performs the full differential expression analysis:

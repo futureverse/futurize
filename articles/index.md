@@ -20,6 +20,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-caret.md):
 - [Parallelize 'DESeq2'
   functions](https://futurize.futureverse.org/articles/futurize-81-DESeq2.md):
+- [Parallelize 'fgsea'
+  functions](https://futurize.futureverse.org/articles/futurize-81-fgsea.md):
 - [Parallelize 'glmmTMB'
   functions](https://futurize.futureverse.org/articles/futurize-81-glmmTMB.md):
 - [Parallelize 'glmnet'
