@@ -52,6 +52,8 @@ navbar:
         href: articles/futurize-81-partykit.html
       - text: Parallelize 'seriation' functions
         href: articles/futurize-81-seriation.html
+      - text: Parallelize 'shapr' functions
+        href: articles/futurize-81-shapr.html
       - text: Parallelize 'strucchange' functions
         href: articles/futurize-81-strucchange.html
       - text: Parallelize 'tm' functions

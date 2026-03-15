@@ -127,6 +127,7 @@ packages that have optional built-in support for parallelization.
 | **[partykit]**    | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
 | **[scater]**      | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
 | **[seriation]**   | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
+| **[shapr]**       | `explain()`, `explain_forecast()`                                         | **[future.apply]** |
 | **[strucchange]** | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
 | **[tm]**          | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
 | **[TSP]**         | `solve_RSP()`                                                             | **[doFuture]**     |
@@ -164,6 +165,8 @@ b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
+
+result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
 
@@ -203,6 +206,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [purrr]: https://cran.r-project.org/package=purrr
 [scater]: https://bioconductor.org/packages/scater/
 [seriation]: https://cran.r-project.org/package=seriation
+[shapr]: https://cran.r-project.org/package=shapr
 [strucchange]: https://cran.r-project.org/package=strucchange
 [tm]: https://cran.r-project.org/package=tm
 [vegan]: https://cran.r-project.org/package=vegan
