@@ -69,7 +69,7 @@ jobs:
             any::rcmdcheck
             any::remotes
           needs: check
-          dependencies: ${{ matrix.config.without_suggests && '"hard"' || 'NA' }}
+          dependencies: ${{ matrix.config.without_suggests && '"hard"' || '"all"' }}
 
       - name: Install package itself (special case)
         run: |
