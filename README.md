@@ -118,6 +118,7 @@ packages that have optional built-in support for parallelization.
 | **[DESeq2]**      | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
 | **[fgsea]**       | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[fwb]**         | `fwb()`, `vcovFWB()`                                                      | -                  |
+| **[GenomicAlignments]** | `summarizeOverlaps()`                                                | **[doFuture]**     |
 | **[glmnet]**      | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[glmmTMB]**     | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
 | **[GSVA]**        | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
@@ -151,6 +152,8 @@ dds <- DESeq2::DESeq(dds) |> futurize()
 res <- fgsea::fgsea(pathways, stats) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -196,6 +199,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [fwb]: https://ngreifer.github.io/fwb/
 [glmnet]: https://cran.r-project.org/package=glmnet
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
+[GenomicAlignments]: https://bioconductor.org/packages/GenomicAlignments/
 [GSVA]: https://bioconductor.org/packages/GSVA/
 [lme4]: https://cran.r-project.org/package=lme4
 [mgcv]: https://cran.r-project.org/package=mgcv

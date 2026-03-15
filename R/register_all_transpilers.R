@@ -22,10 +22,11 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "mgcv",         append_transpilers_for_mgcv)
 
   ## Bioconductor packages
-  transpilers_for_package("futurize::add-on", package = "DESeq2",       append_transpilers_for_DESeq2)
-  transpilers_for_package("futurize::add-on", package = "fgsea",        append_transpilers_for_fgsea)
-  transpilers_for_package("futurize::add-on", package = "GSVA",         append_transpilers_for_GSVA)
-  transpilers_for_package("futurize::add-on", package = "scater",       append_transpilers_for_scater)
+  transpilers_for_package("futurize::add-on", package = "DESeq2",              append_transpilers_for_DESeq2)
+  transpilers_for_package("futurize::add-on", package = "fgsea",               append_transpilers_for_fgsea)
+  transpilers_for_package("futurize::add-on", package = "GenomicAlignments",   append_transpilers_for_GenomicAlignments)
+  transpilers_for_package("futurize::add-on", package = "GSVA",                append_transpilers_for_GSVA)
+  transpilers_for_package("futurize::add-on", package = "scater",              append_transpilers_for_scater)
 
   ## Domain-specific packages
   transpilers_for_package("futurize::add-on", package = "caret",        append_transpilers_for_caret)

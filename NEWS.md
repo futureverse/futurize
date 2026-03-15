@@ -16,46 +16,51 @@
 
 ## New Transpilers
 
- * Add support for map-reduce package **pbapply**, e.g. `y <-
+ * Add support for map-reduce CRAN package **pbapply**, e.g. `y <-
    pblapply(...)  |> futurize()`.
 
- * Add support for Bioconductor package **DESeq2**, e.g. `dds <-
-   DESeq(dds) |> futurize()`.
+ * Add support for domain-specific Bioconductor package **DESeq2**,
+   e.g. `dds <- DESeq(dds) |> futurize()`.
 
- * Add support for Bioconductor package **fgsea**, e.g. `res <-
-   fgsea(pathways, stats) |> futurize()`.
+ * Add support for domain-specific Bioconductor package **fgsea**,
+   e.g. `res <- fgsea(pathways, stats) |> futurize()`.
 
- * Add support for domain-specific package **fwb**, e.g. `b <-
+ * Add support for domain-specific Bioconductor package
+   **GenomicAlignments**, e.g. `se <- summarizeOverlaps(features,
+   bam_files) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **fwb**, e.g. `b <-
    fwb(data, statistic, R = 1000) |> futurize()`.
 
- * Add support for domain-specific package **glmmTMB**, e.g. `ci <-
-   confint(m, method = "profile") |> futurize()`.
+ * Add support for domain-specific CRAN package **glmmTMB**, e.g. `ci
+   <- confint(m, method = "profile") |> futurize()`.
 
- * Add support for Bioconductor package **GSVA**, e.g. `es <-
-   gsva(gsvaParam(expr, geneSets)) |> futurize()`.
+ * Add support for domain-specific Bioconductor package **GSVA**,
+   e.g. `es <- gsva(gsvaParam(expr, geneSets)) |> futurize()`.
 
- * Add support for domain-specific package **mice**, e.g. `imp <-
+ * Add support for domain-specific CRAN package **mice**, e.g. `imp <-
    mice(nhanes, m = 5) |> futurize()`.
 
- * Add support for domain-specific package **partykit**, e.g. `cf <-
-   cforest(dist ~ speed, data = cars) |> futurize()`.
+ * Add support for domain-specific CRAN package **partykit**, e.g. `cf
+   <- cforest(dist ~ speed, data = cars) |> futurize()`.
 
- * Add support for Bioconductor package **scater**, e.g. `sce <-
-   runPCA(sce) |> futurize()`.
+ * Add support for domain-specific Bioconductor package **scater**,
+   e.g. `sce <- runPCA(sce) |> futurize()`.
 
- * Add support for domain-specific package **seriation**,
-   e.g. `o <- seriate_best(d_supreme) |> futurize()`.
+ * Add support for domain-specific CRAN package **seriation**, e.g. `o
+   <- seriate_best(d_supreme) |> futurize()`.
 
- * Add support for CRAN package **shapr**, e.g. `result <-
-   explain(model, x_explain, x_train, approach, phi0) |> futurize()`.
+ * Add support for domain-specific CRAN package **shapr**,
+   e.g. `result <- explain(model, x_explain, x_train, approach, phi0)
+   |> futurize()`.
 
- * Add support for domain-specific package **strucchange**,
+ * Add support for domain-specific CRAN package **strucchange**,
    e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
 
- * Add support for domain-specific package **TSP**, e.g. `tour <-
+ * Add support for domain-specific CRAN package **TSP**, e.g. `tour <-
    solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()`.
 
- * Add support for domain-specific package **vegan**, e.g. `md <-
+ * Add support for domain-specific CRAN package **vegan**, e.g. `md <-
    mrpp(dune, Management) |> futurize()`.
 
 ## Bug Fixes
@@ -73,7 +78,8 @@ This is the first version submitted to CRAN.
 
 ## New Transpilers
 
- * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
+ * Add support for domain-specific CRAN package **mgcv**, e.g. `b <-
+   bam(...) |> futurize()`.
 
 ## New Features
 
@@ -107,8 +113,8 @@ This is the first version submitted to CRAN.
 
 ## New Transpilers
 
- * Add support for **tm**, e.g. `m <- tm_map(crude,
-   content_transformer(tolower)) |> futurize()`.
+ * Add support for domain-specific CRAN package **tm**, e.g. `m <-
+   tm_map(crude, content_transformer(tolower)) |> futurize()`.
 
 ## New Features
 
@@ -126,8 +132,9 @@ This is the first version submitted to CRAN.
 
 ## New Transpilers
 
- * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
-   iris, method = "rf", trControl = ctrl) |> futurize()`.
+ * Add support for domain-specific CRAN package **caret**, e.g. `model
+   <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
+   |> futurize()`.
    
  * Add support for `times()` and `%:%` of **foreach**, which require
    special care when it comes to passing future options,
@@ -161,25 +168,29 @@ and how output and conditions are relayed, among other things.
    `y <- by(xs, idxs, fcn) |> futurize()`, and `xs <- kernapply(x, k)
    |> futurize()`.
 
- * Add support for **purrr**, e.g. `y <- map(xs, fcn) |> futurize()`.
+ * Add support for map-reduce CRAN package **purrr**, e.g. `y <-
+   map(xs, fcn) |> futurize()`.
  
- * Add support for **crossmap**, e.g. `y <- xmap_dbl(xs, fcn) |> futurize()`.
+ * Add support for map-reduce CRAN package **crossmap**, e.g. `y <-
+   xmap_dbl(xs, fcn) |> futurize()`.
  
- * Add support for **foreach**, e.g. `y <- foreach(x = xs) %do% {
-   fcn(x) } |> futurize()`.
+ * Add support for map-reduce CRAN package **foreach**, e.g. `y <-
+   foreach(x = xs) %do% { fcn(x) } |> futurize()`.
  
- * Add support for **plyr**, e.g. `y <- llply(xs, fcn) |>
-   futurize()`.
+ * Add support for map-reduce CRAN package **plyr**, e.g. `y <-
+   llply(xs, fcn) |> futurize()`.
  
- * Add support for **BiocParallel**, e.g. `y <- bplapply(xs, fcn) |>
-   futurize()`.
+ * Add support for map-reduce Bioconductor package **BiocParallel**,
+   e.g. `y <- bplapply(xs, fcn) |> futurize()`.
 
- * Add support for **boot**, e.g. `b <- boot(data, statistic, R = 1000) |> futurize()`.
+ * Add support for domain-specific CRAN package **boot**, e.g. `b <-
+   boot(data, statistic, R = 1000) |> futurize()`.
 
- * Add support for **glmnet**, e.g. `cv <- cv.glmnet(x, y) |>
-   futurize()`.
+ * Add support for domain-specific CRAN package **glmnet**, e.g. `cv
+   <- cv.glmnet(x, y) |> futurize()`.
 
- * Add support for **lme4**, e.g. `gm <- allFit(gm) |> futurize()`.
+ * Add support for domain-specific CRAN package **lme4**, e.g. `gm <-
+   allFit(gm) |> futurize()`.
 
  
 # Version 0.0.1 (2025-03-07)
