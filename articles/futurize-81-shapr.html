@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'strucchange' functions • futurize</title>
+<title>Parallelize 'shapr' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'strucchange' functions">
+<meta property="og:title" content="Parallelize 'shapr' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -137,30 +137,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'strucchange' functions</h1>
+      <h1>Parallelize 'shapr' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-strucchange.md" class="external-link"><code>vignettes/futurize-81-strucchange.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-strucchange.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-shapr.md" class="external-link"><code>vignettes/futurize-81-shapr.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-shapr.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'strucchange' functions}
+%\VignetteIndexEntry{Parallelize 'shapr' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{strucchange}
+%\VignetteKeyword{shapr}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/cran-strucchange-logo.svg" alt="The 'strucchange' image"><span>+</span>
-<img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
+<p><img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>+</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
 <p>The <strong>futurize</strong> package allows you to easily turn
@@ -172,69 +171,87 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">strucchange</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://norskregnesentral.github.io/shapr/" class="external-link">shapr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Nile"</span><span class="op">)</span></span>
-<span><span class="va">bp.nile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>  x_explain <span class="op">=</span> <span class="va">x_explain</span>,</span>
+<span>  x_train <span class="op">=</span> <span class="va">x_train</span>,</span>
+<span>  approach <span class="op">=</span> <span class="st">"empirical"</span>,</span>
+<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong><a href="https://cran.r-project.org/package=strucchange" class="external-link">strucchange</a></strong>
-package provides the <code><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints()</a></code> function for estimating
-one or more change points in a data trace, e.g. in time-series data.</p>
+<p>This vignette demonstrates how to use this approach to parallelize
+<strong><a href="https://cran.r-project.org/package=shapr" class="external-link">shapr</a></strong>
+functions such as <code><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=shapr" class="external-link">shapr</a></strong>
+package implements dependence-aware Shapley values for explaining
+predictions from machine learning models. Its <code><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain()</a></code>
+function computes Shapley value estimates by evaluating conditional
+expectations across multiple coalitions of features, making the
+computation an excellent candidate for parallelization.</p>
 <div class="section level3">
-<h3 id="example-finding-breakpoints-in-time-series-data">Example: Finding breakpoints in time-series data<a class="anchor" aria-label="anchor" href="#example-finding-breakpoints-in-time-series-data"></a>
+<h3 id="example-computing-shapley-values-in-parallel">Example: Computing Shapley values in parallel<a class="anchor" aria-label="anchor" href="#example-computing-shapley-values-in-parallel"></a>
 </h3>
+<p>The <code><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain()</a></code> function computes Shapley values for a set
+of observations. For example, using a simple linear model:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">strucchange</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://norskregnesentral.github.io/shapr/" class="external-link">shapr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## UK Seatbelt data: a SARIMA(1,0,0)(1,0,0)_12 model</span></span>
-<span><span class="co">## (fitted by OLS) is used and reveals (at least) two</span></span>
-<span><span class="co">## breakpoints - one in 1973 associated with the oil crisis and</span></span>
-<span><span class="co">## one in 1983 due to the introduction of compulsory</span></span>
-<span><span class="co">## wearing of seatbelts in the UK.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"UKDriverDeaths"</span><span class="op">)</span></span>
+<span><span class="co">## Fit a model</span></span>
+<span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y_train</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x_train</span><span class="op">$</span><span class="va">x1</span> <span class="op">+</span> <span class="va">x_train</span><span class="op">$</span><span class="va">x2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y_train</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">x_train</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">seatbelt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">UKDriverDeaths</span><span class="op">)</span></span>
-<span><span class="va">seatbelt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">seatbelt</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lag.html" class="external-link">lag</a></span><span class="op">(</span><span class="va">seatbelt</span>, k <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lag.html" class="external-link">lag</a></span><span class="op">(</span><span class="va">seatbelt</span>, k <span class="op">=</span> <span class="op">-</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">seatbelt</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"ylag1"</span>, <span class="st">"ylag12"</span><span class="op">)</span></span>
-<span><span class="va">seatbelt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">seatbelt</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1970</span>, <span class="fl">1</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1984</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">seatbelt</span><span class="op">[</span>,<span class="st">"y"</span><span class="op">]</span>, ylab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">log</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span><span class="op">(</span><span class="va">casualties</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## testing</span></span>
-<span><span class="va">re.seat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/efp.html" class="external-link">efp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">ylag1</span> <span class="op">+</span> <span class="va">ylag12</span>, data <span class="op">=</span> <span class="va">seatbelt</span>, type <span class="op">=</span> <span class="st">"RE"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">re.seat</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## dating</span></span>
-<span><span class="va">bp.seat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">ylag1</span> <span class="op">+</span> <span class="va">ylag12</span>, data <span class="op">=</span> <span class="va">seatbelt</span>, h <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">bp.seat</span>, breaks <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p>This will parallelize the dynamic programming algorithm used by
-algorithm for computing the optimal breakpoints, given that we have set
-up parallel workers, e.g.</p>
+<span><span class="co">## Explain predictions</span></span>
+<span><span class="va">x_explain</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>  x_explain <span class="op">=</span> <span class="va">x_explain</span>,</span>
+<span>  x_train <span class="op">=</span> <span class="va">x_train</span>,</span>
+<span>  approach <span class="op">=</span> <span class="st">"empirical"</span>,</span>
+<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain()</a></code> evaluates the coalitions sequentially,
+but we can easily make it evaluate them in parallel by piping to
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://norskregnesentral.github.io/shapr/" class="external-link">shapr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="va">model</span>,</span>
+<span>  x_explain <span class="op">=</span> <span class="va">x_explain</span>,</span>
+<span>  x_train <span class="op">=</span> <span class="va">x_train</span>,</span>
+<span>  approach <span class="op">=</span> <span class="st">"empirical"</span>,</span>
+<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the coalition computations across the available
+parallel workers, given that we have set up parallel workers, e.g.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
 backends</a> to choose from, including alternatives to parallelize
 locally as well as distributed across remote machines, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
 <p>and</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>strucchange</strong> functions are supported by
+<p>The following <strong>shapr</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li>
-<code><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints()</a></code> for ‘formula’</li>
+<li><code><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain()</a></code></li>
+<li><code><a href="https://norskregnesentral.github.io/shapr/reference/explain_forecast.html" class="external-link">explain_forecast()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

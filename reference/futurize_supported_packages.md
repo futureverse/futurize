@@ -31,8 +31,8 @@ pkgs
 #>  [6] "boot"         "caret"        "crossmap"     "fgsea"        "foreach"     
 #> [11] "fwb"          "glmmTMB"      "glmnet"       "lme4"         "mgcv"        
 #> [16] "mice"         "partykit"     "pbapply"      "plyr"         "purrr"       
-#> [21] "scater"       "seriation"    "stats"        "strucchange"  "tm"          
-#> [26] "vegan"       
+#> [21] "scater"       "seriation"    "shapr"        "stats"        "strucchange" 
+#> [26] "tm"           "vegan"       
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

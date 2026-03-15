@@ -49,6 +49,9 @@
 - Add support for domain-specific package **seriation**,
   e.g. `o <- seriate_best(d_supreme) |> futurize()`.
 
+- Add support for CRAN package **shapr**,
+  e.g. `result <- explain(model, x_explain, x_train, approach, phi0) |> futurize()`.
+
 - Add support for domain-specific package **strucchange**,
   e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
 

@@ -138,6 +138,7 @@ packages that have optional built-in support for parallelization.
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[scater](https://bioconductor.org/packages/scater/)** | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
@@ -176,6 +177,8 @@ b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
+
+result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
 

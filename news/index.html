@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9062</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9063</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-mice.html">Parallelize 'mice' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-partykit.html">Parallelize 'partykit' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-seriation.html">Parallelize 'seriation' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-shapr.html">Parallelize 'shapr' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-TSP.html">Parallelize 'TSP' functions</a></li>
@@ -124,6 +125,7 @@
 <li><p>Add support for domain-specific package <strong>partykit</strong>, e.g. <code>cf &lt;- cforest(dist ~ speed, data = cars) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for Bioconductor package <strong>scater</strong>, e.g. <code>sce &lt;- runPCA(sce) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>seriation</strong>, e.g. <code>o &lt;- seriate_best(d_supreme) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for CRAN package <strong>shapr</strong>, e.g. <code>result &lt;- explain(model, x_explain, x_train, approach, phi0) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>strucchange</strong>, e.g. <code>bp &lt;- breakpoints(Nile ~ 1) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>TSP</strong>, e.g. <code>tour &lt;- solve_TSP(USCA50, method = "nn", rep = 10) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific package <strong>vegan</strong>, e.g. <code>md &lt;- mrpp(dune, Management) |&gt; futurize()</code>.</p></li>
