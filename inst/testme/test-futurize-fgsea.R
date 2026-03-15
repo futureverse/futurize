@@ -26,12 +26,20 @@ result_truth <- fgseaSimple(pathways, stats, nperm = 10000)
 print(result_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result <- fgseaSimple(pathways, stats, nperm = 10000) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(result)
 stopifnot(all.equal(result$pval, result_truth$pval))
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result2 <- fgsea::fgseaSimple(pathways, stats, nperm = 10000) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 stopifnot(all.equal(result2$pval, result_truth$pval))
 
 
@@ -69,12 +77,20 @@ result_truth <- fgsea(pathways2, stats2)
 print(result_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result <- fgsea(pathways2, stats2) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(result)
 stopifnot(all.equal(result$pval, result_truth$pval))
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result2 <- fgsea::fgsea(pathways2, stats2) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 stopifnot(all.equal(result2$pval, result_truth$pval))
 
 

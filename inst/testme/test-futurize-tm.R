@@ -11,7 +11,11 @@ plan(multisession)
 # -------------------------------------------------------------------------
 ## Use wrapper to apply character processing function
 a0 <- tm_map(crude, content_transformer(tolower))
+counters <- plan("backend")[["counters"]]
 a1 <- tm_map(crude, content_transformer(tolower)) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 stopifnot(all.equal(a0, a1), identical(a0, a1))
 
 ## Generate a custom transformation function which takes the heading as new content
@@ -21,7 +25,11 @@ headings <- function(x) {
                     language = meta(x, "language"))
 }                    
 b0 <- tm_map(crude, headings)
+counters <- plan("backend")[["counters"]]
 b1 <- tm_map(crude, headings) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 stopifnot(all.equal(a0, a1), identical(a0, a1))
 
 

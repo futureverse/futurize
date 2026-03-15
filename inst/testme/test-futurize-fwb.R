@@ -21,7 +21,11 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   print(b_truth)
 
   set.seed(42)
+  counters <- plan("backend")[["counters"]]
   b <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
   print(b)
 
   set.seed(42)
@@ -39,7 +43,11 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   print(v_truth)
 
   set.seed(42)
+  counters <- plan("backend")[["counters"]]
   v <- vcovFWB(fit, R = 999) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
   print(v)
 
   #v and v_truth should differ if parallelization is done

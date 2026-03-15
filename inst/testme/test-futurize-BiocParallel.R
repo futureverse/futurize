@@ -5,7 +5,11 @@ options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
+counters <- plan("backend")[["counters"]]
 y <- bplapply(1:3, function(x) { print(x) }) |> futurize(stdout = FALSE)
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(y)
 
 
@@ -45,8 +49,12 @@ for (kk in seq_along(exprs)) {
 
   FUN <- FUN_no_rng
   truth <- eval(expr)
+  counters <- plan("backend")[["counters"]]
   expr_f <- bquote(.(expr) |> futurize())
   res <- eval(expr_f)
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
 
   if (!identical(res, truth)) {
     str(list(truth = truth, res = res))

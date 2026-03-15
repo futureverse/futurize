@@ -7,7 +7,11 @@ options(futurize.debug = TRUE)
 
 plan(multisession)
 
+counters <- plan("backend")[["counters"]]
 y <- lapply(X = 1:3, FUN = function(x) { print(x) }) |> futurize(stdout = FALSE)
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(y)
 
 xs <- list(aa = 1, bb = 1:2, cc = 1:10, dd = 1:5, .ee = -6:6)
@@ -82,10 +86,14 @@ for (flavor in flavors) {
     }
     
     FUN <- FUN_no_rng
-    
+
+    counters <- plan("backend")[["counters"]]
     expr_f <- bquote(.(expr) |> futurize(flavor = .(flavor)))
     res <- eval(expr_f)
-  
+    delta <- plan("backend")[["counters"]] - counters
+    cat(sprintf("Futures created: %d\n", delta[["created"]]))
+    stopifnot(delta[["created"]] > 0L)
+
     if (name == "eapply") {
       res <- res[if (named_truth) names(truth) else order(unlist(res))]
     }
@@ -137,7 +145,11 @@ for (flavor in flavors) {
 } ## for (flavor ...)
 
 message("futurize() for replicate() should default to seed = TRUE")
+counters <- plan("backend")[["counters"]]
 y <- replicate(2, rnorm(1)) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 
 ## Switch to 'sequential' already here to avoid detritus files on Windows
 plan(sequential)

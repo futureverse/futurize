@@ -34,6 +34,7 @@ if (requireNamespace("shapr")) {
 
   ## Futurized via explain()
   set.seed(42)
+  counters <- plan("backend")[["counters"]]
   result <- explain(
     model = model,
     x_explain = x_explain,
@@ -42,12 +43,16 @@ if (requireNamespace("shapr")) {
     phi0 = phi0,
     verbose = NULL
   ) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
   print(result)
 
   stopifnot(all_equal(result, result_truth))
 
   ## Futurized via shapr::explain()
   set.seed(42)
+  counters <- plan("backend")[["counters"]]
   result2 <- shapr::explain(
     model = model,
     x_explain = x_explain,
@@ -56,6 +61,9 @@ if (requireNamespace("shapr")) {
     phi0 = phi0,
     verbose = NULL
   ) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
   print(result2)
 
   stopifnot(all_equal(result2, result_truth))

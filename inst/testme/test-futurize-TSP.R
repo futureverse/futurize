@@ -14,11 +14,19 @@ y_truth <- solve_TSP(USCA50, method = "nn", rep = 10L)
 print(y_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 y <- solve_TSP(USCA50, method = "nn", rep = 10L) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(y)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 y2 <- solve_TSP(USCA50, method = "nn", rep = 10L) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(y2)
 stopifnot(all.equal(y2, y))
 

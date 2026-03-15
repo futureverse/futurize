@@ -30,12 +30,20 @@ result_truth <- gsva(param, verbose = FALSE)
 str(result_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result <- gsva(param, verbose = FALSE) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 str(result)
 stopifnot(all.equal(result, result_truth))
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result2 <- GSVA::gsva(param, verbose = FALSE) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 stopifnot(all.equal(result2, result_truth))
 
 
@@ -49,7 +57,11 @@ result_truth <- gsva(param_ssgsea, verbose = FALSE)
 str(result_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result <- gsva(param_ssgsea, verbose = FALSE) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 str(result)
 stopifnot(all.equal(result, result_truth))
 
@@ -64,7 +76,11 @@ result_truth <- gsva(param_plage, verbose = FALSE)
 str(result_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 result <- gsva(param_plage, verbose = FALSE) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 str(result)
 stopifnot(all.equal(result, result_truth))
 
