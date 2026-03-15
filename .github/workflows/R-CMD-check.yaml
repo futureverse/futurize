@@ -22,7 +22,7 @@ jobs:
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
           - {os: ubuntu-latest,  r: 'release', without_suggests: true, label: 'w/out suggests' }
-          - {os: ubuntu-latest,  r: 'oldrel', without_suggests: true, label: 'w/out suggests' }
+          - {os: ubuntu-latest,  r: 'oldrel'   }
 #          - {os: ubuntu-latest,  r: '4.1'      }
  
     env:
@@ -63,13 +63,20 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
           
+      - name: Remove Suggests that require a newer version of R
+        if: matrix.config.r == 'oldrel'
+        run: |
+          ## Bioc package 'scater' depends on CRAN package 'ggrepel',
+          ## which requires R (>= 4.5.0) as of ggrepel 0.9.7 (2026-02-25)
+          sed -i '/scater,/d' DESCRIPTION
+        shell: bash {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
             any::rcmdcheck
             any::remotes
           needs: check
-          dependencies: ${{ matrix.config.without_suggests && '"hard"' || '"all"' }}
 
       - name: Install package itself (special case)
         run: |
