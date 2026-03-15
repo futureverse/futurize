@@ -23,9 +23,9 @@ geneSets <- list(
 ## ---------------------------------------------------------
 ## gsva() with gsvaParam()
 ## ---------------------------------------------------------
-## gsva() in GSVA (< 2.0) relies on BiocParallel::bpiterate(),
+## gsva() in GSVA (< 2.4) relies on BiocParallel::bpiterate(),
 ## which does _not_ support DoparParam by design.
-if (packageVersion("GSVA") >= "2.0") {
+if ("gsva" %in% futurize_supported_functions("GSVA")) {
   param <- gsvaParam(expr, geneSets)
   
   set.seed(42)

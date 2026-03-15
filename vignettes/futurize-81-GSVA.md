@@ -125,7 +125,7 @@ es <- gsva(zscoreParam(expr, geneSets)) |> futurize()
 
 The following **GSVA** functions are supported by `futurize()`:
 
-* `gsva()`
+* `gsva()` - requires **GSVA** (>= 2.4.0)
 * `gsvaRanks()`
 * `gsvaScores()`
 * `spatCor()`
