@@ -23,28 +23,32 @@ geneSets <- list(
 ## ---------------------------------------------------------
 ## gsva() with gsvaParam()
 ## ---------------------------------------------------------
-param <- gsvaParam(expr, geneSets)
-
-set.seed(42)
-result_truth <- gsva(param, verbose = FALSE)
-str(result_truth)
-
-set.seed(42)
-counters <- plan("backend")[["counters"]]
-result <- gsva(param, verbose = FALSE) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
-str(result)
-stopifnot(all.equal(result, result_truth))
-
-set.seed(42)
-counters <- plan("backend")[["counters"]]
-result2 <- GSVA::gsva(param, verbose = FALSE) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
-stopifnot(all.equal(result2, result_truth))
+## gsva() in GSVA (< 2.0) relies on BiocParallel::bpiterate(),
+## which does _not_ support DoparParam by design.
+if (packageVersion("GSVA") >= "2.0") {
+  param <- gsvaParam(expr, geneSets)
+  
+  set.seed(42)
+  result_truth <- gsva(param, verbose = FALSE)
+  str(result_truth)
+  
+  set.seed(42)
+  counters <- plan("backend")[["counters"]]
+  result <- gsva(param, verbose = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
+  str(result)
+  stopifnot(all.equal(result, result_truth))
+  
+  set.seed(42)
+  counters <- plan("backend")[["counters"]]
+  result2 <- GSVA::gsva(param, verbose = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
+  stopifnot(all.equal(result2, result_truth))
+}
 
 
 ## ---------------------------------------------------------
