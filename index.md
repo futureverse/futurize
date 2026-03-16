@@ -131,7 +131,7 @@ packages that have optional built-in support for parallelization.
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
 | **[GenomicAlignments](https://bioconductor.org/packages/GenomicAlignments/)** | `summarizeOverlaps()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | \- |
-| **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | `"confint()` and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
+| **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
 | **[GSVA](https://bioconductor.org/packages/GSVA/)** | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[kernelshap](https://cran.r-project.org/package=kernelshap)** | `kernelshap()`, `permshap()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |

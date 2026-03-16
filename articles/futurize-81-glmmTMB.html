@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9078</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -180,46 +180,42 @@ sequential code into parallel code by piping the sequential code to the
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Salamanders</span>, family <span class="op">=</span> <span class="va">nbinom2</span><span class="op">)</span></span>
-<span><span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">m</span>, method <span class="op">=</span> <span class="st">"profile"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to parallelize <strong><a href="https://cran.r-project.org/package=glmmTMB" class="external-link">glmmTMB</a></strong>
-functions such as <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> and <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code>
-through <code><a href="../reference/futurize.html">futurize()</a></code>.</p>
+functions such as <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> through
+<code><a href="../reference/futurize.html">futurize()</a></code>.</p>
 <p>The <strong><a href="https://cran.r-project.org/package=glmmTMB" class="external-link">glmmTMB</a></strong>
 package fits generalized linear mixed models (GLMMs) using Template
-Model Builder (TMB). Its <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> and
-<code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> functions compute confidence intervals and
-likelihood profiles for model parameters. When using
-<code>method = "profile"</code> or <code>method = "uniroot"</code>,
-these computations are performed independently for each parameter,
-making them candidates for parallelization.</p>
+Model Builder (TMB). Its <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> function computes
+likelihood profiles for model parameters. These computations are
+performed independently for each parameter, making them candidates for
+parallelization.</p>
 <div class="section level3">
-<h3 id="example-profile-likelihood-confidence-intervals">Example: Profile likelihood confidence intervals<a class="anchor" aria-label="anchor" href="#example-profile-likelihood-confidence-intervals"></a>
+<h3 id="example-likelihood-profile">Example: Likelihood profile<a class="anchor" aria-label="anchor" href="#example-likelihood-profile"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> function computes confidence intervals for
-parameters of a fitted <code>glmmTMB</code> model. Using
-<code>method = "profile"</code> runs a profile likelihood for each
-parameter. For example, using the built-in <code>Salamanders</code>
-dataset to model salamander counts:</p>
+<p>The <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> function computes the likelihood profile
+for each model parameter. For example, using the built-in
+<code>Salamanders</code> dataset to model salamander counts:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Fit a negative binomial GLMM</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Salamanders</span>, family <span class="op">=</span> <span class="va">nbinom2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Compute profile likelihood confidence intervals</span></span>
-<span><span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">m</span>, method <span class="op">=</span> <span class="st">"profile"</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> is calculated sequentially. To calculated
+<span><span class="co">## Compute likelihood profile</span></span>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> is calculated sequentially. To calculated
 in parallel, we can pipe to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Salamanders</span>, family <span class="op">=</span> <span class="va">nbinom2</span><span class="op">)</span></span>
-<span><span class="va">ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">m</span>, method <span class="op">=</span> <span class="st">"profile"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This will distribute the per-parameter profile computations across
 the available parallel workers, given that we have set up parallel
 workers, e.g.</p>
@@ -235,21 +231,6 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="example-likelihood-profile">Example: Likelihood profile<a class="anchor" aria-label="anchor" href="#example-likelihood-profile"></a>
-</h3>
-<p>The <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> function computes the likelihood profile
-for each model parameter, which <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> uses internally
-when <code>method = "profile"</code>. We can call it directly and
-parallelize it using:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Salamanders</span>, family <span class="op">=</span> <span class="va">nbinom2</span><span class="op">)</span></span>
-<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
@@ -257,9 +238,6 @@ parallelize it using:</p>
 <p>The following <strong>glmmTMB</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li>
-<code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> for ‘glmmTMB’ (with
-<code>method = "profile"</code> or <code>method = "uniroot"</code>)</li>
 <li>
 <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> for ‘glmmTMB’</li>
 </ul>
