@@ -22,9 +22,6 @@
 - Add support for map-reduce CRAN package **pbapply**,
   e.g. `y <- pblapply(...) |> futurize()`.
 
-- Add support for Bioconductor package **BiocNeighbors**,
-  e.g. `res <- findKNN(X, k = 10) |> futurize()`.
-
 - Add support for domain-specific Bioconductor package **DESeq2**,
   e.g. `dds <- DESeq(dds) |> futurize()`.
 

@@ -14,8 +14,6 @@
   functions](https://futurize.futureverse.org/articles/futurize-51-foreach.md):
 - [Parallelize 'BiocParallel'
   functions](https://futurize.futureverse.org/articles/futurize-61-BiocParallel.md):
-- [Parallelize 'BiocNeighbors'
-  functions](https://futurize.futureverse.org/articles/futurize-81-BiocNeighbors.md):
 - [Parallelize 'boot'
   functions](https://futurize.futureverse.org/articles/futurize-81-boot.md):
 - [Parallelize 'caret'

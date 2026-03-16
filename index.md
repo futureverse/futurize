@@ -124,7 +124,6 @@ packages that have optional built-in support for parallelization.
 
 | Package | Functions | Requires |
 |----|----|----|
-| **[BiocNeighbors](https://bioconductor.org/packages/BiocNeighbors/)** | `findKNN()`, `findNeighbors()`, `queryKNN()`, `queryNeighbors()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | \- |
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[DESeq2](https://bioconductor.org/packages/DESeq2/)** | `DESeq()`, `lfcShrink()`, `results()` | **[doFuture](https://doFuture.futureverse.org)** |
@@ -160,8 +159,6 @@ Here are some examples:
 
 ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
-
-res <- BiocNeighbors::findKNN(X, k = 10) |> futurize()
 
 ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
