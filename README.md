@@ -115,25 +115,26 @@ parallelization.
 
 ### CRAN packages with support for futurize
 
-| Package                    | Functions                                                                 | Requires           |
-|----------------------------|---------------------------------------------------------------------------|--------------------|
-| **[boot]**                 | `boot()`, `censboot()`, `tsboot()`                                        | -                  |
-| **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
+| Package                    | Functions                                                                    | Requires           |
+|----------------------------|------------------------------------------------------------------------------|--------------------|
+| **[boot]**                 | `boot()`, `censboot()`, `tsboot()`                                           | -                  |
+| **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()`    | **[doFuture]**     |
 | **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
-| **[fwb]**                  | `fwb()`, `vcovFWB()`                                                      | -                  |
-| **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                 | -                  |
-| **[glmnet]**               | `cv.glmnet()`                                                             | **[doFuture]**     |
-| **[kernelshap]**           | `kernelshap()`, `permshap()`                                              | **[doFuture]**     |
-| **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
-| **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                            | -                  |
-| **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
-| **[riskRegression]**       | `Score()` for 'list'                                                      | **[doFuture]**     |
-| **[seriation]**            | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
-| **[shapr]**                | `explain()`, `explain_forecast()`                                         | -                  |
-| **[strucchange]**          | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
-| **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
-| **[TSP]**                  | `solve_RSP()`                                                             | **[doFuture]**     |
-| **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca' | -                  |
+| **[fwb]**                  | `fwb()`, `vcovFWB()`                                                         | -                  |
+| **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                    | -                  |
+| **[glmnet]**               | `cv.glmnet()`                                                                | **[doFuture]**     |
+| **[kernelshap]**           | `kernelshap()`, `permshap()`                                                 | **[doFuture]**     |
+| **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
+| **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma' objects | -                  |
+| **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
+| **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
+| **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
+| **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
+| **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
+| **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
+| **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
+| **[TSP]**                  | `solve_RSP()`                                                                | **[doFuture]**     |
+| **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca'  | -                  |
 
 _Table 2: CRAN packages with domain-specific functions currently
 supported by `futurize()` for parallel transpilation._
@@ -154,6 +155,9 @@ cv <- glmnet::cv.glmnet(x, y) |> futurize()
 ks <- kernelshap::kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
+
+fit <- metafor::rma(yi, vi)
+pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
@@ -238,6 +242,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [GSVA]: https://bioconductor.org/packages/GSVA/
 [kernelshap]: https://cran.r-project.org/package=kernelshap
 [lme4]: https://cran.r-project.org/package=lme4
+[metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
