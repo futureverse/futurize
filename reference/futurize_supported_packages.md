@@ -28,15 +28,16 @@ by the futurize transpiler are not installed.
 pkgs <- futurize_supported_packages()
 pkgs
 #>  [1] "BiocParallel"         "DESeq2"               "GSVA"                
-#>  [4] "GenomicAlignments"    "SingleCellExperiment" "TSP"                 
-#>  [7] "base"                 "boot"                 "caret"               
-#> [10] "crossmap"             "fgsea"                "foreach"             
-#> [13] "fwb"                  "glmmTMB"              "glmnet"              
-#> [16] "lme4"                 "mgcv"                 "mice"                
-#> [19] "partykit"             "pbapply"              "plyr"                
-#> [22] "purrr"                "scater"               "scuttle"             
-#> [25] "seriation"            "shapr"                "stats"               
-#> [28] "strucchange"          "tm"                   "vegan"               
+#>  [4] "GenomicAlignments"    "Rsamtools"            "SingleCellExperiment"
+#>  [7] "TSP"                  "base"                 "boot"                
+#> [10] "caret"                "crossmap"             "fgsea"               
+#> [13] "foreach"              "fwb"                  "glmmTMB"             
+#> [16] "glmnet"               "lme4"                 "mgcv"                
+#> [19] "mice"                 "partykit"             "pbapply"             
+#> [22] "plyr"                 "purrr"                "scater"              
+#> [25] "scuttle"              "seriation"            "shapr"               
+#> [28] "stats"                "strucchange"          "tm"                  
+#> [31] "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

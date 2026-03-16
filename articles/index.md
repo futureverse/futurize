@@ -38,6 +38,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-mice.md):
 - [Parallelize 'partykit'
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
+- [Parallelize 'Rsamtools'
+  functions](https://futurize.futureverse.org/articles/futurize-81-Rsamtools.md):
 - [Parallelize 'scater'
   functions](https://futurize.futureverse.org/articles/futurize-81-scater.md):
 - [Parallelize 'scuttle'

@@ -53,6 +53,9 @@
 - Add support for domain-specific Bioconductor package **scuttle**,
   e.g. `sce <- logNormCounts(sce) |> futurize()`.
 
+- Add support for Bioconductor package **Rsamtools**,
+  e.g. `counts <- countBam(bamViews) |> futurize()`.
+
 - Add support for Bioconductor package **SingleCellExperiment**,
   e.g. `result <- applySCE(sce, perCellQCMetrics) |> futurize()`.
 
