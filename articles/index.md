@@ -52,6 +52,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-seriation.md):
 - [Parallelize 'shapr'
   functions](https://futurize.futureverse.org/articles/futurize-81-shapr.md):
+- [Parallelize 'SimDesign'
+  functions](https://futurize.futureverse.org/articles/futurize-81-SimDesign.md):
 - [Parallelize 'SingleCellExperiment'
   functions](https://futurize.futureverse.org/articles/futurize-81-SingleCellExperiment.md):
 - [Parallelize 'strucchange'

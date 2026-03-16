@@ -139,6 +139,7 @@ parallelization.
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
+| **[SimDesign](https://cran.r-project.org/package=SimDesign)** | `runSimulation()`, `runArraySimulation()` | \- |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
@@ -181,6 +182,9 @@ sc <- riskRegression::Score(list("CSC" = fit), data = d,
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
+
+res <- SimDesign::runSimulation(Design, replications = 1000,
+  generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
