@@ -1,6 +1,8 @@
 if (requireNamespace("GSVA") && requireNamespace("doFuture")) {
 library(futurize)
 library(GSVA)
+print(sessionInfo())
+
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
