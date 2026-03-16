@@ -121,12 +121,13 @@ parallelization.
 | **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
 | **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[fwb]**                  | `fwb()`, `vcovFWB()`                                                      | -                  |
-| **[glmnet]**               | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                 | -                  |
+| **[glmnet]**               | `cv.glmnet()`                                                             | **[doFuture]**     |
 | **[kernelshap]**           | `kernelshap()`, `permshap()`                                              | **[doFuture]**     |
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                            | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
+| **[riskRegression]**       | `Score()` for 'list'                                                      | **[doFuture]**     |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                         | -                  |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
@@ -157,6 +158,10 @@ m <- lme4::allFit(models) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+sc <- riskRegression::Score(list("CSC" = fit), data = d,
+  formula = Hist(time, event) ~ 1, times = 5, B = 100,
+  split.method = "bootcv") |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
@@ -227,8 +232,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [fgsea]: https://bioconductor.org/packages/fgsea/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
-[glmnet]: https://cran.r-project.org/package=glmnet
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
+[glmnet]: https://cran.r-project.org/package=glmnet
 [GenomicAlignments]: https://bioconductor.org/packages/GenomicAlignments/
 [GSVA]: https://bioconductor.org/packages/GSVA/
 [kernelshap]: https://cran.r-project.org/package=kernelshap
@@ -237,6 +242,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
+[riskRegression]: https://cran.r-project.org/package=riskRegression
 [purrr]: https://cran.r-project.org/package=purrr
 [Rsamtools]: https://bioconductor.org/packages/Rsamtools/
 [scater]: https://bioconductor.org/packages/scater/
