@@ -27,6 +27,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "GenomicAlignments",   append_transpilers_for_GenomicAlignments)
   transpilers_for_package("futurize::add-on", package = "GSVA",                append_transpilers_for_GSVA)
   transpilers_for_package("futurize::add-on", package = "scater",              append_transpilers_for_scater)
+  transpilers_for_package("futurize::add-on", package = "scuttle",             append_transpilers_for_scuttle)
 
   ## Domain-specific packages
   transpilers_for_package("futurize::add-on", package = "caret",        append_transpilers_for_caret)

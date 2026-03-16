@@ -47,6 +47,9 @@
  * Add support for domain-specific Bioconductor package **scater**,
    e.g. `sce <- runPCA(sce) |> futurize()`.
 
+ * Add support for domain-specific Bioconductor package **scuttle**,
+   e.g. `sce <- logNormCounts(sce) |> futurize()`.
+
  * Add support for domain-specific CRAN package **seriation**, e.g. `o
    <- seriate_best(d_supreme) |> futurize()`.
 
