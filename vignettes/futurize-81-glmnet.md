@@ -10,7 +10,7 @@
 -->
 
 <div class="logos">
-<img src="../man/figures/glmnet-logo.svg" alt="The 'glmnet' hexlogo">
+<img src="../man/figures/glmnet-logo.png" alt="The 'glmnet' hexlogo">
 <span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
