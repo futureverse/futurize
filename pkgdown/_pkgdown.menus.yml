@@ -68,3 +68,5 @@ articles-bioc:
     href: articles/futurize-81-scuttle.html
   - text: Parallelize 'SingleCellExperiment' functions
     href: articles/futurize-81-SingleCellExperiment.html
+  - text: Parallelize 'sva' functions
+    href: articles/futurize-81-sva.html
