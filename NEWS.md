@@ -86,7 +86,12 @@
  * `futurize()` option `chunk_size` was silently ignored for
    transpilers relying on **doFuture**.
 
-
+ * Packages not supporting specifying a random seed will now produce
+   an informative errors message if `futurize(seed = <numeric>)` is
+   specified, e.g. **boot**, **glmmTM**, **lme4**, **mgcv**, and
+   **vegan**.
+   
+ 
 # Version 0.1.0 (2026-01-18)
 
 This is the first version submitted to CRAN.

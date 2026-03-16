@@ -27,6 +27,13 @@ make_futurize_for_makeClusterFuture <- function(defaults = list(), args = list()
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
 
   function(expr, options = NULL) {
+    ## If specified, assert that 'seed' is logical; numeric not supported
+    if ("seed" %in% attr(options, "specified")) {
+      seed_value <- options[["seed"]]
+      if (is.numeric(seed_value)) {
+        stop(sprintf("futurize() option 'seed' must be logical for this function call, not %s: %s", class(seed_value)[1], deparse(expr)))
+      }
+    }
     expr <- append_call_arguments(expr, .args = args)
     opts <- make_options_for_makeClusterFuture(options, defaults = defaults)
     bquote_apply(template,
