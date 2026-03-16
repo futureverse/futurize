@@ -28,6 +28,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "GSVA",                append_transpilers_for_GSVA)
   transpilers_for_package("futurize::add-on", package = "scater",              append_transpilers_for_scater)
   transpilers_for_package("futurize::add-on", package = "scuttle",             append_transpilers_for_scuttle)
+  transpilers_for_package("futurize::add-on", package = "SingleCellExperiment", append_transpilers_for_SingleCellExperiment)
 
   ## Domain-specific packages
   transpilers_for_package("futurize::add-on", package = "caret",        append_transpilers_for_caret)
