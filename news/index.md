@@ -38,6 +38,9 @@
 - Add support for domain-specific CRAN package **glmmTMB**,
   e.g. `ci <- confint(m, method = "profile") |> futurize()`.
 
+- Add support for domain-specific CRAN package **kernelshap**,
+  e.g. `ks <- kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()`.
+
 - Add support for domain-specific Bioconductor package **GSVA**,
   e.g. `es <- gsva(gsvaParam(expr, geneSets)) |> futurize()`.
 

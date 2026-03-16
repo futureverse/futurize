@@ -30,6 +30,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-glmnet.md):
 - [Parallelize 'GSVA'
   functions](https://futurize.futureverse.org/articles/futurize-81-GSVA.md):
+- [Parallelize 'kernelshap'
+  functions](https://futurize.futureverse.org/articles/futurize-81-kernelshap.md):
 - [Parallelize 'lme4'
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
 - [Parallelize 'mgcv'

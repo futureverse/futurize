@@ -133,6 +133,7 @@ packages that have optional built-in support for parallelization.
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | \- |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | `"confint()` and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
 | **[GSVA](https://bioconductor.org/packages/GSVA/)** | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[kernelshap](https://cran.r-project.org/package=kernelshap)** | `kernelshap()`, `permshap()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
@@ -173,6 +174,8 @@ se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
+
+ks <- kernelshap::kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
 
@@ -255,6 +258,8 @@ md <- vegan::mrpp(dune, Management) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-glmnet.md):
 - [Parallelize 'GSVA'
   functions](https://futurize.futureverse.org/articles/futurize-81-GSVA.md):
+- [Parallelize 'kernelshap'
+  functions](https://futurize.futureverse.org/articles/futurize-81-kernelshap.md):
 - [Parallelize 'lme4'
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
 - [Parallelize 'mgcv'
