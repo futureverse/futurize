@@ -11,6 +11,8 @@
 -->
 
 <div class="logos">
+<img src="../man/figures/sva-logo.png" alt="The 'sva' logo">
+<span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
 <img src="../man/figures/future-logo.png" alt="The 'future' logo">

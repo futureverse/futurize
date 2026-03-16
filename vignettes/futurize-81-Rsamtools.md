@@ -11,6 +11,8 @@
 -->
 
 <div class="logos">
+<img src="../man/figures/Rsamtools-logo.png" alt="The 'Rsamtools' logo">
+<span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
 <img src="../man/figures/future-logo.png" alt="The 'future' logo">
