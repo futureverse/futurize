@@ -147,7 +147,7 @@ packages that have optional built-in support for parallelization.
 | **[sva](https://bioconductor.org/packages/sva/)** | `ComBat()`, `read.degradation.matrix()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
+| **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
 
 *Table 2: Domain-specific functions currently supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)

@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9077</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9078</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -221,6 +221,23 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="example-anova-for-cca-objects">Example: anova() for ‘cca’ objects<a class="anchor" aria-label="anchor" href="#example-anova-for-cca-objects"></a>
+</h3>
+<p>The <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> S3 method for ‘cca’ objects supports
+parallelization via the <code>parallel</code> argument. With
+<strong>futurize</strong>, you can parallelize this directly. Example
+adopted from <code><a href="https://vegandevs.github.io/vegan/reference/anova.cca.html" class="external-link">help("anova.cca", package = "vegan")</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
+<span><span class="va">ord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/cca.html" class="external-link">cca</a></span><span class="op">(</span><span class="va">dune</span> <span class="op">~</span> <span class="va">A1</span> <span class="op">+</span> <span class="va">Management</span>, data <span class="op">=</span> <span class="va">dune.env</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ord</span>, permutations <span class="op">=</span> <span class="fl">99</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
@@ -230,6 +247,8 @@ locally as well as distributed across remote machines, e.g.</p>
 <ul>
 <li><code><a href="https://vegandevs.github.io/vegan/reference/vegan-defunct.html" class="external-link">adonis()</a></code></li>
 <li><code><a href="https://vegandevs.github.io/vegan/reference/adonis.html" class="external-link">adonis2()</a></code></li>
+<li>
+<code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> for ‘cca’</li>
 <li><code><a href="https://vegandevs.github.io/vegan/reference/anosim.html" class="external-link">anosim()</a></code></li>
 <li><code><a href="https://vegandevs.github.io/vegan/reference/cascadeKM.html" class="external-link">cascadeKM()</a></code></li>
 <li><code><a href="https://vegandevs.github.io/vegan/reference/specpool.html" class="external-link">estaccumR()</a></code></li>
