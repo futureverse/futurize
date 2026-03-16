@@ -34,9 +34,9 @@ pkgs
 #> [13] "glmmTMB"           "glmnet"            "lme4"             
 #> [16] "mgcv"              "mice"              "partykit"         
 #> [19] "pbapply"           "plyr"              "purrr"            
-#> [22] "scater"            "seriation"         "shapr"            
-#> [25] "stats"             "strucchange"       "tm"               
-#> [28] "vegan"            
+#> [22] "scater"            "scuttle"           "seriation"        
+#> [25] "shapr"             "stats"             "strucchange"      
+#> [28] "tm"                "vegan"            
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

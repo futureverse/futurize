@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'caret' functions • futurize</title>
+<title>Parallelize 'scuttle' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'caret' functions">
+<meta property="og:title" content="Parallelize 'scuttle' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -55,7 +55,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
   </ul>
 </li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-cran-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">CRAN focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-cran-focus">
 <li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
@@ -138,30 +138,30 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'caret' functions</h1>
+      <h1>Parallelize 'scuttle' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-caret.md" class="external-link"><code>vignettes/futurize-81-caret.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-caret.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-scuttle.md" class="external-link"><code>vignettes/futurize-81-scuttle.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-scuttle.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'caret' functions}
+%\VignetteIndexEntry{Parallelize 'scuttle' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{caret}
+%\VignetteKeyword{Bioconductor}
+%\VignetteKeyword{scuttle}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/cran-caret-logo.svg" alt="The 'caret' image"><span>+</span>
-<img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
+<p><img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
 <p>The <strong>futurize</strong> package allows you to easily turn
@@ -173,45 +173,56 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-<strong><a href="https://cran.r-project.org/package=caret" class="external-link">caret</a></strong>
-functions such as <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code>.</p>
-<p>The <strong><a href="https://cran.r-project.org/package=caret" class="external-link">caret</a></strong>
-package provides a rich set of machine-learning tools with a unified
-API. The <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code> function fits models using
-cross-validation or bootstrap resampling, making it an excellent
-candidate for parallelization.</p>
+the <strong><a href="https://bioconductor.org/packages/scuttle/" class="external-link">scuttle</a></strong>
+functions.</p>
+<p>The <strong><a href="https://bioconductor.org/packages/scuttle/" class="external-link">scuttle</a></strong>
+Bioconductor package provides basic utility functions for single-cell
+RNA-seq data analysis, including quality control, normalization, and
+aggregation, which can be parallelized across cells.</p>
 <div class="section level3">
-<h3 id="example-training-a-random-forest-with-cross-validation">Example: Training a random forest with cross-validation<a class="anchor" aria-label="anchor" href="#example-training-a-random-forest-with-cross-validation"></a>
+<h3 id="example-log-normalizing-counts-in-parallel">Example: Log-normalizing counts in parallel<a class="anchor" aria-label="anchor" href="#example-log-normalizing-counts-in-parallel"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code> function fits models across multiple
-resampling iterations:</p>
+<p>The <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code> function computes log-normalized
+expression values for a <code>SingleCellExperiment</code> object:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Set up 10-fold cross-validation</span></span>
-<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co"># Simulate data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">200L</span></span>
+<span><span class="va">n_cells</span> <span class="op">&lt;-</span> <span class="fl">100L</span></span>
+<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="va">n_genes</span> <span class="op">*</span> <span class="va">n_cells</span>, lambda <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  nrow <span class="op">=</span> <span class="va">n_genes</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="va">n_cells</span>,</span>
+<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"cell"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_cells</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Train a random forest model</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code> evaluates sequentially, but we can easily
-make it evaluate in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">SingleCellExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span></span>
+<span>  assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">counts</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code> runs sequentially, but we can
+easily make it run in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the cross-validation folds across the available
-parallel workers, given that we have set up parallel workers, e.g.</p>
+<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the work across the available parallel workers,
+given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>The built-in <code>multisession</code> backend parallelizes on your
@@ -228,16 +239,34 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>caret</strong> functions are supported by
+<p>The following <strong>scuttle</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/caret/man/bag.html" class="external-link">bag()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/gafs.default.html" class="external-link">gafs()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/nearZeroVar.html" class="external-link">nearZeroVar()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/rfe.html" class="external-link">rfe()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/safs.html" class="external-link">safs()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/sbf.html" class="external-link">sbf()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/calculateAverage.html" class="external-link">calculateAverage()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/normalizeCounts.html" class="external-link">normalizeCounts()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">perFeatureQCMetrics()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerCellQCMetrics()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerFeatureQCMetrics()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerCellQC()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerFeatureQC()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/numDetectedAcrossCells.html" class="external-link">numDetectedAcrossCells()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/numDetectedAcrossFeatures.html" class="external-link">numDetectedAcrossFeatures()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/sumCountsAcrossCells.html" class="external-link">sumCountsAcrossCells()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/sumCountsAcrossFeatures.html" class="external-link">sumCountsAcrossFeatures()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/summarizeAssayByGroup.html" class="external-link">summarizeAssayByGroup()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html" class="external-link">aggregateAcrossCells()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/aggregateAcrossFeatures.html" class="external-link">aggregateAcrossFeatures()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">librarySizeFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">computeLibraryFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html" class="external-link">geometricSizeFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html" class="external-link">computeGeometricFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html" class="external-link">medianSizeFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html" class="external-link">computeMedianFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html" class="external-link">pooledSizeFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html" class="external-link">computePooledFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/fitLinearModel.html" class="external-link">fitLinearModel()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

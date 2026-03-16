@@ -40,6 +40,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
 - [Parallelize 'scater'
   functions](https://futurize.futureverse.org/articles/futurize-81-scater.md):
+- [Parallelize 'scuttle'
+  functions](https://futurize.futureverse.org/articles/futurize-81-scuttle.md):
 - [Parallelize 'seriation'
   functions](https://futurize.futureverse.org/articles/futurize-81-seriation.md):
 - [Parallelize 'shapr'
