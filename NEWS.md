@@ -48,6 +48,9 @@
  * Add support for domain-specific CRAN package **partykit**, e.g. `cf
    <- cforest(dist ~ speed, data = cars) |> futurize()`.
 
+ * Add support for domain-specific CRAN package **Rsolnp**,
+   e.g. `res <- gosolnp(fun, LB, UB, n.restarts = 5) |> futurize()`.
+
  * Add support for domain-specific CRAN package **riskRegression**,
    e.g. `sc <- Score(list("CSC" = fit), data = d, formula =
    Hist(time, event) ~ 1, times = 5, B = 100, split.method =

@@ -42,6 +42,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "metafor",        append_transpilers_for_metafor)
   transpilers_for_package("futurize::add-on", package = "partykit",       append_transpilers_for_partykit)
   transpilers_for_package("futurize::add-on", package = "riskRegression", append_transpilers_for_riskRegression)
+  transpilers_for_package("futurize::add-on", package = "Rsolnp",         append_transpilers_for_Rsolnp)
   transpilers_for_package("futurize::add-on", package = "seriation",      append_transpilers_for_seriation)
   transpilers_for_package("futurize::add-on", package = "SimDesign",      append_transpilers_for_SimDesign)
   transpilers_for_package("futurize::add-on", package = "shapr",          append_transpilers_for_shapr)
