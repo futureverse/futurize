@@ -26,6 +26,12 @@ append_transpilers_for_glmmTMB <- function() {
 
   transpilers <- make_package_transpilers("glmmTMB", FUN = function(fcn, name) {
     if (all(c("parallel", "ncpus", "cl") %in% names(formals(fcn)))) {
+      ## Skip confint() for 'glmmTMB' until has been fixed per
+      ## https://github.com/glmmTMB/glmmTMB/issues/1268
+      if (name == "confint.glmmTMB") {
+        return()
+      }
+
       list(
         label = sprintf("glmmTMB::%s() ~> glmmTMB::%s(..., parallel = TRUE)", name, name),
         transpiler = make_futurize_for_makeClusterFuture(args = list(

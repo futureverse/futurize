@@ -120,7 +120,7 @@ packages that have optional built-in support for parallelization.
 | **[fwb]**               | `fwb()`, `vcovFWB()`                                                      | -                  |
 | **[GenomicAlignments]** | `summarizeOverlaps()`                                                     | **[doFuture]**     |
 | **[glmnet]**            | `cv.glmnet()`                                                             | -                  |
-| **[glmmTMB]**           | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
+| **[glmmTMB]**           | `profile()` for 'glmmTMB'                                                 | -                  |
 | **[GSVA]**              | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
 | **[kernelshap]**        | `kernelshap()`, `permshap()`                                              | **[doFuture]**     |
 | **[lme4]**              | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
