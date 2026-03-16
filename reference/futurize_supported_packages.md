@@ -33,11 +33,11 @@ pkgs
 #> [10] "caret"                "crossmap"             "fgsea"               
 #> [13] "foreach"              "fwb"                  "glmmTMB"             
 #> [16] "glmnet"               "lme4"                 "mgcv"                
-#> [19] "mice"                 "partykit"             "pbapply"             
-#> [22] "plyr"                 "purrr"                "scater"              
-#> [25] "scuttle"              "seriation"            "shapr"               
-#> [28] "stats"                "strucchange"          "sva"                 
-#> [31] "tm"                   "vegan"               
+#> [19] "partykit"             "pbapply"              "plyr"                
+#> [22] "purrr"                "scater"               "scuttle"             
+#> [25] "seriation"            "shapr"                "stats"               
+#> [28] "strucchange"          "sva"                  "tm"                  
+#> [31] "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

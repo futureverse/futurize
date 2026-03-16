@@ -41,9 +41,6 @@
 - Add support for domain-specific Bioconductor package **GSVA**,
   e.g. `es <- gsva(gsvaParam(expr, geneSets)) |> futurize()`.
 
-- Add support for domain-specific CRAN package **mice**,
-  e.g. `imp <- mice(nhanes, m = 5) |> futurize()`.
-
 - Add support for domain-specific CRAN package **partykit**,
   e.g. `cf <- cforest(dist ~ speed, data = cars) |> futurize()`.
 

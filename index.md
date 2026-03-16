@@ -135,7 +135,6 @@ packages that have optional built-in support for parallelization.
 | **[GSVA](https://bioconductor.org/packages/GSVA/)** | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
-| **[mice](https://cran.r-project.org/package=mice)** | `mice()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[Rsamtools](https://bioconductor.org/packages/Rsamtools/)** | `countBam()`, `scanBam()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[scater](https://bioconductor.org/packages/scater/)** | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture](https://doFuture.futureverse.org)** |
@@ -176,8 +175,6 @@ cv <- glmnet::cv.glmnet(x, y) |> futurize()
 es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
-
-imp <- mice::mice(nhanes, m = 5) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
