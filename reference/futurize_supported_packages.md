@@ -36,8 +36,8 @@ pkgs
 #> [19] "mice"                 "partykit"             "pbapply"             
 #> [22] "plyr"                 "purrr"                "scater"              
 #> [25] "scuttle"              "seriation"            "shapr"               
-#> [28] "stats"                "strucchange"          "tm"                  
-#> [31] "vegan"               
+#> [28] "stats"                "strucchange"          "sva"                 
+#> [31] "tm"                   "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

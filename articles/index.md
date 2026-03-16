@@ -52,6 +52,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-SingleCellExperiment.md):
 - [Parallelize 'strucchange'
   functions](https://futurize.futureverse.org/articles/futurize-81-strucchange.md):
+- [Parallelize 'sva'
+  functions](https://futurize.futureverse.org/articles/futurize-81-sva.md):
 - [Parallelize 'tm'
   functions](https://futurize.futureverse.org/articles/futurize-81-tm.md):
 - [Parallelize 'TSP'

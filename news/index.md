@@ -59,6 +59,9 @@
 - Add support for Bioconductor package **SingleCellExperiment**,
   e.g. `result <- applySCE(sce, perCellQCMetrics) |> futurize()`.
 
+- Add support for Bioconductor package **sva**,
+  e.g. `adjusted <- ComBat(dat, batch) |> futurize()`.
+
 - Add support for domain-specific CRAN package **seriation**,
   e.g. `o <- seriate_best(d_supreme) |> futurize()`.
 

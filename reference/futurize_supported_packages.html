@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9074</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9075</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-scater.html">Parallelize 'scater' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-scuttle.html">Parallelize 'scuttle' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-SingleCellExperiment.html">Parallelize 'SingleCellExperiment' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-sva.html">Parallelize 'sva' functions</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -146,8 +147,8 @@ required by the futurize transpiler are not installed.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [19] "mice"                 "partykit"             "pbapply"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [22] "plyr"                 "purrr"                "scater"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [25] "scuttle"              "seriation"            "shapr"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "stats"                "strucchange"          "tm"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "vegan"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "stats"                "strucchange"          "sva"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "tm"                   "vegan"               </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"future.apply"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">fcns</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_functions</span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></span>
