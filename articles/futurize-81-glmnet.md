@@ -1,6 +1,6 @@
 # Parallelize 'glmnet' functions
 
-![The 'glmnet' hexlogo](../reference/figures/glmnet-logo.svg)+ ![The
+![The 'glmnet' hexlogo](../reference/figures/glmnet-logo.png)+ ![The
 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 

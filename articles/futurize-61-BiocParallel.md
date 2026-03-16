@@ -1,7 +1,7 @@
 # Parallelize 'BiocParallel' functions
 
 ![The Bioconductor 'BiocParallel'
-image](../reference/figures/bioconductor-BiocParallel-logo.svg)+ ![The
+image](../reference/figures/bioconductor-BiocParallel-logo.png)+ ![The
 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
