@@ -16,7 +16,7 @@ append_transpilers_for_glmnet <- function() {
       
       list(
         label = sprintf("glmnet::%s() ~> glmnet::%s(..., parallel = TRUE)", name, name),
-        transpiler = make_futurize_for_makeClusterFuture(defaults = defaults, args = list(parallel = TRUE))
+        transpiler = make_futurize_for_doFuture(defaults = defaults, args = list(parallel = TRUE))
       )
     }
   })
