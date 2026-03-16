@@ -42,12 +42,12 @@ navbar:
         href: articles/futurize-81-glmnet.html
       - text: Parallelize 'glmmTMB' functions
         href: articles/futurize-81-glmmTMB.html
+      - text: Parallelize 'kernelshap' functions
+        href: articles/futurize-81-kernelshap.html
       - text: Parallelize 'lme4' functions
         href: articles/futurize-81-lme4.html
       - text: Parallelize 'mgcv' functions
         href: articles/futurize-81-mgcv.html
-      - text: Parallelize 'mice' functions
-        href: articles/futurize-81-mice.html
       - text: Parallelize 'partykit' functions
         href: articles/futurize-81-partykit.html
       - text: Parallelize 'seriation' functions

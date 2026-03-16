@@ -26,6 +26,8 @@ articles-cran:
     href: articles/futurize-81-glmnet.html
   - text: Parallelize 'glmmTMB' functions
     href: articles/futurize-81-glmmTMB.html
+  - text: Parallelize 'kernelshap' functions
+    href: articles/futurize-81-kernelshap.html
   - text: Parallelize 'lme4' functions
     href: articles/futurize-81-lme4.html
   - text: Parallelize 'mgcv' functions

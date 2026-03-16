@@ -122,6 +122,7 @@ packages that have optional built-in support for parallelization.
 | **[glmnet]**            | `cv.glmnet()`                                                             | -                  |
 | **[glmmTMB]**           | `"confint()` and `profile()` for 'glmmTMB'                                | -                  |
 | **[GSVA]**              | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
+| **[kernelshap]**        | `kernelshap()`, `permshap()`                                              | **[doFuture]**     |
 | **[lme4]**              | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
 | **[mgcv]**              | `bam()`, `predict()` for 'bam'                                            | -                  |
 | **[partykit]**          | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
@@ -161,6 +162,8 @@ se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
 es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
+
+ks <- kernelshap::kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
 
@@ -210,6 +213,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
 [GenomicAlignments]: https://bioconductor.org/packages/GenomicAlignments/
 [GSVA]: https://bioconductor.org/packages/GSVA/
+[kernelshap]: https://cran.r-project.org/package=kernelshap
 [lme4]: https://cran.r-project.org/package=lme4
 [mgcv]: https://cran.r-project.org/package=mgcv
 [partykit]: https://cran.r-project.org/package=partykit
