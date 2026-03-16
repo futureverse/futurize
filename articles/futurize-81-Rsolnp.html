@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'GenomicAlignments' functions • futurize</title>
+<title>Parallelize 'Rsolnp' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'GenomicAlignments' functions">
+<meta property="og:title" content="Parallelize 'Rsolnp' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -55,7 +55,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
   </ul>
 </li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-cran-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">CRAN focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-cran-focus">
 <li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
@@ -79,7 +79,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
   </ul>
 </li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-bioc-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Bioc focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-bioc-focus">
 <li><h6 class="dropdown-header" data-toc-skip>Bioconductor packages supporting futurize()</h6></li>
@@ -146,30 +146,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'GenomicAlignments' functions</h1>
+      <h1>Parallelize 'Rsolnp' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-GenomicAlignments.md" class="external-link"><code>vignettes/futurize-81-GenomicAlignments.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-GenomicAlignments.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-Rsolnp.md" class="external-link"><code>vignettes/futurize-81-Rsolnp.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-Rsolnp.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'GenomicAlignments' functions}
+%\VignetteIndexEntry{Parallelize 'Rsolnp' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{Bioconductor}
-%\VignetteKeyword{GenomicAlignments}
+%\VignetteKeyword{Rsolnp}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/bioconductor-GenomicAlignments-logo.svg" alt="The 'GenomicAlignments' logo"><span>+</span>
+<p><img src="../reference/figures/cran-Rsolnp-logo.svg" alt="The CRAN 'Rsolnp' package"><span>+</span>
 <img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
@@ -182,46 +181,65 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicAlignments" class="external-link">GenomicAlignments</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">Rsolnp</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp</a></span><span class="op">(</span></span>
+<span>  fun <span class="op">=</span> <span class="va">gofn</span>,</span>
+<span>  LB <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>  UB <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  n.restarts <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  n.sim <span class="op">=</span> <span class="fl">20000</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-the <strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong>
-functions.</p>
-<p>The <strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong>
-Bioconductor package provides efficient representation and manipulation
-of short genomic alignments. The <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code>
-function counts the number of reads that map to each feature (e.g. gene
-or exon) from one or more BAM files. When called with a
-<code>BamFileList</code>, the work is distributed across BAM files using
-<code><a href="https://rdrr.io/pkg/BiocParallel/man/bplapply.html" class="external-link">bplapply()</a></code>, which can be parallelized.</p>
+<strong><a href="https://cran.r-project.org/package=Rsolnp" class="external-link">Rsolnp</a></strong>
+functions such as <code><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=Rsolnp" class="external-link">Rsolnp</a></strong>
+package provides general nonlinear optimization using the augmented
+Lagrange multiplier method. The <code><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp()</a></code> function performs
+global optimization by randomly generating starting parameters and
+running the optimizer from each, making it an excellent candidate for
+parallelization. The <code><a href="https://rdrr.io/pkg/Rsolnp/man/startpars.html" class="external-link">startpars()</a></code> function similarly
+evaluates many random starting points in parallel.</p>
 <div class="section level3">
-<h3 id="example-running-summarizeoverlaps-in-parallel">Example: Running summarizeOverlaps() in parallel<a class="anchor" aria-label="anchor" href="#example-running-summarizeoverlaps-in-parallel"></a>
+<h3 id="example-global-optimization-with-random-starting-parameters">Example: Global optimization with random starting parameters<a class="anchor" aria-label="anchor" href="#example-global-optimization-with-random-starting-parameters"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code> function counts reads
-overlapping genomic features across multiple BAM files:</p>
+<p>The <code><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp()</a></code> function performs global optimization by
+running the solver from multiple random starting points. For
+example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicAlignments" class="external-link">GenomicAlignments</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Rsamtools" class="external-link">Rsamtools</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">Rsolnp</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">bam_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rsamtools/man/BamFile-class.html" class="external-link">BamFileList</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample1.bam"</span>, <span class="st">"sample2.bam"</span>, <span class="st">"sample3.bam"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chr1"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/IRanges-constructor.html" class="external-link">IRanges</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">2000</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">1500</span>, <span class="fl">2500</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="va">gofn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pars</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">pars</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">pars</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">-</span> <span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code> processes BAM files
-sequentially, but we can easily make it process them in parallel by
-piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp</a></span><span class="op">(</span></span>
+<span>  fun <span class="op">=</span> <span class="va">gofn</span>,</span>
+<span>  LB <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>  UB <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  n.restarts <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  n.sim <span class="op">=</span> <span class="fl">20000</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp()</a></code> evaluates sequentially. To run in
+parallel, pipe to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">Rsolnp</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the BAM file processing across the available
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp</a></span><span class="op">(</span></span>
+<span>  fun <span class="op">=</span> <span class="va">gofn</span>,</span>
+<span>  LB <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>  UB <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  n.restarts <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  n.sim <span class="op">=</span> <span class="fl">20000</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the optimization restarts across the available
 parallel workers, given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
@@ -239,10 +257,11 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>GenomicAlignments</strong> functions are
-supported by <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<p>The following <strong>Rsolnp</strong> functions are supported by
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/Rsolnp/man/gosolnp.html" class="external-link">gosolnp()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/Rsolnp/man/startpars.html" class="external-link">startpars()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

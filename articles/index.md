@@ -44,6 +44,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-riskRegression.md):
 - [Parallelize 'Rsamtools'
   functions](https://futurize.futureverse.org/articles/futurize-81-Rsamtools.md):
+- [Parallelize 'Rsolnp'
+  functions](https://futurize.futureverse.org/articles/futurize-81-Rsolnp.md):
 - [Parallelize 'scater'
   functions](https://futurize.futureverse.org/articles/futurize-81-scater.md):
 - [Parallelize 'scuttle'
