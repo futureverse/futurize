@@ -1,6 +1,8 @@
 # Parallelize 'scuttle' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
+![The 'scuttle'
+logo](../reference/figures/bioconductor-scuttle-logo.svg)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into

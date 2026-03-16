@@ -1,5 +1,7 @@
 # Parallelize 'GenomicAlignments' functions
 
+![The 'GenomicAlignments'
+logo](../reference/figures/bioconductor-GenomicAlignments-logo.svg)+
 ![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
