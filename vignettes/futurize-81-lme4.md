@@ -82,6 +82,26 @@ workers, given that we have set up parallel workers, e.g.
 plan(multisession)
 ```
 
+Unlike other parallel backends in R, `futurize()` relays standard
+output, messages, and warnings produced by the parallel workers back
+to your main R session. For instance, when running the above, you
+will see the progress output from each optimizer as it completes:
+
+```
+> gm_all <- allFit(gm) |> futurize()
+bobyqa : [OK]
+Nelder_Mead : [OK]
+nlminbwrap : [OK]
+nmkbw : [OK]
+optimx.L-BFGS-B : [OK]
+nloptwrap.NLOPT_LN_NELDERMEAD : [OK]
+nloptwrap.NLOPT_LN_BOBYQA : [OK]
+```
+
+This output originates from the parallel workers and is relayed to
+your R session, so you get the same informative feedback as when
+running sequentially.
+
 The built-in `multisession` backend parallelizes on your local
 computer and works on all operating systems. There are [other
 parallel backends] to choose from, including alternatives to

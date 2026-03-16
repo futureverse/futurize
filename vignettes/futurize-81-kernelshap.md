@@ -58,7 +58,7 @@ library(kernelshap)
 ## Fit a model
 x_train <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
 y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(100)
-model <- lm(y_train ~ ., data = cbind(y = y_train, x_train))
+model <- lm(y ~ ., data = cbind(y = y_train, x_train))
 
 ## Compute Kernel SHAP values
 x_explain <- x_train[1:5, ]
