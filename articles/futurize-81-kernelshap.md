@@ -1,7 +1,7 @@
 # Parallelize 'kernelshap' functions
 
 ![The 'kernelshap' logo](../reference/figures/kernelshap-logo.png)+
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)+ ![The
+![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into
