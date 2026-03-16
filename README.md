@@ -124,7 +124,6 @@ packages that have optional built-in support for parallelization.
 | **[GSVA]**              | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
 | **[lme4]**              | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
 | **[mgcv]**              | `bam()`, `predict()` for 'bam'                                            | -                  |
-| **[mice]**              | `mice()`                                                                  | -                  |
 | **[partykit]**          | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
 | **[Rsamtools]**         | `countBam()`, `scanBam()`                                                 | **[doFuture]**     |
 | **[scater]**            | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
@@ -164,8 +163,6 @@ cv <- glmnet::cv.glmnet(x, y) |> futurize()
 es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
-
-imp <- mice::mice(nhanes, m = 5) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
@@ -215,7 +212,6 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [GSVA]: https://bioconductor.org/packages/GSVA/
 [lme4]: https://cran.r-project.org/package=lme4
 [mgcv]: https://cran.r-project.org/package=mgcv
-[mice]: https://cran.r-project.org/package=mice
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
