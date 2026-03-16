@@ -47,6 +47,9 @@
 - Add support for domain-specific CRAN package **partykit**,
   e.g. `cf <- cforest(dist ~ speed, data = cars) |> futurize()`.
 
+- Add support for domain-specific CRAN package **riskRegression**,
+  e.g. `sc <- Score(list("CSC" = fit), data = d, formula = Hist(time, event) ~ 1, times = 5, B = 100, split.method = "bootcv") |> futurize()`.
+
 - Add support for domain-specific Bioconductor package **scater**,
   e.g. `sce <- runPCA(sce) |> futurize()`.
 
@@ -82,6 +85,11 @@
 - [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
   option `chunk_size` was silently ignored for transpilers relying on
   **doFuture**.
+
+- Packages not supporting specifying a random seed will now produce an
+  informative errors message if `futurize(seed = <numeric>)` is
+  specified, e.g. **boot**, **glmmTM**, **lme4**, **mgcv**, and
+  **vegan**.
 
 ## Version 0.1.0
 

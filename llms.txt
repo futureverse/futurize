@@ -129,12 +129,13 @@ parallelization.
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fgsea](https://bioconductor.org/packages/fgsea/)** | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
-| **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
+| **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[kernelshap](https://cran.r-project.org/package=kernelshap)** | `kernelshap()`, `permshap()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
+| **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
@@ -168,6 +169,10 @@ m <- lme4::allFit(models) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+sc <- riskRegression::Score(list("CSC" = fit), data = d,
+  formula = Hist(time, event) ~ 1, times = 5, B = 100,
+  split.method = "bootcv") |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
@@ -284,6 +289,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
 - [Parallelize 'partykit'
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
+- [Parallelize 'riskRegression'
+  functions](https://futurize.futureverse.org/articles/futurize-81-riskRegression.md):
 - [Parallelize 'Rsamtools'
   functions](https://futurize.futureverse.org/articles/futurize-81-Rsamtools.md):
 - [Parallelize 'scater'

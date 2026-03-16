@@ -17,8 +17,8 @@
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Parallelize Common Functions via One Magic Function">
-<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, DESeq2, fgsea, fwb, GenomicAlignments, glmmTMB, glmnet, GSVA, kernelshap, lme4, mgcv, partykit, Rsamtools, scater, scuttle, SingleCellExperiment, seriation, shapr, strucchange, sva, tm, TSP, and vegan'.">
-<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages, including boot, DESeq2, fgsea, fwb, GenomicAlignments, glmmTMB, glmnet, GSVA, kernelshap, lme4, mgcv, partykit, Rsamtools, scater, scuttle, SingleCellExperiment, seriation, shapr, strucchange, sva, tm, TSP, and vegan'.">
+<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package boot, caret, fgsea, fwb, glmmTMB, glmnet, kernelshap, lme4, mgcv, partykit, riskRegression, seriation, shapr, strucchange, tm, TSP, and vegan) and Bioconductor packages (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
+<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package boot, caret, fgsea, fwb, glmmTMB, glmnet, kernelshap, lme4, mgcv, partykit, riskRegression, seriation, shapr, strucchange, tm, TSP, and vegan) and Bioconductor packages (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9085</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9087</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -315,15 +315,15 @@
 <td>-</td>
 </tr>
 <tr>
-<td><strong><a href="https://cran.r-project.org/package=glmnet" class="external-link">glmnet</a></strong></td>
-<td><code>cv.glmnet()</code></td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
 <td><strong><a href="https://cran.r-project.org/package=glmmTMB" class="external-link">glmmTMB</a></strong></td>
 <td>
 <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> for ‘glmmTMB’</td>
 <td>-</td>
+</tr>
+<tr>
+<td><strong><a href="https://cran.r-project.org/package=glmnet" class="external-link">glmnet</a></strong></td>
+<td><code>cv.glmnet()</code></td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=kernelshap" class="external-link">kernelshap</a></strong></td>
@@ -349,6 +349,12 @@
 <td>
 <code>cforest()</code>, <code>ctree_control()</code>, <code>mob_control()</code>, <code>varimp()</code> for ‘cforest’</td>
 <td><strong><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://cran.r-project.org/package=riskRegression" class="external-link">riskRegression</a></strong></td>
+<td>
+<code>Score()</code> for ‘list’</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=seriation" class="external-link">seriation</a></strong></td>
@@ -410,6 +416,10 @@
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">mgcv</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">bam</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">x0</span>, bs <span class="op">=</span> <span class="va">bs</span><span class="op">)</span> <span class="op">+</span> <span class="fu">s</span><span class="op">(</span><span class="va">x1</span>, bs <span class="op">=</span> <span class="va">bs</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">partykit</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">riskRegression</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/riskRegression/man/Score.html" class="external-link">Score</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"CSC"</span> <span class="op">=</span> <span class="va">fit</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span>,</span>
+<span>  formula <span class="op">=</span> <span class="fu">Hist</span><span class="op">(</span><span class="va">time</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, times <span class="op">=</span> <span class="fl">5</span>, B <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  split.method <span class="op">=</span> <span class="st">"bootcv"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">shapr</span><span class="fu">::</span><span class="fu"><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">x_explain</span>, <span class="va">x_train</span>, approach <span class="op">=</span> <span class="st">"empirical"</span>, phi0 <span class="op">=</span> <span class="va">phi0</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>

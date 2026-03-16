@@ -34,10 +34,10 @@ pkgs
 #> [13] "foreach"              "fwb"                  "glmmTMB"             
 #> [16] "glmnet"               "kernelshap"           "lme4"                
 #> [19] "mgcv"                 "partykit"             "pbapply"             
-#> [22] "plyr"                 "purrr"                "scater"              
-#> [25] "scuttle"              "seriation"            "shapr"               
-#> [28] "stats"                "strucchange"          "sva"                 
-#> [31] "tm"                   "vegan"               
+#> [22] "plyr"                 "purrr"                "riskRegression"      
+#> [25] "scater"               "scuttle"              "seriation"           
+#> [28] "shapr"                "stats"                "strucchange"         
+#> [31] "sva"                  "tm"                   "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")
