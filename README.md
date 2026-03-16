@@ -126,6 +126,7 @@ packages that have optional built-in support for parallelization.
 | **[mgcv]**              | `bam()`, `predict()` for 'bam'                                            | -                  |
 | **[mice]**              | `mice()`                                                                  | -                  |
 | **[partykit]**          | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
+| **[Rsamtools]**         | `countBam()`, `scanBam()`                                                 | **[doFuture]**     |
 | **[scater]**            | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
 | **[scuttle]**           | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture]** |
 | **[SingleCellExper      iment]** | `applySCE()`                                                     | **[doFuture]**     |
@@ -168,6 +169,8 @@ imp <- mice::mice(nhanes, m = 5) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+counts <- Rsamtools::countBam(bamViews) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
 
@@ -214,6 +217,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
 [purrr]: https://cran.r-project.org/package=purrr
+[Rsamtools]: https://bioconductor.org/packages/Rsamtools/
 [scater]: https://bioconductor.org/packages/scater/
 [scuttle]: https://bioconductor.org/packages/scuttle/
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/
