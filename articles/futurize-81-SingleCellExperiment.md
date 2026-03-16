@@ -1,6 +1,8 @@
 # Parallelize 'SingleCellExperiment' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
+![The 'SingleCellExperiment'
+logo](../reference/figures/SingleCellExperiment-logo.png)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into

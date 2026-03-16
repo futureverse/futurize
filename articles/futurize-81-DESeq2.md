@@ -1,6 +1,7 @@
 # Parallelize 'DESeq2' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
+![The 'DESeq2' logo](../reference/figures/DESeq2-logo.png)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into

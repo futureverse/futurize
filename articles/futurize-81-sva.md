@@ -1,7 +1,8 @@
 # Parallelize 'sva' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
-'future' logo](../reference/figures/future-logo.png)
+![The 'sva' logo](../reference/figures/sva-logo.png)+ ![The 'futurize'
+hexlogo](../reference/figures/futurize-logo.png)= ![The 'future'
+logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into
 parallel code by piping the sequential code to the

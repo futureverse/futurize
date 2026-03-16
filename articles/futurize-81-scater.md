@@ -1,6 +1,7 @@
 # Parallelize 'scater' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
+![The 'scater' logo](../reference/figures/scater-logo.png)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into
