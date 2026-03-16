@@ -37,9 +37,7 @@ they will be relayed from the parallel worker to your main R session,
 just as you get when running sequentially. This is particularly useful
 when troubleshooting or debugging.
 
-## Supported calls
-
-### Supported map-reduce packages
+## Supported map-reduce packages
 
 The **futurize** package supports transpilation of functions from
 multiple packages. The tables below summarize the supported map-reduce
@@ -117,13 +115,13 @@ k <- kernel("daniell", 50)
 xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 ```
 
-### Supported domain-specific packages
+## Supported domain-specific packages
 
 You can also futurize calls from a growing set of domain-specific CRAN
 and Bioconductor packages that have optional built-in support for
 parallelization.
 
-#### CRAN packages with support for futurize
+### CRAN packages with support for futurize
 
 | Package | Functions | Requires |
 |----|----|----|
@@ -184,7 +182,7 @@ tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
 md <- vegan::mrpp(dune, Management) |> futurize()
 ```
 
-#### Bioconductor packages with support for futurize
+### Bioconductor packages with support for futurize
 
 | Package | Functions | Requires |
 |----|----|----|

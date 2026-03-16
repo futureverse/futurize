@@ -154,11 +154,8 @@
 <p>In addition to getting access to all future-based parallel backends, by using <code><a href="reference/futurize.html">futurize()</a></code> you also get access to all the benefits that comes with <strong>futureverse</strong>. Notably, if the function you parallelize output messages and warnings, they will be relayed from the parallel worker to your main R session, just as you get when running sequentially. This is particularly useful when troubleshooting or debugging.</p>
 </div>
 <div class="section level2">
-<h2 id="supported-calls">Supported calls<a class="anchor" aria-label="anchor" href="#supported-calls"></a>
+<h2 id="supported-map-reduce-packages">Supported map-reduce packages<a class="anchor" aria-label="anchor" href="#supported-map-reduce-packages"></a>
 </h2>
-<div class="section level3">
-<h3 id="supported-map-reduce-packages">Supported map-reduce packages<a class="anchor" aria-label="anchor" href="#supported-map-reduce-packages"></a>
-</h3>
 <p>The <strong>futurize</strong> package supports transpilation of functions from multiple packages. The tables below summarize the supported map-reduce (Table 1) and domain-specific (Tables 2 and 3) functions, respectively. To programmatically see which packages are currently supported, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/futurize_supported_packages.html">futurize_supported_packages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -270,13 +267,13 @@
 <span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kernel.html" class="external-link">kernel</a></span><span class="op">(</span><span class="st">"daniell"</span>, <span class="fl">50</span><span class="op">)</span></span>
 <span><span class="va">xs_smooth</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/kernapply.html" class="external-link">kernapply</a></span><span class="op">(</span><span class="va">xs</span>, k <span class="op">=</span> <span class="va">k</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="supported-domain-specific-packages">Supported domain-specific packages<a class="anchor" aria-label="anchor" href="#supported-domain-specific-packages"></a>
-</h3>
+<div class="section level2">
+<h2 id="supported-domain-specific-packages">Supported domain-specific packages<a class="anchor" aria-label="anchor" href="#supported-domain-specific-packages"></a>
+</h2>
 <p>You can also futurize calls from a growing set of domain-specific CRAN and Bioconductor packages that have optional built-in support for parallelization.</p>
-<div class="section level4">
-<h4 id="cran-packages-with-support-for-futurize">CRAN packages with support for futurize<a class="anchor" aria-label="anchor" href="#cran-packages-with-support-for-futurize"></a>
-</h4>
+<div class="section level3">
+<h3 id="cran-packages-with-support-for-futurize">CRAN packages with support for futurize<a class="anchor" aria-label="anchor" href="#cran-packages-with-support-for-futurize"></a>
+</h3>
 <table class="table">
 <colgroup>
 <col width="22%">
@@ -426,9 +423,9 @@
 <span></span>
 <span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="bioconductor-packages-with-support-for-futurize">Bioconductor packages with support for futurize<a class="anchor" aria-label="anchor" href="#bioconductor-packages-with-support-for-futurize"></a>
-</h4>
+<div class="section level3">
+<h3 id="bioconductor-packages-with-support-for-futurize">Bioconductor packages with support for futurize<a class="anchor" aria-label="anchor" href="#bioconductor-packages-with-support-for-futurize"></a>
+</h3>
 <table class="table">
 <colgroup>
 <col width="22%">
@@ -522,7 +519,6 @@
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">SingleCellExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE</a></span><span class="op">(</span><span class="va">sce</span>, <span class="fu">scuttle</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="va">adjusted</span> <span class="op">&lt;-</span> <span class="fu">sva</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sva/man/ComBat.html" class="external-link">ComBat</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat</span>, batch <span class="op">=</span> <span class="va">batch</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 </div>
 </div>
