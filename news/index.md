@@ -36,7 +36,7 @@
   e.g. `b <- fwb(data, statistic, R = 1000) |> futurize()`.
 
 - Add support for domain-specific CRAN package **glmmTMB**,
-  e.g. `ci <- confint(m, method = "profile") |> futurize()`.
+  e.g. `pr <- profile(m) |> futurize()`.
 
 - Add support for domain-specific CRAN package **kernelshap**,
   e.g. `ks <- kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()`.
