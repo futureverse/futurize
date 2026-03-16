@@ -1,6 +1,7 @@
 # Parallelize 'shapr' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)+ ![The
+![The 'shapr' logo](../reference/figures/cran-shapr-logo.svg)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.png)+ ![The
 'future' logo](../reference/figures/future-logo.png)
 
 The **futurize** package allows you to easily turn sequential code into
