@@ -111,32 +111,32 @@ You can also futurize calls from a growing set of domain-specific
 packages that have optional built-in support for parallelization.
 
 
-| Package                 | Functions                                                                 | Requires           |
-|-------------------------|---------------------------------------------------------------------------|--------------------|
-| **[boot]**              | `boot()`, `censboot()`, `tsboot()`                                        | -                  |
-| **[caret]**             | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
-| **[DESeq2]**            | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
-| **[fgsea]**             | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
-| **[fwb]**               | `fwb()`, `vcovFWB()`                                                      | -                  |
-| **[GenomicAlignments]** | `summarizeOverlaps()`                                                     | **[doFuture]**     |
-| **[glmnet]**            | `cv.glmnet()`                                                             | **[doFuture]**     |
-| **[glmmTMB]**           | `profile()` for 'glmmTMB'                                                 | -                  |
-| **[GSVA]**              | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
-| **[kernelshap]**        | `kernelshap()`, `permshap()`                                              | **[doFuture]**     |
-| **[lme4]**              | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
-| **[mgcv]**              | `bam()`, `predict()` for 'bam'                                            | -                  |
-| **[partykit]**          | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
-| **[Rsamtools]**         | `countBam()`, `scanBam()`                                                 | **[doFuture]**     |
-| **[scater]**            | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
-| **[scuttle]**           | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture]** |
-| **[SingleCellExper      iment]** | `applySCE()`                                                     | **[doFuture]**     |
-| **[seriation]**         | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
-| **[shapr]**             | `explain()`, `explain_forecast()`                                         | -                  |
-| **[strucchange]**       | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
-| **[sva]**               | `ComBat()`, `read.degradation.matrix()`                                   | **[doFuture]**     |
-| **[tm]**                | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
-| **[TSP]**               | `solve_RSP()`                                                             | **[doFuture]**     |
-| **[vegan]**             | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca' | -                  |
+| Package                     | Functions                                                                 | Requires           |
+|-----------------------------|---------------------------------------------------------------------------|--------------------|
+| **[boot]**                  | `boot()`, `censboot()`, `tsboot()`                                        | -                  |
+| **[caret]**                 | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture]**     |
+| **[DESeq2]**                | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
+| **[fgsea]**                 | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
+| **[fwb]**                   | `fwb()`, `vcovFWB()`                                                      | -                  |
+| **[GenomicAlignments]**     | `summarizeOverlaps()`                                                     | **[doFuture]**     |
+| **[glmnet]**                | `cv.glmnet()`                                                             | **[doFuture]**     |
+| **[glmmTMB]**               | `profile()` for 'glmmTMB'                                                 | -                  |
+| **[GSVA]**                  | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
+| **[kernelshap]**            | `kernelshap()`, `permshap()`                                              | **[doFuture]**     |
+| **[lme4]**                  | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'       | -                  |
+| **[mgcv]**                  | `bam()`, `predict()` for 'bam'                                            | -                  |
+| **[partykit]**              | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest' | **[future.apply]** |
+| **[Rsamtools]**             | `countBam()`, `scanBam()`                                                 | **[doFuture]**     |
+| **[scater]**                | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
+| **[scuttle]**               | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture]** |
+| **[SingleCellExperiment]** | `applySCE()`                                                           | **[doFuture]**     |
+| **[seriation]**            | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
+| **[shapr]**                | `explain()`, `explain_forecast()`                                         | -                  |
+| **[strucchange]**          | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
+| **[sva]**                  | `ComBat()`, `read.degradation.matrix()`                                   | **[doFuture]**     |
+| **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
+| **[TSP]**                  | `solve_RSP()`                                                             | **[doFuture]**     |
+| **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca' | -                  |
 
 
 
