@@ -159,7 +159,7 @@
 <div class="section level3">
 <h3 id="supported-map-reduce-packages">Supported map-reduce packages<a class="anchor" aria-label="anchor" href="#supported-map-reduce-packages"></a>
 </h3>
-<p>The <strong>futurize</strong> package supports transpilation of functions from multiple packages. The tables below summarize the supported map-reduce (Table 1) and domain-specific (Table 2) functions, respectively. To programmatically see which packages are currently supported, use:</p>
+<p>The <strong>futurize</strong> package supports transpilation of functions from multiple packages. The tables below summarize the supported map-reduce (Table 1) and domain-specific (Tables 2 and 3) functions, respectively. To programmatically see which packages are currently supported, use:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/futurize_supported_packages.html">futurize_supported_packages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>To see which functions are supported for a specific package, use:</p>
@@ -273,11 +273,14 @@
 <div class="section level3">
 <h3 id="supported-domain-specific-packages">Supported domain-specific packages<a class="anchor" aria-label="anchor" href="#supported-domain-specific-packages"></a>
 </h3>
-<p>You can also futurize calls from a growing set of domain-specific packages that have optional built-in support for parallelization.</p>
+<p>You can also futurize calls from a growing set of domain-specific CRAN and Bioconductor packages that have optional built-in support for parallelization.</p>
+<div class="section level4">
+<h4 id="cran-packages-with-support-for-futurize">CRAN packages with support for futurize<a class="anchor" aria-label="anchor" href="#cran-packages-with-support-for-futurize"></a>
+</h4>
 <table class="table">
 <colgroup>
-<col width="20%">
-<col width="62%">
+<col width="22%">
+<col width="60%">
 <col width="16%">
 </colgroup>
 <thead><tr>
@@ -301,13 +304,6 @@
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>
-<td><strong><a href="https://bioconductor.org/packages/DESeq2/" class="external-link">DESeq2</a></strong></td>
-<td>
-<code>DESeq()</code>, <code>lfcShrink()</code>, <code>results()</code>
-</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
 <td><strong><a href="https://bioconductor.org/packages/fgsea/" class="external-link">fgsea</a></strong></td>
 <td>
 <code>fgsea()</code>, <code>fgseaMultilevel()</code>, <code>fgseaSimple()</code>, <code>fgseaLabel()</code>, <code>geseca()</code>, <code>gesecaSimple()</code>, <code>collapsePathwaysGeseca()</code>
@@ -322,11 +318,6 @@
 <td>-</td>
 </tr>
 <tr>
-<td><strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong></td>
-<td><code>summarizeOverlaps()</code></td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
 <td><strong><a href="https://cran.r-project.org/package=glmnet" class="external-link">glmnet</a></strong></td>
 <td><code>cv.glmnet()</code></td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
@@ -336,13 +327,6 @@
 <td>
 <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> for ‘glmmTMB’</td>
 <td>-</td>
-</tr>
-<tr>
-<td><strong><a href="https://bioconductor.org/packages/GSVA/" class="external-link">GSVA</a></strong></td>
-<td>
-<code>gsva()</code>, <code>gsvaRanks()</code>, <code>gsvaScores()</code>, <code>spatCor()</code>
-</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=kernelshap" class="external-link">kernelshap</a></strong></td>
@@ -370,32 +354,6 @@
 <td><strong><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></strong></td>
 </tr>
 <tr>
-<td><strong><a href="https://bioconductor.org/packages/Rsamtools/" class="external-link">Rsamtools</a></strong></td>
-<td>
-<code>countBam()</code>, <code>scanBam()</code>
-</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="https://bioconductor.org/packages/scater/" class="external-link">scater</a></strong></td>
-<td>
-<code>calculatePCA()</code>, <code>calculateTSNE()</code>, <code>calculateUMAP()</code>, <code>runPCA()</code>, <code>runTSNE()</code>, <code>runUMAP()</code>, <code>runColDataPCA()</code>, <code>nexprs()</code>, <code>getVarianceExplained()</code>, <code>plotRLE()</code>
-</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="https://bioconductor.org/packages/scuttle/" class="external-link">scuttle</a></strong></td>
-<td>
-<code>calculateAverage()</code>, <code>logNormCounts()</code>, <code>normalizeCounts()</code>, <code>perCellQCMetrics()</code>, <code>perFeatureQCMetrics()</code>, <code>addPerCellQCMetrics()</code>, <code>addPerFeatureQCMetrics()</code>, <code>addPerCellQC()</code>, <code>addPerFeatureQC()</code>, <code>numDetectedAcrossCells()</code>, <code>numDetectedAcrossFeatures()</code>, <code>sumCountsAcrossCells()</code>, <code>sumCountsAcrossFeatures()</code>, <code>summarizeAssayByGroup()</code>, <code>aggregateAcrossCells()</code>, <code>aggregateAcrossFeatures()</code>, <code>librarySizeFactors()</code>, <code>computeLibraryFactors()</code>, <code>geometricSizeFactors()</code>, <code>computeGeometricFactors()</code>, <code>medianSizeFactors()</code>, <code>computeMedianFactors()</code>, <code>pooledSizeFactors()</code>, <code>computePooledFactors()</code>, <code>fitLinearModel()</code>
-</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
-<td><strong>[SingleCellExper iment]</strong></td>
-<td><code>applySCE()</code></td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
 <td><strong><a href="https://cran.r-project.org/package=seriation" class="external-link">seriation</a></strong></td>
 <td>
 <code>seriate_best()</code>, <code>seriate_rep()</code>
@@ -413,13 +371,6 @@
 <td><strong><a href="https://cran.r-project.org/package=strucchange" class="external-link">strucchange</a></strong></td>
 <td>
 <code>breakpoints()</code> for ‘formula’</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
-<td><strong><a href="https://bioconductor.org/packages/sva/" class="external-link">sva</a></strong></td>
-<td>
-<code>ComBat()</code>, <code>read.degradation.matrix()</code>
-</td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>
@@ -442,26 +393,18 @@
 </tr>
 </tbody>
 </table>
-<p><em>Table 2: Domain-specific functions currently supported by <code><a href="reference/futurize.html">futurize()</a></code> for parallel transpilation.</em></p>
+<p><em>Table 2: CRAN packages with domain-specific functions currently supported by <code><a href="reference/futurize.html">futurize()</a></code> for parallel transpilation.</em></p>
 <p>Here are some examples:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ratio</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">d</span>, <span class="va">w</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">u</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ratio</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">d</span>, <span class="va">w</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">u</span> <span class="op">*</span> <span class="va">w</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot</a></span><span class="op">(</span><span class="fu">boot</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/boot/man/bigcity.html" class="external-link">city</a></span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu">DESeq2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">fgsea</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">stats</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">fwb</span><span class="fu">::</span><span class="fu"><a href="https://ngreifer.github.io/fwb/reference/fwb.html" class="external-link">fwb</a></span><span class="op">(</span><span class="fu">boot</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/boot/man/bigcity.html" class="external-link">city</a></span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu">GenomicAlignments</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">GSVA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu">GSVA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html" class="external-link">gsvaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ks</span> <span class="op">&lt;-</span> <span class="fu">kernelshap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap</a></span><span class="op">(</span><span class="va">model</span>, X <span class="op">=</span> <span class="va">x_explain</span>, bg_X <span class="op">=</span> <span class="va">bg_X</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -471,6 +414,105 @@
 <span></span>
 <span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">partykit</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">shapr</span><span class="fu">::</span><span class="fu"><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">x_explain</span>, <span class="va">x_train</span>, approach <span class="op">=</span> <span class="st">"empirical"</span>, phi0 <span class="op">=</span> <span class="va">phi0</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu">seriation</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seriation/man/seriate_best.html" class="external-link">seriate_best</a></span><span class="op">(</span><span class="va">d_supreme</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu">strucchange</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">tm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tm/man/tm_map.html" class="external-link">tm_map</a></span><span class="op">(</span><span class="va">crude</span>, <span class="fu">content_transformer</span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tour</span> <span class="op">&lt;-</span> <span class="fu">TSP</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/TSP/man/solve_TSP.html" class="external-link">solve_TSP</a></span><span class="op">(</span><span class="va">USCA50</span>, method <span class="op">=</span> <span class="st">"nn"</span>, rep <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="bioconductor-packages-with-support-for-futurize">Bioconductor packages with support for futurize<a class="anchor" aria-label="anchor" href="#bioconductor-packages-with-support-for-futurize"></a>
+</h4>
+<table class="table">
+<colgroup>
+<col width="22%">
+<col width="60%">
+<col width="16%">
+</colgroup>
+<thead><tr>
+<th>Package</th>
+<th>Functions</th>
+<th>Requires</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/DESeq2/" class="external-link">DESeq2</a></strong></td>
+<td>
+<code>DESeq()</code>, <code>lfcShrink()</code>, <code>results()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/fgsea/" class="external-link">fgsea</a></strong></td>
+<td>
+<code>fgsea()</code>, <code>fgseaMultilevel()</code>, <code>fgseaSimple()</code>, <code>fgseaLabel()</code>, <code>geseca()</code>, <code>gesecaSimple()</code>, <code>collapsePathwaysGeseca()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong></td>
+<td><code>summarizeOverlaps()</code></td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/GSVA/" class="external-link">GSVA</a></strong></td>
+<td>
+<code>gsva()</code>, <code>gsvaRanks()</code>, <code>gsvaScores()</code>, <code>spatCor()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/Rsamtools/" class="external-link">Rsamtools</a></strong></td>
+<td>
+<code>countBam()</code>, <code>scanBam()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/scater/" class="external-link">scater</a></strong></td>
+<td>
+<code>calculatePCA()</code>, <code>calculateTSNE()</code>, <code>calculateUMAP()</code>, <code>runPCA()</code>, <code>runTSNE()</code>, <code>runUMAP()</code>, <code>runColDataPCA()</code>, <code>nexprs()</code>, <code>getVarianceExplained()</code>, <code>plotRLE()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/scuttle/" class="external-link">scuttle</a></strong></td>
+<td>
+<code>calculateAverage()</code>, <code>logNormCounts()</code>, <code>normalizeCounts()</code>, <code>perCellQCMetrics()</code>, <code>perFeatureQCMetrics()</code>, <code>addPerCellQCMetrics()</code>, <code>addPerFeatureQCMetrics()</code>, <code>addPerCellQC()</code>, <code>addPerFeatureQC()</code>, <code>numDetectedAcrossCells()</code>, <code>numDetectedAcrossFeatures()</code>, <code>sumCountsAcrossCells()</code>, <code>sumCountsAcrossFeatures()</code>, <code>summarizeAssayByGroup()</code>, <code>aggregateAcrossCells()</code>, <code>aggregateAcrossFeatures()</code>, <code>librarySizeFactors()</code>, <code>computeLibraryFactors()</code>, <code>geometricSizeFactors()</code>, <code>computeGeometricFactors()</code>, <code>medianSizeFactors()</code>, <code>computeMedianFactors()</code>, <code>pooledSizeFactors()</code>, <code>computePooledFactors()</code>, <code>fitLinearModel()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/SingleCellExperiment/" class="external-link">SingleCellExperiment</a></strong></td>
+<td><code>applySCE()</code></td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://bioconductor.org/packages/sva/" class="external-link">sva</a></strong></td>
+<td>
+<code>ComBat()</code>, <code>read.degradation.matrix()</code>
+</td>
+<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 3: Bioconductor packages with domain-specific functions currently supported by <code><a href="reference/futurize.html">futurize()</a></code> for parallel transpilation.</em></p>
+<p>Here are some examples:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu">DESeq2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">fgsea</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fgsea/man/fgsea.html" class="external-link">fgsea</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="va">stats</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu">GenomicAlignments</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">GSVA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu">GSVA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html" class="external-link">gsvaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu">Rsamtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Rsamtools/man/scanBam.html" class="external-link">countBam</a></span><span class="op">(</span><span class="va">bamViews</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html" class="external-link">runPCA</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -478,20 +520,9 @@
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">SingleCellExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE</a></span><span class="op">(</span><span class="va">sce</span>, <span class="fu">scuttle</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">shapr</span><span class="fu">::</span><span class="fu"><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">x_explain</span>, <span class="va">x_train</span>, approach <span class="op">=</span> <span class="st">"empirical"</span>, phi0 <span class="op">=</span> <span class="va">phi0</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu">seriation</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seriation/man/seriate_best.html" class="external-link">seriate_best</a></span><span class="op">(</span><span class="va">d_supreme</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu">strucchange</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  </span>
-<span><span class="va">adjusted</span> <span class="op">&lt;-</span> <span class="fu">sva</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sva/man/ComBat.html" class="external-link">ComBat</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat</span>, batch <span class="op">=</span> <span class="va">batch</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">tm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tm/man/tm_map.html" class="external-link">tm_map</a></span><span class="op">(</span><span class="va">crude</span>, <span class="fu">content_transformer</span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tour</span> <span class="op">&lt;-</span> <span class="fu">TSP</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/TSP/man/solve_TSP.html" class="external-link">solve_TSP</a></span><span class="op">(</span><span class="va">USCA50</span>, method <span class="op">=</span> <span class="st">"nn"</span>, rep <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">adjusted</span> <span class="op">&lt;-</span> <span class="fu">sva</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sva/man/ComBat.html" class="external-link">ComBat</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">dat</span>, batch <span class="op">=</span> <span class="va">batch</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
 </div>

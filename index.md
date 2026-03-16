@@ -43,8 +43,8 @@ when troubleshooting or debugging.
 
 The **futurize** package supports transpilation of functions from
 multiple packages. The tables below summarize the supported map-reduce
-(Table 1) and domain-specific (Table 2) functions, respectively. To
-programmatically see which packages are currently supported, use:
+(Table 1) and domain-specific (Tables 2 and 3) functions, respectively.
+To programmatically see which packages are currently supported, use:
 
 ``` r
 
@@ -119,37 +119,33 @@ xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
 
 ### Supported domain-specific packages
 
-You can also futurize calls from a growing set of domain-specific
-packages that have optional built-in support for parallelization.
+You can also futurize calls from a growing set of domain-specific CRAN
+and Bioconductor packages that have optional built-in support for
+parallelization.
+
+#### CRAN packages with support for futurize
 
 | Package | Functions | Requires |
 |----|----|----|
 | **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | \- |
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[DESeq2](https://bioconductor.org/packages/DESeq2/)** | `DESeq()`, `lfcShrink()`, `results()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fgsea](https://bioconductor.org/packages/fgsea/)** | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
-| **[GenomicAlignments](https://bioconductor.org/packages/GenomicAlignments/)** | `summarizeOverlaps()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
-| **[GSVA](https://bioconductor.org/packages/GSVA/)** | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[kernelshap](https://cran.r-project.org/package=kernelshap)** | `kernelshap()`, `permshap()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
-| **[Rsamtools](https://bioconductor.org/packages/Rsamtools/)** | `countBam()`, `scanBam()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[scater](https://bioconductor.org/packages/scater/)** | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[scuttle](https://bioconductor.org/packages/scuttle/)** | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **\[SingleCellExper iment\]** | `applySCE()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
-| **[sva](https://bioconductor.org/packages/sva/)** | `ComBat()`, `read.degradation.matrix()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
 
-*Table 2: Domain-specific functions currently supported by
+*Table 2: CRAN packages with domain-specific functions currently
+supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 for parallel transpilation.*
 
@@ -157,23 +153,15 @@ Here are some examples:
 
 ``` r
 
-ctrl <- caret::trainControl(method = "cv", number = 10)
-model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
-
 ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
 b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 
-dds <- DESeq2::DESeq(dds) |> futurize()
-
-res <- fgsea::fgsea(pathways, stats) |> futurize()
+ctrl <- caret::trainControl(method = "cv", number = 10)
+model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
-se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
-
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
-
-es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
 
 ks <- kernelshap::kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()
 
@@ -183,6 +171,50 @@ b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
+result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
+
+o <- seriation::seriate_best(d_supreme) |> futurize()
+
+bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
+  
+m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
+
+tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
+
+md <- vegan::mrpp(dune, Management) |> futurize()
+```
+
+#### Bioconductor packages with support for futurize
+
+| Package | Functions | Requires |
+|----|----|----|
+| **[DESeq2](https://bioconductor.org/packages/DESeq2/)** | `DESeq()`, `lfcShrink()`, `results()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[fgsea](https://bioconductor.org/packages/fgsea/)** | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[GenomicAlignments](https://bioconductor.org/packages/GenomicAlignments/)** | `summarizeOverlaps()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[GSVA](https://bioconductor.org/packages/GSVA/)** | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[Rsamtools](https://bioconductor.org/packages/Rsamtools/)** | `countBam()`, `scanBam()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[scater](https://bioconductor.org/packages/scater/)** | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[scuttle](https://bioconductor.org/packages/scuttle/)** | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[SingleCellExperiment](https://bioconductor.org/packages/SingleCellExperiment/)** | `applySCE()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[sva](https://bioconductor.org/packages/sva/)** | `ComBat()`, `read.degradation.matrix()` | **[doFuture](https://doFuture.futureverse.org)** |
+
+*Table 3: Bioconductor packages with domain-specific functions currently
+supported by
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+for parallel transpilation.*
+
+Here are some examples:
+
+``` r
+
+dds <- DESeq2::DESeq(dds) |> futurize()
+
+res <- fgsea::fgsea(pathways, stats) |> futurize()
+
+se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
+
+es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
+
 counts <- Rsamtools::countBam(bamViews) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
@@ -190,18 +222,6 @@ sce <- scater::runPCA(sce) |> futurize()
 sce <- scuttle::logNormCounts(sce) |> futurize()
 
 result <- SingleCellExperiment::applySCE(sce, scuttle::perCellQCMetrics) |> futurize()
-
-result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
-
-o <- seriation::seriate_best(d_supreme) |> futurize()
-
-bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
 adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
-
-m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
-
-tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
-
-md <- vegan::mrpp(dune, Management) |> futurize()
 ```
