@@ -60,5 +60,11 @@ articles-bioc:
     href: articles/futurize-81-GenomicAlignments.html
   - text: Parallelize 'GSVA' functions
     href: articles/futurize-81-GSVA.html
+  - text: Parallelize 'Rsamtools' functions
+    href: articles/futurize-81-Rsamtools.html
   - text: Parallelize 'scater' functions
     href: articles/futurize-81-scater.html
+  - text: Parallelize 'scuttle' functions
+    href: articles/futurize-81-scuttle.html
+  - text: Parallelize 'SingleCellExperiment' functions
+    href: articles/futurize-81-SingleCellExperiment.html
