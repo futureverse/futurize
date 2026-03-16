@@ -34,6 +34,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-kernelshap.md):
 - [Parallelize 'lme4'
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
+- [Parallelize 'metafor'
+  functions](https://futurize.futureverse.org/articles/futurize-81-metafor.md):
 - [Parallelize 'mgcv'
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
 - [Parallelize 'partykit'

@@ -133,6 +133,7 @@ parallelization.
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[kernelshap](https://cran.r-project.org/package=kernelshap)** | `kernelshap()`, `permshap()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
+| **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ objects | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
@@ -165,6 +166,9 @@ cv <- glmnet::cv.glmnet(x, y) |> futurize()
 ks <- kernelshap::kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()
 
 m <- lme4::allFit(models) |> futurize()
+
+fit <- metafor::rma(yi, vi)
+pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
@@ -285,6 +289,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-kernelshap.md):
 - [Parallelize 'lme4'
   functions](https://futurize.futureverse.org/articles/futurize-81-lme4.md):
+- [Parallelize 'metafor'
+  functions](https://futurize.futureverse.org/articles/futurize-81-metafor.md):
 - [Parallelize 'mgcv'
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
 - [Parallelize 'partykit'

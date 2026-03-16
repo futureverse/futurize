@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'SingleCellExperiment' functions • futurize</title>
+<title>Parallelize 'metafor' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'SingleCellExperiment' functions">
+<meta property="og:title" content="Parallelize 'metafor' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -75,7 +75,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
   </ul>
 </li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-bioc-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Bioc focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-bioc-focus">
 <li><h6 class="dropdown-header" data-toc-skip>Bioconductor packages supporting futurize()</h6></li>
@@ -142,30 +142,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'SingleCellExperiment' functions</h1>
+      <h1>Parallelize 'metafor' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-SingleCellExperiment.md" class="external-link"><code>vignettes/futurize-81-SingleCellExperiment.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-SingleCellExperiment.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-metafor.md" class="external-link"><code>vignettes/futurize-81-metafor.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-metafor.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'SingleCellExperiment' functions}
+%\VignetteIndexEntry{Parallelize 'metafor' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{Bioconductor}
-%\VignetteKeyword{SingleCellExperiment}
+%\VignetteKeyword{metafor}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/SingleCellExperiment-logo.png" alt="The 'SingleCellExperiment' logo"><span>+</span>
+<p><img src="../reference/figures/cran-metafor-logo.svg" alt="The CRAN 'metafor' package"><span>+</span>
 <img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
@@ -178,75 +177,57 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE</a></span><span class="op">(</span><span class="va">sce</span>, <span class="va">perCellQCMetrics</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/escalc.html" class="external-link">escalc</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"RR"</span>, ai <span class="op">=</span> <span class="va">tpos</span>, bi <span class="op">=</span> <span class="va">tneg</span>,</span>
+<span>              ci <span class="op">=</span> <span class="va">cpos</span>, di <span class="op">=</span> <span class="va">cneg</span>, data <span class="op">=</span> <span class="va">dat.bcg</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-the <strong><a href="https://bioconductor.org/packages/SingleCellExperiment/" class="external-link">SingleCellExperiment</a></strong>
-functions.</p>
-<p>The <strong><a href="https://bioconductor.org/packages/SingleCellExperiment/" class="external-link">SingleCellExperiment</a></strong>
-Bioconductor package defines the <code>SingleCellExperiment</code> class
-for storing single-cell genomics data, including alternative experiments
-(e.g. spike-in transcripts, antibody tags). The <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE()</a></code>
-function applies a given function to the main experiment and each
-alternative experiment, passing additional arguments such as
-<code>BPPARAM</code> via <code>...</code> to enable parallelization of
-the applied function.</p>
+<strong><a href="https://cran.r-project.org/package=metafor" class="external-link">metafor</a></strong>
+functions such as <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code>, <code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">rstudent()</a></code>,
+<code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">cooks.distance()</a></code>, and <code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">dfbetas()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=metafor" class="external-link">metafor</a></strong>
+package provides a comprehensive collection of functions for conducting
+meta-analyses in R. It supports fixed-effects, random-effects, and
+mixed-effects (meta-regression) models and includes functions for model
+diagnostics and profiling. Several of these computations involve fitting
+the model repeatedly, making them excellent candidates for
+parallelization.</p>
 <div class="section level3">
-<h3 id="example-computing-per-cell-qc-metrics-in-parallel">Example: Computing per-cell QC metrics in parallel<a class="anchor" aria-label="anchor" href="#example-computing-per-cell-qc-metrics-in-parallel"></a>
+<h3 id="example-likelihood-profile-for-a-random-effects-model">Example: Likelihood profile for a random-effects model<a class="anchor" aria-label="anchor" href="#example-likelihood-profile-for-a-random-effects-model"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE()</a></code> function applies a function across the
-main experiment and its alternative experiments:</p>
+<p>The <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> function computes the likelihood profile
+for model parameters such as the variance component in a random-effects
+meta-analysis. For example, using the built-in BCG vaccine dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Simulate data</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">200L</span></span>
-<span><span class="va">n_cells</span> <span class="op">&lt;-</span> <span class="fl">100L</span></span>
-<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="va">n_genes</span> <span class="op">*</span> <span class="va">n_cells</span>, lambda <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span>  nrow <span class="op">=</span> <span class="va">n_genes</span>,</span>
-<span>  ncol <span class="op">=</span> <span class="va">n_cells</span>,</span>
-<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"cell"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_cells</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="co">## Calculate log risk ratios and sampling variances</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/escalc.html" class="external-link">escalc</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"RR"</span>, ai <span class="op">=</span> <span class="va">tpos</span>, bi <span class="op">=</span> <span class="va">tneg</span>,</span>
+<span>              ci <span class="op">=</span> <span class="va">cpos</span>, di <span class="op">=</span> <span class="va">cneg</span>, data <span class="op">=</span> <span class="va">dat.bcg</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span></span>
-<span>  assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">counts</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="co">## Fit a random-effects model</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Add an alternative experiment (e.g. spike-ins)</span></span>
-<span><span class="va">spike_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">10L</span> <span class="op">*</span> <span class="va">n_cells</span>, lambda <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  nrow <span class="op">=</span> <span class="fl">10L</span>,</span>
-<span>  ncol <span class="op">=</span> <span class="va">n_cells</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">spike_counts</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"spike"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10L</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">spike_counts</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"cell"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_cells</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html" class="external-link">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"spikes"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span></span>
-<span>  assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">spike_counts</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE</a></span><span class="op">(</span><span class="va">sce</span>, <span class="va">perCellQCMetrics</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE()</a></code> runs <code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics()</a></code>
-sequentially on each experiment, but we can easily make it run in
-parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<span><span class="co">## Compute likelihood profile</span></span>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> is calculated sequentially. To calculate
+in parallel, we can pipe to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE</a></span><span class="op">(</span><span class="va">sce</span>, <span class="va">perCellQCMetrics</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the work across the available parallel workers,
-given that we have set up parallel workers, e.g.</p>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/escalc.html" class="external-link">escalc</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"RR"</span>, ai <span class="op">=</span> <span class="va">tpos</span>, bi <span class="op">=</span> <span class="va">tneg</span>,</span>
+<span>              ci <span class="op">=</span> <span class="va">cpos</span>, di <span class="op">=</span> <span class="va">cneg</span>, data <span class="op">=</span> <span class="va">dat.bcg</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the profile computations across the available
+parallel workers, given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 <p>The built-in <code>multisession</code> backend parallelizes on your
@@ -263,10 +244,18 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>SingleCellExperiment</strong> functions are
-supported by <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<p>The following <strong>metafor</strong> functions are supported by
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html" class="external-link">applySCE()</a></code></li>
+<li>
+<code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> for ‘rma.uni’, ‘rma.mv’, ‘rma.ls’, and
+‘rma.uni.selmodel’</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">rstudent()</a></code> for ‘rma.mv’</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">cooks.distance()</a></code> for ‘rma.mv’</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">dfbetas()</a></code> for ‘rma.mv’</li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
