@@ -46,14 +46,20 @@ navbar:
         href: articles/futurize-81-kernelshap.html
       - text: Parallelize 'lme4' functions
         href: articles/futurize-81-lme4.html
+      - text: Parallelize 'metafor' functions
+        href: articles/futurize-81-metafor.html
       - text: Parallelize 'mgcv' functions
         href: articles/futurize-81-mgcv.html
       - text: Parallelize 'partykit' functions
         href: articles/futurize-81-partykit.html
+      - text: Parallelize 'riskRegression' functions
+        href: articles/futurize-81-riskRegression.html
       - text: Parallelize 'seriation' functions
         href: articles/futurize-81-seriation.html
       - text: Parallelize 'shapr' functions
         href: articles/futurize-81-shapr.html
+      - text: Parallelize 'SimDesign' functions
+        href: articles/futurize-81-SimDesign.html
       - text: Parallelize 'strucchange' functions
         href: articles/futurize-81-strucchange.html
       - text: Parallelize 'tm' functions
