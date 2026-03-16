@@ -7,12 +7,16 @@
 #
 append_transpilers_for_GSVA <- function() {
   ns <- getNamespace("GSVA")
-  
+
+  ## gsva() in GSVA (< 2.4.2) and GSVA (>= 2.5.0 & < 2.5.7) relies on
+  ## BiocParallel::bpiterate(), which does _not_ support DoparParam.
+  ns_version <- getNamespaceVersion(ns)
+  supports_gsva <- (ns_version >= "2.5.7") ||
+                   (ns_version >= "2.4.2" && ns_version < "2.5.0")
+                   
   ## These GSVA functions accept BPPARAM via '...' (S4 generics)
   names <- c(
-    ## gsva() in GSVA (< 2.4) relies on BiocParallel::bpiterate()
-    ## which does _not_ support DoparParam by design.
-    if (getNamespaceVersion(ns) >= "2.4") "gsva",
+    if (supports_gsva) "gsva",
     "gsvaRanks", "gsvaScores",
     "spatCor"
   )
