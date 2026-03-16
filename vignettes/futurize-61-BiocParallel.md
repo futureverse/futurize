@@ -11,7 +11,7 @@
 -->
 
 <div class="logos">
-<img src="../man/figures/bioconductor-BiocParallel-logo.svg" alt="The Bioconductor 'BiocParallel' image">
+<img src="../man/figures/bioconductor-BiocParallel-logo.png" alt="The Bioconductor 'BiocParallel' image">
 <span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
