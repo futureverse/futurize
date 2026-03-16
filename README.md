@@ -133,6 +133,7 @@ packages that have optional built-in support for parallelization.
 | **[seriation]**         | `seriate_best()`, `seriate_rep()`                                         | **[doFuture]**     |
 | **[shapr]**             | `explain()`, `explain_forecast()`                                         | -                  |
 | **[strucchange]**       | `breakpoints()` for 'formula'                                             | **[doFuture]**     |
+| **[sva]**               | `ComBat()`, `read.degradation.matrix()`                                   | **[doFuture]**     |
 | **[tm]**                | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
 | **[TSP]**               | `solve_RSP()`                                                             | **[doFuture]**     |
 | **[vegan]**             | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca' | -                  |
@@ -184,6 +185,8 @@ o <- seriation::seriate_best(d_supreme) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
+adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
+
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
@@ -224,6 +227,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 [seriation]: https://cran.r-project.org/package=seriation
 [shapr]: https://cran.r-project.org/package=shapr
 [strucchange]: https://cran.r-project.org/package=strucchange
+[sva]: https://bioconductor.org/packages/sva/
 [tm]: https://cran.r-project.org/package=tm
 [vegan]: https://cran.r-project.org/package=vegan
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
