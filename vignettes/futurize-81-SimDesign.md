@@ -10,6 +10,8 @@
 -->
 
 <div class="logos">
+<img src="../man/figures/cran-SimDesign-logo.svg" alt="The CRAN 'SimDesign' package">
+<span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
 <img src="../man/figures/future-logo.png" alt="The 'future' logo">
