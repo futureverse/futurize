@@ -11,6 +11,8 @@
 -->
 
 <div class="logos">
+<img src="../man/figures/bioconductor-GenomicAlignments-logo.svg" alt="The 'GenomicAlignments' logo">
+<span>+</span>
 <img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
 <span>=</span>
 <img src="../man/figures/future-logo.png" alt="The 'future' logo">
