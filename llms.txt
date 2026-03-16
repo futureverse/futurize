@@ -139,6 +139,7 @@ packages that have optional built-in support for parallelization.
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[scater](https://bioconductor.org/packages/scater/)** | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[scuttle](https://bioconductor.org/packages/scuttle/)** | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **\[SingleCellExper iment\]** | `applySCE()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
@@ -183,6 +184,8 @@ cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 sce <- scater::runPCA(sce) |> futurize()
 
 sce <- scuttle::logNormCounts(sce) |> futurize()
+
+result <- SingleCellExperiment::applySCE(sce, scuttle::perCellQCMetrics) |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
@@ -265,6 +268,8 @@ md <- vegan::mrpp(dune, Management) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-seriation.md):
 - [Parallelize 'shapr'
   functions](https://futurize.futureverse.org/articles/futurize-81-shapr.md):
+- [Parallelize 'SingleCellExperiment'
+  functions](https://futurize.futureverse.org/articles/futurize-81-SingleCellExperiment.md):
 - [Parallelize 'strucchange'
   functions](https://futurize.futureverse.org/articles/futurize-81-strucchange.md):
 - [Parallelize 'tm'
