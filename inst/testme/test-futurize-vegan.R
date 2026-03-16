@@ -69,6 +69,26 @@ print(res)
 stopifnot(all_equal_ignore_call(res, res_truth))
 
 
+message("*** anova() on cca object - S3 method anova.cca()")
+
+## Adopted from example("anova.cca", package = "vegan")
+ord <- cca(dune ~ A1 + Management, data = dune.env)
+
+set.seed(42)
+res_truth <- anova(ord, permutations = 99)
+print(res_truth)
+
+set.seed(42)
+counters <- plan("backend")[["counters"]]
+res <- anova(ord, permutations = 99) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+print(res)
+
+stopifnot(all_equal_ignore_call(res, res_truth))
+
+
 message("*** anosim()")
 
 ## Adopted from example("anosim", package = "vegan")

@@ -30,12 +30,6 @@ append_transpilers_for_vegan <- function() {
     ## "argument 'parallel' is not used (yet)"
     if (name %in% c("simper")) return()
 
-    ## FIXME: S3 methods with the generic function defined in another
-    ## package are currently not supported
-    if (name %in% c("anova.cca")) return()
-
-
-
     defaults <- list()
     if (name %in% ("cascadeKM")) defaults$seed <- TRUE
 

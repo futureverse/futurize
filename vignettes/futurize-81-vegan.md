@@ -80,12 +80,31 @@ plan(future.batchtools::batchtools_slurm)
 ```
 
 
+## Example: anova() for 'cca' objects
+
+The `anova()` S3 method for 'cca' objects supports parallelization via
+the `parallel` argument. With **futurize**, you can parallelize this
+directly. Example adopted from `help("anova.cca", package = "vegan")`:
+
+```r
+library(futurize)
+plan(multisession)
+library(vegan)
+
+data(dune)
+data(dune.env)
+ord <- cca(dune ~ A1 + Management, data = dune.env)
+res <- anova(ord, permutations = 99) |> futurize()
+```
+
+
 # Supported Functions
 
 The following **vegan** functions are supported by `futurize()`:
 
 * `adonis()`
 * `adonis2()`
+* `anova()` for 'cca'
 * `anosim()`
 * `cascadeKM()`
 * `estaccumR()`

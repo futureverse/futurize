@@ -136,7 +136,7 @@ packages that have optional built-in support for parallelization.
 | **[sva]**               | `ComBat()`, `read.degradation.matrix()`                                   | **[doFuture]**     |
 | **[tm]**                | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                          | -                  |
 | **[TSP]**               | `solve_RSP()`                                                             | **[doFuture]**     |
-| **[vegan]**             | `adonis()`, `adonis2()`, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca' | -                  |
+| **[vegan]**             | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca' | -                  |
 
 
 
