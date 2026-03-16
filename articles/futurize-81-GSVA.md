@@ -122,7 +122,7 @@ The following **GSVA** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) - requires **GSVA**
-  (\>= 2.4.0)
+  (\>= 2.4.2 or \>= 2.5.7)
 - [`gsvaRanks()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
 - [`gsvaScores()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
 - [`spatCor()`](https://rdrr.io/pkg/GSVA/man/spatCor.html)
