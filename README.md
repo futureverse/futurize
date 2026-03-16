@@ -131,6 +131,7 @@ parallelization.
 | **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
+| **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
 | **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
 | **[TSP]**                  | `solve_RSP()`                                                                | **[doFuture]**     |
@@ -170,6 +171,9 @@ sc <- riskRegression::Score(list("CSC" = fit), data = d,
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
+
+res <- SimDesign::runSimulation(Design, replications = 1000,
+  generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
 
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
   
@@ -255,6 +259,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/
 [seriation]: https://cran.r-project.org/package=seriation
 [shapr]: https://cran.r-project.org/package=shapr
+[SimDesign]: https://cran.r-project.org/package=SimDesign
 [strucchange]: https://cran.r-project.org/package=strucchange
 [sva]: https://bioconductor.org/packages/sva/
 [tm]: https://cran.r-project.org/package=tm

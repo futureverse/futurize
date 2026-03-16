@@ -71,6 +71,10 @@
  * Add support for domain-specific CRAN package **seriation**, e.g. `o
    <- seriate_best(d_supreme) |> futurize()`.
 
+ * Add support for domain-specific CRAN package **SimDesign**,
+   e.g. `res <- runSimulation(design, replications = 1000, generate,
+   analyse, summarise) |> futurize()`.
+
  * Add support for domain-specific CRAN package **shapr**,
    e.g. `result <- explain(model, x_explain, x_train, approach, phi0)
    |> futurize()`.
