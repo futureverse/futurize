@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9094</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9095</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,23 +188,7 @@ sequential code into parallel code by piping the sequential code to the
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span>
-<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; x = 1</span></span>
-<span><span class="co">#&gt; x = 2</span></span>
-<span><span class="co">#&gt; x = 3</span></span>
-<span><span class="co">#&gt; ...</span></span>
-<span><span class="co">#&gt; x = 10</span></span></code></pre></div>
-<p>Note how messages produced on parallel workers are relayed as-is back
-to the main R session as they complete. Not only messages, but also
-warnings and other types of conditions are relayed back as-is. Likewise,
-standard output produced by <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>, <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>,
-<code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>, and so on is relayed in the same way. This is a
-unique feature of Futureverse - other parallel frameworks in R, such as
-<strong>parallel</strong>, <strong>foreach</strong> with
-<strong>doParallel</strong>, and <strong>BiocParallel</strong>, silently
-drop standard output, messages, and warnings produced on workers. With
-<strong>futurize</strong>, your code behaves the same whether it runs
-sequentially or in parallel: nothing is lost in translation.</p>
+<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -223,24 +207,38 @@ function to the elements of a vector or a list, as in:</p>
 make it evaluate in parallel, by using:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span> <span class="co">## parallelize on local machine</span></span>
+<span></span>
+<span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; x = 1</span></span>
+<span><span class="co">#&gt; x = 2</span></span>
+<span><span class="co">#&gt; x = 3</span></span>
+<span><span class="co">#&gt; ...</span></span>
+<span><span class="co">#&gt; x = 10</span></span></code></pre></div>
+<p>Note how messages produced on parallel workers are relayed as-is back
+to the main R session as they complete. Not only messages, but also
+warnings and other types of conditions are relayed back as-is. Likewise,
+standard output produced by <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>, <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>,
+<code><a href="https://rdrr.io/r/utils/str.html" class="external-link">str()</a></code>, and so on is relayed in the same way. This is a
+unique feature of Futureverse - other parallel frameworks in R, such as
+<strong>parallel</strong>, <strong>foreach</strong> with
+<strong>doParallel</strong>, and <strong>BiocParallel</strong>, silently
+drop standard output, messages, and warnings produced on workers. With
+<strong>futurize</strong>, your code behaves the same whether it runs
+sequentially or in parallel: nothing is lost in translation.</p>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and it works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
 backends</a> to choose from, including alternatives to parallelize
 locally as well as distributed across remote machines, e.g.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
 <p>and</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="kernel-smoothing">Kernel smoothing<a class="anchor" aria-label="anchor" href="#kernel-smoothing"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span></span>
@@ -288,43 +286,43 @@ supported:</p>
 <p>The <strong><a href="https://www.bioconductor.org/packages/BiocGenerics/" class="external-link">BiocGenerics</a></strong>
 package defines generic functions <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>,
 <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">sapply()</a></code>, <code><a href="https://rdrr.io/pkg/BiocGenerics/man/mapply.html" class="external-link">mapply()</a></code>, and <code><a href="https://rdrr.io/pkg/BiocGenerics/man/tapply.html" class="external-link">tapply()</a></code>.
-These S4 generic functions overrides the non-generic, counterpart
+These S4 generic functions override the non-generic, counterpart
 functions in the <strong>base</strong> package, which are only used as a
 fallback if there is no matching method. For example, in a vanilla R
 session we have that both of the following calls are identical:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y_0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span>
 <span><span class="va">y_1</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
 <p>However, if we attach the <strong>BiocGenerics</strong> package, we
 have that the following two calls are identical:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/BiocGenerics" class="external-link">BiocGenerics</a></span><span class="op">)</span></span>
 <span><span class="va">y_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span>
 <span><span class="va">y_3</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
 <p>The reason is that <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code> here is no longer
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::lapply()</a></code>, but the one defined by
-<strong>BiocGenerics</strong>, which masks the one on
+<strong>BiocGenerics</strong>, which masks the one in
 <strong>base</strong>. We can see this with:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/apropos.html" class="external-link">find</a></span><span class="op">(</span><span class="st">"lapply"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "package:BiocGenerics" "package:base" </span></span></code></pre></div>
 <p>This matters in the context of <strong>futurize</strong>. In a
 vanilla R session,</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>is identical to</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>However, with <strong>BiocGenerics</strong> attached, it is instead
 identical to:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>which results in:</p>
 <pre><code>Error in transpilers_for_package(type = type, package = ns_name, action = "make",  : 
   There are no factory functions for creating 'futurize::add-on' transpilers for package 'BiocGenerics'</code></pre>
 <p>The solution is to specify that it is the <strong>base</strong>
 version we wish to futurize, i.e.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

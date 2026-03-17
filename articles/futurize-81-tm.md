@@ -100,3 +100,45 @@ The following **tm** functions are supported by
 - [`tm_map()`](https://rdrr.io/pkg/tm/man/tm_map.html)
 - [`tm_index()`](https://rdrr.io/pkg/tm/man/tm_filter.html)
 - [`TermDocumentMatrix()`](https://rdrr.io/pkg/tm/man/matrix.html)
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`tm_map()`](https://rdrr.io/pkg/tm/man/tm_map.html) using the
+**parallel** package directly, without **futurize**:
+
+``` r
+
+library(tm)
+library(parallel)
+
+data("crude")
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Configure tm to use the cluster
+old_engine <- tm_parLapply_engine()
+tm_parLapply_engine(function(X, FUN, ...) parLapply(cl, X, FUN, ...))
+
+## Transform the corpus in parallel
+m <- tm_map(crude, content_transformer(tolower))
+
+## Restore the old engine and tear down the cluster
+tm_parLapply_engine(old_engine)
+stopCluster(cl)
+```
+
+This requires you to manually create a cluster, configure **tm**’s
+internal parallel engine, and remember to restore the engine and tear
+down the cluster when done. If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use, what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

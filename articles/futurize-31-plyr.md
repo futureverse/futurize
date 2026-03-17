@@ -25,25 +25,7 @@ slow_fcn <- function(x) {
 
 xs <- 1:10
 ys <- llply(xs, slow_fcn) |> futurize()
-#> x = 1
-#> x = 2
-#> x = 3
-#> ...
-#> x = 10
 ```
-
-Note how messages produced on parallel workers are relayed as-is back to
-the main R session as they complete. Not only messages, but also
-warnings and other types of conditions are relayed back as-is. Likewise,
-standard output produced by [`cat()`](https://rdrr.io/r/base/cat.html),
-[`print()`](https://rdrr.io/r/base/print.html),
-[`str()`](https://rdrr.io/r/utils/str.html), and so on is relayed in the
-same way. This is a unique feature of Futureverse - other parallel
-frameworks in R, such as **parallel**, **foreach** with **doParallel**,
-and **BiocParallel**, silently drop standard output, messages, and
-warnings produced on workers. With **futurize**, your code behaves the
-same whether it runs sequentially or in parallel: nothing is lost in
-translation.
 
 ## Introduction
 
@@ -69,19 +51,32 @@ sequentially, but we can easily make it evaluate in parallel, by using:
 
 ``` r
 
-library(futurize)
 library(plyr)
+
+library(futurize)
+plan(multisession) ## parallelize on local machine
+
 xs <- 1:1000
 ys <- xs |> llply(slow_fcn) |> futurize()
+#> x = 1
+#> x = 2
+#> x = 3
+#> ...
+#> x = 10
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
-
-``` r
-
-plan(multisession)
-```
+Note how messages produced on parallel workers are relayed as-is back to
+the main R session as they complete. Not only messages, but also
+warnings and other types of conditions are relayed back as-is. Likewise,
+standard output produced by [`cat()`](https://rdrr.io/r/base/cat.html),
+[`print()`](https://rdrr.io/r/base/print.html),
+[`str()`](https://rdrr.io/r/utils/str.html), and so on is relayed in the
+same way. This is a unique feature of Futureverse - other parallel
+frameworks in R, such as **parallel**, **foreach** with **doParallel**,
+and **BiocParallel**, silently drop standard output, messages, and
+warnings produced on workers. With **futurize**, your code behaves the
+same whether it runs sequentially or in parallel: nothing is lost in
+translation.
 
 The built-in `multisession` backend parallelizes on your local computer
 and it works on all operating systems. There are [other parallel

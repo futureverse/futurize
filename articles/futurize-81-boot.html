@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9094</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9095</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -265,6 +265,38 @@ bootstrap replicates of the <code>lynx</code> time series:</p>
 <li><code><a href="https://rdrr.io/pkg/boot/man/censboot.html" class="external-link">censboot()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/boot/man/tsboot.html" class="external-link">tsboot()</a></code></li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="without-futurize-manual-psock-cluster-setup">Without futurize: Manual PSOCK cluster setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-psock-cluster-setup"></a>
+</h2>
+<p>For comparison, here is what it takes to parallelize
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot()</a></code> using the <strong>parallel</strong> package
+directly, without <strong>futurize</strong>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">boot</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ratio</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pop</span>, <span class="va">w</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">w</span> <span class="op">*</span> <span class="va">pop</span><span class="op">$</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">w</span> <span class="op">*</span> <span class="va">pop</span><span class="op">$</span><span class="va">u</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set up a PSOCK cluster</span></span>
+<span><span class="va">ncpus</span> <span class="op">&lt;-</span> <span class="fl">4L</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">ncpus</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Run bootstrapping in parallel</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot</a></span><span class="op">(</span><span class="va">bigcity</span>, statistic <span class="op">=</span> <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span>, stype <span class="op">=</span> <span class="st">"w"</span>,</span>
+<span>          parallel <span class="op">=</span> <span class="st">"snow"</span>, ncpus <span class="op">=</span> <span class="va">ncpus</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Tear down the cluster</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<p>This requires you to manually create and manage the cluster
+lifecycle. If you forget to call <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster()</a></code>, or if your
+code errors out before reaching it, you leak background R processes. You
+also have to decide upfront how many CPUs to use and what cluster type
+to use. Switching to another parallel backend, e.g. a Slurm cluster,
+would require a completely different setup. With
+<strong>futurize</strong>, all of this is handled for you - just pipe to
+<code><a href="../reference/futurize.html">futurize()</a></code> and control the backend with
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

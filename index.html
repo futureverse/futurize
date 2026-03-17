@@ -17,8 +17,8 @@
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Parallelize Common Functions via One Magic Function">
-<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, partykit, riskRegression, seriation, shapr, SimDesign, strucchange, tm, TSP, and vegan) and Bioconductor packages (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
-<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have an convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, partykit, riskRegression, seriation, shapr, SimDesign, strucchange, tm, TSP, and vegan) and Bioconductor packages (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
+<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that can be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, partykit, riskRegression, seriation, shapr, SimDesign, strucchange, tm, TSP, and vegan) and Bioconductor packages (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
+<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that can be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, partykit, riskRegression, seriation, shapr, SimDesign, strucchange, tm, TSP, and vegan) and Bioconductor packages (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9094</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9095</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,7 +155,7 @@
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">map</span><span class="op">(</span><span class="va">x</span>, <span class="va">fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">boot</span><span class="op">(</span><span class="va">city</span>, <span class="va">ratio</span>, R <span class="op">=</span> <span class="fl">999</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="reference/futurize.html">futurize()</a></code> function parallelizes via <strong><a href="https://www.futureverse.org" class="external-link">futureverse</a></strong>, meaning your code can take advantage of any <strong><a href="https://www.futureverse.org/backends.html" class="external-link">supported future backends</a></strong>, whether it be parallelization on your local computer, across multiple computers, in the cloud, or on a high-performance compute (HPC) cluster. The <strong>futurize</strong> package has only one hard dependency - the <strong><a href="https://future.futureverse.org" class="external-link">future</a></strong> package. All other dependencies are optional “buy-in” dependencies as shown in the below tables.</p>
-<p>In addition to getting access to all future-based parallel backends, by using <code><a href="reference/futurize.html">futurize()</a></code> you also get access to all the benefits that comes with <strong>futureverse</strong>. Notably, if the function you parallelize output messages and warnings, they will be relayed from the parallel worker to your main R session, just as you get when running sequentially. This is particularly useful when troubleshooting or debugging.</p>
+<p>In addition to getting access to all future-based parallel backends, by using <code><a href="reference/futurize.html">futurize()</a></code> you also get access to all the benefits that comes with <strong>futureverse</strong>. Notably, if the function you parallelize outputs messages and warnings, they will be relayed from the parallel worker to your main R session, just as you get when running sequentially. This is particularly useful when troubleshooting or debugging.</p>
 </div>
 <div class="section level2">
 <h2 id="supported-map-reduce-packages">Supported map-reduce packages<a class="anchor" aria-label="anchor" href="#supported-map-reduce-packages"></a>
@@ -305,13 +305,6 @@
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>
-<td><strong><a href="https://bioconductor.org/packages/fgsea/" class="external-link">fgsea</a></strong></td>
-<td>
-<code>fgsea()</code>, <code>fgseaMultilevel()</code>, <code>fgseaSimple()</code>, <code>fgseaLabel()</code>, <code>geseca()</code>, <code>gesecaSimple()</code>, <code>collapsePathwaysGeseca()</code>
-</td>
-<td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
-</tr>
-<tr>
 <td><strong><a href="https://ngreifer.github.io/fwb/" class="external-link">fwb</a></strong></td>
 <td>
 <code>fwb()</code>, <code>vcovFWB()</code>
@@ -409,7 +402,7 @@
 </tr>
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=TSP" class="external-link">TSP</a></strong></td>
-<td><code>solve_RSP()</code></td>
+<td><code>solve_TSP()</code></td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
 </tr>
 <tr>

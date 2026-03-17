@@ -54,7 +54,7 @@ pr <- profile(m)
 ```
 
 Here [`profile()`](https://rdrr.io/r/stats/profile.html) is calculated
-sequentially. To calculated in parallel, we can pipe to
+sequentially. To calculate in parallel, we can pipe to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -99,3 +99,40 @@ The following **glmmTMB** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`profile()`](https://rdrr.io/r/stats/profile.html) using the
+**parallel** package directly, without **futurize**:
+
+``` r
+
+library(glmmTMB)
+library(parallel)
+
+## Fit a negative binomial GLMM
+m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Compute likelihood profile in parallel
+pr <- profile(m, parallel = "snow", ncpus = ncpus, cl = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster lifecycle.
+If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use and what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

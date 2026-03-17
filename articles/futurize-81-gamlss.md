@@ -149,3 +149,41 @@ The following **gamlss** functions are supported by
 - [`drop1All()`](https://rdrr.io/pkg/gamlss/man/stepGAIC.html)
 - [`drop1TGD()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html)
 - [`gamlssCV()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html)
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`gamlssCV()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html) using the
+**parallel** package directly, without **futurize**:
+
+``` r
+
+library(gamlss)
+library(parallel)
+
+data(abdom, package = "gamlss.data")
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+clusterEvalQ(cl, library(gamlss))
+
+## Perform k-fold cross-validation in parallel
+cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10,
+               parallel = "snow", ncpus = ncpus, cl = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster lifecycle.
+If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use and what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

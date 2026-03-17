@@ -96,8 +96,8 @@
   **doFuture**.
 
 - Packages not supporting specifying a random seed will now produce an
-  informative errors message if `futurize(seed = <numeric>)` is
-  specified, e.g. **boot**, **glmmTM**, **lme4**, **mgcv**, and
+  informative error message if `futurize(seed = <numeric>)` is
+  specified, e.g. **boot**, **glmmTMB**, **lme4**, **mgcv**, and
   **vegan**.
 
 ## Version 0.1.0

@@ -144,3 +144,42 @@ The following **lme4** functions are supported by
 - [`influence()`](https://rdrr.io/r/stats/lm.influence.html) for
   ‘merMod’
 - [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html) using the
+**parallel** package directly, without **futurize**:
+
+``` r
+
+library(lme4)
+library(parallel)
+
+## Fit a linear mixed model
+fm <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Bootstrap the fixed-effect coefficients
+boot_coef <- function(model) fixef(model)
+b <- bootMer(fm, boot_coef, nsim = 100,
+             parallel = "snow", ncpus = ncpus, cl = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster lifecycle.
+If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use and what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

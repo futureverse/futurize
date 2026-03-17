@@ -123,3 +123,40 @@ The following **boot** functions are supported by
 - [`boot()`](https://rdrr.io/pkg/boot/man/boot.html)
 - [`censboot()`](https://rdrr.io/pkg/boot/man/censboot.html)
 - [`tsboot()`](https://rdrr.io/pkg/boot/man/tsboot.html)
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`boot()`](https://rdrr.io/pkg/boot/man/boot.html) using the
+**parallel** package directly, without **futurize**:
+
+``` r
+
+library(boot)
+library(parallel)
+
+ratio <- function(pop, w) sum(w * pop$x) / sum(w * pop$u)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Run bootstrapping in parallel
+b <- boot(bigcity, statistic = ratio, R = 999, stype = "w",
+          parallel = "snow", ncpus = ncpus, cl = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster lifecycle.
+If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use and what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

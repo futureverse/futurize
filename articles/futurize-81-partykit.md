@@ -23,8 +23,7 @@ cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 ## Introduction
 
 The **[partykit](https://cran.r-project.org/package=partykit)** package
-provides the `breakpoints()` function for estimating one or more change
-points in a data trace, e.g. in time-series data.
+provides a toolkit for recursive partitioning.
 
 ### Example: Conditional random forests inference
 
@@ -83,3 +82,38 @@ The following **partykit** functions are supported by
 - [`mob_control()`](https://rdrr.io/pkg/partykit/man/mob_control.html)
 - [`varimp()`](https://rdrr.io/pkg/partykit/man/varimp.html) for
   `cforest`
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`cforest()`](https://rdrr.io/pkg/partykit/man/cforest.html) using the
+**parallel** package directly, without **futurize**:
+
+``` r
+
+library(partykit)
+library(parallel)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Fit a conditional inference forest in parallel
+cf <- cforest(dist ~ speed, data = cars,
+              applyfun = function(X, FUN, ...) parLapply(cl, X, FUN, ...))
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster lifecycle.
+If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use and what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

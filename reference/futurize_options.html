@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9094</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9095</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -197,13 +197,12 @@ future backend and the environment from which R runs.</p></dd>
 
 <dt id="arg-scheduling">scheduling<a class="anchor" aria-label="anchor" href="#arg-scheduling"></a></dt>
 <dd><p>Average number of futures ("chunks") per worker.
-If <code>0.0</code>, then a single future is used to process all elements
-of <code>X</code>.
+If <code>0.0</code>, then a single future is used to process all elements.
 If <code>1.0</code> or <code>TRUE</code>, then one future per worker is used.
 If <code>2.0</code>, then each worker will process two futures
-(if there are enough elements in <code>X</code>).
-If <code>Inf</code> or <code>FALSE</code>, then one future per element of
-<code>X</code> is used.
+(if there are enough elements).
+If <code>Inf</code> or <code>FALSE</code>, then one future per element
+is used.
 Only used if <code>chunk_size</code> is <code>NULL</code>.</p></dd>
 
 

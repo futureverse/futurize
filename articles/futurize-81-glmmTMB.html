@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9094</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9095</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -212,7 +212,7 @@ for each model parameter. For example, using the built-in
 <span></span>
 <span><span class="co">## Compute likelihood profile</span></span>
 <span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> is calculated sequentially. To calculated
+<p>Here <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> is calculated sequentially. To calculate
 in parallel, we can pipe to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
@@ -245,6 +245,38 @@ locally as well as distributed across remote machines, e.g.</p>
 <li>
 <code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> for ‘glmmTMB’</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="without-futurize-manual-psock-cluster-setup">Without futurize: Manual PSOCK cluster setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-psock-cluster-setup"></a>
+</h2>
+<p>For comparison, here is what it takes to parallelize
+<code><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile()</a></code> using the <strong>parallel</strong> package
+directly, without <strong>futurize</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Fit a negative binomial GLMM</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Salamanders</span>, family <span class="op">=</span> <span class="va">nbinom2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set up a PSOCK cluster</span></span>
+<span><span class="va">ncpus</span> <span class="op">&lt;-</span> <span class="fl">4L</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">ncpus</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Compute likelihood profile in parallel</span></span>
+<span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/profile.html" class="external-link">profile</a></span><span class="op">(</span><span class="va">m</span>, parallel <span class="op">=</span> <span class="st">"snow"</span>, ncpus <span class="op">=</span> <span class="va">ncpus</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Tear down the cluster</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<p>This requires you to manually create and manage the cluster
+lifecycle. If you forget to call <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster()</a></code>, or if your
+code errors out before reaching it, you leak background R processes. You
+also have to decide upfront how many CPUs to use and what cluster type
+to use. Switching to another parallel backend, e.g. a Slurm cluster,
+would require a completely different setup. With
+<strong>futurize</strong>, all of this is handled for you - just pipe to
+<code><a href="../reference/futurize.html">futurize()</a></code> and control the backend with
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

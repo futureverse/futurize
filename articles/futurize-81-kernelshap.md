@@ -123,3 +123,50 @@ The following **kernelshap** functions are supported by
 
 - [`kernelshap()`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)
 - [`permshap()`](https://rdrr.io/pkg/kernelshap/man/permshap.html)
+
+## Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize
+[`kernelshap()`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)
+using the **parallel** and **doParallel** packages directly, without
+**futurize**:
+
+``` r
+
+library(kernelshap)
+library(parallel)
+library(doParallel)
+
+## Fit a model
+x_train <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
+y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(100)
+model <- lm(y ~ ., data = cbind(y = y_train, x_train))
+
+x_explain <- x_train[1:5, ]
+bg_X <- x_train[1:20, ]
+
+## Set up a PSOCK cluster and register it with foreach
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+registerDoParallel(cl)
+
+## Compute Kernel SHAP values in parallel via foreach
+ks <- kernelshap(model, X = x_explain, bg_X = bg_X, parallel = TRUE)
+
+## Tear down the cluster
+stopCluster(cl)
+registerDoSEQ()  ## reset foreach to sequential
+```
+
+This requires you to manually create a cluster, register it with
+**doParallel**, and remember to tear it down and reset the **foreach**
+backend when done. If you forget to call
+[`stopCluster()`](https://rdrr.io/r/parallel/makeCluster.html), or if
+your code errors out before reaching it, you leak background R
+processes. You also have to decide upfront how many CPUs to use and what
+cluster type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With **futurize**,
+all of this is handled for you - just pipe to
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+and control the backend with
+[`plan()`](https://future.futureverse.org/reference/plan.html).

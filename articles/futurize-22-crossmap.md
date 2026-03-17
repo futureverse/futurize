@@ -47,7 +47,7 @@ that mimics
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html).
 The
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
-transpiles
+function transpiles
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
 into
 [`future_xmap()`](https://pkg.rossellhayes.com/crossmap/reference/future_xmap.html),
@@ -64,7 +64,7 @@ ys <- xmap(xs, function(x, y) x * y) |> futurize()
 
 to process this
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
-call concurrently, which allows you to execute it on a set parallel
+call concurrently, which allows you to execute it on a set of parallel
 workers, e.g.
 
 ``` r

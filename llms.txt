@@ -32,7 +32,7 @@ In addition to getting access to all future-based parallel backends, by
 using
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 you also get access to all the benefits that comes with **futureverse**.
-Notably, if the function you parallelize output messages and warnings,
+Notably, if the function you parallelize outputs messages and warnings,
 they will be relayed from the parallel worker to your main R session,
 just as you get when running sequentially. This is particularly useful
 when troubleshooting or debugging.
@@ -127,7 +127,6 @@ parallelization.
 |----|----|----|
 | **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | \- |
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
-| **[fgsea](https://bioconductor.org/packages/fgsea/)** | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
 | **[gamlss](https://cran.r-project.org/package=gamlss)** | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()` | \- |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
@@ -143,7 +142,7 @@ parallelization.
 | **[SimDesign](https://cran.r-project.org/package=SimDesign)** | `runSimulation()`, `runArraySimulation()` | \- |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
-| **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[TSP](https://cran.r-project.org/package=TSP)** | `solve_TSP()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
 
 *Table 2: CRAN packages with domain-specific functions currently

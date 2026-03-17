@@ -27,7 +27,7 @@ package provides functions for ordering objects using seriation,
 ordination techniques for reordering matrices, dissimilarity matrices,
 and dendrograms.
 
-### Example:
+### Example: Seriate best
 
 Example adopted from
 [`help("seriate_best", package = "seriation")`](https://rdrr.io/pkg/seriation/man/seriate_best.html):
