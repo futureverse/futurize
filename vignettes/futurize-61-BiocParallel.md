@@ -60,9 +60,9 @@ ys <- bplapply(xs, slow_fcn)
 ```
 
 The parallel backend is controlled by the `BiocParallel::register()`,
-similar to how we use `future::plan()` in futureverse. We can use
+similar to how we use `future::plan()` in Futureverse. We can use
 the **futurize** package to tell **BiocParallel** to hand over the
-orchestration of parallel tasks to futureverse. All we need to do is
+orchestration of parallel tasks to Futureverse. All we need to do is
 to pass the expression to `futurize()` as in:
 
 ```r
@@ -126,6 +126,30 @@ The following functions are currently not supported:
    effectively does not work with `futurize()`
  * `bpvectorize()`
  * `register()`
+
+
+# Bioconductor packages using BiocParallel
+
+Most Bioconductor packages that support parallelization do so via
+**BiocParallel** internally. These packages typically expose a
+`BPPARAM` argument in their functions, which controls the parallel
+backend used. For example, `DESeq2::DESeq()` has a `BPPARAM` argument
+that defaults to `BiocParallel::bpparam()`, which corresponds to the
+currently registered **BiocParallel** backend. This means that, in
+order to parallelize such a function, one can call
+`BiocParallel::register()` to set a parallel backend, and then the
+function will use it automatically.
+
+However, not all packages default to `bpparam()`. For example,
+`sva::ComBat()` defaults to `bpparam("SerialParam")`, which means it
+always runs sequentially unless you explicitly pass a parallel
+`BPPARAM` argument. Because of this, one cannot count on `bpparam()`
+being the default everywhere - some functions require an explicit
+`BPPARAM` to parallelize. With **futurize**, this is handled
+automatically: `futurize()` injects the appropriate `BPPARAM` argument
+regardless of what the default is, so that the parallel execution is
+performed via the Futureverse, where the parallel backend is
+controlled by `future::plan()`.
 
 
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
