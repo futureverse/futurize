@@ -135,3 +135,34 @@ The following functions are currently not supported:
   [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 - [`bpvectorize()`](https://rdrr.io/pkg/BiocParallel/man/bpvectorize.html)
 - [`register()`](https://rdrr.io/pkg/BiocParallel/man/register.html)
+
+## Bioconductor packages using BiocParallel
+
+Most Bioconductor packages that support parallelization do so via
+**BiocParallel** internally. These packages typically expose a `BPPARAM`
+argument in their functions, which controls the parallel backend used.
+For example,
+[`DESeq2::DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) has a
+`BPPARAM` argument that defaults to
+[`BiocParallel::bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html),
+which corresponds to the currently registered **BiocParallel** backend -
+similar to how
+[`plan()`](https://future.futureverse.org/reference/plan.html) works for
+Futureverse. This means that, in order to parallelize such a function,
+one can call
+[`BiocParallel::register()`](https://rdrr.io/pkg/BiocParallel/man/register.html)
+to set a parallel backend, and then the function will use it
+automatically.
+
+However, not all packages default to
+[`bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html). For
+example, [`sva::ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html)
+defaults to `bpparam("SerialParam")`, which means it always runs
+sequentially unless you explicitly pass a parallel `BPPARAM` argument.
+Because of this, one cannot count on
+[`bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html) being
+the default everywhere - some functions require an explicit `BPPARAM` to
+parallelize. With **futurize**, this is handled automatically:
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+injects the appropriate `BPPARAM` argument regardless of what the
+default is.

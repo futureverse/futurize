@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9095</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9096</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -277,6 +277,31 @@ effectively does not work with <code><a href="../reference/futurize.html">futuri
 <li><code><a href="https://rdrr.io/pkg/BiocParallel/man/bpvectorize.html" class="external-link">bpvectorize()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register()</a></code></li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="bioconductor-packages-using-biocparallel">Bioconductor packages using BiocParallel<a class="anchor" aria-label="anchor" href="#bioconductor-packages-using-biocparallel"></a>
+</h2>
+<p>Most Bioconductor packages that support parallelization do so via
+<strong>BiocParallel</strong> internally. These packages typically
+expose a <code>BPPARAM</code> argument in their functions, which
+controls the parallel backend used. For example,
+<code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq2::DESeq()</a></code> has a <code>BPPARAM</code> argument that
+defaults to <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::bpparam()</a></code>, which corresponds to
+the currently registered <strong>BiocParallel</strong> backend - similar
+to how <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code> works for Futureverse. This means that, in
+order to parallelize such a function, one can call
+<code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::register()</a></code> to set a parallel backend, and
+then the function will use it automatically.</p>
+<p>However, not all packages default to <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam()</a></code>. For
+example, <code><a href="https://rdrr.io/pkg/sva/man/ComBat.html" class="external-link">sva::ComBat()</a></code> defaults to
+<code>bpparam("SerialParam")</code>, which means it always runs
+sequentially unless you explicitly pass a parallel <code>BPPARAM</code>
+argument. Because of this, one cannot count on <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam()</a></code>
+being the default everywhere - some functions require an explicit
+<code>BPPARAM</code> to parallelize. With <strong>futurize</strong>,
+this is handled automatically: <code><a href="../reference/futurize.html">futurize()</a></code> injects the
+appropriate <code>BPPARAM</code> argument regardless of what the default
+is.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
