@@ -22,6 +22,8 @@ articles-cran:
     href: articles/futurize-81-boot.html
   - text: Parallelize 'caret' functions
     href: articles/futurize-81-caret.html
+  - text: Parallelize 'gamlss' functions
+    href: articles/futurize-81-gamlss.html
   - text: Parallelize 'glmnet' functions
     href: articles/futurize-81-glmnet.html
   - text: Parallelize 'glmmTMB' functions

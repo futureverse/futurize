@@ -121,6 +121,7 @@ parallelization.
 | **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()`    | **[doFuture]**     |
 | **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[fwb]**                  | `fwb()`, `vcovFWB()`                                                         | -                  |
+| **[gamlss]**               | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()`           | -                  |
 | **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                    | -                  |
 | **[glmnet]**               | `cv.glmnet()`                                                                | **[doFuture]**     |
 | **[kernelshap]**           | `kernelshap()`, `permshap()`                                                 | **[doFuture]**     |
@@ -151,6 +152,8 @@ ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+cv <- gamlss::gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
 
 cv <- glmnet::cv.glmnet(x, y) |> futurize()
 
@@ -243,6 +246,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [fgsea]: https://bioconductor.org/packages/fgsea/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
+[gamlss]: https://cran.r-project.org/package=gamlss
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
 [glmnet]: https://cran.r-project.org/package=glmnet
 [GenomicAlignments]: https://bioconductor.org/packages/GenomicAlignments/
