@@ -40,6 +40,8 @@ articles-cran:
     href: articles/futurize-81-partykit.html
   - text: Parallelize 'riskRegression' functions
     href: articles/futurize-81-riskRegression.html
+  - text: Parallelize 'rmgarch' functions
+    href: articles/futurize-81-rmgarch.html
   - text: Parallelize 'Rsolnp' functions
     href: articles/futurize-81-Rsolnp.html
   - text: Parallelize 'seriation' functions
