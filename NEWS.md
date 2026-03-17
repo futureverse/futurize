@@ -1,5 +1,11 @@
 # Version (development version)
 
+Following the initial CRAN release in January 2026, this version adds
+`futurize()` support for many more CRAN and Bioconductor packages. To
+achieve this, support for transpiling S3 and S4 methods was added,
+expanding beyond regular and generic functions. This opens the door
+for futurizing many more packages going forward.
+
 ## Significant Changes
 
  * Add support for futurizing S3 methods where the S3 generic is
