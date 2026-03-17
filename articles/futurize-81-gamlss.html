@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'kernelshap' functions • futurize</title>
+<title>Parallelize 'gamlss' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'kernelshap' functions">
+<meta property="og:title" content="Parallelize 'gamlss' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -147,29 +147,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'kernelshap' functions</h1>
+      <h1>Parallelize 'gamlss' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-kernelshap.md" class="external-link"><code>vignettes/futurize-81-kernelshap.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-kernelshap.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-gamlss.md" class="external-link"><code>vignettes/futurize-81-gamlss.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-gamlss.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'kernelshap' functions}
+%\VignetteIndexEntry{Parallelize 'gamlss' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{kernelshap}
+%\VignetteKeyword{gamlss}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/kernelshap-logo.png" alt="The 'kernelshap' logo"><span>+</span>
+<p><img src="../reference/figures/cran-gamlss-logo.svg" alt="The 'gamlss' image"><span>+</span>
 <img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
@@ -182,88 +182,109 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ModelOriented/kernelshap" class="external-link">kernelshap</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>, X <span class="op">=</span> <span class="va">x_explain</span>, bg_X <span class="op">=</span> <span class="va">bg_X</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">abdom</span>, package <span class="op">=</span> <span class="st">"gamlss.data"</span><span class="op">)</span></span>
+<span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">abdom</span>, K.fold <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-<strong><a href="https://cran.r-project.org/package=kernelshap" class="external-link">kernelshap</a></strong>
-functions such as <code><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap()</a></code> and
-<code><a href="https://rdrr.io/pkg/kernelshap/man/permshap.html" class="external-link">permshap()</a></code>.</p>
-<p>The <strong><a href="https://cran.r-project.org/package=kernelshap" class="external-link">kernelshap</a></strong>
-package provides efficient implementations of Kernel SHAP and
-permutation SHAP for explaining predictions from any machine learning
-model. These functions iterate over observations to compute Shapley
-value estimates, making the computation an excellent candidate for
-parallelization.</p>
+<strong><a href="https://cran.r-project.org/package=gamlss" class="external-link">gamlss</a></strong>
+functions such as <code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV()</a></code>, <code><a href="https://rdrr.io/pkg/gamlss/man/stepGAIC.html" class="external-link">add1All()</a></code>,
+<code><a href="https://rdrr.io/pkg/gamlss/man/stepGAIC.html" class="external-link">drop1All()</a></code>, <code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">add1TGD()</a></code>, and
+<code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">drop1TGD()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=gamlss" class="external-link">gamlss</a></strong>
+package implements Generalized Additive Models for Location, Scale, and
+Shape (GAMLSS). GAMLSS models extend traditional generalized additive
+models (GAMs) by allowing all parameters of a distribution — not just
+the mean — to be modeled as functions of explanatory variables. The
+package provides tools for model fitting, selection, and
+diagnostics.</p>
+<p>Several gamlss functions support parallel evaluation via the
+<code>parallel</code>, <code>ncpus</code>, and <code>cl</code>
+arguments. By piping to <code><a href="../reference/futurize.html">futurize()</a></code>, you can leverage any
+future-based parallel backend for these computations.</p>
 <div class="section level3">
-<h3 id="example-computing-kernel-shap-values-in-parallel">Example: Computing Kernel SHAP values in parallel<a class="anchor" aria-label="anchor" href="#example-computing-kernel-shap-values-in-parallel"></a>
+<h3 id="example-k-fold-cross-validation">Example: k-fold cross-validation<a class="anchor" aria-label="anchor" href="#example-k-fold-cross-validation"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap()</a></code> function computes Kernel SHAP values
-for a set of observations. For example, using a simple linear model:</p>
+<p>The <code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV()</a></code> function performs k-fold cross-validation
+for model selection. This is computationally intensive and benefits
+greatly from parallelization:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ModelOriented/kernelshap" class="external-link">kernelshap</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Fit a model</span></span>
-<span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">y_train</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">x_train</span><span class="op">$</span><span class="va">x1</span> <span class="op">+</span> <span class="va">x_train</span><span class="op">$</span><span class="va">x2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y_train</span>, <span class="va">x_train</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Compute Kernel SHAP values</span></span>
-<span><span class="va">x_explain</span> <span class="op">&lt;-</span> <span class="va">x_train</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span>
-<span><span class="va">bg_X</span> <span class="op">&lt;-</span> <span class="va">x_train</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, <span class="op">]</span></span>
-<span><span class="va">ks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap</a></span><span class="op">(</span><span class="va">model</span>, X <span class="op">=</span> <span class="va">x_explain</span>, bg_X <span class="op">=</span> <span class="va">bg_X</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap()</a></code> processes observations sequentially,
-but we can easily make it process them in parallel by piping to
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">abdom</span>, package <span class="op">=</span> <span class="st">"gamlss.data"</span><span class="op">)</span></span>
+<span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">abdom</span>, K.fold <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV()</a></code> evaluates each fold sequentially, but we
+can easily make it evaluate in parallel by piping to
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ModelOriented/kernelshap" class="external-link">kernelshap</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>, X <span class="op">=</span> <span class="va">x_explain</span>, bg_X <span class="op">=</span> <span class="va">bg_X</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the observation-level computations across the
-available parallel workers, given that we have set up parallel workers,
-e.g.</p>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">abdom</span>, package <span class="op">=</span> <span class="st">"gamlss.data"</span><span class="op">)</span></span>
+<span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">abdom</span>, K.fold <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the cross-validation folds across the available
+parallel workers, given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
+<p>Unlike other parallel backends in R, <code><a href="../reference/futurize.html">futurize()</a></code> relays
+standard output, messages, and warnings produced by the parallel workers
+back to your main R session. For instance, when running the above, you
+will see the progress output from each optimizer as it completes:</p>
+<pre><code>&gt; cv &lt;- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |&gt; futurize()
+fold 1
+fold 2
+fold 3
+fold 4
+fold 5
+fold 6
+fold 7
+fold 8
+fold 9
+fold 10
+&gt; </code></pre>
+<p>This output originates from the parallel workers and is relayed to
+your R session, so you get the same informative feedback as when running
+sequentially.</p>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
 backends</a> to choose from, including alternatives to parallelize
 locally as well as distributed across remote machines, e.g.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
 <p>and</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="example-computing-permutation-shap-values-in-parallel">Example: Computing permutation SHAP values in parallel<a class="anchor" aria-label="anchor" href="#example-computing-permutation-shap-values-in-parallel"></a>
+<h3 id="example-drop-terms-from-a-model">Example: Drop terms from a model<a class="anchor" aria-label="anchor" href="#example-drop-terms-from-a-model"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/kernelshap/man/permshap.html" class="external-link">permshap()</a></code> function works the same way:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>The <code><a href="https://rdrr.io/pkg/gamlss/man/stepGAIC.html" class="external-link">drop1All()</a></code> function evaluates the effect of dropping
+each term from a fitted GAMLSS model, which can be parallelized:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ModelOriented/kernelshap" class="external-link">kernelshap</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.gamlss.com/" class="external-link">gamlss</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/kernelshap/man/permshap.html" class="external-link">permshap</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>, X <span class="op">=</span> <span class="va">x_explain</span>, bg_X <span class="op">=</span> <span class="va">bg_X</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">abdom</span>, package <span class="op">=</span> <span class="st">"gamlss.data"</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/gamlss.html" class="external-link">gamlss</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">abdom</span><span class="op">)</span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/stepGAIC.html" class="external-link">drop1All</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>kernelshap</strong> functions are supported by
+<p>The following <strong>gamlss</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/kernelshap/man/kernelshap.html" class="external-link">kernelshap()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/kernelshap/man/permshap.html" class="external-link">permshap()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/gamlss/man/stepGAIC.html" class="external-link">add1All()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">add1TGD()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/gamlss/man/stepGAIC.html" class="external-link">drop1All()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">drop1TGD()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

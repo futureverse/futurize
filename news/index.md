@@ -35,6 +35,9 @@
 - Add support for domain-specific CRAN package **fwb**,
   e.g. `b <- fwb(data, statistic, R = 1000) |> futurize()`.
 
+- Add support for domain-specific CRAN package **gamlss**,
+  e.g. `cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()`.
+
 - Add support for domain-specific CRAN package **glmmTMB**,
   e.g. `pr <- profile(m) |> futurize()`.
 

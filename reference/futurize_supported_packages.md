@@ -32,13 +32,14 @@ pkgs
 #>  [7] "SimDesign"            "SingleCellExperiment" "TSP"                 
 #> [10] "base"                 "boot"                 "caret"               
 #> [13] "crossmap"             "fgsea"                "foreach"             
-#> [16] "fwb"                  "glmmTMB"              "glmnet"              
-#> [19] "kernelshap"           "lme4"                 "metafor"             
-#> [22] "mgcv"                 "partykit"             "pbapply"             
-#> [25] "plyr"                 "purrr"                "riskRegression"      
-#> [28] "scater"               "scuttle"              "seriation"           
-#> [31] "shapr"                "stats"                "strucchange"         
-#> [34] "sva"                  "tm"                   "vegan"               
+#> [16] "fwb"                  "gamlss"               "glmmTMB"             
+#> [19] "glmnet"               "kernelshap"           "lme4"                
+#> [22] "metafor"              "mgcv"                 "partykit"            
+#> [25] "pbapply"              "plyr"                 "purrr"               
+#> [28] "riskRegression"       "scater"               "scuttle"             
+#> [31] "seriation"            "shapr"                "stats"               
+#> [34] "strucchange"          "sva"                  "tm"                  
+#> [37] "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")
