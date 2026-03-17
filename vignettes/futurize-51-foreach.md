@@ -9,10 +9,6 @@
 %\VignetteEngine{futurize::selfonly}
 -->
 
-The **futurize** package allows you to easily turn sequential code
-into parallel code by piping the sequential code to the `futurize()`
-function. Easy!
-
 <div class="logos">
 <img src="../man/figures/cran-foreach-logo.svg" alt="The CRAN 'foreach' package">
 <span>+</span>
@@ -20,6 +16,10 @@ function. Easy!
 <span>=</span>
 <img src="../man/figures/future-logo.png" alt="The 'future' logo">
 </div>
+
+The **futurize** package allows you to easily turn sequential code
+into parallel code by piping the sequential code to the `futurize()`
+function. Easy!
 
 
 # TL;DR
