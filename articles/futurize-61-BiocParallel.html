@@ -212,9 +212,9 @@ something like:</p>
 <span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/bplapply.html" class="external-link">bplapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span></span></code></pre></div>
 <p>The parallel backend is controlled by the
 <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::register()</a></code>, similar to how we use
-<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> in futureverse. We can use the
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> in Futureverse. We can use the
 <strong>futurize</strong> package to tell <strong>BiocParallel</strong>
-to hand over the orchestration of parallel tasks to futureverse. All we
+to hand over the orchestration of parallel tasks to Futureverse. All we
 need to do is to pass the expression to <code><a href="../reference/futurize.html">futurize()</a></code> as
 in:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -287,9 +287,8 @@ expose a <code>BPPARAM</code> argument in their functions, which
 controls the parallel backend used. For example,
 <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq2::DESeq()</a></code> has a <code>BPPARAM</code> argument that
 defaults to <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::bpparam()</a></code>, which corresponds to
-the currently registered <strong>BiocParallel</strong> backend - similar
-to how <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code> works for Futureverse. This means that, in
-order to parallelize such a function, one can call
+the currently registered <strong>BiocParallel</strong> backend. This
+means that, in order to parallelize such a function, one can call
 <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::register()</a></code> to set a parallel backend, and
 then the function will use it automatically.</p>
 <p>However, not all packages default to <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam()</a></code>. For
@@ -301,7 +300,9 @@ being the default everywhere - some functions require an explicit
 <code>BPPARAM</code> to parallelize. With <strong>futurize</strong>,
 this is handled automatically: <code><a href="../reference/futurize.html">futurize()</a></code> injects the
 appropriate <code>BPPARAM</code> argument regardless of what the default
-is.</p>
+is, so that the parallel execution is performed via the Futureverse,
+where the parallel backend is controlled by
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

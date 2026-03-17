@@ -58,9 +58,9 @@ The parallel backend is controlled by the
 [`BiocParallel::register()`](https://rdrr.io/pkg/BiocParallel/man/register.html),
 similar to how we use
 [`future::plan()`](https://future.futureverse.org/reference/plan.html)
-in futureverse. We can use the **futurize** package to tell
+in Futureverse. We can use the **futurize** package to tell
 **BiocParallel** to hand over the orchestration of parallel tasks to
-futureverse. All we need to do is to pass the expression to
+Futureverse. All we need to do is to pass the expression to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 as in:
 
@@ -145,11 +145,8 @@ For example,
 [`DESeq2::DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) has a
 `BPPARAM` argument that defaults to
 [`BiocParallel::bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html),
-which corresponds to the currently registered **BiocParallel** backend -
-similar to how
-[`plan()`](https://future.futureverse.org/reference/plan.html) works for
-Futureverse. This means that, in order to parallelize such a function,
-one can call
+which corresponds to the currently registered **BiocParallel** backend.
+This means that, in order to parallelize such a function, one can call
 [`BiocParallel::register()`](https://rdrr.io/pkg/BiocParallel/man/register.html)
 to set a parallel backend, and then the function will use it
 automatically.
@@ -165,4 +162,6 @@ the default everywhere - some functions require an explicit `BPPARAM` to
 parallelize. With **futurize**, this is handled automatically:
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 injects the appropriate `BPPARAM` argument regardless of what the
-default is.
+default is, so that the parallel execution is performed via the
+Futureverse, where the parallel backend is controlled by
+[`future::plan()`](https://future.futureverse.org/reference/plan.html).
