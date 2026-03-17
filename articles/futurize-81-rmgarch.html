@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'caret' functions • futurize</title>
+<title>Parallelize 'rmgarch' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'caret' functions">
+<meta property="og:title" content="Parallelize 'rmgarch' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -148,29 +148,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'caret' functions</h1>
+      <h1>Parallelize 'rmgarch' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-caret.md" class="external-link"><code>vignettes/futurize-81-caret.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-caret.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-rmgarch.md" class="external-link"><code>vignettes/futurize-81-rmgarch.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-rmgarch.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'caret' functions}
+%\VignetteIndexEntry{Parallelize 'rmgarch' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{caret}
+%\VignetteKeyword{rmgarch}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/cran-caret-logo.svg" alt="The 'caret' image"><span>+</span>
+<p><img src="../reference/figures/cran-rmgarch-logo.svg" alt="The CRAN 'rmgarch' package"><span>+</span>
 <img src="../reference/figures/futurize-logo.png" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.png" alt="The 'future' logo"></p>
 </div>
@@ -183,44 +183,61 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexiosg/rmgarch" class="external-link">rmgarch</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit</a></span><span class="op">(</span><span class="va">spec</span>, data <span class="op">=</span> <span class="va">returns</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-<strong><a href="https://cran.r-project.org/package=caret" class="external-link">caret</a></strong>
-functions such as <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code>.</p>
-<p>The <strong><a href="https://cran.r-project.org/package=caret" class="external-link">caret</a></strong>
-package provides a rich set of machine-learning tools with a unified
-API. The <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code> function fits models using
-cross-validation or bootstrap resampling, making it an excellent
-candidate for parallelization.</p>
+<strong><a href="https://cran.r-project.org/package=rmgarch" class="external-link">rmgarch</a></strong>
+functions such as <code><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit()</a></code>, <code><a href="https://rdrr.io/pkg/rmgarch/man/dccforecast-methods.html" class="external-link">dccforecast()</a></code>, and
+<code><a href="https://rdrr.io/pkg/rmgarch/man/gogarchfit-methods.html" class="external-link">gogarchfit()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=rmgarch" class="external-link">rmgarch</a></strong>
+package provides multivariate GARCH models including Dynamic Conditional
+Correlation (DCC), Copula-GARCH, and GO-GARCH models. These models
+involve fitting multiple univariate GARCH models as a first step, which
+can be parallelized across series. The package accepts a
+<code>cluster</code> argument for parallel evaluation via the
+<strong>parallel</strong> package.</p>
+<p>By piping to <code><a href="../reference/futurize.html">futurize()</a></code>, you can leverage any
+future-based parallel backend for these computations.</p>
 <div class="section level3">
-<h3 id="example-training-a-random-forest-with-cross-validation">Example: Training a random forest with cross-validation<a class="anchor" aria-label="anchor" href="#example-training-a-random-forest-with-cross-validation"></a>
+<h3 id="example-fitting-a-dcc-garch-model">Example: Fitting a DCC-GARCH model<a class="anchor" aria-label="anchor" href="#example-fitting-a-dcc-garch-model"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code> function fits models across multiple
-resampling iterations:</p>
+<p>The <code><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit()</a></code> function fits a Dynamic Conditional
+Correlation multivariate GARCH model. Fitting the univariate GARCH
+models for each series can be parallelized:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexiosg/rmgarch" class="external-link">rmgarch</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alexiosg/rugarch" class="external-link">rugarch</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Set up 10-fold cross-validation</span></span>
-<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">300L</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="fl">2L</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Train a random forest model</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code> evaluates sequentially, but we can easily
-make it evaluate in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<span><span class="co">## Create univariate GARCH(1,1) specs</span></span>
+<span><span class="va">uspec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rugarch/man/ugarchspec-methods.html" class="external-link">ugarchspec</a></span><span class="op">(</span></span>
+<span>  mean.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>armaOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  variance.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>garchOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">mspec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rugarch/man/multispec-methods.html" class="external-link">multispec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">uspec</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## DCC(1,1) specification</span></span>
+<span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rmgarch/man/dccspec-methods.html" class="external-link">dccspec</a></span><span class="op">(</span>uspec <span class="op">=</span> <span class="va">mspec</span>, dccOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>                distribution <span class="op">=</span> <span class="st">"mvnorm"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Sequential fit</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit</a></span><span class="op">(</span><span class="va">spec</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit()</a></code> fits each univariate model sequentially.
+To run in parallel, pipe to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, method <span class="op">=</span> <span class="st">"rf"</span>, trControl <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the cross-validation folds across the available
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit</a></span><span class="op">(</span><span class="va">spec</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the univariate GARCH fits across the available
 parallel workers, given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
@@ -238,16 +255,28 @@ locally as well as distributed across remote machines, e.g.</p>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>caret</strong> functions are supported by
+<p>The following <strong>rmgarch</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/caret/man/bag.html" class="external-link">bag()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/gafs.default.html" class="external-link">gafs()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/nearZeroVar.html" class="external-link">nearZeroVar()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/rfe.html" class="external-link">rfe()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/safs.html" class="external-link">safs()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/sbf.html" class="external-link">sbf()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/goGARCHfit-class.html" class="external-link">betacokurt()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/goGARCHfit-class.html" class="external-link">betacoskew()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/cgarchfilter-methods.html" class="external-link">cgarchfilter()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/cgarchfit-methods.html" class="external-link">cgarchfit()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/cgarchsim-methods.html" class="external-link">cgarchsim()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/goGARCHfit-class.html" class="external-link">convolution()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/dccfilter-methods.html" class="external-link">dccfilter()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/dccfit-methods.html" class="external-link">dccfit()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/dccforecast-methods.html" class="external-link">dccforecast()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/dccroll-methods.html" class="external-link">dccroll()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/dccsim-methods.html" class="external-link">dccsim()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/DCCtest.html" class="external-link">DCCtest()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/fmoments-methods.html" class="external-link">fmoments()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/fscenario-methods.html" class="external-link">fscenario()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/gogarchfilter-methods.html" class="external-link">gogarchfilter()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/gogarchfit-methods.html" class="external-link">gogarchfit()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/gogarchforecast-methods.html" class="external-link">gogarchforecast()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/gogarchroll-methods.html" class="external-link">gogarchroll()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/rmgarch/man/gogarchsim-methods.html" class="external-link">gogarchsim()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -23,6 +23,7 @@ articles:
   futurize-81-mgcv: futurize-81-mgcv.html
   futurize-81-partykit: futurize-81-partykit.html
   futurize-81-riskRegression: futurize-81-riskRegression.html
+  futurize-81-rmgarch: futurize-81-rmgarch.html
   futurize-81-Rsamtools: futurize-81-Rsamtools.html
   futurize-81-Rsolnp: futurize-81-Rsolnp.html
   futurize-81-scater: futurize-81-scater.html
@@ -36,7 +37,7 @@ articles:
   futurize-81-tm: futurize-81-tm.html
   futurize-81-TSP: futurize-81-TSP.html
   futurize-81-vegan: futurize-81-vegan.html
-last_built: 2026-03-17T05:16Z
+last_built: 2026-03-17T16:12Z
 urls:
   reference: https://futurize.futureverse.org/reference
   article: https://futurize.futureverse.org/articles

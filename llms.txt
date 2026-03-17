@@ -138,6 +138,7 @@ parallelization.
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
+| **[rmgarch](https://cran.r-project.org/package=rmgarch)** | `dccfit()`, `dccfilter()`, `dccforecast()`, `dccroll()`, `dccsim()`, `gogarchfit()`, `gogarchfilter()`, `gogarchforecast()`, `gogarchroll()`, `gogarchsim()`, … | \- |
 | **[Rsolnp](https://cran.r-project.org/package=Rsolnp)** | `gosolnp()`, `startpars()` | \- |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
@@ -184,6 +185,8 @@ sc <- riskRegression::Score(list("CSC" = fit), data = d,
   split.method = "bootcv") |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
+
+fit <- rmgarch::dccfit(spec, data = returns) |> futurize()
 
 res <- Rsolnp::gosolnp(fun = gofn, LB = c(-10, -10), UB = c(10, 10), n.restarts = 5) |> futurize()
 
@@ -309,6 +312,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
 - [Parallelize 'riskRegression'
   functions](https://futurize.futureverse.org/articles/futurize-81-riskRegression.md):
+- [Parallelize 'rmgarch'
+  functions](https://futurize.futureverse.org/articles/futurize-81-rmgarch.md):
 - [Parallelize 'Rsamtools'
   functions](https://futurize.futureverse.org/articles/futurize-81-Rsamtools.md):
 - [Parallelize 'Rsolnp'
