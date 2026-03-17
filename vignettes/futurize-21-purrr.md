@@ -30,22 +30,23 @@ plan(multisession)
 library(purrr)
 
 slow_fcn <- function(x) {
+  message("x = ", x)
   Sys.sleep(0.1)  # emulate work
   x^2
 }
 
-xs <- 1:1000
+xs <- 1:10
 ys <- xs |> map(slow_fcn) |> futurize()
 ```
 
 
 # Introduction
 
-This vignette demonstrates how to use this approach to parallelize **[purrr]**
-functions such as `map()`, `map_dbl()`, and `walk()`.
+This vignette demonstrates how to use this approach to parallelize
+**[purrr]** functions such as `map()`, `map_dbl()`, and `walk()`.
 
 The **purrr** `map()` function is commonly used to apply a function to
-the elements of a vector or a list. For example, 
+the elements of a vector or a list. For example,
 
 ```r
 library(purrr)
@@ -56,7 +57,6 @@ ys <- map(xs, slow_fcn)
 or equivalently using pipe syntax
 
 ```r
-library(purrr)
 xs <- 1:1000
 ys <- xs |> map(slow_fcn)
 ```
@@ -65,18 +65,30 @@ Here `map()` evaluates sequentially, but we can easily make it
 evaluate in parallel, by using:
 
 ```r
-library(futurize)
 library(purrr)
+
+library(futurize)
+plan(multisession) ## parallelize on local machine
+
 xs <- 1:1000
 ys <- xs |> map(slow_fcn) |> futurize()
+#> x = 1
+#> x = 2
+#> x = 3
+#> ...
+#> x = 10
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
-
-```r
-plan(multisession)
-```
+Note how messages produced on parallel workers are relayed as-is back
+to the main R session as they complete. Not only messages, but also
+warnings and other types of conditions are relayed back as-is.
+Likewise, standard output produced by `cat()`, `print()`, `str()`, and
+so on is relayed in the same way. This is a unique feature of
+Futureverse - other parallel frameworks in R, such as **parallel**,
+**foreach** with **doParallel**, and **BiocParallel**, silently drop
+standard output, messages, and warnings produced on workers. With
+**futurize**, your code behaves the same whether it runs sequentially
+or in parallel: nothing is lost in translation.
 
 The built-in `multisession` backend parallelizes on your local
 computer and it works on all operating systems. There are [other
@@ -114,7 +126,7 @@ The `futurize()` function supports parallelization of the following **purrr** fu
  * `map()`, `map_chr()`, `map_dbl()`, `map_int()`, `map_lgl()`, `map_raw()`, `map_dfr()`, `map_dfc()`, `walk()`
  * `map2()`, `map2_chr()`, `map2_dbl()`, `map2_int()`, `map2_lgl()`, `map2_raw()`, `map2_dfr()`, `map2_dfc()`, `walk2()`
  * `pmap()`, `pmap_chr()`, `pmap_dbl()`, `pmap_int()`, `pmap_lgl()`, `pmap_raw()`, `pmap_dfr()`, `pmap_dfc()`, `pwalk()`
-   `imap()`, `imap_chr()`, `imap_dbl()`, `imap_int()`, `imap_lgl()`, `imap_raw()`, `imap_dfr()`, `imap_dfc()`, `iwalk()`
+ * `imap()`, `imap_chr()`, `imap_dbl()`, `imap_int()`, `imap_lgl()`, `imap_raw()`, `imap_dfr()`, `imap_dfc()`, `iwalk()`
  * `modify()`, `modify_if()`, `modify_at()`
  * `map_if()`, `map_at()`
  * `invoke_map()`, `invoke_map_chr()`, `invoke_map_dbl()`, `invoke_map_int()`, `invoke_map_lgl()`, `invoke_map_raw()`, `invoke_map_dfr()`, `invoke_map_dfc()`

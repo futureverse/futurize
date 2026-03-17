@@ -28,14 +28,14 @@ library(futurize)
 plan(multisession)
 
 slow_fcn <- function(x) {
+  message("x = ", x)
   Sys.sleep(0.1)  # emulate work
   x^2
 }
 
-xs <- 1:1000
+xs <- 1:10
 ys <- lapply(xs, slow_fcn) |> futurize()
 ```
-
 
 # Introduction
 
@@ -56,15 +56,26 @@ evaluate in parallel, by using:
 
 ```r
 library(futurize)
+plan(multisession) ## parallelize on local machine
+
 ys <- lapply(xs, slow_fcn) |> futurize()
+#> x = 1
+#> x = 2
+#> x = 3
+#> ...
+#> x = 10
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
-
-```r
-plan(multisession)
-```
+Note how messages produced on parallel workers are relayed as-is back
+to the main R session as they complete. Not only messages, but also
+warnings and other types of conditions are relayed back as-is.
+Likewise, standard output produced by `cat()`, `print()`, `str()`, and
+so on is relayed in the same way. This is a unique feature of
+Futureverse - other parallel frameworks in R, such as **parallel**,
+**foreach** with **doParallel**, and **BiocParallel**, silently drop
+standard output, messages, and warnings produced on workers. With
+**futurize**, your code behaves the same whether it runs sequentially
+or in parallel: nothing is lost in translation.
 
 The built-in `multisession` backend parallelizes on your local
 computer and it works on all operating systems. There are [other
@@ -101,7 +112,7 @@ xs_smooth <- kernapply(xs, k = k50) |> futurize()
 # Supported Functions
 
 The `futurize()` function supports parallelization of the common base
-R functions. The following  **base** package functions are supported:
+R functions. The following **base** package functions are supported:
 
  * `lapply()`, `vapply()`, `sapply()`, `tapply()`
  * `mapply()`, `.mapply()`, `Map()`
@@ -122,7 +133,7 @@ The following **stats** package function is also supported:
 
 The **[BiocGenerics]** package defines generic functions `lapply()`,
 `sapply()`, `mapply()`, and `tapply()`. These S4 generic functions
-overrides the non-generic, counterpart functions in the **base**
+override the non-generic, counterpart functions in the **base**
 package, which are only used as a fallback if there is no matching
 method. For example, in a vanilla R session we have that both of the
 following calls are identical:
@@ -142,7 +153,7 @@ y_3 <- BiocGenerics::lapply(1:3, sqrt)
 ```
 
 The reason is that `lapply()` here is no longer `base::lapply()`, but
-the one defined by **BiocGenerics**, which masks the one on
+the one defined by **BiocGenerics**, which masks the one in
 **base**. We can see this with:
 
 ```r

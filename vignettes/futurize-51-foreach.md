@@ -3,7 +3,6 @@
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{Bioconductor}
 %\VignetteKeyword{foreach}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
@@ -31,14 +30,14 @@ plan(multisession)
 library(foreach)
 
 slow_fcn <- function(x) {
+  message("x = ", x)
   Sys.sleep(0.1)  # emulate work
   x^2
 }
 
-xs <- 1:1000
+xs <- 1:10
 ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
 ```
-
 
 # Introduction
 
@@ -52,24 +51,36 @@ xs <- 1:1000
 ys <- foreach(x = xs) %do% slow_fcn(x)
 ```
 
-This `foreach()` construct is resolved sequentially. We can use
-the **futurize** package to tell **foreach** to hand over the
+This `foreach()` construct is resolved sequentially. We can use the
+**futurize** package to tell **foreach** to hand over the
 orchestration of parallel tasks to futureverse. All we need to do is
 to pass the expression to `futurize()` as in:
 
 ```r
-library(futurize)
 library(foreach)
+
+library(futurize)
+plan(multisession) ## parallelize on local machine
+
 xs <- 1:1000
 ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
+#> x = 1
+#> x = 2
+#> x = 3
+#> ...
+#> x = 10
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
-
-```r
-plan(multisession)
-```
+Note how messages produced on parallel workers are relayed as-is back
+to the main R session as they complete. Not only messages, but also
+warnings and other types of conditions are relayed back as-is.
+Likewise, standard output produced by `cat()`, `print()`, `str()`, and
+so on is relayed in the same way. This is a unique feature of
+Futureverse - other parallel frameworks in R, such as **parallel**,
+**foreach** with **doParallel**, and **BiocParallel**, silently drop
+standard output, messages, and warnings produced on workers. With
+**futurize**, your code behaves the same whether it runs sequentially
+or in parallel: nothing is lost in translation.
 
 The built-in `multisession` backend parallelizes on your local
 computer and it works on all operating systems. There are [other
@@ -92,8 +103,8 @@ Here is another example that parallelizes `times()` of the
 
 
 ```r
-library(futurize)
 library(foreach)
+library(futurize)
 ys <- times(10) %do% rnorm(3) |> futurize()
 ```
 
