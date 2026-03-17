@@ -40,7 +40,7 @@ using seriation, ordination techniques for reordering matrices,
 dissimilarity matrices, and dendrograms.
 
 
-## Example: 
+## Example: Seriate best
 
 Example adopted from `help("seriate_best", package = "seriation")`:
 

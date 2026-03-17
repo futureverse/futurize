@@ -34,7 +34,7 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq_along(nzc)] %*% beta
+fx <- x[, seq_len(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -69,7 +69,7 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq_along(nzc)] %*% beta
+fx <- x[, seq_len(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -89,7 +89,7 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq_along(nzc)] %*% beta
+fx <- x[, seq_len(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -125,6 +125,51 @@ plan(future.batchtools::batchtools_slurm)
 The following **glmnet** functions are supported by `futurize()`:
 
 * `cv.glmnet()` with `seed = TRUE` as the default
+
+
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `cv.glmnet()`
+using the **parallel** and **doParallel** packages directly, without
+**futurize**:
+
+```r
+library(glmnet)
+library(parallel)
+library(doParallel)
+
+## Generate simulated data
+n <- 1000
+p <- 100
+nzc <- trunc(p / 10)
+x <- matrix(rnorm(n * p), n, p)
+beta <- rnorm(nzc)
+fx <- x[, seq_len(nzc)] %*% beta
+eps <- rnorm(n) * 5
+y <- drop(fx + eps)
+
+## Set up a PSOCK cluster and register it with foreach
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+registerDoParallel(cl)
+
+## Perform cross-validation in parallel via foreach
+cv <- cv.glmnet(x, y, parallel = TRUE)
+
+## Tear down the cluster
+stopCluster(cl)
+registerDoSEQ()  ## reset foreach to sequential
+```
+
+This requires you to manually create a cluster, register it with
+**doParallel**, and remember to tear it down and reset the
+**foreach** backend when done. If you forget to call
+`stopCluster()`, or if your code errors out before reaching it, you
+leak background R processes. You also have to decide upfront how
+many CPUs to use and what cluster type to use. Switching to another
+parallel backend, e.g. a Slurm cluster, would require a completely
+different setup. With **futurize**, all of this is handled for you - just pipe
+to `futurize()` and control the backend with `plan()`.
 
 
 [glmnet]: https://cran.r-project.org/package=glmnet

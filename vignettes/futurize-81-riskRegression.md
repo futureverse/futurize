@@ -120,5 +120,48 @@ The following **riskRegression** functions are supported by `futurize()`:
 * `Score()` for 'list'
 
 
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `Score()` using
+the **parallel** and **doParallel** packages directly, without
+**futurize**:
+
+```r
+library(riskRegression)
+library(survival)
+library(parallel)
+library(doParallel)
+
+set.seed(42)
+d <- sampleData(200, outcome = "competing.risks")
+fit <- CSC(Hist(time, event) ~ X1 + X2 + X7 + X8, data = d)
+
+## Set up a PSOCK cluster and register it with foreach
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+registerDoParallel(cl)
+
+## Bootstrap cross-validation in parallel via foreach
+sc <- Score(list("CSC" = fit), data = d,
+            formula = Hist(time, event) ~ 1,
+            times = 5, B = 100, split.method = "bootcv",
+            parallel = "as.registered")
+
+## Tear down the cluster
+stopCluster(cl)
+registerDoSEQ()  ## reset foreach to sequential
+```
+
+This requires you to manually create a cluster, register it with
+**doParallel**, and remember to tear it down and reset the
+**foreach** backend when done. If you forget to call
+`stopCluster()`, or if your code errors out before reaching it, you
+leak background R processes. You also have to decide upfront how
+many CPUs to use and what cluster type to use. Switching to another
+parallel backend, e.g. a Slurm cluster, would require a completely
+different setup. With **futurize**, all of this is handled for you - just pipe
+to `futurize()` and control the backend with `plan()`.
+
+
 [riskRegression]: https://cran.r-project.org/package=riskRegression
 [other parallel backends]: https://www.futureverse.org/backends.html

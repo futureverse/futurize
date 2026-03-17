@@ -68,13 +68,12 @@ except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
 \item{scheduling}{Average number of futures ("chunks") per worker.
-If \code{0.0}, then a single future is used to process all elements
-of \code{X}.
+If \code{0.0}, then a single future is used to process all elements.
 If \code{1.0} or \code{TRUE}, then one future per worker is used.
 If \code{2.0}, then each worker will process two futures
-(if there are enough elements in \code{X}).
-If \code{Inf} or \code{FALSE}, then one future per element of
-\code{X} is used.
+(if there are enough elements).
+If \code{Inf} or \code{FALSE}, then one future per element
+is used.
 Only used if \code{chunk_size} is \code{NULL}.}
 
 \item{chunk_size}{The average number of elements per future ("chunk").

@@ -40,7 +40,7 @@ salesperson problem (TSP).
 
 ## Example: 
 
-Example adopted from `help("solve_RSP", package = "TSP")`:
+Example adopted from `help("solve_TSP", package = "TSP")`:
 
 ```r
 library(futurize)
@@ -90,6 +90,43 @@ plan(future.batchtools::batchtools_slurm)
 The following **TSP** functions are supported by `futurize()`:
 
 * `solve_TSP()`
+
+
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `solve_TSP()`
+using the **parallel** and **doParallel** packages directly, without
+**futurize**:
+
+```r
+library(TSP)
+library(parallel)
+library(doParallel)
+
+data("USCA50")
+
+## Set up a PSOCK cluster and register it with foreach
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+registerDoParallel(cl)
+
+## Solve the TSP in parallel via foreach
+tour <- solve_TSP(USCA50, method = "nn", rep = 10L)
+
+## Tear down the cluster
+stopCluster(cl)
+registerDoSEQ()  ## reset foreach to sequential
+```
+
+This requires you to manually create a cluster, register it with
+**doParallel**, and remember to tear it down and reset the
+**foreach** backend when done. If you forget to call
+`stopCluster()`, or if your code errors out before reaching it, you
+leak background R processes. You also have to decide upfront how
+many CPUs to use and what cluster type to use. Switching to another
+parallel backend, e.g. a Slurm cluster, would require a completely
+different setup. With **futurize**, all of this is handled for you - just pipe
+to `futurize()` and control the backend with `plan()`.
 
 
 [TSP]: https://cran.r-project.org/package=TSP

@@ -38,9 +38,11 @@ dune.mrpp <- with(dune.env, {
 
 # Introduction
 
-The **[vegan]** package provides methods for community and vegetation ecologists. Some of the functions has built-in support for parallelization, which the **futurize** simplifies further.
+The **[vegan]** package provides methods for community and
+vegetation ecologists. Some of the functions have built-in support
+for parallelization, which **futurize** simplifies further.
 
-## Example: 
+## Example: MRPP
 
 Example adopted from `help("mrpp", package = "vegan")`:
 
@@ -115,6 +117,41 @@ The following **vegan** functions are supported by `futurize()`:
 * `oecosimu()`
 * `ordiareatest()`
 * `permutest()` for 'betadisper', and 'cca'
+
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `mrpp()` using
+the **parallel** package directly, without **futurize**:
+
+```r
+library(vegan)
+library(parallel)
+
+data(dune)
+data(dune.env)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Run MRPP in parallel
+dune.mrpp <- with(dune.env, {
+  mrpp(dune, Management, parallel = cl)
+})
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster
+lifecycle. If you forget to call `stopCluster()`, or if your code
+errors out before reaching it, you leak background R processes. You
+also have to decide upfront how many CPUs to use and what cluster
+type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With
+**futurize**, all of this is handled for you - just pipe to
+`futurize()` and control the backend with `plan()`.
+
 
 [vegan]: https://cran.r-project.org/package=vegan
 [other parallel backends]: https://www.futureverse.org/backends.html

@@ -1,5 +1,5 @@
 Package: futurize
-Version: 0.1.0-9094
+Version: 0.1.0-9095
 Title: Parallelize Common Functions via One Magic Function
 Description: The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), 'foreach::foreach() %do% { ... }' into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the 'future' ecosystem <doi:10.32614/RJ-2021-048>. By combining this function with R's native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. 'lapply(xs, fcn) |> futurize()', 'purrr::map(xs, fcn) |> futurize()', and 'foreach::foreach(x = xs) %do% { fcn(x) } |> futurize()'. Other map-reduce packages that can be "futurized" are 'BiocParallel', 'plyr', 'crossmap', 'pbapply' packages. There is also support for a growing set of domain-specific packages (e.g. CRAN package 'boot', 'caret', 'fgsea', 'fwb', 'gamlss', 'glmmTMB', 'glmnet', 'kernelshap', 'lme4', 'metafor', 'mgcv', 'partykit', 'riskRegression', 'seriation', 'shapr', 'SimDesign', 'strucchange', 'tm', 'TSP', and 'vegan') and Bioconductor packages (e.g. 'DESeq2', 'GenomicAlignments', 'GSVA', 'Rsamtools', 'scater', 'scuttle', 'SingleCellExperiment', and 'sva').
 Authors@R: c(

@@ -62,7 +62,7 @@ m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
 pr <- profile(m)
 ```
 
-Here `profile()` is calculated sequentially. To calculated in
+Here `profile()` is calculated sequentially. To calculate in
 parallel, we can pipe to `futurize()`:
 
 ```r
@@ -102,6 +102,39 @@ plan(future.batchtools::batchtools_slurm)
 The following **glmmTMB** functions are supported by `futurize()`:
 
 * `profile()` for 'glmmTMB'
+
+
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `profile()`
+using the **parallel** package directly, without **futurize**:
+
+```r
+library(glmmTMB)
+library(parallel)
+
+## Fit a negative binomial GLMM
+m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Compute likelihood profile in parallel
+pr <- profile(m, parallel = "snow", ncpus = ncpus, cl = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster
+lifecycle. If you forget to call `stopCluster()`, or if your code
+errors out before reaching it, you leak background R processes. You
+also have to decide upfront how many CPUs to use and what cluster
+type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With
+**futurize**, all of this is handled for you - just pipe to
+`futurize()` and control the backend with `plan()`.
 
 
 [glmmTMB]: https://cran.r-project.org/package=glmmTMB
