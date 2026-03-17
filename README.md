@@ -130,8 +130,6 @@ parallelization.
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
 | **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
-| **[rmgarch]**              | `dccfit()`, `dccfilter()`, `dccforecast()`, `dccroll()`, `dccsim()`, `gogarchfit()`, `gogarchfilter()`, `gogarchforecast()`, `gogarchroll()`, `gogarchsim()`, ... | - |
-| **[Rsolnp]**               | `gosolnp()`, `startpars()`                                                   | -                  |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
 | **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
@@ -175,9 +173,6 @@ sc <- riskRegression::Score(list("CSC" = fit), data = d,
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
-fit <- rmgarch::dccfit(spec, data = returns) |> futurize()
-
-res <- Rsolnp::gosolnp(fun = gofn, LB = c(-10, -10), UB = c(10, 10), n.restarts = 5) |> futurize()
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
 
@@ -264,8 +259,6 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [purrr]: https://cran.r-project.org/package=purrr
 [riskRegression]: https://cran.r-project.org/package=riskRegression
 [Rsamtools]: https://bioconductor.org/packages/Rsamtools/
-[rmgarch]: https://cran.r-project.org/package=rmgarch
-[Rsolnp]: https://cran.r-project.org/package=Rsolnp
 [scater]: https://bioconductor.org/packages/scater/
 [scuttle]: https://bioconductor.org/packages/scuttle/
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/

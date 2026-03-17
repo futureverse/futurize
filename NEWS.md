@@ -52,11 +52,6 @@
  * Add support for domain-specific CRAN package **partykit**, e.g. `cf
    <- cforest(dist ~ speed, data = cars) |> futurize()`.
 
- * Add support for domain-specific CRAN package **rmgarch**,
-   e.g. `fit <- dccfit(spec, data = returns) |> futurize()`.
-
- * Add support for domain-specific CRAN package **Rsolnp**,
-   e.g. `res <- gosolnp(fun, LB, UB, n.restarts = 5) |> futurize()`.
 
  * Add support for domain-specific CRAN package **riskRegression**,
    e.g. `sc <- Score(list("CSC" = fit), data = d, formula =
