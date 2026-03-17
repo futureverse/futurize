@@ -4,7 +4,7 @@ globalVariables(c("CALL", "OPTS", "EXPR"))
 
 #' Efficient partial substitution in expressions
 #' 
-#' @param expr An bquoted R expression
+#' @param expr A bquoted R expression
 #' 
 #' @param substitute If TRUE, `expr` is substituted.
 #' 
@@ -12,7 +12,7 @@ globalVariables(c("CALL", "OPTS", "EXPR"))
 #' 
 #' @param \ldots Named arguments.
 #' 
-#' @param envir The enivironment in which the the bquoted values
+#' @param envir The environment in which the bquoted values
 #' should be resolved.
 #' 
 #' @return

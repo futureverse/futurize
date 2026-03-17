@@ -487,7 +487,7 @@ transpiler_packages <- function(classes = NULL) {
 #' @param s3methods (logical) If TRUE, registered S3 methods are considered.
 #'
 #' @return
-#' A named list of named list of transpilers, where the names corresponds
+#' A named list of lists of transpilers, where the names correspond
 #' to function names of the package `package` and transpilers are lists.
 #'
 #' @noRd

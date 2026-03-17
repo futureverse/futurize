@@ -99,8 +99,8 @@
    transpilers relying on **doFuture**.
 
  * Packages not supporting specifying a random seed will now produce
-   an informative errors message if `futurize(seed = <numeric>)` is
-   specified, e.g. **boot**, **glmmTM**, **lme4**, **mgcv**, and
+   an informative error message if `futurize(seed = <numeric>)` is
+   specified, e.g. **boot**, **glmmTMB**, **lme4**, **mgcv**, and
    **vegan**.
    
  

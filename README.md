@@ -28,7 +28,7 @@ dependencies as shown in the below tables.
 In addition to getting access to all future-based parallel backends,
 by using `futurize()` you also get access to all the benefits that
 comes with **futureverse**. Notably, if the function you parallelize
-output messages and warnings, they will be relayed from the parallel
+outputs messages and warnings, they will be relayed from the parallel
 worker to your main R session, just as you get when running
 sequentially. This is particularly useful when troubleshooting or
 debugging.
@@ -119,7 +119,6 @@ parallelization.
 |----------------------------|------------------------------------------------------------------------------|--------------------|
 | **[boot]**                 | `boot()`, `censboot()`, `tsboot()`                                           | -                  |
 | **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()`    | **[doFuture]**     |
-| **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[fwb]**                  | `fwb()`, `vcovFWB()`                                                         | -                  |
 | **[gamlss]**               | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()`           | -                  |
 | **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                    | -                  |
@@ -135,7 +134,7 @@ parallelization.
 | **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
 | **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
-| **[TSP]**                  | `solve_RSP()`                                                                | **[doFuture]**     |
+| **[TSP]**                  | `solve_TSP()`                                                                | **[doFuture]**     |
 | **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca'  | -                  |
 
 _Table 2: CRAN packages with domain-specific functions currently

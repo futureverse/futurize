@@ -3,13 +3,12 @@
 #' @inheritParams future::future
 #'
 #' @param scheduling Average number of futures ("chunks") per worker.
-#'        If `0.0`, then a single future is used to process all elements
-#'        of `X`.
+#'        If `0.0`, then a single future is used to process all elements.
 #'        If `1.0` or `TRUE`, then one future per worker is used.
 #'        If `2.0`, then each worker will process two futures
-#'        (if there are enough elements in `X`).
-#'        If `Inf` or `FALSE`, then one future per element of
-#'        `X` is used.
+#'        (if there are enough elements).
+#'        If `Inf` or `FALSE`, then one future per element
+#'        is used.
 #'        Only used if `chunk_size` is `NULL`.
 #'
 #' @param chunk_size The average number of elements per future ("chunk").

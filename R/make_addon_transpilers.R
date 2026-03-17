@@ -1,7 +1,7 @@
 # Used by transpilers for the future.apply, furrr packages
 #'
 #' @return
-#' A named list of list of transpilers, where the name of the list is the package name.
+#' A named list of lists of transpilers, where the name of the list is the package name.
 #' The list of transpilers is also a named list, where each element is a transpiler
 #' and the corresponding name is the function transpiled.
 #' A transpiler is a named list with elements:

@@ -46,7 +46,7 @@ ys <- xmap(xs, function(x, y) x * y) |> futurize()
 ```
 
 Here `xmap()` evaluates sequentially over each combination of (.y, .x)
-elements.  The **crossmap** package provides its own future-counterpart functions, e.g. there is a `future_xmap()` that mimics `xmap()`. The `futurize()` transpiles `xmap()` into `future_xmap()`, meaning you can do:
+elements. The **crossmap** package provides its own future-counterpart functions, e.g. there is a `future_xmap()` that mimics `xmap()`. The `futurize()` function transpiles `xmap()` into `future_xmap()`, meaning you can do:
 
 ```r
 library(futurize)
@@ -57,7 +57,7 @@ ys <- xmap(xs, function(x, y) x * y) |> futurize()
 ```
 
 to process this `xmap()` call concurrently, which allows you to
-execute it on a set parallel workers, e.g.
+execute it on a set of parallel workers, e.g.
 
 ```r
 plan(multisession)

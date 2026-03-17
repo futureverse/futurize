@@ -45,7 +45,7 @@ print.transpiled_call <- function(x, ...) {
   ...x_org... <- x
 
   ## Make sure attributes are displayed
-  ## Wooa; this might be more convoluted than writing a custom
+  ## Whoa; this might be more convoluted than writing a custom
   ## print() method from scratch
   ...x... <- as.list(x)
   for (...kk... in seq_along(...x...)) {
