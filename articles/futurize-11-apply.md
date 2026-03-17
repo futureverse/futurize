@@ -17,13 +17,32 @@ library(futurize)
 plan(multisession)
 
 slow_fcn <- function(x) {
+  message("x = ", x)
   Sys.sleep(0.1)  # emulate work
   x^2
 }
 
-xs <- 1:1000
+xs <- 1:10
 ys <- lapply(xs, slow_fcn) |> futurize()
+#> x = 1
+#> x = 2
+#> x = 3
+#> ...
+#> x = 10
 ```
+
+Note how messages produced on parallel workers are relayed as-is back to
+the main R session as they complete. Not only messages, but also
+warnings and other types of conditions are relayed back as-is. Likewise,
+standard output produced by [`cat()`](https://rdrr.io/r/base/cat.html),
+[`print()`](https://rdrr.io/r/base/print.html),
+[`str()`](https://rdrr.io/r/utils/str.html), and so on is relayed in the
+same way. This is a unique feature of Futureverse - other parallel
+frameworks in R, such as **parallel**, **foreach** with **doParallel**,
+and **BiocParallel**, silently drop standard output, messages, and
+warnings produced on workers. With **futurize**, your code behaves the
+same whether it runs sequentially or in parallel: nothing is lost in
+translation.
 
 ## Introduction
 

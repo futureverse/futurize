@@ -138,26 +138,13 @@ parallelization.
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
-
-**[seriation](https://cran.r-project.org/package=seriation)** \|
-`seriate_best()`, `seriate_rep()` \|
-**[doFuture](https://doFuture.futureverse.org)** \|\
-**[shapr](https://cran.r-project.org/package=shapr)** \| `explain()`,
-`explain_forecast()` \| - \|\
-**[SimDesign](https://cran.r-project.org/package=SimDesign)** \|
-`runSimulation()`, `runArraySimulation()` \| - \|\
-**[strucchange](https://cran.r-project.org/package=strucchange)** \|
-`breakpoints()` for ‘formula’ \|
-**[doFuture](https://doFuture.futureverse.org)** \|\
-**[tm](https://cran.r-project.org/package=tm)** \|
-`TermDocumentMatrix()`, `tm_index()`, `tm_map()` \| - \|\
-**[TSP](https://cran.r-project.org/package=TSP)** \| `solve_RSP()` \|
-**[doFuture](https://doFuture.futureverse.org)** \|\
-**[vegan](https://cran.r-project.org/package=vegan)** \| `adonis()`,
-`adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’,
-`anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`,
-`mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`,
-`ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ \| - \|
+| **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
+| **[SimDesign](https://cran.r-project.org/package=SimDesign)** | `runSimulation()`, `runArraySimulation()` | \- |
+| **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
+| **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
+| **[TSP](https://cran.r-project.org/package=TSP)** | `solve_RSP()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
 
 *Table 2: CRAN packages with domain-specific functions currently
 supported by
