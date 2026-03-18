@@ -10,11 +10,11 @@
 -->
 
 <div class="logos">
-<img src="../man/figures/cran-foreach-logo.svg" alt="The CRAN 'foreach' package">
+<img src="../man/figures/cran-foreach-logo.webp" alt="The CRAN 'foreach' package">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code

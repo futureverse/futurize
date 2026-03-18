@@ -10,11 +10,11 @@
 -->
 
 <div class="logos">
-<img src="../man/figures/cran-plyr-logo.svg" alt="The 'plyr' image">
+<img src="../man/figures/cran-plyr-logo.webp" alt="The 'plyr' image">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code
