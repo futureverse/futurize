@@ -12,6 +12,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-31-plyr.md):
 - [Parallelize 'foreach'
   functions](https://futurize.futureverse.org/articles/futurize-51-foreach.md):
+- [Parallelize 'pbapply'
+  functions](https://futurize.futureverse.org/articles/futurize-55-pbapply.md):
 - [Parallelize 'BiocParallel'
   functions](https://futurize.futureverse.org/articles/futurize-61-BiocParallel.md):
 - [Parallelize 'boot'
@@ -22,6 +24,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-DESeq2.md):
 - [Parallelize 'fgsea'
   functions](https://futurize.futureverse.org/articles/futurize-81-fgsea.md):
+- [Parallelize 'fwb'
+  functions](https://futurize.futureverse.org/articles/futurize-81-fwb.md):
 - [Parallelize 'gamlss'
   functions](https://futurize.futureverse.org/articles/futurize-81-gamlss.md):
 - [Parallelize 'GenomicAlignments'

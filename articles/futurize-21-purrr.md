@@ -172,3 +172,12 @@ function supports parallelization of the following **purrr** functions:
   [`invoke_map_raw()`](https://purrr.tidyverse.org/reference/invoke.html),
   [`invoke_map_dfr()`](https://purrr.tidyverse.org/reference/invoke.html),
   [`invoke_map_dfc()`](https://purrr.tidyverse.org/reference/invoke.html)
+
+## Progress Reporting via progressr
+
+For progress reporting, please see the **\[progressr\]** package. It is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live fashion.
+See the
+[`vignette("futurize-11-apply", package = "futurize")`](https://futurize.futureverse.org/articles/futurize-11-apply.md)
+for more details and an example.

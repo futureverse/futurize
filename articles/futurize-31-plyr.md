@@ -129,3 +129,12 @@ function supports parallelization of the following **plyr** functions:
   [`maply()`](https://rdrr.io/pkg/plyr/man/maply.html),
   [`mdply()`](https://rdrr.io/pkg/plyr/man/mdply.html),
   [`mlply()`](https://rdrr.io/pkg/plyr/man/mlply.html)
+
+## Progress Reporting via progressr
+
+For progress reporting, please see the **\[progressr\]** package. It is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live fashion.
+See the
+[`vignette("futurize-11-apply", package = "futurize")`](https://futurize.futureverse.org/articles/futurize-11-apply.md)
+for more details and an example.

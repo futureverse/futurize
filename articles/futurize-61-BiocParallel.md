@@ -165,3 +165,12 @@ injects the appropriate `BPPARAM` argument regardless of what the
 default is, so that the parallel execution is performed via the
 Futureverse, where the parallel backend is controlled by
 [`future::plan()`](https://future.futureverse.org/reference/plan.html).
+
+## Progress Reporting via progressr
+
+For progress reporting, please see the **\[progressr\]** package. It is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live fashion.
+See the
+[`vignette("futurize-11-apply", package = "futurize")`](https://futurize.futureverse.org/articles/futurize-11-apply.md)
+for more details and an example.
