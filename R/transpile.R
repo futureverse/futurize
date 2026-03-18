@@ -378,7 +378,7 @@ list_transpilers <- function(pattern = NULL, class) {
         ## length(idxs) > 1 should not happen, but in case ...
         transpilers_fcn <- list()
         for (idx in idxs) {
-          transpilers_fcn <- c(transpilers_fcn, transpilers[[idx]])
+          transpilers_fcn <- c(transpilers_fcn, transpilers[idx])
         }
         drop <- duplicated(names(transpilers_fcn), fromLast = TRUE)
         transpilers_fcn <- transpilers_fcn[!drop]
