@@ -102,7 +102,7 @@ bquote_apply <- function(tmpl, ..., envir = parent.frame()) {
         f[at[nat]] <- list(NULL)
         e <- as.call(f)
       } else if (is.pairlist(e)) {
-        e[1] <- list(NULL)
+        e[at[nat]] <- list(NULL)
         e <- as.pairlist(e)
       } else {
         stop(sprintf("Unknown type of expression (please report to the maintainer): %s", sQuote(paste(deparse(e), collapse = "\\n"))))
