@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## (45s) to limit total check time
 if (requireNamespace("GenomicAlignments") && requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)
 library(GenomicAlignments)

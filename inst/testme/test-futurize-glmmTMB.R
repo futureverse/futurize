@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## (35s) to limit total check time
 if (requireNamespace("glmmTMB") && getRversion() >= "4.4.0") {
 library(futurize)
 library(glmmTMB)

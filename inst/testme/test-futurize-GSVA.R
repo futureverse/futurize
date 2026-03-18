@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## (20s) to limit total check time
 if (requireNamespace("GSVA") && requireNamespace("doFuture")) {
 library(futurize)
 library(GSVA)

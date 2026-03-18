@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## (20s) to limit total check time
 if (requireNamespace("fgsea") && requireNamespace("doFuture")) {
 library(futurize)
 library(fgsea)
