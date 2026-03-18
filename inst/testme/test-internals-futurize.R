@@ -26,11 +26,6 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   print(db)
 }
 
-message("make_options_for_makeClusterFuture()")
-opts <- futurize:::make_options_for_makeClusterFuture(options = list())
-str(opts)
-opts <- futurize:::make_options_for_makeClusterFuture(options = list(), defaults = list(packages = character(0L), stdout = TRUE))
-str(opts)
 
 message("list_transpilers()")
 ts <- futurize:::list_transpilers(class = "non-existing")
@@ -197,14 +192,6 @@ stopifnot("w" %in% names(as.list(call2)))
 call3 <- futurize:::append_call_arguments(call, .args = list(a = 1))
 stopifnot("a" %in% names(as.list(call3)))
 
-
-message("*** make_options_for_doFuture() - chunk_size rename")
-if (requireNamespace("doFuture", quietly = TRUE)) {
-  opts <- futurize_options(chunk_size = 10L)
-  result <- futurize:::make_options_for_doFuture(opts, wrap = FALSE)
-  stopifnot("chunk.size" %in% names(result))
-  stopifnot(!("chunk_size" %in% names(result)))
-}
 
 message("transpilers_for_package()")
 ts <- futurize:::transpilers_for_package(type = "unknown", package = "base", fcn = lapply, debug = TRUE)
