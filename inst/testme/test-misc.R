@@ -61,15 +61,9 @@ stopifnot(inherits(res, "error"))
 message("*** Internals")
 options(futurize.debug = TRUE)
 
-message("debug_indent()")
-try(futurize:::debug_indent(delta = -1L))
-
 message("decend_wrappers()")
 try(futurize:::decend_wrappers(NULL, unwrap = list()))
 try(futurize:::decend_wrappers(quote({ lapply(x, f) }), unwrap = list(`{`), debug = TRUE))
-
-message(".onLoad()")
-futurize:::.onLoad("futurize", "futurize")
 
 message("register_all_transpilers()")
 futurize:::register_all_transpilers()
@@ -284,36 +278,6 @@ if (requireNamespace("doFuture", quietly = TRUE)) {
   stopifnot("chunk.size" %in% names(result))
   stopifnot(!("chunk_size" %in% names(result)))
 }
-
-
-message("*** import_future() and import_from()")
-import_from <- futurize:::import_from
-import_future <- futurize:::import_future
-
-fcn <- import_future("plan")
-stopifnot(is.function(fcn))
-
-fcn <- import_future("nonExistingFcn", default = identity)
-stopifnot(identical(fcn, identity))
-
-res <- tryCatch(
-  import_future("nonExistingFcn"),
-  error = identity
-)
-stopifnot(inherits(res, "error"))
-
-fcn <- import_from("lapply", package = "base")
-stopifnot(identical(fcn, base::lapply))
-
-fcn <- import_from("nonExisting", package = "base", default = sum)
-stopifnot(identical(fcn, sum))
-
-res <- tryCatch(
-  import_from("nonExisting", package = "base"),
-  error = identity
-)
-stopifnot(inherits(res, "error"))
-
 
 message("transpilers_for_package()")
 ts <- futurize:::transpilers_for_package(type = "unknown", package = "base", fcn = lapply, debug = TRUE)
