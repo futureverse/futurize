@@ -33,7 +33,7 @@ append_transpilers_for_glmmTMB <- function() {
       }
 
       list(
-        label = sprintf("glmmTMB::%s() ~> glmmTMB::%s(..., parallel = TRUE)", name, name),
+        label = sprintf("glmmTMB::%s() ~> glmmTMB::%s(..., parallel = \"snow\")", name, name),
         transpiler = make_futurize_for_makeClusterFuture(args = list(
           parallel = "snow",
           ncpus = 2L,   ## only used for test ncpus > 1
