@@ -7,7 +7,11 @@ message("*** Internals")
 # Debug functions
 # --------------------------------------------------------------------
 message("debug_indent()")
-try(futurize:::debug_indent(delta = -1L))
+oopts <- options(warn = 2L)
+res <- tryCatch(futurize:::debug_indent(delta = -1L), error = identity)
+print(res)
+stopifnot(inherits(res, "error"))
+options(oopts)
 
 
 # --------------------------------------------------------------------
