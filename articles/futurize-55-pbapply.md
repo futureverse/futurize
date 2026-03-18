@@ -83,9 +83,9 @@ ys <- pblapply(xs, slow_fcn) |> futurize()
 ```
 
 Comment: The `message("x = ", x)` output is not relayed to the main R
-session by design, because if it would, then it would clutter up the
-progress bar that **pbapply** renders, which is the whole purpose of
-using **pbapply** in the first place.
+session by design, because if it were, it would clutter up the progress
+bar that **pbapply** renders, which is the whole purpose of using
+**pbapply** in the first place.
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel

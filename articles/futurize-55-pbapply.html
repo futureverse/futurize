@@ -43,7 +43,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-map-reduce" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Map Reduce</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-map-reduce">
 <li><h6 class="dropdown-header" data-toc-skip>Map-reduce packages supporting futurize()</h6></li>
@@ -52,6 +52,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-22-crossmap.html">Parallelize 'crossmap' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-31-plyr.html">Parallelize 'plyr' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-51-foreach.html">Parallelize 'foreach' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-55-pbapply.html">Parallelize 'pbapply' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
   </ul>
 </li>
@@ -61,6 +62,7 @@
 <li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-boot.html">Parallelize 'boot' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-caret.html">Parallelize 'caret' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-fwb.html">Parallelize 'fwb' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-gamlss.html">Parallelize 'gamlss' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-glmnet.html">Parallelize 'glmnet' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-glmmTMB.html">Parallelize 'glmmTMB' functions</a></li>
@@ -233,8 +235,8 @@ easily make it evaluate in parallel by piping to
 <span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span></span>
 <span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://peter.solymos.org/pbapply/reference/pbapply.html" class="external-link">pblapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Comment: The <code>message("x = ", x)</code> output is not relayed to
-the main R session by design, because if it would, then it would clutter
-up the progress bar that <strong>pbapply</strong> renders, which is the
+the main R session by design, because if it were, it would clutter up
+the progress bar that <strong>pbapply</strong> renders, which is the
 whole purpose of using <strong>pbapply</strong> in the first place.</p>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
