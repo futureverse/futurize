@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## (35s) to limit total check time
 if (requireNamespace("SingleCellExperiment") && requireNamespace("scuttle") && requireNamespace("doFuture")) {
 library(futurize)
 library(SingleCellExperiment)

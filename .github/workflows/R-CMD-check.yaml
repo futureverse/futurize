@@ -40,7 +40,9 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: ${{ matrix.config.without_suggests && 'false' || 'true' }}
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
+      _R_CHECK_TESTS_ELAPSED_THRESHOLD_: 0
       RCMDCHECK_ERROR_ON: note
+      NOT_CRAN: true
       ## Specific to futures
 #      R_FUTURE_CONNECTIONS_ONMISUSE: "error[details=TRUE]"
       R_FUTURE_GLOBALENV_ONMISUSE: "error"

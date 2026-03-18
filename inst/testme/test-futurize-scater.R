@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## (35s) to limit total check time
 if (requireNamespace("scater") && requireNamespace("doFuture")) {
 library(futurize)
 library(scater)
