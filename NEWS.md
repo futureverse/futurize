@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 0.2.0 (2026-03-17)
 
 Following the initial CRAN release in January 2026, this version adds
 `futurize()` support for many more CRAN and Bioconductor packages. To
