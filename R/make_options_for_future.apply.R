@@ -11,7 +11,7 @@ make_options_for_future.apply <- local({
 
   function(options, fcn, defaults = NULL) {
     ## Nothing to do?
-    if (length(options) == 0L) return(options)
+    if (length(options) == 0L && length(defaults) == 0L) return(options)
 
     if (is.null(defaults_base)) {
       defaults_base <<- get_defaults(future.apply::future_lapply)
