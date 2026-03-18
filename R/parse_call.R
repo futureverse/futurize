@@ -87,7 +87,11 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
     repeat {
       ns_name <- environmentName(tenv)
       if (nzchar(ns_name)) break
-      tenv <- parent.env(tenv)
+      tenv_next <- parent.env(tenv)
+      if (identical(tenv_next, tenv)) {
+        stop(sprintf("Internal error: infinite environment stack in parse_call(): %s", sQuote(ns_name)))
+      }
+      tenv <- tenv_next
     }
     
     stopifnot(nzchar(ns_name))
