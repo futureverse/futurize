@@ -166,5 +166,35 @@ stopifnot(delta[["created"]] > 0L)
 stopifnot(identical(y, truth3))
 
 
+## Wrapped in local(..., envir = ...) - not the last element
+e <- new.env()
+truth4 <- local(lapply(1:3, identity), envir = e)
+counters <- plan("backend")[["counters"]]
+y <- local({ lapply(1:3, identity) }, envir = e) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+stopifnot(identical(y, truth4))
+
+e <- new.env()
+truth5 <- local({ lapply(1:3, identity) }, envir = e)
+counters <- plan("backend")[["counters"]]
+y <- local({ lapply(1:3, identity) }, envir = e) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+stopifnot(identical(y, truth5))
+
+
+## Wrapped in suppressWarnings(..., classes = ...) - not the last element
+truth6 <- suppressWarnings({ lapply(1:3, identity) }, classes = "warning")
+counters <- plan("backend")[["counters"]]
+y <- suppressWarnings({ lapply(1:3, identity) }, classes = "warning") |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+stopifnot(identical(y, truth6))
+
+
 plan(sequential)
 } ## if (requireNamespace("future.apply"))

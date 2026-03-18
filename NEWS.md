@@ -104,6 +104,11 @@ for futurizing many more packages going forward.
  * `futurize()` option `chunk_size` was silently ignored for
    transpilers relying on **doFuture**.
 
+ * `futurize()` failed to descend wrapped calls such as `local()` and
+   `suppressWarnings()` that specified additional arguments. For
+   example, `local({ lapply( ... ) }, envir = env) |> futurize()`
+   would produce a parsing error.
+
  * Packages not supporting specifying a random seed will now produce
    an informative error message if `futurize(seed = <numeric>)` is
    specified, e.g. **boot**, **glmmTMB**, **lme4**, **mgcv**, and
