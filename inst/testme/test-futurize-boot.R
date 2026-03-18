@@ -20,7 +20,11 @@ b_truth <- boot(city, ratio, R = 999, stype = "w")
 print(b_truth)
 
 set.seed(42)
+counters <- plan("backend")[["counters"]]
 b <- boot(city, ratio, R = 999, stype = "w") |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(b)
 
 stopifnot(all_equal(b, b_truth))

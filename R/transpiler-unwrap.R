@@ -1,9 +1,9 @@
-decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap", debug = FALSE) {
+descend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap", debug = FALSE) {
   ## Nothing to do?
-  if (length(unwrap) == 0) return(1L)
-  
+  if (length(unwrap) == 0 || !is.call(expr)) return(1L)
+
   if (debug) {
-    mdebug_push("decend_wrappers() ...")
+    mdebug_push("descend_wrappers() ...")
     on.exit(mdebug_pop())
   }
 
@@ -12,7 +12,7 @@ decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap
     mdebug("Call:")
     mprint(call)
   }
-  
+
   call_info <- parse_call(call, envir = envir, what = what, debug = debug)
   fcn <- call_info[["fcn"]]
   fcn_name <- call_info[["fcn_name"]]
@@ -28,13 +28,23 @@ decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap
         )
         mdebugf("Wrapped in %s", info)
       }
-      index <- length(expr)
-      return(c(length(expr), decend_wrappers(expr[[index]], envir = envir, unwrap = unwrap, what = what, debug = debug)))
+
+      ## Which argument is the wrapped expression?
+      index <- if (identical(fcn, base::`{`)) {
+        length(expr)
+      } else {
+        2L
+      }
+
+      ## Safety check
+      if (index > length(expr)) return(1L)
+
+      return(c(index, descend_wrappers(expr[[index]], envir = envir, unwrap = unwrap, what = what, debug = debug)))
     } ## if (identical(fcn, wrapper)
   } ## for (wrapper in unwrap)
-  
+
   return(1L)
-} ## decend_wrappers()
+} ## descend_wrappers()
 
 
 
@@ -45,7 +55,7 @@ print.transpiled_call <- function(x, ...) {
   ...x_org... <- x
 
   ## Make sure attributes are displayed
-  ## Wooa; this might be more convoluted than writing a custom
+  ## Whoa; this might be more convoluted than writing a custom
   ## print() method from scratch
   ...x... <- as.list(x)
   for (...kk... in seq_along(...x...)) {

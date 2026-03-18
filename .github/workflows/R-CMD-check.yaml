@@ -6,7 +6,7 @@ jobs:
   R-CMD-check:
     if: "! contains(github.event.head_commit.message, '[ci skip]')"    
 
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     runs-on: ${{ matrix.config.os }}
 
@@ -21,6 +21,7 @@ jobs:
           - {os: macOS-latest,   r: 'release'  }
           - {os: ubuntu-latest,  r: 'devel'    }
           - {os: ubuntu-latest,  r: 'release'  }
+          - {os: ubuntu-latest,  r: 'release', without_suggests: true, label: 'w/out suggests' }
           - {os: ubuntu-latest,  r: 'oldrel'   }
 #          - {os: ubuntu-latest,  r: '4.1'      }
  
@@ -35,10 +36,13 @@ jobs:
       ## R CMD check
       _R_CHECK_CRAN_INCOMING_: false
       _R_CHECK_MATRIX_DATA_: true
-      _R_CHECK_SUGGESTS_ONLY_: true
+      _R_CHECK_SUGGESTS_ONLY_: ${{ matrix.config.without_suggests && 'true' || 'false' }}
+      _R_CHECK_FORCE_SUGGESTS_: ${{ matrix.config.without_suggests && 'false' || 'true' }}
       _R_CHECK_THINGS_IN_TEMP_DIR_: true
       _R_CHECK_TESTS_NLINES_: 300
+      _R_CHECK_TESTS_ELAPSED_THRESHOLD_: 0
       RCMDCHECK_ERROR_ON: note
+      NOT_CRAN: true
       ## Specific to futures
 #      R_FUTURE_CONNECTIONS_ONMISUSE: "error[details=TRUE]"
       R_FUTURE_GLOBALENV_ONMISUSE: "error"
@@ -61,6 +65,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
           
+      - name: Remove Suggests that require a newer version of R
+        if: matrix.config.r == 'oldrel'
+        run: |
+          ## Bioc package 'scater' depends on CRAN package 'ggrepel',
+          ## which requires R (>= 4.5.0) as of ggrepel 0.9.7 (2026-02-25)
+          sed -i '/scater,/d' DESCRIPTION
+        shell: bash {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
@@ -71,8 +83,6 @@ jobs:
       - name: Install package itself (special case)
         run: |
           install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
-          remotes::install_github("futureverse/doFuture", ref = "develop")
-          
         shell: Rscript {0}
 
       - name: Session info

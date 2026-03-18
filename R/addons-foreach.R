@@ -9,50 +9,44 @@
 #   })
 #
 append_transpilers_for_doFuture <- function() {
-  transpiler <- eval(bquote(function(expr, options = NULL) {
+  template <- bquote_compile(local({
+    oopts <- options(future.disposable = .(OPTS))
+    on.exit(options(oopts))
+    .(EXPR)
+  }))
+  
+  transpiler <- function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
     call <- expr[[2]]
     fcn <- call[[1]]
+    
     ## times()?
     if (identical(fcn, as.symbol("times")) ||
         identical(fcn, quote(foreach::times))) {
-      expr2 <- quote(local({
-        oopts <- options(future.disposable = OPTS)
-        on.exit(options(oopts))
-        EXPR
-      }))
-      idx_OPTS <- c(2L, 2L, 3L, 2L)
-      idx_EXPR <- c(2L, 4L)
-      
-      ## SPECIAL CASE: Are we running via 'covr'?
-      if (length(expr2[[c(2L, 2L, 3L)]]) > 2L) {
-        idx_OPTS <- c(2L, 2L, 3L, 3L)
-      }
-      
       ## Default to seed = TRUE
       if (!"seed" %in% attr(options, "specified")) {
         options[["seed"]] <- TRUE
       }
-      
-      expr2[[idx_OPTS]] <- options
-      expr2[[idx_EXPR]] <- expr
-      expr <- expr2
-    } else if (identical(fcn, as.symbol("%:%")) ||
-               identical(fcn, quote(foreach::`%:%`))) {
-      options <- make_options_for_doFuture(options, wrap = TRUE)
-      idx_EXPR <- c(2L, 3L)
-      parts <- c(as.list(expr[[idx_EXPR]]), options)
-      expr[[idx_EXPR]] <- as.call(parts)
+      expr <- bquote_apply(template,
+        OPTS = options,
+        EXPR = expr
+      )
     } else {
       options <- make_options_for_doFuture(options, wrap = TRUE)
-      idx_EXPR <- c(2L)
-      parts <- c(as.list(expr[[idx_EXPR]]), options)
-      expr[[idx_EXPR]] <- as.call(parts)
+      if (identical(fcn, as.symbol("%:%")) ||
+               identical(fcn, quote(foreach::`%:%`))) {
+        idx_EXPR <- 2:3
+      } else {
+        idx_EXPR <- 2L
+      }
+
+      expr[[idx_EXPR]] <- append_call_arguments(expr[[idx_EXPR]],
+        .args = options
+      )
     }
     expr
-  }))
-  body(transpiler) <- body(transpiler)
+  }
 
   transpilers <- list()
   transpilers[["%do%"]] <- list(
@@ -77,41 +71,3 @@ append_transpilers_for_doFuture <- function() {
   ## Return required packages
   c("doFuture")
 }
-
-
-make_options_for_doFuture <- local({
-  defaults_base <- NULL
-
-  function(options, defaults = NULL, wrap = TRUE) {
-    ## Nothing to do?
-    if (length(options) == 0 && length(defaults) == 0) return(options)
-
-    if (is.null(defaults_base)) {
-      ## The 'doFuture' package already imports 'future.apply'
-      defaults_base <<- names(formals(future.apply::future_lapply))
-    }
-
-    if (length(defaults) > 0) {
-      names <- setdiff(names(defaults), attr(options, "specified"))
-      for (name in names) options[[name]] <- defaults[[name]]
-    }
-
-    names <- names(options)
-
-    ## Remap chunk_size -> chunk.size
-    idxs <- which(names == "chunk_size")
-    if (length(idxs) > 0) names[idxs] <- "chunk.size"
-
-    ## Remap future options for doFuture
-    names <- sprintf("future.%s", names)
-
-    ## Silently drop unknown future options
-    keep <- intersect(defaults_base, names)
-    idxs <- match(keep, table = names)
-    options <- options[idxs]
-    
-    if (wrap) options <- list(.options.future = options)
-
-    options
-  }
-})

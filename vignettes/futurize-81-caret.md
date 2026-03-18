@@ -5,16 +5,16 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{caret}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 
 <div class="logos">
-<img src="../man/figures/cran-caret-logo.svg" alt="The 'caret' image">
+<img src="../man/figures/cran-caret-logo.webp" alt="The 'caret' image">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code
@@ -109,3 +109,4 @@ The following **caret** functions are supported by `futurize()`:
 
 
 [caret]: https://cran.r-project.org/package=caret
+[other parallel backends]: https://www.futureverse.org/backends.html

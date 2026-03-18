@@ -2,6 +2,8 @@
 #' @tags globals
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 ## Test adopted from http://stackoverflow.com/questions/42561088/nested-do-call-within-a-foreach-dopar-environment-cant-find-function-passed-w
@@ -77,3 +79,5 @@ for (strategy in supportedStrategies()) {
 message("*** Tricky globals requiring recursive search ... DONE")
 
 
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

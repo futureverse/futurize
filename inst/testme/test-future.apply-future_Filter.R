@@ -1,6 +1,8 @@
 #' @tags future_Filter
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_Filter() ...")
@@ -26,3 +28,5 @@ for (strategy in supportedStrategies()) {
 plan(sequential)
 
 message("*** future_Filter() ... DONE")
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

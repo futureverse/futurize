@@ -1,6 +1,8 @@
 #' @tags future_lapply future_mapply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_*apply() and 'future.stdout' ...")
@@ -70,3 +72,5 @@ for (cores in 1:availCores) {
 message("*** future_*apply() and 'future.stdout' ... DONE")
 
 
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

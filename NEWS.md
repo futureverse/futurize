@@ -1,9 +1,131 @@
+# Version 0.2.0 (2026-03-17)
+
+Following the initial CRAN release in January 2026, this version adds
+`futurize()` support for many more CRAN and Bioconductor packages. To
+achieve this, support for transpiling S3 and S4 methods was added,
+expanding beyond regular and generic functions. This opens the door
+for futurizing many more packages going forward.
+
+## Significant Changes
+
+ * Add support for futurizing S3 methods where the S3 generic is
+   defined in another package.
+
+ * Add support for futurizing S4 methods where the S4 generic is
+   defined in another package.
+
+## New Features
+
+ * Add support for disabling `futurize()` transpilation via R option
+   `futurize.enable`, which may be set via environment variable
+   `R_FUTURIZE_ENABLE` when the package is loaded.
+
+## New Transpilers
+
+ * Add support for map-reduce CRAN package **pbapply**, e.g. `y <-
+   pblapply(...)  |> futurize()`.
+
+ * Add support for domain-specific Bioconductor package **DESeq2**,
+   e.g. `dds <- DESeq(dds) |> futurize()`.
+
+ * Add support for domain-specific Bioconductor package **fgsea**,
+   e.g. `res <- fgsea(pathways, stats) |> futurize()`.
+
+ * Add support for domain-specific Bioconductor package
+   **GenomicAlignments**, e.g. `se <- summarizeOverlaps(features,
+   bam_files) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **fwb**, e.g. `b <-
+   fwb(data, statistic, R = 1000) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **gamlss**,
+   e.g. `cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |>
+   futurize()`.
+
+ * Add support for domain-specific CRAN package **glmmTMB**, e.g. `pr
+   <- profile(m) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **kernelshap**,
+   e.g. `ks <- kernelshap(model, X = x_explain, bg_X = bg_X) |>
+   futurize()`.
+
+ * Add support for domain-specific Bioconductor package **GSVA**,
+   e.g. `es <- gsva(gsvaParam(expr, geneSets)) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **metafor**, e.g. `pr
+   <- profile(fit) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **partykit**, e.g. `cf
+   <- cforest(dist ~ speed, data = cars) |> futurize()`.
+
+
+ * Add support for domain-specific CRAN package **riskRegression**,
+   e.g. `sc <- Score(list("CSC" = fit), data = d, formula =
+   Hist(time, event) ~ 1, times = 5, B = 100, split.method =
+   "bootcv") |> futurize()`.
+
+ * Add support for domain-specific Bioconductor package **scater**,
+   e.g. `sce <- runPCA(sce) |> futurize()`.
+
+ * Add support for domain-specific Bioconductor package **scuttle**,
+   e.g. `sce <- logNormCounts(sce) |> futurize()`.
+
+ * Add support for Bioconductor package **Rsamtools**,
+   e.g. `counts <- countBam(bamViews) |> futurize()`.
+
+ * Add support for Bioconductor package **SingleCellExperiment**,
+   e.g. `result <- applySCE(sce, perCellQCMetrics) |> futurize()`.
+
+ * Add support for Bioconductor package **sva**,
+   e.g. `adjusted <- ComBat(dat, batch) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **seriation**, e.g. `o
+   <- seriate_best(d_supreme) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **SimDesign**,
+   e.g. `res <- runSimulation(design, replications = 1000, generate,
+   analyse, summarise) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **shapr**,
+   e.g. `result <- explain(model, x_explain, x_train, approach, phi0)
+   |> futurize()`.
+
+ * Add support for domain-specific CRAN package **strucchange**,
+   e.g. `bp <- breakpoints(Nile ~ 1) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **TSP**, e.g. `tour <-
+   solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **vegan**, e.g. `md <-
+   mrpp(dune, Management) |> futurize()`.
+
+## Bug Fixes
+
+ * `futurize()` option `chunk_size` was silently ignored for
+   transpilers relying on **doFuture**.
+
+ * `futurize()` failed to descend wrapped calls such as `local()` and
+   `suppressWarnings()` that specified additional arguments. For
+   example, `local({ lapply( ... ) }, envir = env) |> futurize()`
+   would produce a parsing error.
+
+ * Packages not supporting specifying a random seed will now produce
+   an informative error message if `futurize(seed = <numeric>)` is
+   specified, e.g. **boot**, **glmmTMB**, **lme4**, **mgcv**, and
+   **vegan**.
+   
+ 
 # Version 0.1.0 (2026-01-18)
 
 This is the first version submitted to CRAN.
 
 
 # Version 0.0.6 (2026-01-14)
+
+## New Transpilers
+
+ * Add support for domain-specific CRAN package **mgcv**, e.g. `b <-
+   bam(...) |> futurize()`.
 
 ## New Features
 
@@ -22,8 +144,6 @@ This is the first version submitted to CRAN.
  * Error messages now distinguish between infix operators
    (e.g. `%do%`) and functions (e.g. `lapply()`).
 
- * Add support for **mgcv**, e.g. `b <- bam(...) |> futurize()`.
-
 
 # Version 0.0.5 (2025-11-26)
 
@@ -37,6 +157,11 @@ This is the first version submitted to CRAN.
 
 # Version 0.0.4 (2025-09-26)
 
+## New Transpilers
+
+ * Add support for domain-specific CRAN package **tm**, e.g. `m <-
+   tm_map(crude, content_transformer(tolower)) |> futurize()`.
+
 ## New Features
 
  * Handle nested transpilers.
@@ -48,11 +173,18 @@ This is the first version submitted to CRAN.
  * Add `futurize(FALSE)` and `futurize(TRUE)` for disabling and
    enabling futurizing of calls.
 
- * Add support for **tm**, e.g. `m <- tm_map(crude,
-   content_transformer(tolower)) |> futurize()`.
-
  
 # Version 0.0.3 (2025-08-20)
+
+## New Transpilers
+
+ * Add support for domain-specific CRAN package **caret**, e.g. `model
+   <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
+   |> futurize()`.
+   
+ * Add support for `times()` and `%:%` of **foreach**, which require
+   special care when it comes to passing future options,
+   e.g. `futurize(seed = FALSE)`.
 
 ## New Features
 
@@ -62,13 +194,6 @@ This is the first version submitted to CRAN.
 
  * `futurize()` gained argument `eval`, which can be used to return
    the futurized expression instead of evaluating it.
-
- * Add support for **caret**, e.g. `model <- train(Species ~ ., data =
-   iris, method = "rf", trControl = ctrl) |> futurize()`.
-   
- * Add support for `times()` and `%:%` of **foreach**, which require
-   special care when it comes to passing future options,
-   e.g. `futurize(seed = FALSE)`.
  
 
 # Version 0.0.2 (2025-05-23)
@@ -83,32 +208,35 @@ one unifying, unique set of arguments that can be used to configure
 how the futures are resolved, how they are partitioned into chunks,
 and how output and conditions are relayed, among other things.
 
-## New Features
+## New Transpilers
 
  * Add support for base R, e.g. `y <- lapply(xs, fcn) |> futurize()`,
    `y <- by(xs, idxs, fcn) |> futurize()`, and `xs <- kernapply(x, k)
    |> futurize()`.
 
- * Add support for **purrr**, e.g. `y <- map(xs, fcn) |> futurize()`.
+ * Add support for map-reduce CRAN package **purrr**, e.g. `y <-
+   map(xs, fcn) |> futurize()`.
  
- * Add support for **crossmap**, e.g. `y <- xmap_dbl(xs, fcn) |> futurize()`.
+ * Add support for map-reduce CRAN package **crossmap**, e.g. `y <-
+   xmap_dbl(xs, fcn) |> futurize()`.
  
- * Add support for **foreach**, e.g. `y <- foreach(x = xs) %do% {
-   fcn(x) } |> futurize()`.
+ * Add support for map-reduce CRAN package **foreach**, e.g. `y <-
+   foreach(x = xs) %do% { fcn(x) } |> futurize()`.
  
- * Add support for **plyr**, e.g. `y <- llply(xs, fcn) |>
-   futurize()`.
+ * Add support for map-reduce CRAN package **plyr**, e.g. `y <-
+   llply(xs, fcn) |> futurize()`.
  
- * Add support for **BiocParallel**, e.g. `y <- bplapply(xs, fcn) |>
-   futurize()`.
+ * Add support for map-reduce Bioconductor package **BiocParallel**,
+   e.g. `y <- bplapply(xs, fcn) |> futurize()`.
 
- * Add support for **boot**, e.g. `b <- boot(data, statistic, R =
-   1000) |> futurize()`.
+ * Add support for domain-specific CRAN package **boot**, e.g. `b <-
+   boot(data, statistic, R = 1000) |> futurize()`.
 
- * Add support for **glmnet**, e.g. `cv <- cv.glmnet(x, y) |>
-   futurize()`.
+ * Add support for domain-specific CRAN package **glmnet**, e.g. `cv
+   <- cv.glmnet(x, y) |> futurize()`.
 
- * Add support for **lme4**, e.g. `gm <- allFit(gm) |> futurize()`.
+ * Add support for domain-specific CRAN package **lme4**, e.g. `gm <-
+   allFit(gm) |> futurize()`.
 
  
 # Version 0.0.1 (2025-03-07)

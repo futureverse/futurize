@@ -5,16 +5,16 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{crossmap}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 
 <div class="logos">
-<img src="../man/figures/crossmap-logo.png" alt="The 'crossmap' image">
+<img src="../man/figures/crossmap-logo.webp" alt="The 'crossmap' image">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code
@@ -35,30 +35,29 @@ ys <- xmap(xs, ~ .y * .x) |> futurize()
 
 # Introduction
 
-This vignette demonstrates how to use this approach to parallelize
-**[crossmap]** functions such as `xmap()` and `xwalk()`.
-
-The **crossmap** `xmap()` function can be used to iterate over every
-combination of elements in an input list. For example,
+The **[crossmap]** package adds to the **[purrr]**-set of functions. For example, `xmap()` can apply a function to every combination of elements in a list, e.g.
 
 ```r
 library(crossmap)
-xs <- list(1:5, 1:5)
-ys <- xmap(xs, ~ .y * .x)
+
+# Multiply the 15 combinations of values in 1:3 and -2:2
+xs <- list(1:3, -2:2)
+ys <- xmap(xs, function(x, y) x * y) |> futurize()
 ```
 
 Here `xmap()` evaluates sequentially over each combination of (.y, .x)
-elements. We can easily make it evaluate in parallel, by using:
+elements. The **crossmap** package provides its own future-counterpart functions, e.g. there is a `future_xmap()` that mimics `xmap()`. The `futurize()` function transpiles `xmap()` into `future_xmap()`, meaning you can do:
 
 ```r
 library(futurize)
-library(crossmap)
-xs <- list(1:5, 1:5)
-ys <- xmap(xs, ~ .y * .x) |> futurize()
+
+# Multiply the 15 combinations of values in 1:3 and -2:2
+xs <- list(1:3, -2:2)
+ys <- xmap(xs, function(x, y) x * y) |> futurize()
 ```
 
-This will distribute the calculations across the available parallel
-workers, given that we have set parallel workers, e.g.
+to process this `xmap()` call concurrently, which allows you to
+execute it on a set of parallel workers, e.g.
 
 ```r
 plan(multisession)
@@ -94,3 +93,4 @@ The `futurize()` function supports parallelization of the following **crossmap**
 
 
 [crossmap]: https://cran.r-project.org/package=crossmap
+[other parallel backends]: https://www.futureverse.org/backends.html

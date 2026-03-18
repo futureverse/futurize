@@ -23,7 +23,8 @@ register_vignette_engine_during_build_only <- function(pkgname) {
         gif = "image/gif",
         jpg = "image/jpeg",
         png = "image/png",
-        svg = "image/svg+xml"
+        svg = "image/svg+xml",
+        webp = "image/webp"
       )
       html <- unlist(strsplit(html, split = "\n", fixed = TRUE))
       for (ext in names(mimes)) {

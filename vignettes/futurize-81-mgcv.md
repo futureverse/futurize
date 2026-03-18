@@ -5,16 +5,16 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{mgcv}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 
 <div class="logos">
-<img src="../man/figures/cran-mgcv-logo.svg" alt="The 'mgcv' image">
+<img src="../man/figures/cran-mgcv-logo.webp" alt="The 'mgcv' image">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code
@@ -98,7 +98,44 @@ plan(future.batchtools::batchtools_slurm)
 The following **mgcv** functions are supported by `futurize()`:
 
 * `bam()`
-* `predict.bam()`
+* `predict()` for 'bam'
+
+
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `bam()` using
+the **parallel** package directly, without **futurize**:
+
+```r
+library(mgcv)
+library(parallel)
+
+## Adopted from example("bam", package = "mgcv")
+dat <- gamSim(1, n = 25000, dist = "normal", scale = 20)
+bs <- "cr"
+k <- 12
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Fit the model in parallel
+b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) +
+             s(x3, bs = bs), data = dat, cluster = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster
+lifecycle. If you forget to call `stopCluster()`, or if your code
+errors out before reaching it, you leak background R processes. You
+also have to decide upfront how many CPUs to use and what cluster
+type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With
+**futurize**, all of this is handled for you - just pipe to
+`futurize()` and control the backend with `plan()`.
 
 
 [mgcv]: https://cran.r-project.org/package=mgcv
+[other parallel backends]: https://www.futureverse.org/backends.html

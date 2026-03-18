@@ -87,6 +87,12 @@
 #'
 #' @example incl/futurize.R
 #'
+#' @seealso
+#' To see which CRAN and Bioconductor packages are supported, use
+#' [futurize_supported_packages()].
+#' To see which functions a specific package supports, use
+#' [futurize_supported_functions()].
+#'
 #' @aliases fz
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
@@ -97,7 +103,9 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
     on.exit(mdebug_pop())
   }
 
-  transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
+  disable <- !isTRUE(getOption("futurize.enable", TRUE))
+  
+  transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, disable = disable, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 

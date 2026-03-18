@@ -1,6 +1,8 @@
 #' @tags future_lapply
 #' @tags sequential multisession multicore
 
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 library(futurize)
 
 message("*** future_lapply() and RNGs ...")
@@ -200,3 +202,5 @@ for (name in names(seed_sets)) {
 message("*** future_lapply() and RNGs ... DONE")
 
 
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

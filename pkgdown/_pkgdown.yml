@@ -11,8 +11,97 @@ home:
 
 navbar:
   structure:
+    left: [intro, reference, articles-mapreduce, articles-cran, articles-bioc, news]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
+    articles-mapreduce:
+      text: Map Reduce
+      menu:
+      - text: Map-reduce packages supporting futurize()
+      - text: Parallelize base-R apply functions
+        href: articles/futurize-11-apply.html
+      - text: Parallelize 'purrr' functions
+        href: articles/futurize-21-purrr.html
+      - text: Parallelize 'crossmap' functions
+        href: articles/futurize-22-crossmap.html
+      - text: Parallelize 'plyr' functions
+        href: articles/futurize-31-plyr.html
+      - text: Parallelize 'foreach' functions
+        href: articles/futurize-51-foreach.html
+      - text: Parallelize 'pbapply' functions
+        href: articles/futurize-55-pbapply.html
+      - text: Parallelize 'BiocParallel' functions
+        href: articles/futurize-61-BiocParallel.html
+    articles-cran:
+      text: CRAN focus
+      menu:
+      - text: CRAN packages supporting futurize()
+      - text: Parallelize 'boot' functions
+        href: articles/futurize-81-boot.html
+      - text: Parallelize 'caret' functions
+        href: articles/futurize-81-caret.html
+      - text: Parallelize 'fwb' functions
+        href: articles/futurize-81-fwb.html
+      - text: Parallelize 'gamlss' functions
+        href: articles/futurize-81-gamlss.html
+      - text: Parallelize 'glmnet' functions
+        href: articles/futurize-81-glmnet.html
+      - text: Parallelize 'glmmTMB' functions
+        href: articles/futurize-81-glmmTMB.html
+      - text: Parallelize 'kernelshap' functions
+        href: articles/futurize-81-kernelshap.html
+      - text: Parallelize 'lme4' functions
+        href: articles/futurize-81-lme4.html
+      - text: Parallelize 'metafor' functions
+        href: articles/futurize-81-metafor.html
+      - text: Parallelize 'mgcv' functions
+        href: articles/futurize-81-mgcv.html
+      - text: Parallelize 'partykit' functions
+        href: articles/futurize-81-partykit.html
+      - text: Parallelize 'riskRegression' functions
+        href: articles/futurize-81-riskRegression.html
+      - text: Parallelize 'seriation' functions
+        href: articles/futurize-81-seriation.html
+      - text: Parallelize 'shapr' functions
+        href: articles/futurize-81-shapr.html
+      - text: Parallelize 'SimDesign' functions
+        href: articles/futurize-81-SimDesign.html
+      - text: Parallelize 'strucchange' functions
+        href: articles/futurize-81-strucchange.html
+      - text: Parallelize 'tm' functions
+        href: articles/futurize-81-tm.html
+      - text: Parallelize 'TSP' functions
+        href: articles/futurize-81-TSP.html
+      - text: Parallelize 'vegan' functions
+        href: articles/futurize-81-vegan.html
+    articles-bioc:
+      text: Bioc focus
+      menu:
+      - text: Bioconductor packages supporting futurize()
+      - text: Parallelize 'BiocParallel' functions
+        href: articles/futurize-61-BiocParallel.html
+      - text: Parallelize 'DESeq2' functions
+        href: articles/futurize-81-DESeq2.html
+      - text: Parallelize 'fgsea' functions
+        href: articles/futurize-81-fgsea.html
+      - text: Parallelize 'GenomicAlignments' functions
+        href: articles/futurize-81-GenomicAlignments.html
+      - text: Parallelize 'GSVA' functions
+        href: articles/futurize-81-GSVA.html
+      - text: Parallelize 'Rsamtools' functions
+        href: articles/futurize-81-Rsamtools.html
+      - text: Parallelize 'scater' functions
+        href: articles/futurize-81-scater.html
+      - text: Parallelize 'scuttle' functions
+        href: articles/futurize-81-scuttle.html
+      - text: Parallelize 'SingleCellExperiment' functions
+        href: articles/futurize-81-SingleCellExperiment.html
+      - text: Parallelize 'sva' functions
+        href: articles/futurize-81-sva.html
+
+    news:
+      text: News
+      href: news/index.html
     futureverse:
       icon: fas fa-home
       href: https://www.futureverse.org/
@@ -35,6 +124,8 @@ navbar:
         href: https://future.mirai.futureverse.org
       - text: future.tests 
         href: https://future.tests.futureverse.org
+      - text: futurize (map-reduce)
+        href: https://futurize.futureverse.org
       - text: globals 
         href: https://globals.futureverse.org
       - text: listenv 
@@ -43,12 +134,10 @@ navbar:
         href: https://parallelly.futureverse.org
       - text: progressr 
         href: https://progressr.futureverse.org
-      - text: BiocParallel.FutureParam (experimental)
-        href: https://BiocParallel.FutureParam.futureverse.org
+      - text: future.p2p (experimental)
+        href: https://future.p2p.futureverse.org
       - text: future.tools (experimental)
         href: https://future.tools.futureverse.org
-      - text: future.mapreduce (experimental)
-        href: https://future.mapreduce.futureverse.org
       - text: marshal (experimental)
         href: https://marshal.futureverse.org
     cran:

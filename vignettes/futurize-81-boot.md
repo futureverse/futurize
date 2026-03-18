@@ -5,16 +5,16 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{boot}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 
 <div class="logos">
-<img src="../man/figures/cran-boot-logo.svg" alt="The 'boot' image">
+<img src="../man/figures/cran-boot-logo.webp" alt="The 'boot' image">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code
@@ -128,4 +128,38 @@ The following **boot** functions are supported by `futurize()`:
 * `tsboot()`
 
 
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `boot()` using
+the **parallel** package directly, without **futurize**:
+
+```r
+library(boot)
+library(parallel)
+
+ratio <- function(pop, w) sum(w * pop$x) / sum(w * pop$u)
+
+## Set up a PSOCK cluster
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+
+## Run bootstrapping in parallel
+b <- boot(bigcity, statistic = ratio, R = 999, stype = "w",
+          parallel = "snow", ncpus = ncpus, cl = cl)
+
+## Tear down the cluster
+stopCluster(cl)
+```
+
+This requires you to manually create and manage the cluster
+lifecycle. If you forget to call `stopCluster()`, or if your code
+errors out before reaching it, you leak background R processes. You
+also have to decide upfront how many CPUs to use and what cluster
+type to use. Switching to another parallel backend, e.g. a Slurm
+cluster, would require a completely different setup. With
+**futurize**, all of this is handled for you - just pipe to
+`futurize()` and control the backend with `plan()`.
+
+
 [boot]: https://cran.r-project.org/package=boot
+[other parallel backends]: https://www.futureverse.org/backends.html

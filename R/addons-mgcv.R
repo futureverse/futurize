@@ -6,75 +6,25 @@
 # })
 #
 append_transpilers_for_mgcv <- function() {
-  package <- "mgcv"
-
   if (getRversion() < "4.4.0") {
-    stop(sprintf("You are running R %s, but futurization of '%s' functions requires R (>= 4.4.0)", getRversion(), package))
+    stop(sprintf("You are running R %s, but futurization of 'mgcv' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  template <- quote(
-    local({
-      cl <- do.call(CALL, args = OPTS)
-      oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
-      on.exit(options(oopts))
-      EXPR
-    })
-  )
+  transpiler <- make_futurize_for_makeClusterFuture(args = list(
+    cluster = quote(cl)
+  ))
 
-  idx_CALL <- c(2, 2, 3, 2)
-  idx_OPTS <- c(2, 2, 3, 3)
-  idx_EXPR <- c(2, 5)
-
-  ## SPECIAL CASE: Are we running under 'covr'?
-  if (length(template[[idx_CALL]]) > 1) {
-    idx_CALL <- c(2, 2, 3, 3, 3, 2)
-    idx_OPTS <- c(2, 2, 3, 3, 3, 3)
-    idx_EXPR <- c(2, 5, 3, 3)
-  }
-
-  ## To please 'R CMD check' on R (< 4.4.0), where
-  ## future::makeClusterFuture() is not available
-  
-  call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
-  template[[idx_CALL]] <- call
-
-  transpiler <- eval(bquote(function(expr, options = NULL) {
-    ## Update 'OPTS'
-    template[[idx_OPTS]] <- make_options_for_makeClusterFuture(options)
-
-    ## Update 'EXPR'
-    parts <- c(
-      as.list(expr),
-      cluster = quote(cl)
-    )
-    template[[idx_EXPR]] <- as.call(parts)
-    
-    template
-  }))
-  body(transpiler) <- body(transpiler)
-
-  transpilers <- list()
-
-  ns <- getNamespace(package)
-  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
-  names <- exports
-  for (name in names) {
-    if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-      fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      if ("cluster" %in% names(formals(fcn))) {
-        transpilers[[name]] <- list(
-          label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = transpiler
-        )
-      }
+  transpilers <- make_package_transpilers("mgcv", FUN = function(fcn, name) {
+    if ("cluster" %in% names(formals(fcn))) {
+      list(
+        label = sprintf("mgcv::%s() ~> mgcv::%s(..., parallel = TRUE)", name, name),
+        transpiler = transpiler
+      )
     }
-  }
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
+  })
 
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "future")
+  c("mgcv", "future")
 }

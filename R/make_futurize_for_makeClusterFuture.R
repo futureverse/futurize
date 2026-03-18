@@ -1,0 +1,45 @@
+#' Create a futurize transpiler based on makeClusterFuture()
+#' 
+#' @param expr An \R call expression.
+#'
+#' @param args Named arguments to be appended to the call expression.
+#'
+#' @param template An optional custom template.
+#'
+#' @returns
+#' A transpiler function.
+#'
+#' @noRd
+make_futurize_for_makeClusterFuture <- function(defaults = list(), args = list(), template = NULL) {
+  if (is.null(template)) {
+    template <- bquote_compile(
+      local({
+        cl <- do.call(.(CALL), args = .(OPTS))
+        oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
+        on.exit(options(oopts))
+        .(EXPR)
+      })
+    )
+  }
+
+  ## To please 'R CMD check' on R (< 4.4.0), where
+  ## future::makeClusterFuture() is not available
+  call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
+
+  function(expr, options = NULL) {
+    ## If specified, assert that 'seed' is logical; numeric not supported
+    if ("seed" %in% attr(options, "specified")) {
+      seed_value <- options[["seed"]]
+      if (is.numeric(seed_value)) {
+        stop(sprintf("futurize() option 'seed' must be logical for this function call, not %s: %s", class(seed_value)[1], deparse(expr)))
+      }
+    }
+    expr <- append_call_arguments(expr, .args = args)
+    opts <- make_options_for_makeClusterFuture(options, defaults = defaults)
+    bquote_apply(template,
+      CALL = call,
+      OPTS = opts,
+      EXPR = expr
+    )
+  }
+} ## make_futurize_for_makeClusterFuture()

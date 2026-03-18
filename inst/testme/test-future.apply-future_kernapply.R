@@ -1,3 +1,6 @@
+
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 if (require("datasets") && require("stats")) {
   library(futurize)
   library(datasets)
@@ -39,3 +42,5 @@ if (require("datasets") && require("stats")) {
 
   plan(sequential)
 }
+
+} ## if (requireNamespace("future.apply", quietly = TRUE))

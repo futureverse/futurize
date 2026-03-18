@@ -5,16 +5,16 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{glmnet}
 %\VignetteKeyword{vignette}
-%\VignetteKeyword{handlers}
+%\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 
 <div class="logos">
-<img src="../man/figures/glmnet-logo.svg" alt="The 'glmnet' hexlogo">
+<img src="../man/figures/glmnet-logo.webp" alt="The 'glmnet' hexlogo">
 <span>+</span>
-<img src="../man/figures/futurize-logo.png" alt="The 'futurize' hexlogo">
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
 <span>=</span>
-<img src="../man/figures/future-logo.png" alt="The 'future' logo">
+<img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
 The **futurize** package allows you to easily turn sequential code
@@ -34,7 +34,7 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq_along(nzc)] %*% beta
+fx <- x[, seq_len(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -47,10 +47,12 @@ cv <- cv.glmnet(x, y) |> futurize()
 This vignette demonstrates how to use this approach to parallelize **[glmnet]**
 functions such as `cv.glmnet()`.
 
-The **[glmnet]** package provides highly-optimized algorithms for fitting
-Generalized Linear Models (GLMs) with lasso and elastic-net regularization.
-Its `cv.glmnet()` function performs cross-validation to select the optimal
-regularization parameter, which is an excellent candidate for parallelization.
+The **[glmnet]** package uses a highly optimized pathwise coordinate
+descent algorithm to efficiently compute the entire regularization
+path for penalized generalized linear models (Lasso, Ridge, Elastic
+Net).  Its `cv.glmnet()` function performs cross-validation to select
+the optimal regularization parameter, which is an excellent candidate
+for parallelization.
 
 
 ## Example: Cross-validation for regularized regression
@@ -67,7 +69,7 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq_along(nzc)] %*% beta
+fx <- x[, seq_len(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -87,7 +89,7 @@ p <- 100
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
-fx <- x[, seq_along(nzc)] %*% beta
+fx <- x[, seq_len(nzc)] %*% beta
 eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
@@ -125,4 +127,50 @@ The following **glmnet** functions are supported by `futurize()`:
 * `cv.glmnet()` with `seed = TRUE` as the default
 
 
+# Without futurize: Manual PSOCK cluster setup
+
+For comparison, here is what it takes to parallelize `cv.glmnet()`
+using the **parallel** and **doParallel** packages directly, without
+**futurize**:
+
+```r
+library(glmnet)
+library(parallel)
+library(doParallel)
+
+## Generate simulated data
+n <- 1000
+p <- 100
+nzc <- trunc(p / 10)
+x <- matrix(rnorm(n * p), n, p)
+beta <- rnorm(nzc)
+fx <- x[, seq_len(nzc)] %*% beta
+eps <- rnorm(n) * 5
+y <- drop(fx + eps)
+
+## Set up a PSOCK cluster and register it with foreach
+ncpus <- 4L
+cl <- makeCluster(ncpus)
+registerDoParallel(cl)
+
+## Perform cross-validation in parallel via foreach
+cv <- cv.glmnet(x, y, parallel = TRUE)
+
+## Tear down the cluster
+stopCluster(cl)
+registerDoSEQ()  ## reset foreach to sequential
+```
+
+This requires you to manually create a cluster, register it with
+**doParallel**, and remember to tear it down and reset the
+**foreach** backend when done. If you forget to call
+`stopCluster()`, or if your code errors out before reaching it, you
+leak background R processes. You also have to decide upfront how
+many CPUs to use and what cluster type to use. Switching to another
+parallel backend, e.g. a Slurm cluster, would require a completely
+different setup. With **futurize**, all of this is handled for you - just pipe
+to `futurize()` and control the backend with `plan()`.
+
+
 [glmnet]: https://cran.r-project.org/package=glmnet
+[other parallel backends]: https://www.futureverse.org/backends.html

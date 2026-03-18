@@ -1,0 +1,121 @@
+#' @importFrom utils globalVariables
+globalVariables(".")
+globalVariables(c("CALL", "OPTS", "EXPR"))
+
+#' Efficient partial substitution in expressions
+#' 
+#' @param expr A bquoted R expression
+#' 
+#' @param substitute If TRUE, `expr` is substituted.
+#' 
+#' @param tmpl A bquote template.
+#' 
+#' @param \ldots Named arguments.
+#' 
+#' @param envir The environment in which the bquoted values
+#' should be resolved.
+#' 
+#' @return
+#' `bquote_compile()` returns a compiled bquote template, where attribute
+#'  `expression` holds the original expression `expr`.
+#' 
+#' `bquote_apply()` returns an expression.
+#' 
+#' @examples
+#' tmpl <- bquote_compile(
+#'   local({
+#'     cl <- do.call(.(CALL), args = .(OPTS))
+#'     oopts <- options(future.ClusterFuture.clusterEvalQ = "error")
+#'     on.exit(options(oopts))
+#'     .(EXPR)
+#'   })
+#' )
+#' 
+#' expr <- bquote_apply(tmpl, CALL = quote(foo::bar),
+#'                      OPTS = list(a = 1, b = 2), EXPR = quote(1 + 2))
+#' 
+#' @noRd
+bquote_compile <- function(expr, substitute = TRUE) {
+  if (substitute) expr <- substitute(expr)
+  
+  tmpl <- list()
+  
+  unquote <- function(e, at = integer(0L)) {
+    n <- length(e)
+    if (n == 0L) return()
+
+    if (is.pairlist(e)) {
+      for (kk in 1:n) unquote(e[[kk]], at = c(at, kk))
+      return()
+    }
+
+    if (!is.call(e)) return()
+    
+    ## .(<name>)?
+    if (is.name(e[[1L]]) && as.character(e[[1]]) == ".") {
+      ## Record location in expression tree
+      entry <- list(
+        expression = e[[2L]],
+        at         = at
+      )
+      tmpl <<- c(tmpl, list(entry))
+      return()
+    }
+  
+    ## `{`, `+`, ...
+    for (kk in 1:n) unquote(e[[kk]], at = c(at, kk))
+  }
+
+  dummy <- unquote(expr)
+  attr(tmpl, "expression") <- expr
+  tmpl
+}
+
+
+#' @noRd
+bquote_apply <- function(tmpl, ..., envir = parent.frame()) {
+  expr <- attr(tmpl, "expression")
+
+  args <- list(...)
+  if (length(args) > 0) {
+    envir <- new.env(parent = envir)
+    for (name in names(args)) {
+      assign(name, args[[name]], envir = envir, inherits = FALSE)
+    }
+  }
+  
+  for (kk in seq_along(tmpl)) {
+    entry <- tmpl[[kk]]
+    value <- eval(entry[["expression"]], envir = envir)
+    at <- entry[["at"]]
+    
+    ## Special case: Result becomes just a value
+    nat <- length(at)
+    if (nat == 0) return(value)
+
+    ## Inject a NULL (needs special care) or a regular value?
+    if (is.null(value)) {
+      head <- if (nat == 1L) NULL else at[-nat]
+      e <- if (is.null(head)) expr else expr[[head]]
+      if (is.call(e)) {
+        f <- as.list(e)
+        f[at[nat]] <- list(NULL)
+        e <- as.call(f)
+      } else if (is.pairlist(e)) {
+        e[at[nat]] <- list(NULL)
+        e <- as.pairlist(e)
+      } else {
+        stop(sprintf("Unknown type of expression (please report to the maintainer): %s", sQuote(paste(deparse(e), collapse = "\\n"))))
+      }
+      if (is.null(head)) {
+        expr <- e
+      } else {
+        expr[[head]] <- e
+      }
+    } else {
+      expr[[at]] <- value
+    }
+  }
+
+  expr
+}

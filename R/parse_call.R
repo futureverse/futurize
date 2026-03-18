@@ -87,7 +87,11 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
     repeat {
       ns_name <- environmentName(tenv)
       if (nzchar(ns_name)) break
-      tenv <- parent.env(tenv)
+      tenv_next <- parent.env(tenv)
+      if (identical(tenv_next, tenv)) {
+        stop(sprintf("Internal error: infinite environment stack in parse_call(): %s", sQuote(ns_name)))
+      }
+      tenv <- tenv_next
     }
     
     stopifnot(nzchar(ns_name))
@@ -105,3 +109,33 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
 
   list(fcn = fcn, ns_name = ns_name, fcn_name = fcn_name)
 } ## parse_call()
+
+
+
+
+#' Append arguments to a call.
+#'
+#' @param expr An \R call expression.
+#'
+#' @param \ldots,.args Named arguments to be appended to the call expression.
+#'
+#' @return
+#' Return the expression with arguments appended.
+#'
+#' @examples
+#' call <- quote(my_fcn(x, y))
+#' print(call)
+#' #> my_fcn(x, y)
+#'
+#' call2 <- append_call_arguments(call, z = 42, w = quote(1 + 2))
+#' print(call2)
+#' #> my_fcn(x, y, z = 42, w = 1 + 2)
+#'
+#' @noRd
+append_call_arguments <- function(expr, ..., .args = list(...)) {
+  ## Update 'EXPR'
+  as.call(c(
+    as.list(expr),
+    .args
+  ))
+} ## append_call_arguments()

@@ -4,7 +4,9 @@
 \alias{zzz-futurize.options}
 \alias{futurize.options}
 \alias{futurize.debug}
+\alias{futurize.enable}
 \alias{R_FUTURIZE_DEBUG}
+\alias{R_FUTURIZE_ENABLE}
 \title{Options used by futurize}
 \description{
 Below are the \R options and environment variables that are used by the
@@ -14,7 +16,7 @@ Below are the \R options and environment variables that are used by the
 change in future versions of the package.  Please use with care until
 further notice.}
 }
-\section{Packages must not change future options}{
+\section{Packages must not change futurize options}{
 
 
 Just like for other R options, as a package developer you must \emph{not} change
@@ -30,6 +32,14 @@ undo your changes immediately afterward.
 }
 }
 
+\section{Options for controlling futurization}{
+
+\describe{
+\item{\option{futurize.enable}:}{(logical) If \code{TRUE} (default),
+\code{futurize()} transpilation will be applied, otherwise not.}
+}
+}
+
 \section{Environment variables that set R options}{
 
 All of the above \R \option{futurize.*} options can be set by corresponding
@@ -41,5 +51,5 @@ For example, if \code{R_FUTURIZE_DEBUG=true}, then option
 }
 
 \seealso{
-To set \R options or environment variables when \R starts (even before the \pkg{future} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
+To set \R options or environment variables when \R starts (even before the \pkg{futurize} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
 }

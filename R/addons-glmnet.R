@@ -6,71 +6,23 @@
 # })
 #
 append_transpilers_for_glmnet <- function() {
-  package <- "glmnet"
-
-  template <- quote(
-    with(doFuture::registerDoFuture(flavor = "%dofuture%"), {
-      ## This will be automatically removed by doFuture
-      options(future.disposable = OPTS)
-      EXPR
-    })
-  )
-
-  make_transpiler <- function(name) {
-    defaults <- list()
-    if (name == "cv.glmnet") {
-      defaults <- list(seed = TRUE)
-    }
-
-    idx_OPTS <- c(3, 2, 2)
-    idx_EXPR <- c(3, 3)
-
-    transpiler <- eval(bquote(function(expr, options = NULL) {
-      ## SPECIAL CASE: Are we running via 'covr'?
-      if (length(template[[c(3, 2)]]) > 2L) {
-        idx_OPTS <- c(3, 2, 3, 3, 2)
-        idx_EXPR <- c(3, 3, 3, 3)
+  transpilers <- make_package_transpilers("glmnet", FUN = function(fcn, name) {
+    if ("parallel" %in% names(formals(fcn))) {
+      if (name == "cv.glmnet") {
+        defaults <- list(seed = TRUE)
+      } else {
+        defaults <- list()
       }
       
-      ## Update 'OPTS'
-      template[[idx_OPTS]] <- make_options_for_doFuture(options, defaults = .(defaults), wrap = FALSE)
-      
-      ## Update 'EXPR'
-      parts <- c(
-        as.list(expr),
-        parallel = TRUE
+      list(
+        label = sprintf("glmnet::%s() ~> glmnet::%s(..., parallel = TRUE)", name, name),
+        transpiler = make_futurize_for_doFuture(defaults = defaults, args = list(parallel = TRUE))
       )
-      template[[idx_EXPR]] <- as.call(parts)
-      
-      template
-    }))
-    body(transpiler) <- body(transpiler)
-    
-    transpiler
-  }
-
-  transpilers <- list()
-
-  ns <- getNamespace(package)
-  exports <- names(ns[[".__NAMESPACE__."]][["exports"]])
-  names <- exports
-  for (name in names) {
-    if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
-      fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
-      if ("parallel" %in% names(formals(fcn))) {
-        transpilers[[name]] <- list(
-          label = sprintf("%s::%s() ~> %s::%s(..., parallel = TRUE)", package, name, package, name),
-          transpiler = make_transpiler(name)
-        )
-      }
     }
-  }
-
-  transpilers <- list(transpilers)
-  names(transpilers) <- package
+  })
 
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c(package, "doFuture")
+  c("glmnet", "doFuture")
 }

@@ -29,7 +29,7 @@
 transpile <- local({
   .enabled <- list()
   
-  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
+  function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), disable = FALSE, type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
     if (debug) {
       mdebug_push("transpile() ...")
       on.exit(mdebug_pop())
@@ -55,7 +55,7 @@ transpile <- local({
     }
   
     ## Don't transpile, i.e. evaluate as-is?
-    if (!enabled || !when) {
+    if (!enabled || !when || disable) {
       if (eval) {
         if (debug) mdebug("Evaluate call expression")
         return(eval(expr, envir = envir))
@@ -64,7 +64,7 @@ transpile <- local({
         return(expr)
       }
     }
-    
+
     repeat {
       ## 1a. Get a matching transpiler
       transpiler <- get_transpiler(expr, envir = envir, type = type, what = what, unwrap = unwrap, debug = debug)
@@ -120,6 +120,69 @@ transpile <- local({
 class(transpile) <- c("transpiler", class(transpile))
 
 
+#' Finds transpiler for S3 method for S3 generic function call and object
+#'
+#' @inheritParams find_s3_method
+#'
+#' @param type
+#'
+#' @return
+#' A transpiler function, or NULL if none exists.
+#'
+#' @noRd
+find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = FALSE) {
+  method <- find_s3_method(fcn, fcn_name = fcn_name, call = call, envir = envir, debug = debug)
+  if (is.null(method)) return(NULL)
+
+  pkg <- method[["package"]]
+  name <- method[["name"]]
+
+  ## Look up registered transpiler for the package of the S3 method
+  transpiler_sets <- get_transpilers(type)
+  transpilers <- transpiler_sets[[pkg]]
+
+  ## If non-existing, retry by first trying to register transpilers for the package
+  if (is.null(transpilers)) {
+    transpilers <- tryCatch({
+      transpilers_for_package(type = type, package = pkg, action = "make", debug = debug)
+      transpiler_sets <- get_transpilers(type)
+      transpiler_sets[[pkg]]
+    }, error = function(e) NULL)
+  }
+
+  ## No transpilers registered for this package?
+  if (is.null(transpilers)) return(NULL)
+
+  transpilers[[name]]
+} ## find_s3_method_transpiler()
+
+
+find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = FALSE) {
+  method <- find_s4_method(fcn, fcn_name = fcn_name, call = call, envir = envir, debug = debug)
+  if (is.null(method)) return(NULL)
+
+  pkg <- method[["package"]]
+  name <- method[["name"]]
+
+  ## Look up registered transpiler for the package of the S4 method
+  transpiler_sets <- get_transpilers(type)
+  transpilers <- transpiler_sets[[pkg]]
+
+  ## If non-existing, retry by first trying to register transpilers for the package
+  if (is.null(transpilers)) {
+    transpilers <- tryCatch({
+      transpilers_for_package(type = type, package = pkg, action = "make", debug = debug)
+      transpiler_sets <- get_transpilers(type)
+      transpiler_sets[[pkg]]
+    }, error = function(e) NULL)
+  }
+
+  ## No transpilers registered for this package?
+  if (is.null(transpilers)) return(NULL)
+
+  transpilers[[name]]
+} ## find_s4_method_transpiler()
+
 
 #' Get a registered transpiler for an R expression
 #' 
@@ -146,7 +209,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     mdebug_push("Finding call to be transpiled ...")
   }
   
-  call_pos <- decend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
+  call_pos <- descend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
   call <- expr[[call_pos]]
   call_info <- parse_call(call, envir = envir, what = what, debug = debug)
@@ -189,24 +252,32 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     }
 
     ## Get transpiler package addons
-    req_pkgs <- transpilers_for_package(type = type, package = ns_name, action = "make", debug = debug)
-    if (debug) {
-      mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
-    }
-
-    okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = TRUE)
-    if (!all(okay)) {
-      pkgs <- req_pkgs[!okay]
-      info <- if (grepl("^%.*%$", fcn_name)) {
-        sprintf("%s::`%s`", ns_name, fcn_name)
-      } else {
-        sprintf("%s::%s()", ns_name, fcn_name)
+    ## tryCatch() is needed for cases where a package re-exports a generic
+    ## from another package, e.g. scater::runPCA() is a re-export of
+    ## BiocSingular::runPCA()
+    req_pkgs <- tryCatch(
+      transpilers_for_package(type = type, package = ns_name, action = "make", debug = debug),
+      error = function(e) NULL
+    )
+    if (!is.null(req_pkgs)) {
+      if (debug) {
+        mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
       }
-      stop(sprintf("Please install %s in order to %s %s",
-           commaq(pkgs), what, info))
+
+      okay <- vapply(req_pkgs, FUN.VALUE = NA, FUN = requireNamespace, quietly = TRUE)
+      if (!all(okay)) {
+        pkgs <- req_pkgs[!okay]
+        info <- if (grepl("^%.*%$", fcn_name)) {
+          sprintf("%s::`%s`", ns_name, fcn_name)
+        } else {
+          sprintf("%s::%s()", ns_name, fcn_name)
+        }
+        stop(sprintf("Please install %s in order to %s %s",
+             commaq(pkgs), what, info))
+      }
+      transpiler_sets <- get_transpilers(type)
+      transpilers <- transpiler_sets[[ns_name]]
     }
-    transpiler_sets <- get_transpilers(type)
-    transpilers <- transpiler_sets[[ns_name]]
   }
 
   if (debug) {
@@ -214,14 +285,28 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   }
   
   ## Is there a registered transpiler for the function?
-  if (is.null(transpilers)) {
-    stop(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
+  if (is.null(transpilers) || ! fcn_name %in% names(transpilers)) {
+    ## Fallback: S3 generic dispatching to a method in another package
+    ## Note: 'call' is expr[[call_pos]] = the function head symbol, not the
+    ## full call. The full call expression including arguments is needed for
+    ## match.call(), so we reconstruct it here.
+    full_call <- if (length(call_pos) == 1L) expr else expr[[call_pos[-length(call_pos)]]]
+    if (is_s3_generic(fcn)) {
+      transpiler <- find_s3_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+    } else if (inherits(fcn, "standardGeneric")) {
+      transpiler <- find_s4_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+    } else {
+      transpiler <- NULL
+    }
+    if (is.null(transpiler)) {
+      if (is.null(transpilers)) {
+        stop(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
+      }
+      stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
+    }
+  } else {
+    transpiler <- transpilers[[fcn_name]]
   }
-
-  if (! fcn_name %in% names(transpilers)) {
-    stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
-  }
-  transpiler <- transpilers[[fcn_name]]
   if (debug) {
     stopifnot(is.list(transpiler), "label" %in% names(transpiler), "transpiler" %in% names(transpiler))
     mdebugf("Transpiler description: %s", transpiler[["label"]])
@@ -290,10 +375,10 @@ list_transpilers <- function(pattern = NULL, class) {
       if (length(idxs) == 1) {
         transpilers_fcn <- transpilers[idxs]
       } else {
-        ## length(idxs) > 1 should not happend, but in case ...
+        ## length(idxs) > 1 should not happen, but in case ...
         transpilers_fcn <- list()
         for (idx in idxs) {
-          transpilers_fcn <- c(transpilers_fcn, transpilers[[idx]])
+          transpilers_fcn <- c(transpilers_fcn, transpilers[idx])
         }
         drop <- duplicated(names(transpilers_fcn), fromLast = TRUE)
         transpilers_fcn <- transpilers_fcn[!drop]
@@ -389,3 +474,56 @@ transpiler_packages <- function(classes = NULL) {
   }
   transpilers
 }
+
+
+
+#' @param package (character string) Package name.
+#'
+#' @param FUN A functions taking arguments `fcn` (a function),
+#' `package` (character string), and `name` (character string).
+#'
+#' @param export (logical) If TRUE, exported functions are considered.
+#'
+#' @param s3methods (logical) If TRUE, registered S3 methods are considered.
+#'
+#' @return
+#' A named list of lists of transpilers, where the names correspond
+#' to function names of the package `package` and transpilers are lists.
+#'
+#' @noRd
+make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = TRUE) {
+  transpilers <- list()
+  ns <- getNamespace(package)
+
+  names <- character(0L)
+  if (exports) {
+    exports <- names(getNamespaceInfo(ns, "exports"))
+    names <- c(names, exports)
+  }
+  if (s3methods) {
+    s3methods <- getNamespaceInfo(ns, "S3methods")[,3]
+    if (!is.character(s3methods)) {
+      ## Note, although 's3methods' is typically a character vector, it
+      ## might also be a list. For example, loadNamespace("strucchange")
+      ## results in a character vector, but if we then load
+      ## loadNamespace("partykit"), the registered S3 methods for
+      ## 'strucchange' becomes a list with two function objects appended
+      ## at the very end.
+      s3methods <- s3methods[vapply(s3methods, FUN.VALUE = FALSE, FUN = is.character)]
+      s3methods <- unlist(s3methods, use.names = FALSE)
+    }
+    names <- c(names, s3methods)
+  }
+  
+  for (name in names) {
+    if (exists(name, mode = "function", envir = ns, inherits = FALSE)) {
+      fcn <- get(name, mode = "function", envir = ns, inherits = FALSE)
+      transpilers[[name]] <- FUN(fcn, name = name)
+    }
+  }
+
+  transpilers <- list(transpilers)
+  names(transpilers) <- package
+
+  transpilers
+} ## make_package_transpilers()

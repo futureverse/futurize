@@ -17,7 +17,7 @@ debug_indent <- local({
       if (depth < 0L) {
         calls <- paste(vapply(sys.calls(), FUN = deparse, FUN.VALUE = NA_character_), collapse = " -> ")
         warning(sprintf("[INTERNAL WARNING]: There appears to be one mdebug_pop() too many: %s", calls), call. = TRUE, immediate. = TRUE)
-        depth <- 0L
+        depth <<- 0L
       }
     }
     prefix <<- if (depth == 0) "" else paste(paste(symbols[seq_len(depth)], " "), collapse = "")
@@ -43,6 +43,7 @@ mdebugf_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 
 mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
   n <- length(.debug$stack)
+  if (n == 0) stop("Called mdebug_pop() on an empty debug stack")
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
   debug_indent(-1)
@@ -51,6 +52,7 @@ mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
 
 mdebugf_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
   n <- length(.debug$stack)
+  if (n == 0) stop("Called mdebug_pop() on an empty debug stack")
   msg <- .debug$stack[n]
   .debug$stack <- .debug$stack[-n]
   debug_indent(-1)

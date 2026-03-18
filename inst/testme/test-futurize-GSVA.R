@@ -1,0 +1,94 @@
+#' @tags skip_on_cran  ## (20s) to limit total check time
+if (requireNamespace("GSVA") && requireNamespace("doFuture")) {
+library(futurize)
+library(GSVA)
+print(sessionInfo())
+
+options(future.rng.onMisuse = "error")
+
+plan(multisession)
+
+## Create simple test data
+set.seed(42)
+n_genes <- 120L    # > 100 for gsva() to parallelize
+n_samples <- 120L  # > 100 for gsva() to parallelize
+expr <- matrix(rnorm(n_genes * n_samples), nrow = n_genes, ncol = n_samples)
+rownames(expr) <- paste0("gene", seq_len(n_genes))
+colnames(expr) <- paste0("sample", seq_len(n_samples))
+
+geneSets <- list(
+  geneSet1 = paste0("gene", sample(n_genes, 10L)),
+  geneSet2 = paste0("gene", sample(n_genes, 15L)),
+  geneSet3 = paste0("gene", sample(n_genes, 20L))
+)
+
+## gsva() in GSVA (< 2.4) relies on BiocParallel::bpiterate(),
+## which does _not_ support DoparParam by design.
+if ("gsva" %in% futurize_supported_functions("GSVA")) {
+  ## ---------------------------------------------------------
+  ## gsva() with gsvaParam()
+  ## ---------------------------------------------------------
+  param <- gsvaParam(expr, geneSets)
+  
+  set.seed(42)
+  result_truth <- gsva(param, verbose = FALSE)
+  str(result_truth)
+  
+  set.seed(42)
+  counters <- plan("backend")[["counters"]]
+  result <- gsva(param, verbose = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
+  str(result)
+  stopifnot(all.equal(result, result_truth))
+  
+  set.seed(42)
+  counters <- plan("backend")[["counters"]]
+  result2 <- GSVA::gsva(param, verbose = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
+  stopifnot(all.equal(result2, result_truth))
+
+
+  ## ---------------------------------------------------------
+  ## gsva() with ssgseaParam()
+  ## ---------------------------------------------------------
+  param_ssgsea <- ssgseaParam(expr, geneSets)
+  
+  set.seed(42)
+  result_truth <- gsva(param_ssgsea, verbose = FALSE)
+  str(result_truth)
+  
+  set.seed(42)
+  counters <- plan("backend")[["counters"]]
+  result <- gsva(param_ssgsea, verbose = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
+  str(result)
+  stopifnot(all.equal(result, result_truth))
+  
+  
+  ## ---------------------------------------------------------
+  ## gsva() with plageParam()
+  ## ---------------------------------------------------------
+  param_plage <- plageParam(expr, geneSets)
+  
+  set.seed(42)
+  result_truth <- gsva(param_plage, verbose = FALSE)
+  str(result_truth)
+  
+  set.seed(42)
+  counters <- plan("backend")[["counters"]]
+  result <- gsva(param_plage, verbose = FALSE) |> futurize()
+  delta <- plan("backend")[["counters"]] - counters
+  cat(sprintf("Futures created: %d\n", delta[["created"]]))
+  stopifnot(delta[["created"]] > 0L)
+  str(result)
+  stopifnot(all.equal(result, result_truth))
+} ## if ("gsva" %in% futurize_supported_functions("GSVA"))  
+
+plan(sequential)
+} ## if (requireNamespace("GSVA") && ...)

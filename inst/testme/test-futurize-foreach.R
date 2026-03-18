@@ -21,15 +21,23 @@ str(list(y_truth = y_truth, y_truth_2 = y_truth_2))
 
 
 message("foreach(...) %do% |> futurize()")
+counters <- plan("backend")[["counters"]]
 y <- foreach(x = 1:3, .combine = c) %do% {
   print(x)
   sqrt(x)
 } |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(y)
 stopifnot(identical(y, y_truth))
 
 message("foreach(...) %:% foreach(...) %do% |> futurize()")
+counters <- plan("backend")[["counters"]]
 y_2 <- foreach(x = 1:2) %:% foreach(y = 3L) %do% c(x,y) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 str(y_2)
 stopifnot(identical(y_2, y_truth_2))
 
@@ -60,7 +68,11 @@ stopifnot(identical(y, y_truth))
 
 
 message("times(...) %do% |> futurize()")
+counters <- plan("backend")[["counters"]]
 y <- times(1L) %do% { 42L } |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
 print(y)
 stopifnot(identical(y, 42L))
 
