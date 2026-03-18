@@ -1,9 +1,9 @@
 # Parallelize 'SimDesign' functions
 
 ![The CRAN 'SimDesign'
-package](../reference/figures/cran-SimDesign-logo.svg)+ ![The 'futurize'
-hexlogo](../reference/figures/futurize-logo.png)= ![The 'future'
-logo](../reference/figures/future-logo.png)
+package](../reference/figures/cran-SimDesign-logo.webp)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.webp)= ![The
+'future' logo](../reference/figures/future-logo.webp)
 
 The **futurize** package allows you to easily turn sequential code into
 parallel code by piping the sequential code to the

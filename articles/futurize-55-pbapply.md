@@ -1,8 +1,8 @@
 # Parallelize 'pbapply' functions
 
-![The 'pbapply' image](../reference/figures/cran-pbapply-logo.svg)+
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
-'future' logo](../reference/figures/future-logo.png)
+![The 'pbapply' image](../reference/figures/cran-pbapply-logo.webp)+
+![The 'futurize' hexlogo](../reference/figures/futurize-logo.webp)=
+![The 'future' logo](../reference/figures/future-logo.webp)
 
 The **futurize** package allows you to easily turn sequential code into
 parallel code by piping the sequential code to the

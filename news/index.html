@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9105</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9107</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,19 +114,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="version-020">Version 0.2.0<a class="anchor" aria-label="anchor" href="#version-020"></a></h2>
 <p>Following the initial CRAN release in January 2026, this version adds <code><a href="../reference/futurize.html">futurize()</a></code> support for many more CRAN and Bioconductor packages. To achieve this, support for transpiling S3 and S4 methods was added, expanding beyond regular and generic functions. This opens the door for futurizing many more packages going forward.</p>
 <div class="section level3">
-<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<h3 id="significant-changes-0-2-0">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-2-0"></a></h3>
 <ul><li><p>Add support for futurizing S3 methods where the S3 generic is defined in another package.</p></li>
 <li><p>Add support for futurizing S4 methods where the S4 generic is defined in another package.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-0-2-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
 <ul><li>Add support for disabling <code><a href="../reference/futurize.html">futurize()</a></code> transpilation via R option <code>futurize.enable</code>, which may be set via environment variable <code>R_FUTURIZE_ENABLE</code> when the package is loaded.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
+<h3 id="new-transpilers-0-2-0">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-0-2-0"></a></h3>
 <ul><li><p>Add support for map-reduce CRAN package <strong>pbapply</strong>, e.g. <code>y &lt;- pblapply(...)  |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific Bioconductor package <strong>DESeq2</strong>, e.g. <code>dds &lt;- DESeq(dds) |&gt; futurize()</code>.</p></li>
 <li><p>Add support for domain-specific Bioconductor package <strong>fgsea</strong>, e.g. <code>res &lt;- fgsea(pathways, stats) |&gt; futurize()</code>.</p></li>
@@ -152,7 +152,7 @@
 <li><p>Add support for domain-specific CRAN package <strong>vegan</strong>, e.g. <code>md &lt;- mrpp(dune, Management) |&gt; futurize()</code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-0-2-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
 <ul><li><p><code><a href="../reference/futurize.html">futurize()</a></code> option <code>chunk_size</code> was silently ignored for transpilers relying on <strong>doFuture</strong>.</p></li>
 <li><p><code><a href="../reference/futurize.html">futurize()</a></code> failed to descend wrapped calls such as <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code> and <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> that specified additional arguments. For example, <code>local({ lapply( ... ) }, envir = env) |&gt; futurize()</code> would produce a parsing error.</p></li>
 <li><p>Packages not supporting specifying a random seed will now produce an informative error message if <code>futurize(seed = &lt;numeric&gt;)</code> is specified, e.g. <strong>boot</strong>, <strong>glmmTMB</strong>, <strong>lme4</strong>, <strong>mgcv</strong>, and <strong>vegan</strong>.</p></li>

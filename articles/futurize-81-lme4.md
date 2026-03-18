@@ -1,8 +1,8 @@
 # Parallelize 'lme4' functions
 
-![The 'lme4' image](../reference/figures/cran-lme4-logo.svg)+ ![The
-'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
-'future' logo](../reference/figures/future-logo.png)
+![The 'lme4' image](../reference/figures/cran-lme4-logo.webp)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.webp)= ![The
+'future' logo](../reference/figures/future-logo.webp)
 
 The **futurize** package allows you to easily turn sequential code into
 parallel code by piping the sequential code to the

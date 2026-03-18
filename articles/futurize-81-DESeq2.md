@@ -1,8 +1,8 @@
 # Parallelize 'DESeq2' functions
 
-![The 'DESeq2' logo](../reference/figures/DESeq2-logo.png)+ ![The
-'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
-'future' logo](../reference/figures/future-logo.png)
+![The 'DESeq2' logo](../reference/figures/DESeq2-logo.webp)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.webp)= ![The
+'future' logo](../reference/figures/future-logo.webp)
 
 The **futurize** package allows you to easily turn sequential code into
 parallel code by piping the sequential code to the

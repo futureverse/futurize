@@ -1,8 +1,8 @@
 # Parallelize 'Rsamtools' functions
 
-![The 'Rsamtools' logo](../reference/figures/Rsamtools-logo.png)+ ![The
-'futurize' hexlogo](../reference/figures/futurize-logo.png)= ![The
-'future' logo](../reference/figures/future-logo.png)
+![The 'Rsamtools' logo](../reference/figures/Rsamtools-logo.webp)+ ![The
+'futurize' hexlogo](../reference/figures/futurize-logo.webp)= ![The
+'future' logo](../reference/figures/future-logo.webp)
 
 The **futurize** package allows you to easily turn sequential code into
 parallel code by piping the sequential code to the
