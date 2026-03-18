@@ -209,7 +209,7 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     mdebug_push("Finding call to be transpiled ...")
   }
   
-  call_pos <- decend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
+  call_pos <- descend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
   call <- expr[[call_pos]]
   call_info <- parse_call(call, envir = envir, what = what, debug = debug)
@@ -375,7 +375,7 @@ list_transpilers <- function(pattern = NULL, class) {
       if (length(idxs) == 1) {
         transpilers_fcn <- transpilers[idxs]
       } else {
-        ## length(idxs) > 1 should not happend, but in case ...
+        ## length(idxs) > 1 should not happen, but in case ...
         transpilers_fcn <- list()
         for (idx in idxs) {
           transpilers_fcn <- c(transpilers_fcn, transpilers[[idx]])

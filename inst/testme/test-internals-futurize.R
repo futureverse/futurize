@@ -3,9 +3,9 @@ library(futurize)
 message("*** Futurize internals")
 options(futurize.debug = TRUE)
 
-message("decend_wrappers()")
-try(futurize:::decend_wrappers(NULL, unwrap = list()))
-try(futurize:::decend_wrappers(quote({ lapply(x, f) }), unwrap = list(`{`), debug = TRUE))
+message("descend_wrappers()")
+try(futurize:::descend_wrappers(NULL, unwrap = list()))
+try(futurize:::descend_wrappers(quote({ lapply(x, f) }), unwrap = list(`{`), debug = TRUE))
 
 message("register_all_transpilers()")
 futurize:::register_all_transpilers()

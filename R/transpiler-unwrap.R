@@ -1,9 +1,9 @@
-decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap", debug = FALSE) {
+descend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap", debug = FALSE) {
   ## Nothing to do?
   if (length(unwrap) == 0) return(1L)
   
   if (debug) {
-    mdebug_push("decend_wrappers() ...")
+    mdebug_push("descend_wrappers() ...")
     on.exit(mdebug_pop())
   }
 
@@ -29,12 +29,12 @@ decend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwrap
         mdebugf("Wrapped in %s", info)
       }
       index <- length(expr)
-      return(c(length(expr), decend_wrappers(expr[[index]], envir = envir, unwrap = unwrap, what = what, debug = debug)))
+      return(c(length(expr), descend_wrappers(expr[[index]], envir = envir, unwrap = unwrap, what = what, debug = debug)))
     } ## if (identical(fcn, wrapper)
   } ## for (wrapper in unwrap)
   
   return(1L)
-} ## decend_wrappers()
+} ## descend_wrappers()
 
 
 
