@@ -21,6 +21,7 @@ find_s4_method <- function(fcn, fcn_name, call, envir, debug = FALSE) {
   fmls <- formals(fcn)
   if (length(fmls) == 0L) return(NULL)
 
+  ## FIXME: Here we assume we're dispatching on the first argument
   dispatch_arg_name <- names(fmls)[[1L]]
   if (dispatch_arg_name == "...") return(NULL) ## FIXME: Skip for now
 
