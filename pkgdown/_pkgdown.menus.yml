@@ -12,6 +12,8 @@ articles-mapreduce:
     href: articles/futurize-31-plyr.html
   - text: Parallelize 'foreach' functions
     href: articles/futurize-51-foreach.html
+  - text: Parallelize 'pbapply' functions
+    href: articles/futurize-55-pbapply.html
   - text: Parallelize 'BiocParallel' functions
     href: articles/futurize-61-BiocParallel.html
 articles-cran:
@@ -22,6 +24,8 @@ articles-cran:
     href: articles/futurize-81-boot.html
   - text: Parallelize 'caret' functions
     href: articles/futurize-81-caret.html
+  - text: Parallelize 'fwb' functions
+    href: articles/futurize-81-fwb.html
   - text: Parallelize 'gamlss' functions
     href: articles/futurize-81-gamlss.html
   - text: Parallelize 'glmnet' functions
