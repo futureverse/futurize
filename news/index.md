@@ -102,6 +102,14 @@ more packages going forward.
   option `chunk_size` was silently ignored for transpilers relying on
   **doFuture**.
 
+- [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  failed to descend wrapped calls such as
+  [`local()`](https://rdrr.io/r/base/eval.html) and
+  [`suppressWarnings()`](https://rdrr.io/r/base/warning.html) that
+  specified additional arguments. For example,
+  `local({ lapply( ... ) }, envir = env) |> futurize()` would produce a
+  parsing error.
+
 - Packages not supporting specifying a random seed will now produce an
   informative error message if `futurize(seed = <numeric>)` is
   specified, e.g. **boot**, **glmmTMB**, **lme4**, **mgcv**, and

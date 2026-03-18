@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9104</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0-9105</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,6 +154,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p><code><a href="../reference/futurize.html">futurize()</a></code> option <code>chunk_size</code> was silently ignored for transpilers relying on <strong>doFuture</strong>.</p></li>
+<li><p><code><a href="../reference/futurize.html">futurize()</a></code> failed to descend wrapped calls such as <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code> and <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> that specified additional arguments. For example, <code>local({ lapply( ... ) }, envir = env) |&gt; futurize()</code> would produce a parsing error.</p></li>
 <li><p>Packages not supporting specifying a random seed will now produce an informative error message if <code>futurize(seed = &lt;numeric&gt;)</code> is specified, e.g. <strong>boot</strong>, <strong>glmmTMB</strong>, <strong>lme4</strong>, <strong>mgcv</strong>, and <strong>vegan</strong>.</p></li>
 </ul></div>
 </div>
