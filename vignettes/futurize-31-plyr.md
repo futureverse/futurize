@@ -120,5 +120,14 @@ The `futurize()` function supports parallelization of the following
 * `m_ply()`, `maply()`, `mdply()`, `mlply()`
 
 
+# Progress Reporting via progressr
+
+For progress reporting, please see the **[progressr]** package. It is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live
+fashion. See the `vignette("futurize-11-apply", package = "futurize")`
+for more details and an example.
+
+
 [plyr]: https://cran.r-project.org/package=plyr
 [other parallel backends]: https://www.futureverse.org/backends.html

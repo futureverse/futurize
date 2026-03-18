@@ -132,5 +132,14 @@ The `futurize()` function supports parallelization of the following **purrr** fu
  * `invoke_map()`, `invoke_map_chr()`, `invoke_map_dbl()`, `invoke_map_int()`, `invoke_map_lgl()`, `invoke_map_raw()`, `invoke_map_dfr()`, `invoke_map_dfc()`
 
 
+# Progress Reporting via progressr
+
+For progress reporting, please see the **[progressr]** package. It is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live
+fashion. See the `vignette("futurize-11-apply", package = "futurize")`
+for more details and an example.
+
+
 [purrr]: https://cran.r-project.org/package=purrr
 [other parallel backends]: https://www.futureverse.org/backends.html

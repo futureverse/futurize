@@ -129,6 +129,50 @@ The following **stats** package function is also supported:
  * `kernapply()`
 
 
+# Progress Reporting via progressr
+
+The **[progressr]** package is specially designed to work with the
+Futureverse ecosystem. With **progressr**, progress can be reported
+from parallelized computations in a near-live fashion. Progress
+updates are propagated from the workers back to the main process,
+where they are relayed to provide feedback during long-running
+computations. This works because progress is signaled as R
+conditions that the **future** package and most future backends
+relay instantly.
+
+For example:
+
+```r
+library(futurize)
+plan(multisession)
+library(progressr)
+handlers(global = TRUE)
+
+xs <- 1:100
+ys <- local({
+  p <- progressor(along = xs)
+  lapply(xs, function(x) {
+    p()
+    slow_fcn(x)
+  })
+}) |> futurize()
+```
+
+Note also how `futurize()` unwraps the expression - it descends
+through `local()` and `{ }` to identify the `lapply()` call to be
+futurized. Using the default progress handler, the above output and
+progress reporting will appear as:
+
+```plain
+x = 1
+x = 2
+...
+x = 20
+  |=====                    |  20%
+```
+
+
+
 # Known issues
 
 The **[BiocGenerics]** package defines generic functions `lapply()`,
@@ -193,5 +237,6 @@ y <- base::lapply(1:3, sqrt) |> futurize()
 ```
 
 
+[progressr]: https://cran.r-project.org/package=progressr
 [other parallel backends]: https://www.futureverse.org/backends.html
 [BiocGenerics]: https://www.bioconductor.org/packages/BiocGenerics/

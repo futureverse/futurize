@@ -118,5 +118,14 @@ The `futurize()` function supports parallelization of the following
  * `times(...) %do% { ... }` with `seed = TRUE` as the default
 
 
+# Progress Reporting via progressr
+
+For progress reporting, please see the **[progressr]** package. It is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live
+fashion. See the `vignette("futurize-11-apply", package = "futurize")`
+for more details and an example.
+
+
 [foreach]: https://cran.r-project.org/package=foreach
 [other parallel backends]: https://www.futureverse.org/backends.html
