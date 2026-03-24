@@ -1,6 +1,12 @@
 # Changelog
 
+## Version (development version)
+
+- …
+
 ## Version 0.2.0
+
+CRAN release: 2026-03-18
 
 Following the initial CRAN release in January 2026, this version adds
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
