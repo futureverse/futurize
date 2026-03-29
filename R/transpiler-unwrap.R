@@ -32,6 +32,9 @@ descend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwra
       ## Which argument is the wrapped expression?
       index <- if (identical(fcn, base::`{`)) {
         length(expr)
+      } else if (identical(fcn, base::with)) {
+        ## with(data, expr) - the expression is the second argument (position 3)
+        3L
       } else {
         2L
       }

@@ -6,6 +6,7 @@ options(futurize.debug = TRUE)
 message("descend_wrappers()")
 try(futurize:::descend_wrappers(NULL, unwrap = list()))
 try(futurize:::descend_wrappers(quote({ lapply(x, f) }), unwrap = list(`{`), debug = TRUE))
+try(futurize:::descend_wrappers(quote(with(data, lapply(x, f))), unwrap = list(base::with), debug = TRUE))
 
 message("register_all_transpilers()")
 futurize:::register_all_transpilers()

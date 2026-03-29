@@ -1,6 +1,8 @@
 # Version (development version)
 
- * ...
+## New Features
+
+ * Add support for descending calls wrapped in `with()`.
 
 
 # Version 0.2.0 (2026-03-18)

@@ -166,6 +166,33 @@ stopifnot(delta[["created"]] > 0L)
 stopifnot(identical(y, truth3))
 
 
+## Wrapped in with(data, ...)
+data <- data.frame(a = 1:3)
+truth_with <- future.apply::future_lapply(data$a, identity)
+counters <- plan("backend")[["counters"]]
+y <- with(data, lapply(a, identity)) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+stopifnot(identical(y, truth_with))
+
+## Wrapped in { with(data, ...) }
+counters <- plan("backend")[["counters"]]
+y <- { with(data, lapply(a, identity)) } |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+stopifnot(identical(y, truth_with))
+
+## Wrapped in with(data, { ... })
+counters <- plan("backend")[["counters"]]
+y <- with(data, { lapply(a, identity) }) |> futurize()
+delta <- plan("backend")[["counters"]] - counters
+cat(sprintf("Futures created: %d\n", delta[["created"]]))
+stopifnot(delta[["created"]] > 0L)
+stopifnot(identical(y, truth_with))
+
+
 ## Wrapped in local(..., envir = ...) - not the last element
 e <- new.env()
 truth4 <- local(lapply(1:3, identity), envir = e)
