@@ -82,7 +82,7 @@ jobs:
 
       - name: Install package itself (special case)
         run: |
-          install.packages(".", repos = NULL, type = "source")  ## needed by parallel workers
+          install.packages(".", repos = NULL, type = "source")  ## needed by vignettes
         shell: Rscript {0}
 
       - name: Session info

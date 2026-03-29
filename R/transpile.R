@@ -79,7 +79,7 @@ transpile <- local({
         if (debug) {
           mdebug_push("Apply nested transpiler ...")
           on.exit({
-            print(expr)
+            mprint(expr)
             mdebug_pop()
           })
           mprint(expr)
