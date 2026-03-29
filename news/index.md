@@ -2,7 +2,10 @@
 
 ## Version (development version)
 
-- …
+### New Features
+
+- Add support for descending calls wrapped in
+  [`with()`](https://rdrr.io/r/base/with.html).
 
 ## Version 0.2.0
 
