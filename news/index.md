@@ -15,7 +15,8 @@
 
 ### Bug Fixes
 
-- `futurize(label = name)` was ignored for ‘crossmap’ and ‘purrr’ calls.
+- `futurize(label = name)` was ignored for **crossmap** and **purrr**
+  calls.
 
 ## Version 0.2.0
 
