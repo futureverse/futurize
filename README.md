@@ -55,7 +55,7 @@ futurize_supported_functions("caret")
 |--------------------|--------------------------------------------------------------------------------------------------------------------|--------------------------|
 | **base**           | `lapply()`, `sapply()`, `tapply()`, `vapply()`, `mapply()`, `.mapply()`, `Map()`, `eapply()`, `apply()`, `by()`, `replicate()`, `Filter()` | **[future.apply]** |
 | **stats**          | `kernapply()`                                                                                  | **[future.apply]** |
-| **[purrr]**        | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()`, `invoke_map()` | **[furrr]** |
+| **[purrr]**        | `map()` and variants, `map2()` and variants, `pmap()` and variants, `imap()` and variants, `modify()`, `modify_if()`, `modify_at()`, `map_if()`, `map_at()` | **[furrr]** |
 | **[crossmap]**     | `xmap()` and variants, `xwalk()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `imap_vec()`        | -                  |
 | **[foreach]**      | `%do%`, e.g. `foreach() %do% { }`, `times() %do% { }`                                          | **[doFuture]**     | 
 | **[plyr]**         | `aaply()` and variants, `ddply()` and variants, `llply()` and variants, `mlply()` and variants | **[doFuture]**     | 

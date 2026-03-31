@@ -67,16 +67,6 @@ stopifnot(identical(
 ))
 
 
-message("future_pmap_raw() works")
-x <- c("a", "b", "c")
-y <- as.raw(1:3)
-
-stopifnot(identical(
-  pmap_raw(list(x, y), ~.y) |> futurize(),
-  pmap_raw(list(x, y), ~.y)
-))
-
-
 message("names of `.x` are retained")
 x <- c(a = 1, b = 2)
 y <- c(c = 1, d = 2)
@@ -123,7 +113,6 @@ stopifnot(identical(pmap_chr(list(list(), list()), identity) |> futurize(), char
 stopifnot(identical(pmap_dbl(list(list(), list()), identity) |> futurize(), double()))
 stopifnot(identical(pmap_int(list(list(), list()), identity) |> futurize(), integer()))
 stopifnot(identical(pmap_lgl(list(list(), list()), identity) |> futurize(), logical()))
-stopifnot(identical(pmap_raw(list(list(), list()), identity) |> futurize(), raw()))
 
 
 message("size one recycling works")
