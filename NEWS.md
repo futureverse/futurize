@@ -3,6 +3,9 @@
 ## New Features
 
  * Add support for descending calls wrapped in `with()`.
+ 
+ * Errors produced when an unsupported call is attempted now includes
+   the version of the **futurize** package.
 
 
 # Version 0.2.0 (2026-03-18)

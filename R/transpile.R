@@ -300,9 +300,9 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     }
     if (is.null(transpiler)) {
       if (is.null(transpilers)) {
-        stop(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
+        stop_with_version(sprintf("Function %s::%s() is not in one of the registered %s namespaces: %s", ns_name, fcn_name, what, commaq(names(transpiler_sets))))
       }
-      stop(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
+      stop_with_version(sprintf("Do not know how to %s function: %s()", what, deparse(call)))
     }
   } else {
     transpiler <- transpilers[[fcn_name]]
@@ -443,7 +443,7 @@ transpilers_for_package <- local({
       fcns <- db[[package]]
       if (debug) mprint(list(fcns = fcns))
       if (length(fcns) == 0L) {
-        stop(sprintf("There are no factory functions for creating %s transpilers for package %s", sQuote(type), sQuote(package)))
+        stop_with_version(sprintf("There are no factory functions for creating %s transpilers for package %s", sQuote(type), sQuote(package)))
       }
       req_pkgs <- lapply(fcns, FUN = function(fcn) fcn())
       req_pkgs <- unlist(req_pkgs, use.names = FALSE)
@@ -527,3 +527,8 @@ make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = T
 
   transpilers
 } ## make_package_transpilers()
+
+stop_with_version <- function(msg, ...) {
+  msg <- sprintf("[%s %s] %s", packageName(), getNamespaceVersion(packageName()), msg)
+  stop(msg, ...)
+}
