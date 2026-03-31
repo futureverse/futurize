@@ -10,6 +10,11 @@
  * Errors produced when an unsupported call is attempted now includes
    the version of the **futurize** package.
 
+## Bug Fixes
+
+ * `futurize(label = name)` was ignored for 'crossmap' and 'purrr'
+   calls.
+
 
 # Version 0.2.0 (2026-03-18)
 
