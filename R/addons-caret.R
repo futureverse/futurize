@@ -12,7 +12,13 @@ append_transpilers_for_caret <- function() {
       if (name == "nearZeroVar") {
         list(
           label = sprintf("caret::%s() ~> caret::%s()", name, name),
-          transpiler = make_futurize_for_doFuture(defaults = list(seed = TRUE), args = list(foreach = TRUE))
+          transpiler = make_futurize_for_doFuture(
+            defaults = list(
+              seed = TRUE,
+              label = sprintf("fz:caret::%s-%%d", name)
+            ),
+            args = list(foreach = TRUE)
+          )
         )
       }
     } else {
@@ -23,7 +29,12 @@ append_transpilers_for_caret <- function() {
         if ("allowParallel" %in% names(formals(fcnControl))) {
           list(
             label = sprintf("caret::%s() ~> caret::%s()", name, name),
-            transpiler = make_futurize_for_doFuture(defaults = list(seed = TRUE))
+            transpiler = make_futurize_for_doFuture(
+              defaults = list(
+                seed = TRUE,
+                label = sprintf("fz:caret::%s-%%d", name)
+              )
+            )
           )
         }
       }
