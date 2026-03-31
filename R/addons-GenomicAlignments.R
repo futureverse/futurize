@@ -19,7 +19,10 @@ append_transpilers_for_GenomicAlignments <- function() {
       args <- list(BPPARAM = quote(BiocParallel::DoparParam()))
       transpilers[[name]] <- list(
         label = sprintf("GenomicAlignments::%s() ~> GenomicAlignments::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
-        transpiler = make_futurize_for_doFuture(args = args)
+        transpiler = make_futurize_for_doFuture(
+          args = args,
+          defaults = list(label = sprintf("fz:GenomicAlignments::%s-%%d", name))
+        )
       )
     }
   }

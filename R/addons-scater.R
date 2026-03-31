@@ -24,7 +24,10 @@ append_transpilers_for_scater <- function() {
       args <- list(BPPARAM = quote(BiocParallel::DoparParam()))
       transpilers[[name]] <- list(
         label = sprintf("scater::%s() ~> scater::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
-        transpiler = make_futurize_for_doFuture(args = args)
+        transpiler = make_futurize_for_doFuture(
+          args = args,
+          defaults = list(label = sprintf("fz:scater::%s-%%d", name))
+        )
       )
     }
   }
