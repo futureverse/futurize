@@ -1,6 +1,8 @@
 on:
   workflow_dispatch:  # Enables manual triggering
 
+name: deps-devel-checks
+
 jobs:
   deps-devel-checks:
     timeout-minutes: 45
@@ -23,9 +25,9 @@ jobs:
           - { r: "release", pkg: "psolymos/pbapply" }
           - { r: "release", pkg: "Bioconductor/BiocParallel@devel" }
 #          - { r: "release", pkg: "boot" }
-          - { r: "release", pkg: "topepo/caret" }
+          - { r: "release", pkg: "topepo/caret/pkg/caret" }
           - { r: "release", pkg: "thelovelab/DESeq2@devel" }
-          - { r: "release", pkg: "gamlss/fgsea" }
+          - { r: "release", pkg: "alserglab/fgsea" }
           - { r: "release", pkg: "Bioconductor/GenomicAlignments@devel" }
           - { r: "release", pkg: "Bioconductor/Rsamtools@devel" }
           - { r: "release", pkg: "ngreifer/fwb" } 
