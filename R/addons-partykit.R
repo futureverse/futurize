@@ -11,7 +11,8 @@ append_transpilers_for_partykit <- function() {
         label = sprintf("partykit::%s() ~> partykit::%s()", name, name),
         transpiler = make_futurize_for_future.apply(
           defaults = list(
-            future.seed = TRUE
+            future.seed = TRUE,
+            future.label = sprintf("fz:partykit::%s-%%d", name)
           ),
           args = list(
             applyfun = function(...) {
