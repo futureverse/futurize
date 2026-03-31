@@ -1,3 +1,4 @@
+#' @tags pkg-doFuture
 #' @tags %dofuture%
 #' @tags detritus-files
 #' @tags sequential multisession cluster multicore

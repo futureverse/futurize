@@ -1,3 +1,4 @@
+#' @tags pkg-BiocParallel
 if (requireNamespace("BiocParallel") && requireNamespace("doFuture")) {
 library(futurize)
 library(BiocParallel)

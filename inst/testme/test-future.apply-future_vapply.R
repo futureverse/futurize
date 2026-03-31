@@ -1,3 +1,4 @@
+#' @tags pkg-future.apply
 #' @tags future_vapply
 #' @tags detritus-files
 #' @tags sequential multisession multicore

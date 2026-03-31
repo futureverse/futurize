@@ -1,3 +1,4 @@
+#' @tags pkg-future.apply
 if (requireNamespace("future.apply")) {
 library(futurize)
 library(stats)

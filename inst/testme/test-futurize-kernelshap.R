@@ -1,3 +1,4 @@
+#' @tags pkg-kernelshap
 if (requireNamespace("kernelshap") && requireNamespace("doFuture")) {
   library(futurize)
   library(kernelshap)

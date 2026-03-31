@@ -1,4 +1,4 @@
-
+#' @tags pkg-future.apply
 #' @tags future_lapply
 #' @tags listenv
 #' @tags sequential multisession multicore

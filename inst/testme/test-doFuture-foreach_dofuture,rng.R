@@ -1,3 +1,4 @@
+#' @tags pkg-doFuture
 #' @tags %dofuture%
 #' @tags rng
 #' @tags sequential multisession cluster multicore

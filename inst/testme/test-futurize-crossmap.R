@@ -1,3 +1,4 @@
+#' @tags pkg-crossmap
 if (requireNamespace("crossmap")) {
 library(futurize)
 library(crossmap)

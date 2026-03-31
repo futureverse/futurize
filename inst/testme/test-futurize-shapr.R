@@ -1,3 +1,4 @@
+#' @tags pkg-shapr
 if (requireNamespace("shapr")) {
   library(futurize)
   library(shapr)

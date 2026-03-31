@@ -1,3 +1,4 @@
+#' @tags pkg-future.apply
 #' @tags future_apply
 #' @tags globals
 #' @tags sequential multisession multicore
