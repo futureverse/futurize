@@ -12,7 +12,7 @@
 
 ## Bug Fixes
 
- * `futurize(label = name)` was ignored for 'crossmap' and 'purrr'
+ * `futurize(label = name)` was ignored for **crossmap** and **purrr**
    calls.
 
 
