@@ -7,6 +7,16 @@
 - Add support for descending calls wrapped in
   [`with()`](https://rdrr.io/r/base/with.html).
 
+- Add default future labels that reflect what function call has been
+  futurized.
+
+- Errors produced when an unsupported call is attempted now includes the
+  version of the **futurize** package.
+
+### Bug Fixes
+
+- `futurize(label = name)` was ignored for ‘crossmap’ and ‘purrr’ calls.
+
 ## Version 0.2.0
 
 CRAN release: 2026-03-18

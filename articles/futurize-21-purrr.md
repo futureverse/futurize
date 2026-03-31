@@ -128,7 +128,6 @@ function supports parallelization of the following **purrr** functions:
   [`map_dbl()`](https://purrr.tidyverse.org/reference/map.html),
   [`map_int()`](https://purrr.tidyverse.org/reference/map.html),
   [`map_lgl()`](https://purrr.tidyverse.org/reference/map.html),
-  [`map_raw()`](https://purrr.tidyverse.org/reference/map_raw.html),
   [`map_dfr()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`map_dfc()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`walk()`](https://purrr.tidyverse.org/reference/map.html)
@@ -137,7 +136,6 @@ function supports parallelization of the following **purrr** functions:
   [`map2_dbl()`](https://purrr.tidyverse.org/reference/map2.html),
   [`map2_int()`](https://purrr.tidyverse.org/reference/map2.html),
   [`map2_lgl()`](https://purrr.tidyverse.org/reference/map2.html),
-  [`map2_raw()`](https://purrr.tidyverse.org/reference/map_raw.html),
   [`map2_dfr()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`map2_dfc()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`walk2()`](https://purrr.tidyverse.org/reference/map2.html)
@@ -146,7 +144,6 @@ function supports parallelization of the following **purrr** functions:
   [`pmap_dbl()`](https://purrr.tidyverse.org/reference/pmap.html),
   [`pmap_int()`](https://purrr.tidyverse.org/reference/pmap.html),
   [`pmap_lgl()`](https://purrr.tidyverse.org/reference/pmap.html),
-  [`pmap_raw()`](https://purrr.tidyverse.org/reference/map_raw.html),
   [`pmap_dfr()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`pmap_dfc()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`pwalk()`](https://purrr.tidyverse.org/reference/pmap.html)
@@ -155,7 +152,6 @@ function supports parallelization of the following **purrr** functions:
   [`imap_dbl()`](https://purrr.tidyverse.org/reference/imap.html),
   [`imap_int()`](https://purrr.tidyverse.org/reference/imap.html),
   [`imap_lgl()`](https://purrr.tidyverse.org/reference/imap.html),
-  [`imap_raw()`](https://purrr.tidyverse.org/reference/map_raw.html),
   [`imap_dfr()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`imap_dfc()`](https://purrr.tidyverse.org/reference/map_dfr.html),
   [`iwalk()`](https://purrr.tidyverse.org/reference/imap.html)
@@ -164,14 +160,6 @@ function supports parallelization of the following **purrr** functions:
   [`modify_at()`](https://purrr.tidyverse.org/reference/modify.html)
 - [`map_if()`](https://purrr.tidyverse.org/reference/map_if.html),
   [`map_at()`](https://purrr.tidyverse.org/reference/map_if.html)
-- [`invoke_map()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_chr()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_dbl()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_int()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_lgl()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_raw()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_dfr()`](https://purrr.tidyverse.org/reference/invoke.html),
-  [`invoke_map_dfc()`](https://purrr.tidyverse.org/reference/invoke.html)
 
 ## Progress Reporting via progressr
 

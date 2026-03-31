@@ -106,8 +106,7 @@ functions:
 - [`xmap_chr()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html),
   [`xmap_dbl()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html),
   [`xmap_int()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html),
-  [`xmap_lgl()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html),
-  [`xmap_raw()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
+  [`xmap_lgl()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
 - [`xmap_dfc()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html),
   [`xmap_dfr()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
 - [`xmap_mat()`](https://pkg.rossellhayes.com/crossmap/reference/xmap_mat.html),
