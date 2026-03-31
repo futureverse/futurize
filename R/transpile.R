@@ -528,6 +528,8 @@ make_package_transpilers <- function(package, FUN, exports = TRUE, s3methods = T
   transpilers
 } ## make_package_transpilers()
 
+
+#' @importFrom utils packageName
 stop_with_version <- function(msg, ...) {
   msg <- sprintf("[%s %s] %s", packageName(), getNamespaceVersion(packageName()), msg)
   stop(msg, ...)
