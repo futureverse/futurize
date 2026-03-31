@@ -15,42 +15,42 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { r: "release", pkg: "futureverse/future.apply@develop" }
-          - { r: "release", pkg: "RevolutionAnalytics/foreach" }
-          - { r: "release", pkg: "futureverse/doFuture@develop" }
-          - { r: "release", pkg: "tidyverse/purrr" }
-          - { r: "release", pkg: "futureverse/furrr" }
-          - { r: "release", pkg: "rossellhayes/crossmap" }
-          - { r: "release", pkg: "hadley/plyr" }
-          - { r: "release", pkg: "psolymos/pbapply" }
-          - { r: "release", pkg: "Bioconductor/BiocParallel@devel" }
-#          - { r: "release", pkg: "boot" }
-          - { r: "release", pkg: "topepo/caret/pkg/caret" }
-          - { r: "release", pkg: "thelovelab/DESeq2@devel" }
-          - { r: "release", pkg: "alserglab/fgsea" }
-          - { r: "release", pkg: "Bioconductor/GenomicAlignments@devel" }
-          - { r: "release", pkg: "Bioconductor/Rsamtools@devel" }
-          - { r: "release", pkg: "ngreifer/fwb" } 
-          - { r: "release", pkg: "gamlss-dev/gamlss" }
-          - { r: "release", pkg: "glmmTMB/glmmTMB/glmmTMB" }
-#          - { r: "release", pkg: "glmnet" }
-          - { r: "release", pkg: "rcastelo/GSVA@devel" }
-          - { r: "release", pkg: "ModelOriented/kernelshap" }
-          - { r: "release", pkg: "lme4/lme4" }
-          - { r: "release", pkg: "wviechtb/metafor" }
-#          - { r: "release", pkg: "mgcv" }
-#          - { r: "release", pkg: "partykit" }
-          - { r: "release", pkg: "tagteam/riskRegression" }
-#          - { r: "release", pkg: "scater" }
-#          - { r: "release", pkg: "LTLA/scuttle" }  ## devel not stable?
-          - { r: "release", pkg: "SingleCellExperiment" }
-#          - { r: "release", pkg: "sva" }
-          - { r: "release", pkg: "mhahsler/seriation" }
-          - { r: "release", pkg: "philchalmers/SimDesign" }
-          - { r: "release", pkg: "NorskRegnesentral/shapr" }
-          - { r: "release", pkg: "strucchange" }
-#          - { r: "release", pkg: "tm" }
-          - { r: "release", pkg: "vegandevs/vegan" }
+          - { r: "release", pkg: "future.apply", url: "futureverse/future.apply@develop" }
+          - { r: "release", pkg: "foreach", url: "RevolutionAnalytics/foreach" }
+          - { r: "release", pkg: "doFuture", url: "futureverse/doFuture@develop" }
+          - { r: "release", pkg: "purrr", url: "tidyverse/purrr" }
+          - { r: "release", pkg: "furrr", url: "futureverse/furrr" }
+          - { r: "release", pkg: "crossmap", url: "rossellhayes/crossmap" }
+          - { r: "release", pkg: "plyr", url: "hadley/plyr" }
+          - { r: "release", pkg: "pbapply", url: "psolymos/pbapply" }
+          - { r: "release", pkg: "BiocParallel", url: "Bioconductor/BiocParallel@devel" }
+#          - { r: "release", pkg: "boot", url: "boot" }
+          - { r: "release", pkg: "caret", url: "topepo/caret/pkg/caret" }
+          - { r: "release", pkg: "DESeq2", url: "thelovelab/DESeq2@devel" }
+          - { r: "release", pkg: "fgsea", url: "alserglab/fgsea" }
+          - { r: "release", pkg: "GenomicAlignments", url: "Bioconductor/GenomicAlignments@devel" }
+          - { r: "release", pkg: "Rsamtools", url: "Bioconductor/Rsamtools@devel" }
+          - { r: "release", pkg: "fwb", url: "ngreifer/fwb" } 
+          - { r: "release", pkg: "gamlss", url: "gamlss-dev/gamlss" }
+          - { r: "release", pkg: "glmmTMB", url: "glmmTMB/glmmTMB/glmmTMB" }
+#          - { r: "release", pkg: "glmnet", url: "glmnet" }
+          - { r: "release", pkg: "GSVA", url: "rcastelo/GSVA@devel" }
+          - { r: "release", pkg: "kernelshap", url: "ModelOriented/kernelshap" }
+          - { r: "release", pkg: "lme4", url: "lme4/lme4" }
+          - { r: "release", pkg: "metafor", url: "wviechtb/metafor" }
+#          - { r: "release", pkg: "mgcv", url: "mgcv" }
+#          - { r: "release", pkg: "partykit", url: "partykit" }
+          - { r: "release", pkg: "riskRegression", url: "tagteam/riskRegression" }
+#          - { r: "release", pkg: "scater", url: "scater" }
+#          - { r: "release", pkg: "scuttle", url: "LTLA/scuttle" }  ## devel not stable?
+          - { r: "release", pkg: "SingleCellExperiment", url: "SingleCellExperiment" }
+#          - { r: "release", pkg: "sva", url: "sva" }
+          - { r: "release", pkg: "seriation", url: "mhahsler/seriation" }
+          - { r: "release", pkg: "SimDesign", url: "philchalmers/SimDesign" }
+          - { r: "release", pkg: "shapr", url: "NorskRegnesentral/shapr" }
+          - { r: "release", pkg: "strucchange", url: "strucchange" }
+#          - { r: "release", pkg: "tm", url: "tm" }
+          - { r: "release", pkg: "vegan", url: "vegandevs/vegan" }
  
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -79,6 +79,8 @@ jobs:
       R_FUTURE_FUTURE_GC: defunct
       R_FUTURE_PLAN_EARLYSIGNAL: defunct
       R_FUTURE_RESOLVED_RUN: defunct
+      ## Specific to testme
+      R_TESTME_FILTER_TAGS='"pkg-${{ matrix.config.pkg }}" %in% tags'
 
     steps:
       - uses: actions/checkout@v4
@@ -105,7 +107,7 @@ jobs:
 
       - name: Install development versions of dependencies
         run: |
-          pak::pak("${{ matrix.config.pkg }}")
+          pak::pak("${{ matrix.config.url }}")
         shell: Rscript {0}
 
       - name: Session info

@@ -38,8 +38,11 @@
 #' * R_TESTME_PACKAGE
 #' * R_TESTME_NAME
 #' * R_TESTME_PATH
-#' * R_TESTME_FILTER_NAME: An R expression to be evaluated
-#' * R_TESTME_FILTER_TAGS: An R expression to be evaluated
+#' * R_TESTME_FILTER_NAME:
+#"    An R expression to be evaluated as TRUE
+#' * R_TESTME_FILTER_TAGS:
+#'    An R expression to be evaluated as TRUE, e.g.
+#'    R_TESTME_FILTER_TAGS='"pkg-furrr" %in% tags'
 #' * R_TESTME_COVERAGE
 #' * R_TESTME_DEBUG
 main <- function() {
