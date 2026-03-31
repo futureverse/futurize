@@ -30,7 +30,7 @@ append_transpilers_for_vegan <- function() {
     ## "argument 'parallel' is not used (yet)"
     if (name %in% c("simper")) return()
 
-    defaults <- list()
+    defaults <- list(label =  sprintf("fz:SimDesign::%s", name))
     if (name %in% ("cascadeKM")) defaults$seed <- TRUE
 
     if ("parallel" %in% names(formals(fcn))) {

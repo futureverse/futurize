@@ -4,6 +4,9 @@
 
  * Add support for descending calls wrapped in `with()`.
  
+ * Add default future labels that reflect what function call has been
+   futurized.
+ 
  * Errors produced when an unsupported call is attempted now includes
    the version of the **futurize** package.
 

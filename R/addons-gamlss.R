@@ -10,15 +10,6 @@ append_transpilers_for_gamlss <- function() {
     stop(sprintf("You are running R %s, but futurization of 'gamlss' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  transpiler <- make_futurize_for_makeClusterFuture(
-    defaults = list(packages = "gamlss"),
-    args = list(
-      parallel = "snow",
-      ncpus = 2L,   ## only used for test ncpus > 1
-      cl = quote(cl)
-    )
-  )
-
   ## Functions that do NOT respect a user-provided 'cl' argument:
   ## stepGAIC(), stepGAICAll.A(), stepGAICAll.B(), stepTGD(),
   ## stepTGDAll.A() always create their own cluster via
@@ -33,6 +24,18 @@ append_transpilers_for_gamlss <- function() {
   transpilers <- make_package_transpilers("gamlss", FUN = function(fcn, name) {
     if (name %in% skip) return(NULL)
     if (all(c("parallel", "ncpus", "cl") %in% names(formals(fcn)))) {
+      transpiler <- make_futurize_for_makeClusterFuture(
+        defaults = list(
+          packages = "gamlss",
+          label = sprintf("fz:gamlss::%s", name)
+        ),
+        args = list(
+          parallel = "snow",
+          ncpus = 2L,   ## only used for test ncpus > 1
+          cl = quote(cl)
+        )
+      )
+
       list(
         label = sprintf("gamlss::%s() ~> gamlss::%s(..., parallel = TRUE)", name, name),
         transpiler = transpiler
