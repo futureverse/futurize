@@ -1,13 +1,15 @@
 on:
   workflow_dispatch:  # Enables manual triggering
 
+name: deps-devel-checks
+
 jobs:
   deps-devel-checks:
     timeout-minutes: 45
 
     runs-on: ubuntu-latest
 
-    name: ${{ matrix.config.pkg }} (${{ matrix.config.r }}) ${{ matrix.config.label }}
+    name: ${{ matrix.config.pkg }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
@@ -78,7 +80,7 @@ jobs:
       R_FUTURE_PLAN_EARLYSIGNAL: defunct
       R_FUTURE_RESOLVED_RUN: defunct
       ## Specific to testme
-      R_TESTME_FILTER_TAGS='"pkg-${{ matrix.config.pkg }}" %in% tags'
+      R_TESTME_FILTER_TAGS: '"pkg-${{ matrix.config.pkg }}" %in% tags'
 
     steps:
       - uses: actions/checkout@v4
@@ -88,7 +90,6 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
           
       - uses: r-lib/actions/setup-r-dependencies@v2
