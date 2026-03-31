@@ -28,12 +28,18 @@ append_transpilers_for_doFuture <- function() {
       if (!"seed" %in% attr(options, "specified")) {
         options[["seed"]] <- TRUE
       }
+      if (!"label" %in% attr(options, "specified")) {
+        options[["label"]] <- "fz:foreach::times-%d"
+      }
       expr <- bquote_apply(template,
         OPTS = options,
         EXPR = expr
       )
     } else {
-      options <- make_options_for_doFuture(options, wrap = TRUE)
+      name <- if (identical(fcn, as.symbol("%:%")) ||
+                  identical(fcn, quote(foreach::`%:%`))) "%:%" else "foreach"
+      defaults <- list(label = sprintf("fz:foreach::%s-%%d", name))
+      options <- make_options_for_doFuture(options, defaults = defaults, wrap = TRUE)
       if (identical(fcn, as.symbol("%:%")) ||
                identical(fcn, quote(foreach::`%:%`))) {
         idx_EXPR <- 2:3
