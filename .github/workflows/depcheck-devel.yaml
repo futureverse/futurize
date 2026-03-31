@@ -1,8 +1,6 @@
 on:
   workflow_dispatch:  # Enables manual triggering
 
-name: deps-devel-checks
-
 jobs:
   deps-devel-checks:
     timeout-minutes: 45
