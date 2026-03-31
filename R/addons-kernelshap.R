@@ -8,9 +8,13 @@
 append_transpilers_for_kernelshap <- function() {
   transpilers <- make_package_transpilers("kernelshap", FUN = function(fcn, name) {
     if (name %in% c("kernelshap", "permshap")) {
+      defaults <- list(
+        seed = TRUE,
+        label = sprintf("fz:kernelshap::%s-%%d", name)
+      )
       list(
         label = sprintf("kernelshap::%s() ~> kernelshap::%s(..., parallel = TRUE)", name, name),
-        transpiler = make_futurize_for_doFuture(defaults = list(seed = TRUE), args = list(parallel = TRUE))
+        transpiler = make_futurize_for_doFuture(defaults = defaults, args = list(parallel = TRUE))
       )
     }
   })

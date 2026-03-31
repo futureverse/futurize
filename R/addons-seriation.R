@@ -9,9 +9,13 @@
 append_transpilers_for_seriation <- function() {
   transpilers <- make_package_transpilers("seriation", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      defaults <- list(
+        seed = TRUE,
+        label = sprintf("fz:seriation::%s-%%d", name)
+      )
       list(
         label = sprintf("seriation::%s() ~> seriation::%s()", name, name),
-        transpiler = make_futurize_for_doFuture(args = list(parallel = TRUE), defaults = list(seed = TRUE))
+        transpiler = make_futurize_for_doFuture(args = list(parallel = TRUE), defaults = defaults)
       )
     }
   })

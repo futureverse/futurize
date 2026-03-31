@@ -33,17 +33,22 @@ append_transpilers_for_tm <- function() {
   ## future::makeClusterFuture() is not available
   call <- as.call(lapply(c("::", "future", "makeClusterFuture"), as.name))
 
-  transpiler <- function(expr, options = NULL) {
-    opts <- make_options_for_makeClusterFuture(options, defaults = list(packages = "tm"))
+  template2 <- bquote_compile(function(expr, options = NULL) {
+    defaults <- list(
+      packages = "tm",
+      label = sprintf("fz:tm::%s", .(NAME))
+    )
+    opts <- make_options_for_makeClusterFuture(options, defaults = defaults)
     bquote_apply(template,
       CALL = call,
       OPTS = opts,
       EXPR = expr
     )
-  }
+  })
 
   transpilers <- make_package_transpilers("tm", FUN = function(fcn, name) {
     if (!name %in% c("tm_map", "tm_index", "TermDocumentMatrix")) return(NULL)
+    transpiler <- eval(bquote_apply(template2, NAME = name))
     list(
       label = sprintf("tm::%s() ~> tm::%s()", name, name),
       transpiler = transpiler

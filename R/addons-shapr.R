@@ -10,13 +10,13 @@
 append_transpilers_for_shapr <- function() {
   transpilers <- make_package_transpilers("shapr", FUN = function(fcn, name) {
     if (name %in% c("explain", "explain_forecast")) {
+      defaults <- list(
+        future.seed = TRUE,
+        future.label = sprintf("fz:shapr::%s-%%d", name)
+      )
       list(
         label = sprintf("shapr::%s() ~> shapr::%s()", name, name),
-        transpiler = make_futurize_for_future.apply(
-          defaults = list(
-            future.seed = TRUE
-          )
-        )
+        transpiler = make_futurize_for_future.apply(defaults = defaults)
       )
     }
   })

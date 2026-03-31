@@ -18,8 +18,11 @@ append_transpilers_for_riskRegression <- function() {
     )
   )
 
-  transpiler <- function(expr, options = NULL) {
-    defaults <- list(seed = TRUE)
+  template2 <- bquote_compile(function(expr, options = NULL) {
+    defaults <- list(
+      seed = TRUE,
+      label = sprintf("fz:riskRegression::%s-%%d", .(NAME))
+    )
     expr <- append_call_arguments(expr,
       parallel = "as.registered"
     )
@@ -32,10 +35,11 @@ append_transpilers_for_riskRegression <- function() {
       OPTS = opts,
       EXPR = expr
     )
-  }
+  })
 
   transpilers <- make_package_transpilers("riskRegression", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      transpiler <- eval(bquote_apply(template2, NAME = name))
       list(
         label = sprintf("riskRegression::%s() ~> riskRegression::%s(..., parallel = \"as.registered\")", name, name),
         transpiler = transpiler
