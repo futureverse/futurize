@@ -1,6 +1,6 @@
 #' @importFrom utils globalVariables
 globalVariables(".")
-globalVariables(c("CALL", "OPTS", "EXPR"))
+globalVariables(c("CALL", "OPTS", "EXPR", "NAME"))
 
 #' Efficient partial substitution in expressions
 #' 
