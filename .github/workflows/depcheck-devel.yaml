@@ -32,7 +32,7 @@ jobs:
           - { r: "release", pkg: "Bioconductor/Rsamtools@devel" }
           - { r: "release", pkg: "ngreifer/fwb" } 
           - { r: "release", pkg: "gamlss-dev/gamlss" }
-          - { r: "release", pkg: "glmmTMB/glmmTMB" }
+          - { r: "release", pkg: "glmmTMB/glmmTMB/glmmTMB" }
 #          - { r: "release", pkg: "glmnet" }
           - { r: "release", pkg: "rcastelo/GSVA@devel" }
           - { r: "release", pkg: "ModelOriented/kernelshap" }
@@ -42,7 +42,7 @@ jobs:
 #          - { r: "release", pkg: "partykit" }
           - { r: "release", pkg: "tagteam/riskRegression" }
 #          - { r: "release", pkg: "scater" }
-          - { r: "release", pkg: "LTLA/scuttle" }
+#          - { r: "release", pkg: "LTLA/scuttle" }  ## devel not stable?
           - { r: "release", pkg: "SingleCellExperiment" }
 #          - { r: "release", pkg: "sva" }
           - { r: "release", pkg: "mhahsler/seriation" }
