@@ -39,27 +39,26 @@ append_transpilers_for_BiocParallel <- function() {
     })
   )
 
-  transpiler <- function(expr, options = NULL) {
+  template2 <- bquote_compile(function(expr, options = NULL) {
     stdout <- options[["stdout"]]
     template <- if (isFALSE(stdout)) template_no_stdout else template_stdout
-
     expr <- append_call_arguments(expr,
       BPPARAM = quote(BiocParallel::DoparParam())
     )
-
-    opts <- make_options_for_doFuture(options, wrap = TRUE)
-    
+    defaults <- list(label = sprintf("fz:BiocParallel::%s-%%d", .(NAME)))
+    opts <- make_options_for_doFuture(options, defaults = defaults, wrap = TRUE)
     ## Update 'OPTS'
     bquote_apply(template,
       OPTS = opts,
       EXPR = expr
     )
-  }
+  })
 
   transpilers <- make_package_transpilers("BiocParallel", FUN = function(fcn, name) {
     ## Skip some BiocParallel functions
     if (name %in% c("bpvectorize", "register")) return(NULL)
     if ("BPPARAM" %in% names(formals(fcn))) {
+      transpiler <- eval(bquote_apply(template2, NAME = name))
       list(
         label = sprintf("BiocParallel::%s() ~> BiocParallel::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
         transpiler = transpiler
