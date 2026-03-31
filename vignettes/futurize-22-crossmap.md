@@ -86,7 +86,7 @@ The `futurize()` function supports parallelization of the following **crossmap**
 
 * `imap_vec()`, `map_vec()`, `map2_vec()`, `pmap_vec()`, `xmap_vec()`
 * `xmap()`
-* `xmap_chr()`, `xmap_dbl()`, `xmap_int()`, `xmap_lgl()`, `xmap_raw()`
+* `xmap_chr()`, `xmap_dbl()`, `xmap_int()`, `xmap_lgl()`
 * `xmap_dfc()`, `xmap_dfr()`
 * `xmap_mat()`, `xmap_arr()`
 * `xwalk()`

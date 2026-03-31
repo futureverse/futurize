@@ -64,15 +64,6 @@ stopifnot(identical(
 ))
 
 
-message("future_map_raw() works")
-x <- as.raw(1:3)
-
-stopifnot(identical(
-  map_raw(x, ~.x) |> futurize(),
-  map_raw(x, ~.x)
-))
-
-
 message("names of `.x` are retained")
 x <- c(a = 1, b = 2)
 stopifnot(identical(names(map_dbl(x, ~1) |> futurize()), c("a", "b")))
@@ -111,7 +102,6 @@ stopifnot(identical(map_chr(list(), identity) |> futurize(), character()))
 stopifnot(identical(map_dbl(list(), identity) |> futurize(), double()))
 stopifnot(identical(map_int(list(), identity) |> futurize(), integer()))
 stopifnot(identical(map_lgl(list(), identity) |> futurize(), logical()))
-stopifnot(identical(map_raw(list(), identity) |> futurize(), raw()))
 
 
 # ------------------------------------------------------------------------------
