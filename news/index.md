@@ -1,6 +1,6 @@
 # Changelog
 
-## Version (development version)
+## Version 0.3.0
 
 ### New Features
 
