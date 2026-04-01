@@ -1,3 +1,4 @@
+#' @tags pkg-fwb
 if (requireNamespace("fwb") && requireNamespace("boot")) {
   library(futurize)
   library(fwb)

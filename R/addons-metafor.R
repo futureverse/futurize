@@ -10,14 +10,17 @@ append_transpilers_for_metafor <- function() {
     stop(sprintf("You are running R %s, but futurization of 'metafor' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  transpiler <- make_futurize_for_makeClusterFuture(args = list(
-    parallel = "snow",
-    ncpus = 2L,   ## only used for test ncpus > 1
-    cl = quote(cl)
-  ))
-
   transpilers <- make_package_transpilers("metafor", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      transpiler <- make_futurize_for_makeClusterFuture(
+        args = list(
+          parallel = "snow",
+          ncpus = 2L,   ## only used for test ncpus > 1
+          cl = quote(cl)
+        ),
+        defaults = list(label = sprintf("fz:metafor::%s", name))
+      )
+      
       list(
         label = sprintf("metafor::%s() ~> metafor::%s(..., parallel = \"snow\")", name, name),
         transpiler = transpiler

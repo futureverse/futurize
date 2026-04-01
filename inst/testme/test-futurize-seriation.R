@@ -1,3 +1,4 @@
+#' @tags pkg-seriation
 if (requireNamespace("seriation") && requireNamespace("doFuture")) {
 library(futurize)
 library(seriation)

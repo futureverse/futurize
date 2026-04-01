@@ -1,3 +1,4 @@
+#' @tags pkg-DESeq2
 #' @tags skip_on_cran  ## (35s) to limit total check time
 if (requireNamespace("DESeq2") && requireNamespace("doFuture")) {
 library(futurize)

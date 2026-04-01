@@ -32,7 +32,10 @@ append_transpilers_for_scuttle <- function() {
       args <- list(BPPARAM = quote(BiocParallel::DoparParam()))
       transpilers[[name]] <- list(
         label = sprintf("scuttle::%s() ~> scuttle::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
-        transpiler = make_futurize_for_doFuture(args = args)
+        transpiler = make_futurize_for_doFuture(
+          args = args,
+          defaults = list(label = sprintf("fz:scuttle::%s-%%d", name))
+        )
       )
     }
   }

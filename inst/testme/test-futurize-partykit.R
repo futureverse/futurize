@@ -1,3 +1,4 @@
+#' @tags pkg-partykit
 if (requireNamespace("partykit") && requireNamespace("future.apply")) {
 library(futurize)
 library(partykit)

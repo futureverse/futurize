@@ -1,3 +1,4 @@
+#' @tags pkg-purrr
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
 library(purrr)

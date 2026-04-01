@@ -19,7 +19,7 @@ append_transpilers_for_fwb <- function() {
     })
   )
   
-  transpiler <- function(expr, options = NULL, defaults = list(seed = TRUE)) {
+  template2 <- bquote_compile(function(expr, options = NULL) {
     ## Specified future.* arguments
     specified <- attr(options, "specified")
 
@@ -35,14 +35,16 @@ append_transpilers_for_fwb <- function() {
                                exclude = c("message", "warning"))
     }
 
-    if (length(defaults) > 0) {
-      names <- setdiff(names(defaults), attr(options, "specified"))
-      for (name in names) {
-        if (name == "packages") {
-          options[[name]] <- c(options[[name]], defaults[[name]])
-        } else {
-          options[[name]] <- defaults[[name]]
-        }
+    defaults <- list(
+      seed = TRUE,
+      label = sprintf("fz:fwb::%s-%%d", .(NAME))
+    )
+    names <- setdiff(names(defaults), attr(options, "specified"))
+    for (name in names) {
+      if (name == "packages") {
+        options[[name]] <- c(options[[name]], defaults[[name]])
+      } else {
+        options[[name]] <- defaults[[name]]
       }
     }
     
@@ -54,10 +56,12 @@ append_transpilers_for_fwb <- function() {
       OPTS = options,
       EXPR = expr
     )
-  }
+  })
 
   transpilers <- make_package_transpilers("fwb", FUN = function(fcn, name) {
     if ("cl" %in% names(formals(fcn))) {
+      transpiler <- eval(bquote_apply(template2, NAME = name))
+
       list(
         label = sprintf("fwb::%s() ~> fwb::%s(..., cl = \"future\")", name, name),
         transpiler = transpiler

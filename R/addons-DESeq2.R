@@ -12,9 +12,13 @@ append_transpilers_for_DESeq2 <- function() {
       if ("parallel" %in% names(formals(fcn))) {
         args <- c(list(parallel = TRUE), args)
       }
+      
       list(
         label = sprintf("DESeq2::%s() ~> DESeq2::%s(..., parallel = TRUE, BPPARAM = BiocParallel::DoparParam())", name, name),
-        transpiler = make_futurize_for_doFuture(args = args)
+        transpiler = make_futurize_for_doFuture(
+          args = args,
+          defaults = list(label = sprintf("fz:DESeq2::%s-%%d", name))
+        )
       )
     }
   })

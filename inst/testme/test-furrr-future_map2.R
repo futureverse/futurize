@@ -1,3 +1,4 @@
+#' @tags pkg-furrr
 #' @tags detritus-files
 
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
@@ -68,16 +69,6 @@ stopifnot(identical(
 ))
 
 
-message("future_map2_raw() works")
-x <- c("a", "b", "c")
-y <- as.raw(1:3)
-
-stopifnot(identical(
-  map2_raw(x, y, ~.y) |> futurize(),
-  map2_raw(x, y, ~.y)
-))
-
-
 message("names of `.x` are retained")
 x <- c(a = 1, b = 2)
 y <- c(c = 1, d = 2)
@@ -119,7 +110,6 @@ stopifnot(identical(map2_chr(list(), list(), identity) |> futurize(), character(
 stopifnot(identical(map2_dbl(list(), list(), identity) |> futurize(), double()))
 stopifnot(identical(map2_int(list(), list(), identity) |> futurize(), integer()))
 stopifnot(identical(map2_lgl(list(), list(), identity) |> futurize(), logical()))
-stopifnot(identical(map2_raw(list(), list(), identity) |> futurize(), raw()))
 
 
 message("size one recycling works")

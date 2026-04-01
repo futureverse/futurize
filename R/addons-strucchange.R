@@ -11,7 +11,10 @@ append_transpilers_for_strucchange <- function() {
     if (name == "breakpoints.formula") {
       list(
         label = sprintf("strucchange::%s() ~> strucchange::%s()", name, name),
-        transpiler = make_futurize_for_doFuture(args = list(hpc = "foreach"))
+        transpiler = make_futurize_for_doFuture(
+          args = list(hpc = "foreach"),
+          defaults = list(label = sprintf("fz:strucchange::%s-%%d", name))
+        )
       )
     }
   })

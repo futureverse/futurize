@@ -1,3 +1,4 @@
+#' @tags pkg-boot
 if (requireNamespace("boot") && getRversion() >= "4.4.0") {
 library(futurize)
 library(boot)

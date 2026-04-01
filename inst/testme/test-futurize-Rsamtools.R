@@ -1,3 +1,4 @@
+#' @tags pkg-Rsamtools
 if (requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)
 library(Rsamtools)

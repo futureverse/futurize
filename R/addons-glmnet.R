@@ -8,10 +8,9 @@
 append_transpilers_for_glmnet <- function() {
   transpilers <- make_package_transpilers("glmnet", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      defaults <- list(label = sprintf("fz:glmnet::%s-%%d", name))
       if (name == "cv.glmnet") {
-        defaults <- list(seed = TRUE)
-      } else {
-        defaults <- list()
+        defaults[["seed"]] <- TRUE
       }
       
       list(

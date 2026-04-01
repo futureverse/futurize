@@ -1,3 +1,4 @@
+#' @tags pkg-SimDesign
 if (requireNamespace("SimDesign") && getRversion() >= "4.4.0") {
 library(futurize)
 library(SimDesign)

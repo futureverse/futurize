@@ -19,10 +19,9 @@ append_transpilers_for_lme4 <- function() {
 
   transpilers <- make_package_transpilers("lme4", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
+      defaults <- list(label = sprintf("fz:lme4::%s", name))
       if (name %in% c("allFit", "influence.merMod")) {
-        defaults <- list(packages = "lme4")
-      } else {
-        defaults <- list()
+        defaults$packages <- "lme4"
       }
 
       list(

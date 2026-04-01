@@ -17,6 +17,11 @@ make_options_for_future.apply <- local({
       defaults_base <<- get_defaults(future.apply::future_lapply)
     }
 
+    ## Keep only 'future.apply' defaults
+    if (length(defaults) > 0) {
+      defaults <- defaults[grepl("^future[.]", names(defaults))]
+    }
+    
     ## Default future.* arguments
     defaults <- c(defaults_base, get_defaults(fcn), defaults)
     keep <- !duplicated(names(defaults), fromLast = TRUE)

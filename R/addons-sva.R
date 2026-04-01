@@ -19,7 +19,10 @@ append_transpilers_for_sva <- function() {
       args <- list(BPPARAM = quote(BiocParallel::DoparParam()))
       transpilers[[name]] <- list(
         label = sprintf("sva::%s() ~> sva::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
-        transpiler = make_futurize_for_doFuture(args = args)
+        transpiler = make_futurize_for_doFuture(
+          args = args,
+          defaults = list(label = sprintf("fz:sva::%s-%%d", name))
+        )
       )
     }
   }

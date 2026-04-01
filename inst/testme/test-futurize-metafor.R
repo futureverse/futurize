@@ -1,3 +1,4 @@
+#' @tags pkg-metafor
 if (requireNamespace("metafor") && getRversion() >= "4.4.0") {
 library(futurize)
 library(metafor)

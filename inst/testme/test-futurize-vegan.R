@@ -1,3 +1,4 @@
+#' @tags pkg-vegan
 if (requireNamespace("vegan") && getRversion() >= "4.4.0") {
 
 all_equal_ignore_call <- function(a, b, ...) {

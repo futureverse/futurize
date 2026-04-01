@@ -1,4 +1,22 @@
-# Version 0.2.0 (2026-03-17)
+# Version 0.3.0 (2026-04-01)
+
+## New Features
+
+ * Add support for descending calls wrapped in `with()`.
+ 
+ * Add default future labels that reflect what function call has been
+   futurized.
+ 
+ * Errors produced when an unsupported call is attempted now includes
+   the version of the **futurize** package.
+
+## Bug Fixes
+
+ * `futurize(label = name)` was ignored for **crossmap** and **purrr**
+   calls.
+
+
+# Version 0.2.0 (2026-03-18)
 
 Following the initial CRAN release in January 2026, this version adds
 `futurize()` support for many more CRAN and Bioconductor packages. To

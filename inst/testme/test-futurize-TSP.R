@@ -1,3 +1,4 @@
+#' @tags pkg-TSP
 if (requireNamespace("TSP") && requireNamespace("doFuture")) {
 library(futurize)
 library(TSP)

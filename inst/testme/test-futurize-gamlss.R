@@ -1,3 +1,4 @@
+#' @tags pkg-gamlss
 if (requireNamespace("gamlss") && getRversion() >= "4.4.0") {
 library(futurize)
 library(gamlss)

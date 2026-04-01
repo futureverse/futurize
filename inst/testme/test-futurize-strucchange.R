@@ -1,3 +1,4 @@
+#' @tags pkg-strucchange
 if (requireNamespace("strucchange") && requireNamespace("doFuture")) {
 library(futurize)
 library(strucchange)

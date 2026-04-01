@@ -1,3 +1,4 @@
+#' @tags pkg-foreach
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)

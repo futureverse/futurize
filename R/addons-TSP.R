@@ -9,9 +9,13 @@
 append_transpilers_for_TSP <- function() {
   transpilers <- make_package_transpilers("TSP", FUN = function(fcn, name) {
     if (name %in% c("solve_TSP")) {
+      defaults <- list(
+        seed = TRUE,
+        label = sprintf("fz:TSP::%s-%%d", name)
+      )
       list(
         label = sprintf("TSP::%s() ~> TSP::%s()", name, name),
-        transpiler = make_futurize_for_doFuture(defaults = list(seed = TRUE))
+        transpiler = make_futurize_for_doFuture(defaults = defaults)
       )
     }
   })

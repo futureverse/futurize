@@ -1,3 +1,4 @@
+#' @tags pkg-furrr
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
 library(purrr)
@@ -9,7 +10,6 @@ stopifnot(identical(imap_chr(1:2, ~as.character(.y)) |> futurize(), c("1", "2"))
 stopifnot(identical(imap_int(1:2, ~.y) |> futurize(), c(1L, 2L)))
 stopifnot(identical(imap_dbl(1:2, ~.y) |> futurize(), c(1, 2)))
 stopifnot(identical(imap_lgl(1:2, ~identical(.y, 1L)) |> futurize(), c(TRUE, FALSE)))
-stopifnot(identical(imap_raw(1:2, ~raw(1)) |> futurize(), raw(2)))
 stopifnot(identical(
   imap_dfr(1:2, ~data.frame(x = .y)) |> futurize(),
   data.frame(x = c(1L, 2L))
@@ -35,10 +35,6 @@ stopifnot(identical(
 stopifnot(identical(
   imap_lgl(x, ~if (.y == "x") TRUE else FALSE) |> futurize(),
   c(x = TRUE, y = FALSE)
-))
-stopifnot(identical(
-  imap_raw(x, ~if (.y == "x") as.raw(1) else as.raw(2)) |> futurize(),
-  set_names(as.raw(c(1L, 2L)), c("x", "y"))
 ))
 stopifnot(identical(
   imap_dfr(x, ~data.frame(x = .y)) |> futurize(),

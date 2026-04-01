@@ -1,3 +1,4 @@
+#' @tags pkg-caret
 if (requireNamespace("caret") && requireNamespace("randomForest") && requireNamespace("doFuture")) {
 library(futurize)
 library(caret)

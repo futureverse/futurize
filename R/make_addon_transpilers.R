@@ -22,17 +22,24 @@ make_addon_transpilers <- function(from_package, to_package, make_options) {
   }
 
   transpilers <- list()
-
+  
   exports <- names(getNamespaceInfo(to_package, "exports"))
   names <- grep("^future_", exports, value = TRUE)
   for (name in names) {
     basename <- sub("^future_", "", name)
 
+    defaults <- list(
+      ## for future.apply
+      future.label = sprintf("fz:%s::%s-%%d", from_package, basename),
+      ## for furrr
+      prefix       = sprintf("fz:%s::%s", from_package, basename)
+    )
+
     transpiler <- eval(bquote(function(expr, options = NULL) {
       call <- make_call(.(name))
       fcn <- eval(call)
       expr[[1]] <- call
-      parts <- c(as.list(expr), .(make_options)(options, fcn))
+      parts <- c(as.list(expr), .(make_options)(options, fcn, defaults = .(defaults)))
       expr <- as.call(parts)
       expr
     }))

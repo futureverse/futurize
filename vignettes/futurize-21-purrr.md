@@ -123,13 +123,12 @@ ys <- 1:10 |>
 
 The `futurize()` function supports parallelization of the following **purrr** functions:
 
- * `map()`, `map_chr()`, `map_dbl()`, `map_int()`, `map_lgl()`, `map_raw()`, `map_dfr()`, `map_dfc()`, `walk()`
- * `map2()`, `map2_chr()`, `map2_dbl()`, `map2_int()`, `map2_lgl()`, `map2_raw()`, `map2_dfr()`, `map2_dfc()`, `walk2()`
- * `pmap()`, `pmap_chr()`, `pmap_dbl()`, `pmap_int()`, `pmap_lgl()`, `pmap_raw()`, `pmap_dfr()`, `pmap_dfc()`, `pwalk()`
- * `imap()`, `imap_chr()`, `imap_dbl()`, `imap_int()`, `imap_lgl()`, `imap_raw()`, `imap_dfr()`, `imap_dfc()`, `iwalk()`
+ * `map()`, `map_chr()`, `map_dbl()`, `map_int()`, `map_lgl()`, `map_dfr()`, `map_dfc()`, `walk()`
+ * `map2()`, `map2_chr()`, `map2_dbl()`, `map2_int()`, `map2_lgl()`, `map2_dfr()`, `map2_dfc()`, `walk2()`
+ * `pmap()`, `pmap_chr()`, `pmap_dbl()`, `pmap_int()`, `pmap_lgl()`, `pmap_dfr()`, `pmap_dfc()`, `pwalk()`
+ * `imap()`, `imap_chr()`, `imap_dbl()`, `imap_int()`, `imap_lgl()`, `imap_dfr()`, `imap_dfc()`, `iwalk()`
  * `modify()`, `modify_if()`, `modify_at()`
  * `map_if()`, `map_at()`
- * `invoke_map()`, `invoke_map_chr()`, `invoke_map_dbl()`, `invoke_map_int()`, `invoke_map_lgl()`, `invoke_map_raw()`, `invoke_map_dfr()`, `invoke_map_dfc()`
 
 
 # Progress Reporting via progressr

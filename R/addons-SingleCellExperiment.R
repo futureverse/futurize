@@ -17,7 +17,10 @@ append_transpilers_for_SingleCellExperiment <- function() {
       args <- list(BPPARAM = quote(BiocParallel::DoparParam()))
       transpilers[[name]] <- list(
         label = sprintf("SingleCellExperiment::%s() ~> SingleCellExperiment::%s(..., BPPARAM = BiocParallel::DoparParam())", name, name),
-        transpiler = make_futurize_for_doFuture(args = args)
+        transpiler = make_futurize_for_doFuture(
+          args = args,
+          defaults = list(label = sprintf("fz:SingleCellExperiment::%s-%%d", name))
+        )
       )
     }
   }
