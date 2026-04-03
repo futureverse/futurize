@@ -47,6 +47,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "seriation",      append_transpilers_for_seriation)
   transpilers_for_package("futurize::add-on", package = "SimDesign",      append_transpilers_for_SimDesign)
   transpilers_for_package("futurize::add-on", package = "shapr",          append_transpilers_for_shapr)
+  transpilers_for_package("futurize::add-on", package = "stars",          append_transpilers_for_stars)
   transpilers_for_package("futurize::add-on", package = "strucchange",    append_transpilers_for_strucchange)
   transpilers_for_package("futurize::add-on", package = "tm",             append_transpilers_for_tm)
   transpilers_for_package("futurize::add-on", package = "TSP",            append_transpilers_for_TSP)

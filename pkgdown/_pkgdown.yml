@@ -66,6 +66,8 @@ navbar:
         href: articles/futurize-81-shapr.html
       - text: Parallelize 'SimDesign' functions
         href: articles/futurize-81-SimDesign.html
+      - text: Parallelize 'stars' functions
+        href: articles/futurize-81-stars.html
       - text: Parallelize 'strucchange' functions
         href: articles/futurize-81-strucchange.html
       - text: Parallelize 'tm' functions
