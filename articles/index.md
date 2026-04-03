@@ -62,6 +62,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-SimDesign.md):
 - [Parallelize 'SingleCellExperiment'
   functions](https://futurize.futureverse.org/articles/futurize-81-SingleCellExperiment.md):
+- [Parallelize 'stars'
+  functions](https://futurize.futureverse.org/articles/futurize-81-stars.md):
 - [Parallelize 'strucchange'
   functions](https://futurize.futureverse.org/articles/futurize-81-strucchange.md):
 - [Parallelize 'sva'

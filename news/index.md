@@ -1,6 +1,15 @@
 # Changelog
 
+## Version (development version)
+
+### New Transpilers
+
+- Add support for map-reduce CRAN package **stars**,
+  e.g. `sm <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
+
 ## Version 0.3.0
+
+CRAN release: 2026-04-01
 
 ### New Features
 

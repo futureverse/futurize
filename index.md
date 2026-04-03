@@ -140,6 +140,7 @@ parallelization.
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
 | **[SimDesign](https://cran.r-project.org/package=SimDesign)** | `runSimulation()`, `runArraySimulation()` | \- |
+| **[stars](https://cran.r-project.org/package=stars)** | `st_apply()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_TSP()` | **[doFuture](https://doFuture.futureverse.org)** |
@@ -189,8 +190,11 @@ o <- seriation::seriate_best(d_supreme) |> futurize()
 res <- SimDesign::runSimulation(Design, replications = 1000,
   generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
 
+s <- stars::st_as_stars(matrix(1:20, nrow = 5, ncol = 4))
+res <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
+
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
-  
+
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
