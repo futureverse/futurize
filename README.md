@@ -132,6 +132,7 @@ parallelization.
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
 | **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
+| **[stars]**                | `st_apply()`                                                                 | **[future.apply]** |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
 | **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
 | **[TSP]**                  | `solve_TSP()`                                                                | **[doFuture]**     |
@@ -178,8 +179,11 @@ o <- seriation::seriate_best(d_supreme) |> futurize()
 res <- SimDesign::runSimulation(Design, replications = 1000,
   generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
 
+s <- stars::st_as_stars(matrix(1:20, nrow = 5, ncol = 4))
+res <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
+
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
-  
+
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
@@ -264,6 +268,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [seriation]: https://cran.r-project.org/package=seriation
 [shapr]: https://cran.r-project.org/package=shapr
 [SimDesign]: https://cran.r-project.org/package=SimDesign
+[stars]: https://cran.r-project.org/package=stars
 [strucchange]: https://cran.r-project.org/package=strucchange
 [sva]: https://bioconductor.org/packages/sva/
 [tm]: https://cran.r-project.org/package=tm
