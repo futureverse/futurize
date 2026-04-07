@@ -1,7 +1,7 @@
 <%
 pkgs_mapreduce <- c("futurize", "future.apply", "doFuture", "furrr")
 pkgs_backend <- c("future.batchtools", "future.callr", "future.mirai")
-pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressr", pkgs_mapreduce, pkgs_backend)
+pkgs <- c("globals", "listenv", "parallelly", "future", "future.tests", "progressify", "progressr", pkgs_mapreduce, pkgs_backend)
 pkgs_extra <- c("future.p2p", "future.tools", "marshal")
 pkgs <- c(sort(pkgs), pkgs_extra)
 urls <- sprintf("https://%s.futureverse.org", pkgs)
@@ -31,7 +31,7 @@ home:
 
 navbar:
   structure:
-    left: [<%= paste(c("intro", "reference", names(menus), "news"), collapse = ", ") %>]
+    left: [<%= paste(c("intro", "reference", if (length(menus) > 0) names(menus) else "articles", "news"), collapse = ", ") %>]
     right: [search, futureverse, pkgs, cran, github, lightswitch]
   components:
 <%= if (length(menus) > 0) {
