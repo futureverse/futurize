@@ -140,5 +140,6 @@ fashion. See the `vignette("futurize-11-apply", package = "futurize")`
 for more details and an example.
 
 
+[progressr]: https://progressr.futureverse.org/
 [purrr]: https://cran.r-project.org/package=purrr
 [other parallel backends]: https://www.futureverse.org/backends.html

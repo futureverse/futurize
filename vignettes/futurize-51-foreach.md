@@ -127,5 +127,6 @@ fashion. See the `vignette("futurize-11-apply", package = "futurize")`
 for more details and an example.
 
 
+[progressr]: https://progressr.futureverse.org/
 [foreach]: https://cran.r-project.org/package=foreach
 [other parallel backends]: https://www.futureverse.org/backends.html

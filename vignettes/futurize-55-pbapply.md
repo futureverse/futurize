@@ -175,6 +175,6 @@ parallelized computations in a near-live fashion. See the
 details.
 
 
+[progressr]: https://progressr.futureverse.org/
 [pbapply]: https://cran.r-project.org/package=pbapply
-[progressr]: https://cran.r-project.org/package=progressr
 [other parallel backends]: https://www.futureverse.org/backends.html
