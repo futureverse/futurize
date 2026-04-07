@@ -175,9 +175,9 @@ and control the backend with
 ## Progress Reporting via progressr
 
 An alternative to using **pbapply** for progress reporting is to use the
-**[progressr](https://cran.r-project.org/package=progressr)** package,
-which is specially designed to work with the Futureverse ecosystem and
-provide progress updates from parallelized computations in a near-live
-fashion. See the
+**[progressr](https://progressr.futureverse.org/)** package, which is
+specially designed to work with the Futureverse ecosystem and provide
+progress updates from parallelized computations in a near-live fashion.
+See the
 [`vignette("futurize-11-apply", package = "futurize")`](https://futurize.futureverse.org/articles/futurize-11-apply.md)
 for more details.

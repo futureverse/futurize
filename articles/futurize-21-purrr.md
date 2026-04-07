@@ -163,7 +163,8 @@ function supports parallelization of the following **purrr** functions:
 
 ## Progress Reporting via progressr
 
-For progress reporting, please see the **\[progressr\]** package. It is
+For progress reporting, please see the
+**[progressr](https://progressr.futureverse.org/)** package. It is
 specially designed to work with the Futureverse ecosystem and provide
 progress updates from parallelized computations in a near-live fashion.
 See the
