@@ -5,6 +5,10 @@
  * Add support for map-reduce CRAN package **stars**, e.g. `sm <-
    st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
 
+## Bug Fixes
+
+ * `futurize()` did not use `seed = TRUE` for `gamlss::gamlssCV()`.
+
 
 # Version 0.3.0 (2026-04-01)
 
