@@ -7,6 +7,12 @@
 - Add support for map-reduce CRAN package **stars**,
   e.g. `sm <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
 
+### Bug Fixes
+
+- [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  did not use `seed = TRUE` for
+  [`gamlss::gamlssCV()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html).
+
 ## Version 0.3.0
 
 CRAN release: 2026-04-01
