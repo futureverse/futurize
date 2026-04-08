@@ -31,9 +31,7 @@ library(vegan)
 
 data(dune)
 data(dune.env)
-dune.mrpp <- with(dune.env, {
-  mrpp(dune, Management) |> futurize()
-})
+dune.mrpp <- with(dune.env, { mrpp(dune, Management) }) |> futurize()
 ```
 
 # Introduction
@@ -53,9 +51,7 @@ library(vegan)
 
 data(dune)
 data(dune.env)
-dune.mrpp <- with(dune.env, {
-  mrpp(dune, Management) |> futurize()
-})
+dune.mrpp <- with(dune.env, { mrpp(dune, Management) }) |> futurize()
 ```
 
 This will parallelize the computations, given that we have set up
