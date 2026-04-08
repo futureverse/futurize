@@ -178,9 +178,9 @@ whether futurization was previously enabled or disabled.</p>
 
 
 <p>The transpilation mechanism includes logic to "unwrap" expressions
-enclosed in constructs such as <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>, <code>( )</code>, <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code>, <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>,
-<code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, <code><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible()</a></code>, <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code>, and
-<code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code>. The transpiler descends through wrapping
+enclosed in constructs such as <code>!</code>, <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>, <code>( )</code>, <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code>, <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>,
+<code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, <code><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible()</a></code>, <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code>, <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code>,
+and <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. The transpiler descends through wrapping
 constructs until it finds a transpilable expression, avoiding the
 need to place <code>futurize()</code> inside such constructs. This allows for
 patterns like:</p>

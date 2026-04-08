@@ -57,17 +57,18 @@ whether futurization was previously enabled or disabled.
 ## Expression unwrapping
 
 The transpilation mechanism includes logic to "unwrap" expressions
-enclosed in constructs such as
+enclosed in constructs such as `!`,
 [`{ }`](https://rdrr.io/r/base/Paren.html), `( )`,
 [`local()`](https://rdrr.io/r/base/eval.html),
 [`I()`](https://rdrr.io/r/base/AsIs.html),
 [`identity()`](https://rdrr.io/r/base/identity.html),
 [`invisible()`](https://rdrr.io/r/base/invisible.html),
-[`suppressMessages()`](https://rdrr.io/r/base/message.html), and
-[`suppressWarnings()`](https://rdrr.io/r/base/warning.html). The
-transpiler descends through wrapping constructs until it finds a
-transpilable expression, avoiding the need to place `futurize()` inside
-such constructs. This allows for patterns like:
+[`suppressMessages()`](https://rdrr.io/r/base/message.html),
+[`suppressWarnings()`](https://rdrr.io/r/base/warning.html), and
+[`with()`](https://rdrr.io/r/base/with.html). The transpiler descends
+through wrapping constructs until it finds a transpilable expression,
+avoiding the need to place `futurize()` inside such constructs. This
+allows for patterns like:
 
     y <- {
       lapply(xs, fcn)
