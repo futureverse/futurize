@@ -25,9 +25,9 @@
 #'
 #' @section Expression unwrapping:
 #' The transpilation mechanism includes logic to "unwrap" expressions
-#' enclosed in constructs such as `{ }`, `( )`, `local()`, `I()`,
-#' `identity()`, `invisible()`, `suppressMessages()`, and
-#' `suppressWarnings()`. The transpiler descends through wrapping
+#' enclosed in constructs such as `!`, `{ }`, `( )`, `local()`, `I()`,
+#' `identity()`, `invisible()`, `suppressMessages()`, `suppressWarnings()`,
+#' and `with()`. The transpiler descends through wrapping
 #' constructs until it finds a transpilable expression, avoiding the
 #' need to place `futurize()` inside such constructs. This allows for
 #' patterns like:

@@ -46,9 +46,9 @@ whether futurization was previously enabled or disabled.
 \section{Expression unwrapping}{
 
 The transpilation mechanism includes logic to "unwrap" expressions
-enclosed in constructs such as \code{{ }}, \verb{( )}, \code{local()}, \code{I()},
-\code{identity()}, \code{invisible()}, \code{suppressMessages()}, and
-\code{suppressWarnings()}. The transpiler descends through wrapping
+enclosed in constructs such as \code{!}, \code{{ }}, \verb{( )}, \code{local()}, \code{I()},
+\code{identity()}, \code{invisible()}, \code{suppressMessages()}, \code{suppressWarnings()},
+and \code{with()}. The transpiler descends through wrapping
 constructs until it finds a transpilable expression, avoiding the
 need to place \code{futurize()} inside such constructs. This allows for
 patterns like:
