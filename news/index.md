@@ -13,6 +13,11 @@
   did not use `seed = TRUE` for
   [`gamlss::gamlssCV()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html).
 
+- [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  on [`boot::censboot()`](https://rdrr.io/pkg/boot/man/censboot.html)
+  would produce an error on “parallel::clusterEvalQ() is not supported
+  by FutureCluster clusters. Ignoring expression: library(survival)”.
+
 ## Version 0.3.0
 
 CRAN release: 2026-04-01
