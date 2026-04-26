@@ -62,22 +62,54 @@ if (requireNamespace("survival", quietly = TRUE)) {
     out
   }
 
-  R <- 100
+  R <- 100L
   
   set.seed(42)
-  cens_truth <- censboot(aml, aml.fun, R = R, strata = aml$group)
-  print(cens_truth)
+  b_truth <- censboot(aml, aml.fun, R = R, strata = aml$group)
+  print(b_truth)
   
   set.seed(42)
-  cens <- censboot(aml, aml.fun, R = R, strata = aml$group) |> futurize()
-  print(cens)
+  b <- censboot(aml, aml.fun, R = R, strata = aml$group) |> futurize()
+  print(b)
 
-  cens_truth$call <- NULL
-  cens$call <- NULL
-  stopifnot(all.equal(cens, cens_truth))
+  b_truth$call <- NULL
+  b$call <- NULL
+  stopifnot(all.equal(b, b_truth))
 }
 
 message("censboot() ... done")
+
+
+#------------------------------------------------------------------
+# tsboot()
+#------------------------------------------------------------------
+message("tsboot() ...")
+## Adopted from example("tsboot", package = "boot")
+
+## stats::ar()
+if (requireNamespace("stats", quietly = TRUE)) {
+
+  lynx.fun <- function(tsb) {
+    ar.fit <- ar(tsb, order.max = 25)
+    c(ar.fit$order, mean(tsb), tsb)
+  }
+
+  R <- 99L
+  
+  set.seed(42)
+  b_truth <- tsboot(log(lynx), lynx.fun, R = R, l = 20, sim = "geom")
+  str(b_truth)
+  
+  set.seed(42)
+  b <- tsboot(log(lynx), lynx.fun, R = R, l = 20, sim = "geom") |> futurize()
+  str(b)
+
+  b_truth$call <- NULL
+  b$call <- NULL
+  stopifnot(all.equal(b, b_truth))
+}
+
+message("tsboot() ... done")
 
 
 plan(sequential)
