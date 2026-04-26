@@ -9,6 +9,10 @@
 
  * `futurize()` did not use `seed = TRUE` for `gamlss::gamlssCV()`.
 
+ * `futurize()` on `boot::censboot()` would produce an error on
+   "parallel::clusterEvalQ() is not supported by FutureCluster
+   clusters. Ignoring expression: library(survival)".
+   
 
 # Version 0.3.0 (2026-04-01)
 

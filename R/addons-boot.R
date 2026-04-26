@@ -10,13 +10,28 @@ append_transpilers_for_boot <- function() {
     stop(sprintf("You are running R %s, but futurization of 'boot' functions requires R (>= 4.4.0)", getRversion()))
   }
 
+  template_ignore_clusterEvalQ <- bquote_compile(
+    local({
+      cl <- do.call(.(CALL), args = .(OPTS))
+      oopts <- options(future.ClusterFuture.clusterEvalQ = "ignore")
+      on.exit(options(oopts))
+      .(EXPR)
+    })
+  )
+
   transpilers <- make_package_transpilers("boot", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
-      transpiler <- make_futurize_for_makeClusterFuture(args = list(
-        parallel = "snow",
-        ncpus = 2L,   ## only used for test ncpus > 1
-        cl = quote(cl)
-      ), defaults = list(label = sprintf("fz:boot::%s", name)))
+      transpiler <- make_futurize_for_makeClusterFuture(
+        template = template_ignore_clusterEvalQ,
+        args = list(
+          parallel = "snow",
+          ncpus = 2L,   ## only used for test ncpus > 1
+          cl = quote(cl)
+        ), defaults = list(
+          packages = if (name == "censboot") "survival",
+          label = sprintf("fz:boot::%s", name)
+        )
+      )
 
       list(
         label = sprintf("boot::%s() ~> boot::%s(..., parallel = TRUE)",  name, name),
