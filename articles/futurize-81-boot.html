@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -256,7 +256,37 @@ bootstrap replicates of the <code>lynx</code> time series:</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ar_fit</span><span class="op">$</span><span class="va">order</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">tsb</span><span class="op">)</span>, <span class="va">tsb</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">lynx_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/boot/man/tsboot.html" class="external-link">tsboot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span>, <span class="va">lynx_fun</span>, R <span class="op">=</span> <span class="fl">99</span>, l <span class="op">=</span> <span class="fl">20</span>, sim <span class="op">=</span> <span class="st">"geom"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">lynx_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/boot/man/tsboot.html" class="external-link">tsboot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span>, <span class="va">lynx_fun</span>, R <span class="op">=</span> <span class="fl">999</span>, l <span class="op">=</span> <span class="fl">20</span>, sim <span class="op">=</span> <span class="st">"geom"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="example-bootstrap-for-censored-data">Example: Bootstrap for censored data<a class="anchor" aria-label="anchor" href="#example-bootstrap-for-censored-data"></a>
+</h3>
+<p>The <code><a href="https://rdrr.io/pkg/boot/man/censboot.html" class="external-link">censboot()</a></code> function is used for bootstrap sampling
+of censored data, which is common in survival analysis. For example,
+using the <code>aml</code> data from the <strong><a href="https://cran.r-project.org/package=boot" class="external-link">boot</a></strong>
+package:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">boot</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">aml</span>, package <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">aml_fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">surv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survfit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">cens</span><span class="op">)</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
+<span>    <span class="va">out</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>    <span class="va">st</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">surv</span><span class="op">$</span><span class="va">strata</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">inds</span> <span class="op">&lt;-</span> <span class="va">st</span><span class="op">:</span><span class="op">(</span><span class="va">st</span> <span class="op">+</span> <span class="va">surv</span><span class="op">$</span><span class="va">strata</span><span class="op">[</span><span class="va">s</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>        <span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">surv</span><span class="op">$</span><span class="va">time</span><span class="op">[</span><span class="va">inds</span><span class="op">[</span><span class="fl">1</span><span class="op">-</span><span class="va">surv</span><span class="op">$</span><span class="va">surv</span><span class="op">[</span><span class="va">inds</span><span class="op">]</span> <span class="op">&gt;=</span> <span class="fl">0.5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>        <span class="va">st</span> <span class="op">&lt;-</span> <span class="va">st</span> <span class="op">+</span> <span class="va">surv</span><span class="op">$</span><span class="va">strata</span><span class="op">[</span><span class="va">s</span><span class="op">]</span></span>
+<span>        <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">md</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">out</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">aml_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/boot/man/censboot.html" class="external-link">censboot</a></span><span class="op">(</span><span class="va">aml</span>, <span class="va">aml_fun</span>, R <span class="op">=</span> <span class="fl">999</span>, strata <span class="op">=</span> <span class="va">aml</span><span class="op">$</span><span class="va">group</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -276,7 +306,7 @@ bootstrap replicates of the <code>lynx</code> time series:</p>
 <p>For comparison, here is what it takes to parallelize
 <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot()</a></code> using the <strong>parallel</strong> package
 directly, without <strong>futurize</strong>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">boot</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
 <span></span>

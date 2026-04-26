@@ -112,7 +112,39 @@ lynx_fun <- function(tsb) {
     c(ar_fit$order, mean(tsb), tsb)
 }
 
-lynx_boot <- tsboot(log(lynx), lynx_fun, R = 99, l = 20, sim = "geom") |> futurize()
+lynx_boot <- tsboot(log(lynx), lynx_fun, R = 999, l = 20, sim = "geom") |> futurize()
+```
+
+### Example: Bootstrap for censored data
+
+The [`censboot()`](https://rdrr.io/pkg/boot/man/censboot.html) function
+is used for bootstrap sampling of censored data, which is common in
+survival analysis. For example, using the `aml` data from the
+**[boot](https://cran.r-project.org/package=boot)** package:
+
+``` r
+
+library(futurize)
+plan(multisession)
+library(boot)
+library(survival)
+
+data(aml, package = "boot")
+
+aml_fun <- function(data) {
+    surv <- survfit(Surv(time, cens) ~ group, data = data)
+    out <- NULL
+    st <- 1
+    for (s in seq_along(surv$strata)) {
+        inds <- st:(st + surv$strata[s] - 1)
+        md <- min(surv$time[inds[1-surv$surv[inds] >= 0.5]])
+        st <- st + surv$strata[s]
+        out <- c(out, md)
+    }
+    out
+}
+
+aml_boot <- censboot(aml, aml_fun, R = 999, strata = aml$group) |> futurize()
 ```
 
 ## Supported Functions
