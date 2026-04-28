@@ -24,7 +24,8 @@ ys <- xmap(xs, ~ .y * .x) |> futurize()
 ## Introduction
 
 The **[crossmap](https://cran.r-project.org/package=crossmap)** package
-adds to the **\[purrr\]**-set of functions. For example,
+adds to the **[purrr](https://cran.r-project.org/package=purrr)**-set of
+functions. For example,
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
 can apply a function to every combination of elements in a list, e.g.
 
