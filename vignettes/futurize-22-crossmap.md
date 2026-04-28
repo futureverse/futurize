@@ -93,4 +93,5 @@ The `futurize()` function supports parallelization of the following **crossmap**
 
 
 [crossmap]: https://cran.r-project.org/package=crossmap
+[purrr]: https://cran.r-project.org/package=purrr
 [other parallel backends]: https://www.futureverse.org/backends.html
