@@ -194,8 +194,8 @@ This is the first version submitted to CRAN.
 
 - Add support for futurizing calls nested in one or more layers of
   `{ ... }`, `( ... )`, `local( ... )`,
-  [`I()`](https://rdrr.io/r/base/AsIs.html), and
-  [`identity()`](https://rdrr.io/r/base/identity.html), e.g.
+  [`I()`](https://rdrr.io/pkg/S4Vectors/man/S4Vectors-internals.html),
+  and [`identity()`](https://rdrr.io/r/base/identity.html), e.g.
   `local({ lapply(x, f) }) |> futurize()` is the same as
   `local({ lapply(x, f) |> futurize() })`.
 

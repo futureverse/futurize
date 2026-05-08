@@ -172,11 +172,11 @@ all of this is handled for you - just pipe to
 and control the backend with
 [`plan()`](https://future.futureverse.org/reference/plan.html).
 
-## Progress Reporting via progressr
+## Progress Reporting via progressify
 
 An alternative to using **pbapply** for progress reporting is to use the
-**[progressr](https://progressr.futureverse.org/)** package, which is
-specially designed to work with the Futureverse ecosystem and provide
+**[progressify](https://progressify.futureverse.org/)** package, which
+is specially designed to work with the Futureverse ecosystem and provide
 progress updates from parallelized computations in a near-live fashion.
 See the
 [`vignette("futurize-11-apply", package = "futurize")`](https://futurize.futureverse.org/articles/futurize-11-apply.md)

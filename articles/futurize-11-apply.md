@@ -137,16 +137,18 @@ The following **stats** package function is also supported:
 
 - [`kernapply()`](https://rdrr.io/r/stats/kernapply.html)
 
-## Progress Reporting via progressr
+## Progress Reporting via progressify
 
-The **[progressr](https://cran.r-project.org/package=progressr)**
-package is specially designed to work with the Futureverse ecosystem.
-With **progressr**, progress can be reported from parallelized
-computations in a near-live fashion. Progress updates are propagated
-from the workers back to the main process, where they are relayed to
-provide feedback during long-running computations. This works because
-progress is signaled as R conditions that the **future** package and
-most future backends relay instantly.
+The **[progressify](https://progressify.futureverse.org/)** package is
+specially designed to work with the Futureverse ecosystem. With
+**progressify**, progress can be reported from parallelized computations
+in a near-live fashion. Progress updates are propagated from the workers
+back to the main process, where they are relayed to provide feedback
+during long-running computations. This works because progress is
+signaled as R conditions that the **future** package and most future
+backends relay instantly. What is unique about **progressify** is that
+it adds progress reporting to your existing code without you having to
+change your code.
 
 For example:
 
@@ -154,24 +156,17 @@ For example:
 
 library(futurize)
 plan(multisession)
-library(progressr)
-handlers(global = TRUE)
+library(progressify)
 
 xs <- 1:100
-ys <- local({
-  p <- progressor(along = xs)
-  lapply(xs, function(x) {
-    p()
-    slow_fcn(x)
-  })
-}) |> futurize()
+ys <- lapply(xs, slow_fcn) |> progressify() |> futurize()
 ```
 
-Note also how
+Note how
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 unwraps the expression - it descends through
-[`local()`](https://rdrr.io/r/base/eval.html) and
-[`{ }`](https://rdrr.io/r/base/Paren.html) to identify the
+[`progressify()`](https://progressify.futureverse.org/reference/progressify.html)
+to identify the
 [`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) call to
 be futurized. Using the default progress handler, the above output and
 progress reporting will appear as:

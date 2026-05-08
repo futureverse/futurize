@@ -130,10 +130,10 @@ function supports parallelization of the following **plyr** functions:
   [`mdply()`](https://rdrr.io/pkg/plyr/man/mdply.html),
   [`mlply()`](https://rdrr.io/pkg/plyr/man/mlply.html)
 
-## Progress Reporting via progressr
+## Progress Reporting via progressify
 
 For progress reporting, please see the
-**[progressr](https://progressr.futureverse.org/)** package. It is
+**[progressify](https://progressify.futureverse.org/)** package. It is
 specially designed to work with the Futureverse ecosystem and provide
 progress updates from parallelized computations in a near-live fashion.
 See the
