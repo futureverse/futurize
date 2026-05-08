@@ -124,8 +124,6 @@ class(transpile) <- c("transpiler", class(transpile))
 #'
 #' @inheritParams find_s3_method
 #'
-#' @param type
-#'
 #' @return
 #' A transpiler function, or NULL if none exists.
 #'
