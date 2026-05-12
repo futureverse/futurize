@@ -46,6 +46,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
 - [Parallelize 'partykit'
   functions](https://futurize.futureverse.org/articles/futurize-81-partykit.md):
+- [Parallelize 'pls'
+  functions](https://futurize.futureverse.org/articles/futurize-81-pls.md):
 - [Parallelize 'riskRegression'
   functions](https://futurize.futureverse.org/articles/futurize-81-riskRegression.md):
 - [Parallelize 'Rsamtools'

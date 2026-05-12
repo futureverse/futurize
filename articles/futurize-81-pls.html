@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'vegan' functions • futurize</title>
+<title>Parallelize 'pls' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'vegan' functions">
+<meta property="og:title" content="Parallelize 'pls' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -151,29 +151,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'vegan' functions</h1>
+      <h1>Parallelize 'pls' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-vegan.md" class="external-link"><code>vignettes/futurize-81-vegan.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-vegan.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-pls.md" class="external-link"><code>vignettes/futurize-81-pls.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-pls.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'vegan' functions}
+%\VignetteIndexEntry{Parallelize 'pls' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{vegan}
+%\VignetteKeyword{pls}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/cran-vegan-logo.webp" alt="The 'vegan' logo"><span>+</span>
+<p><span>+</span>
 <img src="../reference/figures/futurize-logo.webp" alt="The 'futurize' hexlogo"><span>=</span>
 <img src="../reference/figures/future-logo.webp" alt="The 'future' logo"></p>
 </div>
@@ -186,120 +186,108 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/khliland/pls" class="external-link">pls</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
-<span><span class="va">dune.mrpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dune.env</span>, <span class="op">{</span> <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">yarn</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">NIR</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, data <span class="op">=</span> <span class="va">yarn</span>, validation <span class="op">=</span> <span class="st">"CV"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong><a href="https://cran.r-project.org/package=vegan" class="external-link">vegan</a></strong>
-package provides methods for community and vegetation ecologists. Some
-of the functions have built-in support for parallelization, which
-<strong>futurize</strong> simplifies further.</p>
+<p>This vignette demonstrates how to use this approach to parallelize
+<strong><a href="https://cran.r-project.org/package=pls" class="external-link">pls</a></strong> functions
+such as <code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">mvr()</a></code>, <code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr()</a></code>, <code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">pcr()</a></code>, and
+<code><a href="https://khliland.github.io/pls/reference/crossval.html" class="external-link">crossval()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=pls" class="external-link">pls</a></strong> package
+provides Partial Least Squares Regression (PLSR) and Principal Component
+Regression (PCR) methods. These methods often use cross-validation (CV)
+to determine the number of components to use, which can be
+computationally intensive and is an ideal candidate for
+parallelization.</p>
 <div class="section level3">
-<h3 id="example-mrpp">Example: MRPP<a class="anchor" aria-label="anchor" href="#example-mrpp"></a>
+<h3 id="example-pls-regression-with-cross-validation">Example: PLS Regression with Cross-Validation<a class="anchor" aria-label="anchor" href="#example-pls-regression-with-cross-validation"></a>
 </h3>
-<p>Example adopted from
-<code><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">help("mrpp", package = "vegan")</a></code>:</p>
+<p>The <code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr()</a></code> function is used to perform PLS regression.
+When <code>validation = "CV"</code> is specified, it performs
+cross-validation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/khliland/pls" class="external-link">pls</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">yarn</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
-<span><span class="va">dune.mrpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dune.env</span>, <span class="op">{</span> <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will parallelize the computations, given that we have set up
-parallel workers, e.g.</p>
+<span><span class="co">## Sequential evaluation</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">NIR</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, data <span class="op">=</span> <span class="va">yarn</span>, validation <span class="op">=</span> <span class="st">"CV"</span><span class="op">)</span></span></code></pre></div>
+<p>To make it evaluate in parallel, simply pipe the call to
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
-<p>The built-in <code>multisession</code> backend parallelizes on your
-local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
-backends</a> to choose from, including alternatives to parallelize
-locally as well as distributed across remote machines, e.g.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/khliland/pls" class="external-link">pls</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">yarn</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Parallel evaluation</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">NIR</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, data <span class="op">=</span> <span class="va">yarn</span>, validation <span class="op">=</span> <span class="st">"CV"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will automatically use the parallel backend set by
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code>, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
-<p>and</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="example-anova-for-cca-objects">Example: anova() for ‘cca’ objects<a class="anchor" aria-label="anchor" href="#example-anova-for-cca-objects"></a>
+<h3 id="example-stand-alone-cross-validation">Example: Stand-alone Cross-Validation<a class="anchor" aria-label="anchor" href="#example-stand-alone-cross-validation"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> S3 method for ‘cca’ objects supports
-parallelization via the <code>parallel</code> argument. With
-<strong>futurize</strong>, you can parallelize this directly. Example
-adopted from <code><a href="https://vegandevs.github.io/vegan/reference/anova.cca.html" class="external-link">help("anova.cca", package = "vegan")</a></code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>The <code><a href="https://khliland.github.io/pls/reference/crossval.html" class="external-link">crossval()</a></code> function can be used to perform
+cross-validation on an already fitted model:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/khliland/pls" class="external-link">pls</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
-<span><span class="va">ord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/cca.html" class="external-link">cca</a></span><span class="op">(</span><span class="va">dune</span> <span class="op">~</span> <span class="va">A1</span> <span class="op">+</span> <span class="va">Management</span>, data <span class="op">=</span> <span class="va">dune.env</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ord</span>, permutations <span class="op">=</span> <span class="fl">99</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">yarn</span><span class="op">)</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">NIR</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, data <span class="op">=</span> <span class="va">yarn</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Parallel cross-validation</span></span>
+<span><span class="va">m_cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/crossval.html" class="external-link">crossval</a></span><span class="op">(</span><span class="va">m1</span>, segments <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>vegan</strong> functions are supported by
+<p>The following <strong>pls</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/vegan-defunct.html" class="external-link">adonis()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/adonis.html" class="external-link">adonis2()</a></code></li>
-<li>
-<code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> for ‘cca’</li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/anosim.html" class="external-link">anosim()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/cascadeKM.html" class="external-link">cascadeKM()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/specpool.html" class="external-link">estaccumR()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">mantel()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/mantel.html" class="external-link">mantel.partial()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/metaMDS.html" class="external-link">metaMDSiter()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/oecosimu.html" class="external-link">oecosimu()</a></code></li>
-<li><code><a href="https://vegandevs.github.io/vegan/reference/ordihull.html" class="external-link">ordiareatest()</a></code></li>
-<li>
-<code><a href="https://vegandevs.github.io/vegan/reference/anova.cca.html" class="external-link">permutest()</a></code> for ‘betadisper’, and ‘cca’</li>
+<li><code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">mvr()</a></code></li>
+<li><code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr()</a></code></li>
+<li><code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">pcr()</a></code></li>
+<li><code><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">cppls()</a></code></li>
+<li><code><a href="https://khliland.github.io/pls/reference/crossval.html" class="external-link">crossval()</a></code></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="without-futurize-manual-psock-cluster-setup">Without futurize: Manual PSOCK cluster setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-psock-cluster-setup"></a>
+<h2 id="without-futurize-manual-pls-options-setup">Without futurize: Manual ‘pls.options’ setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-pls-options-setup"></a>
 </h2>
-<p>For comparison, here is what it takes to parallelize
-<code><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp()</a></code> using the <strong>parallel</strong> package
-directly, without <strong>futurize</strong>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vegandevs.github.io/vegan/" class="external-link">vegan</a></span><span class="op">)</span></span>
+<p>For comparison, here is what it takes to parallelize <code>pls</code>
+functions using the <strong>parallel</strong> package directly, without
+<strong>futurize</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/khliland/pls" class="external-link">pls</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dune.env</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Set up a PSOCK cluster</span></span>
+<span><span class="co">## Set up a cluster</span></span>
 <span><span class="va">ncpus</span> <span class="op">&lt;-</span> <span class="fl">4L</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">ncpus</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Run MRPP in parallel</span></span>
-<span><span class="va">dune.mrpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dune.env</span>, <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://vegandevs.github.io/vegan/reference/mrpp.html" class="external-link">mrpp</a></span><span class="op">(</span><span class="va">dune</span>, <span class="va">Management</span>, parallel <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">## Configure pls to use the cluster</span></span>
+<span><span class="va">old_opts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/pls.options.html" class="external-link">pls.options</a></span><span class="op">(</span>parallel <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Tear down the cluster</span></span>
+<span><span class="co">## Run regression with cross-validation</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">yarn</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://khliland.github.io/pls/reference/mvr.html" class="external-link">plsr</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">NIR</span>, ncomp <span class="op">=</span> <span class="fl">10</span>, data <span class="op">=</span> <span class="va">yarn</span>, validation <span class="op">=</span> <span class="st">"CV"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Restore original options and stop the cluster</span></span>
+<span><span class="fu"><a href="https://khliland.github.io/pls/reference/pls.options.html" class="external-link">pls.options</a></span><span class="op">(</span><span class="va">old_opts</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
-<p>This requires you to manually create and manage the cluster
-lifecycle. If you forget to call <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster()</a></code>, or if your
-code errors out before reaching it, you leak background R processes. You
-also have to decide upfront how many CPUs to use and what cluster type
-to use. Switching to another parallel backend, e.g. a Slurm cluster,
-would require a completely different setup. With
-<strong>futurize</strong>, all of this is handled for you - just pipe to
-<code><a href="../reference/futurize.html">futurize()</a></code> and control the backend with
-<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code>.</p>
+<p>This requires you to manually manage the cluster lifecycle and the
+global <code><a href="https://khliland.github.io/pls/reference/pls.options.html" class="external-link">pls.options()</a></code>. With <strong>futurize</strong>, the
+cluster setup and option management are handled automatically and
+localized to the function call.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
