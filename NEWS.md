@@ -5,6 +5,10 @@
  * Add support for map-reduce CRAN package **stars**, e.g. `sm <-
    st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
 
+ * Add support for domain-specific CRAN package **pls**,
+   e.g. `m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation =
+   "CV") |> futurize()`.
+
 ## Bug Fixes
 
  * `futurize()` did not use `seed = TRUE` for `gamlss::gamlssCV()`.

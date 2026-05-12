@@ -128,6 +128,7 @@ parallelization.
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma' objects | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
+| **[pls]**                  | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()`                          | -                  |
 | **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
@@ -166,6 +167,8 @@ pr <- profile(fit) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+m <- pls::plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
 
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,
@@ -259,6 +262,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
+[pls]: https://cran.r-project.org/package=pls
 [purrr]: https://cran.r-project.org/package=purrr
 [riskRegression]: https://cran.r-project.org/package=riskRegression
 [Rsamtools]: https://bioconductor.org/packages/Rsamtools/
