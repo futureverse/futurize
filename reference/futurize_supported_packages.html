@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-lme4.html">Parallelize 'lme4' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-metafor.html">Parallelize 'metafor' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-mgcv.html">Parallelize 'mgcv' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-parameters.html">Parallelize 'parameters' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-partykit.html">Parallelize 'partykit' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-pls.html">Parallelize 'pls' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-pvclust.html">Parallelize 'pvclust' functions</a></li>
@@ -155,12 +156,13 @@ required by the futurize transpiler are not installed.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "fgsea"                "foreach"              "fwb"                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "gamlss"               "glmmTMB"              "glmnet"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [19] "kernelshap"           "lme4"                 "metafor"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "mgcv"                 "partykit"             "pbapply"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "pls"                  "plyr"                 "purrr"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "pvclust"              "riskRegression"       "scater"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "scuttle"              "seriation"            "shapr"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "stars"                "stats"                "strucchange"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "sva"                  "tm"                   "vegan"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "mgcv"                 "parameters"           "partykit"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "pbapply"              "pls"                  "plyr"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "purrr"                "pvclust"              "riskRegression"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "scater"               "scuttle"              "seriation"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "shapr"                "stars"                "stats"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "strucchange"          "sva"                  "tm"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "vegan"               </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"future.apply"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">fcns</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_functions</span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></span>

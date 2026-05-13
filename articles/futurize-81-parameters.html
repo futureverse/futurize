@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Parallelize 'GenomicAlignments' functions • futurize</title>
+<title>Parallelize 'parameters' functions • futurize</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Parallelize 'GenomicAlignments' functions">
+<meta property="og:title" content="Parallelize 'parameters' functions">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -56,7 +56,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
   </ul>
 </li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-cran-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">CRAN focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-cran-focus">
 <li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
@@ -85,7 +85,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
   </ul>
 </li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-bioc-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Bioc focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-bioc-focus">
 <li><h6 class="dropdown-header" data-toc-skip>Bioconductor packages supporting futurize()</h6></li>
@@ -153,31 +153,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Parallelize 'GenomicAlignments' functions</h1>
+      <h1>Parallelize 'parameters' functions</h1>
                         <h4 data-toc-skip class="author">Henrik
 Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-GenomicAlignments.md" class="external-link"><code>vignettes/futurize-81-GenomicAlignments.md</code></a></small>
-      <div class="d-none name"><code>futurize-81-GenomicAlignments.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/futureverse/futurize/blob/HEAD/vignettes/futurize-81-parameters.md" class="external-link"><code>vignettes/futurize-81-parameters.md</code></a></small>
+      <div class="d-none name"><code>futurize-81-parameters.Rmd</code></div>
     </div>
 
     
     
 <!--
-%\VignetteIndexEntry{Parallelize 'GenomicAlignments' functions}
+%\VignetteIndexEntry{Parallelize 'parameters' functions}
 %\VignetteAuthor{Henrik Bengtsson}
 %\VignetteKeyword{R}
 %\VignetteKeyword{package}
-%\VignetteKeyword{Bioconductor}
-%\VignetteKeyword{GenomicAlignments}
+%\VignetteKeyword{parameters}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
 -->
 <div class="logos">
-<p><img src="../reference/figures/bioconductor-GenomicAlignments-logo.webp" alt="The 'GenomicAlignments' logo"><span>+</span>
-<img src="../reference/figures/futurize-logo.webp" alt="The 'futurize' hexlogo"><span>=</span>
+<p><img src="../reference/figures/futurize-logo.webp" alt="The 'futurize' hexlogo"><span>+</span>
 <img src="../reference/figures/future-logo.webp" alt="The 'future' logo"></p>
 </div>
 <p>The <strong>futurize</strong> package allows you to easily turn
@@ -189,68 +187,112 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicAlignments" class="external-link">GenomicAlignments</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model</a></span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-the <strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong>
-functions.</p>
-<p>The <strong><a href="https://bioconductor.org/packages/GenomicAlignments/" class="external-link">GenomicAlignments</a></strong>
-Bioconductor package provides efficient representation and manipulation
-of short genomic alignments. The <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code>
-function counts the number of reads that map to each feature (e.g. gene
-or exon) from one or more BAM files. When called with a
-<code>BamFileList</code>, the work is distributed across BAM files using
-<code><a href="https://rdrr.io/pkg/BiocParallel/man/bplapply.html" class="external-link">bplapply()</a></code>, which can be parallelized.</p>
+<strong><a href="https://cran.r-project.org/package=parameters" class="external-link">parameters</a></strong>
+functions, such as <code><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model()</a></code> and
+<code><a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html" class="external-link">bootstrap_parameters()</a></code>.</p>
+<p>The <strong><a href="https://cran.r-project.org/package=parameters" class="external-link">parameters</a></strong>
+package (part of the <strong>easystats</strong> ecosystem) provides
+utilities for processing and summarizing statistical models. The
+<code><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model()</a></code> function generates a distribution of
+model estimates by refitting the model multiple times using bootstrapped
+samples. This process can be computationally demanding, especially for
+complex models or a large number of iterations. Since each bootstrap
+iteration is independent, it is a perfect candidate for
+parallelization.</p>
 <div class="section level3">
-<h3 id="example-running-summarizeoverlaps-in-parallel">Example: Running summarizeOverlaps() in parallel<a class="anchor" aria-label="anchor" href="#example-running-summarizeoverlaps-in-parallel"></a>
+<h3 id="example-bootstrapping-a-linear-model">Example: Bootstrapping a linear model<a class="anchor" aria-label="anchor" href="#example-bootstrapping-a-linear-model"></a>
 </h3>
-<p>The <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code> function counts reads
-overlapping genomic features across multiple BAM files:</p>
+<p>Consider a linear model where we want to obtain bootstrapped
+estimates of the coefficients:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicAlignments" class="external-link">GenomicAlignments</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Rsamtools" class="external-link">Rsamtools</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">bam_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rsamtools/man/BamFile-class.html" class="external-link">BamFileList</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample1.bam"</span>, <span class="st">"sample2.bam"</span>, <span class="st">"sample3.bam"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chr1"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/IRanges-constructor.html" class="external-link">IRanges</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">2000</span><span class="op">)</span>, end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">500</span>, <span class="fl">1500</span>, <span class="fl">2500</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code> processes BAM files
-sequentially, but we can easily make it process them in parallel by
-piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<span><span class="co">## Generate 1000 bootstrap replicates (sequentially)</span></span>
+<span><span class="va">boot_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model</a></span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<p>To parallelize this using <strong>futurize</strong>, simply pipe the
+call to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps</a></span><span class="op">(</span><span class="va">features</span>, <span class="va">bam_files</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will distribute the BAM file processing across the available
-parallel workers, given that we have set up parallel workers, e.g.</p>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Generate 1000 bootstrap replicates (in parallel)</span></span>
+<span><span class="va">boot_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model</a></span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will distribute the bootstrap iterations across the available
+parallel workers, given that we have set up a parallel backend, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
-<p>The built-in <code>multisession</code> backend parallelizes on your
-local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
-backends</a> to choose from, including alternatives to parallelize
-locally as well as distributed across remote machines, e.g.</p>
+</div>
+<div class="section level3">
+<h3 id="example-bootstrapped-parameters-summary">Example: Bootstrapped parameters summary<a class="anchor" aria-label="anchor" href="#example-bootstrapped-parameters-summary"></a>
+</h3>
+<p>The <code><a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html" class="external-link">bootstrap_parameters()</a></code> function is a higher-level
+wrapper that calls <code><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model()</a></code> and then summarizes
+the results. It can also be parallelized in the same way:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.mirai</span><span class="fu">::</span><span class="va"><a href="https://future.mirai.futureverse.org/reference/mirai_multisession.html" class="external-link">mirai_multisession</a></span><span class="op">)</span></span></code></pre></div>
-<p>and</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future.batchtools</span><span class="fu">::</span><span class="va"><a href="https://future.batchtools.futureverse.org/reference/batchtools_slurm.html" class="external-link">batchtools_slurm</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">boot_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html" class="external-link">bootstrap_parameters</a></span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
 </h2>
-<p>The following <strong>GenomicAlignments</strong> functions are
-supported by <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
+<p>The following <strong>parameters</strong> functions are supported by
+<code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code><a href="https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html" class="external-link">summarizeOverlaps()</a></code></li>
+<li>
+<code><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model()</a></code> with <code>seed = TRUE</code> as the
+default</li>
+<li>
+<code><a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html" class="external-link">bootstrap_parameters()</a></code> with <code>seed = TRUE</code> as
+the default</li>
+<li>
+<code>parameters_bootstrap()</code> with <code>seed = TRUE</code> as
+the default</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="without-futurize-manual-psock-cluster-setup">Without futurize: Manual PSOCK cluster setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-psock-cluster-setup"></a>
+</h2>
+<p>For comparison, here is what it takes to parallelize
+<code><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model()</a></code> using the <strong>parallel</strong>
+package directly, without <strong>futurize</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Set up a PSOCK cluster</span></span>
+<span><span class="va">ncpus</span> <span class="op">&lt;-</span> <span class="fl">4L</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">ncpus</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Run bootstrapping in parallel</span></span>
+<span><span class="va">boot_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link">bootstrap_model</a></span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span>, </span>
+<span>                             parallel <span class="op">=</span> <span class="st">"snow"</span>, n_cpus <span class="op">=</span> <span class="va">ncpus</span>, </span>
+<span>                             cluster <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Tear down the cluster</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
+<p>With <strong>futurize</strong>, the cluster management is handled
+automatically. You just control the backend with
+<code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan()</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -135,6 +135,7 @@ parallelization.
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ objects | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
+| **[parameters](https://cran.r-project.org/package=parameters)** | `bootstrap_model()`, `bootstrap_parameters()`, `parameters_bootstrap()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[pls](https://cran.r-project.org/package=pls)** | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()` | \- |
 | **[pvclust](https://cran.r-project.org/package=pvclust)** | `pvclust()` | \- |
@@ -177,6 +178,8 @@ fit <- metafor::rma(yi, vi)
 pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
+
+fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
