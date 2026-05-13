@@ -56,6 +56,8 @@ navbar:
         href: articles/futurize-81-metafor.html
       - text: Parallelize 'mgcv' functions
         href: articles/futurize-81-mgcv.html
+      - text: Parallelize 'parameters' functions
+        href: articles/futurize-81-parameters.html
       - text: Parallelize 'partykit' functions
         href: articles/futurize-81-partykit.html
       - text: Parallelize 'pls' functions
