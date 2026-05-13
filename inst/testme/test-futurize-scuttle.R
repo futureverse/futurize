@@ -1,5 +1,5 @@
 #' @tags skip_on_cran  ## (35s) to limit total check time
-if (requireNamespace("scuttle") && requireNamespace("doFuture")) {
+if (requireNamespace("scuttle") && packageVersion("scuttle") <= "1.21.5" && requireNamespace("doFuture")) {
 library(futurize)
 library(scuttle)
 

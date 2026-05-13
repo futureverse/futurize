@@ -34,6 +34,11 @@ sce <- logNormCounts(sce) |> futurize()
 qc <- perCellQCMetrics(sce) |> futurize()
 ```
 
+_Comment: The `scuttle::perCellQCMetrics()` function is deprecated as
+of **[scuttle]** (>= 1.22) (part of Bioconductor 3.22 released on
+2026-04-29), and more importantly, no longer supports
+parallelization._
+
 
 # Introduction
 
@@ -115,7 +120,7 @@ The following **scuttle** functions are supported by `futurize()`:
 * `calculateAverage()`
 * `logNormCounts()`
 * `normalizeCounts()`
-* `perCellQCMetrics()`
+* `perCellQCMetrics()` - deprecated in **scuttle** (>= 1.22)
 * `perFeatureQCMetrics()`
 * `addPerCellQCMetrics()`
 * `addPerFeatureQCMetrics()`

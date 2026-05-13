@@ -5,6 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{Bioconductor}
 %\VignetteKeyword{SingleCellExperiment}
+%\VignetteKeyword{scuttle}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
@@ -33,6 +34,13 @@ library(scuttle)
 
 result <- applySCE(sce, perCellQCMetrics) |> futurize()
 ```
+
+
+_Comment: The below `SingleCellExperiment::applySCE()` example rely on
+`scuttle::perCellQCMetrics()` for parallelization. The
+`perCellQCMetrics()` function is deprecated as of **[scuttle]** (>=
+1.22) (part of Bioconductor 3.22 released on 2026-04-29), and more
+importantly, no longer supports parallelization._
 
 
 # Introduction
@@ -92,9 +100,9 @@ altExp(sce, "spikes") <- SingleCellExperiment(
 result <- applySCE(sce, perCellQCMetrics)
 ```
 
-Here `applySCE()` runs `perCellQCMetrics()` sequentially on each
-experiment, but we can easily make it run in parallel by piping to
-`futurize()`:
+Here `applySCE()` runs `perCellQCMetrics()` from the **[scuttle]**
+package sequentially on each experiment, but we can easily make it run
+in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
@@ -102,8 +110,13 @@ library(futurize)
 result <- applySCE(sce, perCellQCMetrics) |> futurize()
 ```
 
-This will distribute the work across the available parallel workers,
-given that we have set up parallel workers, e.g.
+It is actually not `SingleCellExperiment::applySCE()` that
+orchestrates the parallelization, but `scuttle::perCellQCMetrics()`,
+which hands of the parallelization to **[BiocParallel]** which in turn
+hands it of to futureverse.
+
+The above will distribute the work across the available parallel
+workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
@@ -133,5 +146,7 @@ The following **SingleCellExperiment** functions are supported by `futurize()`:
 * `applySCE()`
 
 
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/
+[scuttle]: https://bioconductor.org/packages/scuttle/
 [other parallel backends]: https://www.futureverse.org/backends.html
