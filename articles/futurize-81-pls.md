@@ -101,6 +101,7 @@ The following **pls** functions are supported by
 - [`pcr()`](https://khliland.github.io/pls/reference/mvr.html)
 - [`cppls()`](https://khliland.github.io/pls/reference/mvr.html)
 - [`crossval()`](https://khliland.github.io/pls/reference/crossval.html)
+  with `seed = TRUE` as the default
 
 ## Without futurize: Manual ‘pls.options’ setup
 

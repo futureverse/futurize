@@ -122,7 +122,9 @@ The following **kernelshap** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`kernelshap()`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)
-- [`permshap()`](https://rdrr.io/pkg/kernelshap/man/permshap.html)
+  with `seed = TRUE` as the default
+- [`permshap()`](https://rdrr.io/pkg/kernelshap/man/permshap.html) with
+  `seed = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

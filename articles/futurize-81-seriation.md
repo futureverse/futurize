@@ -77,4 +77,6 @@ The following **seriation** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`seriate_best()`](https://rdrr.io/pkg/seriation/man/seriate_best.html)
+  with `seed = TRUE` as the default
 - [`seriate_rep()`](https://rdrr.io/pkg/seriation/man/seriate_best.html)
+  with `seed = TRUE` as the default

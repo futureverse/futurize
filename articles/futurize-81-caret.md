@@ -94,10 +94,17 @@ plan(future.batchtools::batchtools_slurm)
 The following **caret** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`bag()`](https://rdrr.io/pkg/caret/man/bag.html)
-- [`gafs()`](https://rdrr.io/pkg/caret/man/gafs.default.html)
-- [`nearZeroVar()`](https://rdrr.io/pkg/caret/man/nearZeroVar.html)
-- [`rfe()`](https://rdrr.io/pkg/caret/man/rfe.html)
-- [`safs()`](https://rdrr.io/pkg/caret/man/safs.html)
-- [`sbf()`](https://rdrr.io/pkg/caret/man/sbf.html)
-- [`train()`](https://rdrr.io/pkg/caret/man/train.html)
+- [`bag()`](https://rdrr.io/pkg/caret/man/bag.html) with `seed = TRUE`
+  as the default
+- [`gafs()`](https://rdrr.io/pkg/caret/man/gafs.default.html) with
+  `seed = TRUE` as the default
+- [`nearZeroVar()`](https://rdrr.io/pkg/caret/man/nearZeroVar.html) with
+  `seed = TRUE` as the default
+- [`rfe()`](https://rdrr.io/pkg/caret/man/rfe.html) with `seed = TRUE`
+  as the default
+- [`safs()`](https://rdrr.io/pkg/caret/man/safs.html) with `seed = TRUE`
+  as the default
+- [`sbf()`](https://rdrr.io/pkg/caret/man/sbf.html) with `seed = TRUE`
+  as the default
+- [`train()`](https://rdrr.io/pkg/caret/man/train.html) with
+  `seed = TRUE` as the default

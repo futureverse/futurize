@@ -119,4 +119,6 @@ The following **shapr** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`explain()`](https://norskregnesentral.github.io/shapr/reference/explain.html)
+  with `seed = TRUE` as the default
 - [`explain_forecast()`](https://norskregnesentral.github.io/shapr/reference/explain_forecast.html)
+  with `seed = TRUE` as the default

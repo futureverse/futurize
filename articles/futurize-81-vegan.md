@@ -100,6 +100,7 @@ The following **vegan** functions are supported by
 - [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’
 - [`anosim()`](https://vegandevs.github.io/vegan/reference/anosim.html)
 - [`cascadeKM()`](https://vegandevs.github.io/vegan/reference/cascadeKM.html)
+  with `seed = TRUE` as the default
 - [`estaccumR()`](https://vegandevs.github.io/vegan/reference/specpool.html)
 - [`mantel()`](https://vegandevs.github.io/vegan/reference/mantel.html)
 - [`mantel.partial()`](https://vegandevs.github.io/vegan/reference/mantel.html)
