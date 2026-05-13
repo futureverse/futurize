@@ -104,7 +104,7 @@ The following **vegan** functions are supported by `futurize()`:
 * `adonis2()`
 * `anova()` for 'cca'
 * `anosim()`
-* `cascadeKM()`
+* `cascadeKM()` with `seed = TRUE` as the default
 * `estaccumR()`
 * `mantel()`
 * `mantel.partial()`

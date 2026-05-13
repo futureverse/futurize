@@ -84,8 +84,8 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **seriation** functions are supported by `futurize()`:
 
-* `seriate_best()`
-* `seriate_rep()`
+* `seriate_best()` with `seed = TRUE` as the default
+* `seriate_rep()` with `seed = TRUE` as the default
 
 
 [seriation]: https://cran.r-project.org/package=seriation

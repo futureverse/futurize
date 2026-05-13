@@ -86,10 +86,10 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **partykit** functions are supported by `futurize()`:
 
-* `cforest()`
-* `ctree_control()`
-* `mob_control()`
-* `varimp()` for `cforest`
+* `cforest()` with `seed = TRUE` as the default
+* `ctree_control()` with `seed = TRUE` as the default
+* `mob_control()` with `seed = TRUE` as the default
+* `varimp()` for `cforest` with `seed = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

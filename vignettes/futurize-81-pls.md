@@ -102,7 +102,7 @@ The following **pls** functions are supported by `futurize()`:
 * `plsr()`
 * `pcr()`
 * `cppls()`
-* `crossval()`
+* `crossval()` with `seed = TRUE` as the default
 
 
 # Without futurize: Manual 'pls.options' setup

@@ -119,8 +119,8 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **shapr** functions are supported by `futurize()`:
 
-* `explain()`
-* `explain_forecast()`
+* `explain()` with `seed = TRUE` as the default
+* `explain_forecast()` with `seed = TRUE` as the default
 
 
 [shapr]: https://cran.r-project.org/package=shapr

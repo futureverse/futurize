@@ -117,7 +117,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **riskRegression** functions are supported by `futurize()`:
 
-* `Score()` for 'list'
+* `Score()` for 'list' with `seed = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup
