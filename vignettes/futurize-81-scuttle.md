@@ -118,25 +118,9 @@ plan(future.batchtools::batchtools_slurm)
 The following **scuttle** functions are supported by `futurize()`:
 
 * `calculateAverage()`
-* `logNormCounts()`
-* `normalizeCounts()`
-* `perCellQCMetrics()` - deprecated in **scuttle** (>= 1.22)
 * `perFeatureQCMetrics()`
-* `addPerCellQCMetrics()`
-* `addPerFeatureQCMetrics()`
-* `addPerCellQC()`
-* `addPerFeatureQC()`
-* `numDetectedAcrossCells()`
 * `numDetectedAcrossFeatures()`
-* `sumCountsAcrossCells()`
-* `sumCountsAcrossFeatures()`
 * `summarizeAssayByGroup()`
-* `aggregateAcrossCells()`
-* `aggregateAcrossFeatures()`
-* `librarySizeFactors()`
-* `computeLibraryFactors()`
-* `geometricSizeFactors()`
-* `computeGeometricFactors()`
 * `medianSizeFactors()`
 * `computeMedianFactors()`
 * `pooledSizeFactors()`
@@ -144,5 +128,28 @@ The following **scuttle** functions are supported by `futurize()`:
 * `fitLinearModel()`
 
 
+The following **scuttle** functions are deprecated in **scuttle** (>=
+1.22) in favor of counter-part functions in Bioconductor package
+**[scrapper]**. Support for `futurize()` of the these deprecated
+functions remains, but will be phased out;
+
+* `logNormCounts()`
+* `normalizeCounts()`
+* `perCellQCMetrics()`
+* `addPerCellQCMetrics()`
+* `addPerFeatureQCMetrics()`
+* `addPerCellQC()`
+* `addPerFeatureQC()`
+* `numDetectedAcrossCells()`
+* `sumCountsAcrossCells()`
+* `sumCountsAcrossFeatures()`
+* `aggregateAcrossCells()`
+* `aggregateAcrossFeatures()`
+* `librarySizeFactors()`
+* `computeLibraryFactors()`
+* `geometricSizeFactors()`
+* `computeGeometricFactors()`
+
 [scuttle]: https://bioconductor.org/packages/scuttle/
+[scrapper]: https://bioconductor.org/packages/scrapper/
 [other parallel backends]: https://www.futureverse.org/backends.html
