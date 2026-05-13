@@ -9,14 +9,9 @@ plan(multisession)
 d_truth <- nearZeroVar(iris[, -5], saveMetrics = TRUE)
 print(d_truth)
 
-counters <- plan("backend")[["counters"]]
-d <- nearZeroVar(iris[, -5], saveMetrics = TRUE) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+d <- nearZeroVar(iris[, -5], saveMetrics = TRUE) |> futurize_and_verify()
 print(d)
 stopifnot(all.equal(d, d_truth))
-
 
 # Define training control
 ctrl <- trainControl(method = "cv", number = 10)
@@ -26,11 +21,7 @@ model_truth <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
 print(model_truth)
 
 set.seed(1011)
-counters <- plan("backend")[["counters"]]
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize_and_verify()
 print(model)
 
 ## Cannot really compare results, because of different RNGs

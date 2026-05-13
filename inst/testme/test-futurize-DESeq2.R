@@ -30,7 +30,6 @@ dds <- DESeqDataSetFromMatrix(
   design = ~ condition
 )
 
-
 ## ---------------------------------------------------------
 ## DESeq()
 ## ---------------------------------------------------------
@@ -39,20 +38,12 @@ result_truth <- DESeq(dds)
 print(result_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result <- DESeq(dds) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- DESeq(dds) |> futurize_and_verify()
 print(result)
 stopifnot(all.equal(results(result), results(result_truth)))
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result2 <- DESeq2::DESeq(dds) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result2 <- DESeq2::DESeq(dds) |> futurize_and_verify()
 stopifnot(all.equal(results(result2), results(result_truth)))
 
 plan(sequential)

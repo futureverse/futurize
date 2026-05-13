@@ -25,13 +25,9 @@ if (requireNamespace("kernelshap") && requireNamespace("doFuture")) {
   print(result_truth)
 
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
   result <- kernelshap(
     model, X = x_explain, bg_X = bg_X
-  ) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  ) |> futurize_and_verify()
   print(result)
 
   stopifnot(all.equal(result$S, result_truth$S))
@@ -48,13 +44,9 @@ if (requireNamespace("kernelshap") && requireNamespace("doFuture")) {
   print(result_truth2)
 
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
   result2 <- permshap(
     model, X = x_explain, bg_X = bg_X
-  ) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  ) |> futurize_and_verify()
   print(result2)
 
   stopifnot(all.equal(result2$S, result_truth2$S))

@@ -39,23 +39,16 @@ altExp(sce, "spikes") <- SingleCellExperiment(
   assays = list(counts = spike_counts)
 )
 
-
 ## ---------------------------------------------------------
 ## applySCE() with perFeatureQCMetrics
 ## ---------------------------------------------------------
 result_truth <- applySCE(sce, perFeatureQCMetrics)
 
-counters <- plan("backend")[["counters"]]
-result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- applySCE(sce, perFeatureQCMetrics) |> futurize_and_verify()
 stopifnot(all.equal(result, result_truth))
 
-result2 <- SingleCellExperiment::applySCE(sce, perFeatureQCMetrics) |> futurize()
+result2 <- SingleCellExperiment::applySCE(sce, perFeatureQCMetrics) |> futurize_and_verify()
 stopifnot(all.equal(result2, result_truth))
-
-
 
 plan(sequential)
 } ## if (requireNamespace("SingleCellExperiment") && ...)

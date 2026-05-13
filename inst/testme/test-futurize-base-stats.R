@@ -8,11 +8,7 @@ options(futurize.debug = TRUE)
 
 plan(multisession)
 
-counters <- plan("backend")[["counters"]]
-y <- lapply(X = 1:3, FUN = function(x) { print(x) }) |> futurize(stdout = FALSE)
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+y <- lapply(X = 1:3, FUN = function(x) { print(x) }) |> futurize_and_verify(stdout = FALSE)
 print(y)
 
 xs <- list(aa = 1, bb = 1:2, cc = 1:10, dd = 1:5, .ee = -6:6)
@@ -37,7 +33,6 @@ FUN_rng <- function(x, na.rm = TRUE) {
 }
 
 es <- as.environment(xs)
-
 
 exprs <- list(
      lapply = quote( lapply(X = xs, FUN = FUN) ),
@@ -88,12 +83,9 @@ for (flavor in flavors) {
     
     FUN <- FUN_no_rng
 
-    counters <- plan("backend")[["counters"]]
-    expr_f <- bquote(.(expr) |> futurize(flavor = .(flavor)))
+    expr_f <- bquote(.(expr) |> futurize_and_verify(flavor = .(flavor)))
+
     res <- eval(expr_f)
-    delta <- plan("backend")[["counters"]] - counters
-    cat(sprintf("Futures created: %d\n", delta[["created"]]))
-    stopifnot(delta[["created"]] > 0L)
 
     if (name == "eapply") {
       res <- res[if (named_truth) names(truth) else order(unlist(res))]
@@ -101,7 +93,7 @@ for (flavor in flavors) {
     stopifnot(identical(res, truth))
   
     out <- utils::capture.output({
-      expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L), flavor = .(flavor)))
+      expr_f2 <- bquote(.(expr) |> futurize_and_verify(stdout = FALSE, conditions = character(0L), flavor = .(flavor)))
       res2 <- eval(expr_f2)
     })
     print(out)
@@ -115,7 +107,7 @@ for (flavor in flavors) {
       identical(out, character(0L))
     )
     
-    expr_f3 <- bquote(.(expr) |> futurize(chunk_size = 1L, flavor = .(flavor)))
+    expr_f3 <- bquote(.(expr) |> futurize_and_verify(chunk_size = 1L, flavor = .(flavor)))
     res3 <- eval(expr_f3)
     if (name == "eapply") {
       res3 <- res3[if (named_truth) names(truth) else order(unlist(res3))]
@@ -127,7 +119,7 @@ for (flavor in flavors) {
     
     message("Test with RNG:")
     FUN <- FUN_rng
-    expr_f4 <- bquote(.(expr) |> futurize(seed = TRUE, flavor = .(flavor)))
+    expr_f4 <- bquote(.(expr) |> futurize_and_verify(seed = TRUE, flavor = .(flavor)))
     print(expr_f4)
     res4 <- local({
       opts <- options(future.rng.onMisuse = "error")
@@ -146,11 +138,7 @@ for (flavor in flavors) {
 } ## for (flavor ...)
 
 message("futurize() for replicate() should default to seed = TRUE")
-counters <- plan("backend")[["counters"]]
-y <- replicate(2, rnorm(1)) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+y <- replicate(2, rnorm(1)) |> futurize_and_verify()
 
 ## Switch to 'sequential' already here to avoid detritus files on Windows
 plan(sequential)

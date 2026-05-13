@@ -4,6 +4,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 if (require("datasets") && require("stats")) {
   library(futurize)
+
+
   library(datasets)
   
   plan(multisession)
@@ -21,7 +23,7 @@ if (require("datasets") && require("stats")) {
   stopifnot(inherits(k1, "tskernel"))
   X1_truth <- kernapply(X, k = k1)
   str(X1_truth)
-  X1 <- kernapply(X, k = k1) |> futurize()
+  X1 <- kernapply(X, k = k1) |> futurize_and_verify()
   str(X1)
   stopifnot(identical(X1, X1_truth))
 
@@ -36,7 +38,7 @@ if (require("datasets") && require("stats")) {
   stopifnot(inherits(k1, "tskernel"))
   X1_truth <- kernapply(X, k = k1)
   str(X1_truth)
-  X1 <- kernapply(X, k = k1) |> futurize()
+  X1 <- kernapply(X, k = k1) |> futurize_and_verify()
   str(X1)
   stopifnot(identical(X1, X1_truth))
 

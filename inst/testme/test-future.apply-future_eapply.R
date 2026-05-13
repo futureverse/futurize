@@ -6,6 +6,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_eapply() ...")
 
 message("- From example(eapply) ...")
@@ -20,17 +22,17 @@ for (strategy in supportedStrategies()) {
   env$logic <- c(TRUE, FALSE, FALSE, TRUE)
   
   y0 <- unlist(eapply(env, mean, USE.NAMES = FALSE))
-  y1 <- unlist(eapply(env, mean, USE.NAMES = FALSE) |> futurize())
+  y1 <- unlist(eapply(env, mean, USE.NAMES = FALSE) |> futurize_and_verify())
   stopifnot(all.equal(y1, y0))
   
   y0 <- eapply(env, quantile, probs = 1:3/4)
-  y1 <- eapply(env, quantile, probs = 1:3/4) |> futurize()
+  y1 <- eapply(env, quantile, probs = 1:3/4) |> futurize_and_verify()
   stopifnot(all.equal(y1, y0))
   
   y0 <- eapply(env, quantile)
-  y1 <- eapply(env, quantile) |> futurize()
+  y1 <- eapply(env, quantile) |> futurize_and_verify()
   stopifnot(all.equal(y1, y0))
-  y2 <- eapply(env, "quantile") |> futurize()
+  y2 <- eapply(env, "quantile") |> futurize_and_verify()
   stopifnot(all.equal(y2, y0))
 
   plan(sequential)

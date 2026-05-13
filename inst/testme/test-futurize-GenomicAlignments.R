@@ -7,7 +7,6 @@ options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
-
 ## ---------------------------------------------------------
 ## summarizeOverlaps() with BamFileList
 ## ---------------------------------------------------------
@@ -36,31 +35,22 @@ names(features) <- paste0("feature", 1:3)
 result_truth <- summarizeOverlaps(features, bf)
 str(result_truth)
 
-counters <- plan("backend")[["counters"]]
-result <- summarizeOverlaps(features, bf) |> futurize()
+result <- summarizeOverlaps(features, bf) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(
   SummarizedExperiment::assay(result),
   SummarizedExperiment::assay(result_truth)
 ))
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
 
-counters <- plan("backend")[["counters"]]
-result2 <- GenomicAlignments::summarizeOverlaps(features, bf) |> futurize()
+result2 <- GenomicAlignments::summarizeOverlaps(features, bf) |> futurize_and_verify()
 stopifnot(all.equal(
   SummarizedExperiment::assay(result2),
   SummarizedExperiment::assay(result_truth)
 ))
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
 
 ## Cleanup
 file.remove(bam_files)
 file.remove(paste0(bam_files, ".bai"))
-
 
 plan(sequential)
 } ## if (requireNamespace("GenomicAlignments") && ...)

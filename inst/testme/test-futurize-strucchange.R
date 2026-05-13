@@ -11,11 +11,7 @@ data("Nile")
 bp_truth <- breakpoints(Nile ~ 1)
 print(bp_truth)
 
-counters <- plan("backend")[["counters"]]
-bp <- breakpoints(Nile ~ 1) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+bp <- breakpoints(Nile ~ 1) |> futurize_and_verify()
 print(bp)
 
 common <- setdiff(names(bp), c("RSS", "extract.breaks", "extend.RSS.table", "nobs", "call", "datatsp"))

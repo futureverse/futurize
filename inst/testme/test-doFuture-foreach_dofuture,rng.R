@@ -5,6 +5,8 @@
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
+
+
 library(foreach)
 
 strategies <- future:::supportedStrategies()
@@ -22,21 +24,21 @@ for (strategy in strategies) {
 
   r1 <- foreach(i = 1:4) %do% {
     runif(1)
-  } |> futurize(seed = 42)
+  } |> futurize_and_verify(seed = 42)
   str(r1)
   if (is.null(r1_0)) r1_0 <- r1
   stopifnot(identical(r1, r1_0))
   
   r2 <- foreach(i = 1:4) %do% {
     runif(1)
-  } |> futurize(seed = 42)
+  } |> futurize_and_verify(seed = 42)
   str(r2)
   stopifnot(identical(r2, r1))
 
   set.seed(42)
   r3 <- foreach(i = 1:4) %do% {
     runif(1)
-  } |> futurize(seed = TRUE)
+  } |> futurize_and_verify(seed = TRUE)
   str(r3)
   if (is.null(r3_0)) r3_0 <- r3
   stopifnot(identical(r3, r3_0))
@@ -44,7 +46,7 @@ for (strategy in strategies) {
   set.seed(42)
   r4 <- foreach(i = 1:4) %do% {
     runif(1)
-  } |> futurize(seed = TRUE)
+  } |> futurize_and_verify(seed = TRUE)
   str(r4)
   stopifnot(identical(r4, r3))
 

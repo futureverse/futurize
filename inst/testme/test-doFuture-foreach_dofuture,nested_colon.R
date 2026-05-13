@@ -7,6 +7,7 @@ if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
+
 strategies <- future:::supportedStrategies()
 
 message("*** doFuture - nested w/ %:% ...")
@@ -21,7 +22,7 @@ for (strategy1 in strategies) {
     bs <- 3:1
     x <- foreach(a = as) %:% foreach(b = bs) %do% {
       list(a = a, b = b, plan_b = future::plan("list"), plan = future::plan("next"))
-    } |> futurize()
+    } |> futurize_and_verify()
 
     stopifnot(length(x) == length(as))
     for (aa in seq_along(as)) {
@@ -52,7 +53,7 @@ for (strategy1 in strategies) {
     ## from 'R CMD check --as-cran' when running on MS Windows. This looks
     ## like a bug in R, cf. https://bugs.r-project.org/show_bug.cgi?id=18133    
     message("- shut down nested workers")
-    dummy <- foreach(ii = 1:nbrOfWorkers()) %do% plan("sequential") |> futurize()
+    dummy <- foreach(ii = 1:nbrOfWorkers()) %do% plan("sequential") |> futurize_and_verify()
     plan("sequential")
     
     message(sprintf("- plan(list('%s', '%s')) ... DONE", strategy1, strategy2))

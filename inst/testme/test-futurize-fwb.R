@@ -22,11 +22,7 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   print(b_truth)
 
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
-  b <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  b <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE) |> futurize_and_verify()
   print(b)
 
   set.seed(42)
@@ -44,11 +40,7 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   print(v_truth)
 
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
-  v <- vcovFWB(fit, R = 999) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  v <- vcovFWB(fit, R = 999) |> futurize_and_verify()
   print(v)
 
   #v and v_truth should differ if parallelization is done
@@ -59,7 +51,7 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   v2 <- vcovFWB(fit, R = 999, cl = "future")
   print(v2)
 
-  #v and v2 should not differ if futurize() engages cl = "future"
+  #v and v2 should not differ if futurize_and_verify() engages cl = "future"
   stopifnot(all.equal(v, v2))
 
   plan(sequential)

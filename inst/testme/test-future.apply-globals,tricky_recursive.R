@@ -7,6 +7,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 ## Test adopted from http://stackoverflow.com/questions/42561088/nested-do-call-within-a-foreach-dopar-environment-cant-find-function-passed-w
 
 options(future.debug = FALSE)
@@ -41,14 +43,14 @@ main_future_lapply <- function(x = 1:2, caller = call_my_add_caller,
                                args = list(FUN = call_my_add)) {
   lapply(x, FUN = function(i) {
     do.call(caller, args = c(list(a = i, b = i + 1L), args))
-  }) |> futurize()
+  }) |> futurize_and_verify()
 }
 
 main_future_lapply_no_FUN <- function(x = 1:2, caller = call_my_add_caller,
                                args = list(FUN = call_my_add)) {
   lapply(x, FUN = function(i) {
     do.call(caller, args = list(a = i, b = i + 1L))
-  }) |> futurize()
+  }) |> futurize_and_verify()
 }
 
 x0 <- y0 <- z0 <- NULL

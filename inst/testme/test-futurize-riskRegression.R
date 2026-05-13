@@ -22,14 +22,10 @@ sc_truth <- Score(list("CSC" = fit), data = d,
 print(sc_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
 sc <- Score(list("CSC" = fit), data = d,
             formula = Hist(time, event) ~ 1,
             times = 5, B = 10, split.method = "bootcv",
-            seed = 42) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created (Score): %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+            seed = 42) |> futurize_and_verify()
 print(sc)
 
 plan(sequential)

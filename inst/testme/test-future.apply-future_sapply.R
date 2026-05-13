@@ -6,6 +6,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_sapply() ...")
 
 xs <- list(
@@ -35,7 +37,7 @@ for (strategy in supportedStrategies()) {
           y0 <- sapply(x, FUN = FUN,
                               USE.NAMES = USE.NAMES, simplify = simplify)
           y1 <- sapply(x, FUN = FUN,
-                              USE.NAMES = USE.NAMES, simplify = simplify) |> futurize()
+                              USE.NAMES = USE.NAMES, simplify = simplify) |> futurize_and_verify()
           str(list(y0 = y0, y1 = y1))
           stopifnot(identical(y1, y0))
           if (identical(simplify, FALSE)) {
@@ -49,14 +51,14 @@ for (strategy in supportedStrategies()) {
   }
 
   y0 <- sapply(1:3, FUN = "sqrt")
-  y1 <- sapply(1:3, FUN = "sqrt") #|> futurize()
+  y1 <- sapply(1:3, FUN = "sqrt") #|> futurize_and_verify()
   stopifnot(identical(y1, y0))
   
   ## https://github.com/futureverse/future.apply/issues/61
 #  compute <- function(a, x_vec) a + x_vec
 #  call_compute <- function(..., x_vec = 1:2){
 #    compute_with_dots <- function(x) compute(..., x_vec = x)
-#    sapply(x_vec, FUN = compute_with_dots) |> futurize()
+#    sapply(x_vec, FUN = compute_with_dots) |> futurize_and_verify()
 #  }
 #  y <- call_compute(0L)
 #  print(y)

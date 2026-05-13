@@ -25,31 +25,25 @@ sce <- SingleCellExperiment::SingleCellExperiment(
   assays = list(counts = counts)
 )
 
-
 ## ---------------------------------------------------------
 ## logNormCounts()
 ## ---------------------------------------------------------
 result_truth <- logNormCounts(sce)
 
-result <- logNormCounts(sce) |> futurize()
+result <- logNormCounts(sce) |> futurize() ## FIXME: futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
 
-result2 <- scuttle::logNormCounts(sce) |> futurize()
+result2 <- scuttle::logNormCounts(sce) |> futurize() ## FIXME: futurize_and_verify()
 str(result2)
 stopifnot(all.equal(result2, result_truth))
-
 
 ## ---------------------------------------------------------
 ## perFeatureQCMetrics()
 ## ---------------------------------------------------------
 result_truth <- perFeatureQCMetrics(sce)
 
-counters <- plan("backend")[["counters"]]
-result <- perFeatureQCMetrics(sce) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- perFeatureQCMetrics(sce) |> futurize_and_verify()
 stopifnot(all.equal(result, result_truth))
 
 plan(sequential)

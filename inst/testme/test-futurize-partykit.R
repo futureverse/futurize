@@ -18,11 +18,7 @@ cf_future.apply <- partykit::cforest(dist ~ speed, data = cars, applyfun = funct
 print(summary(cf_future.apply))
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize::futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize_and_verify()
 print(summary(cf))
 
 stopifnot(
@@ -44,7 +40,6 @@ stopifnot(
   all.equal(nd, nd_truth),
   all.equal(nd, nd_future.apply)
 )
-
 
 plan(sequential)
 } ## if (requireNamespace("partykit"))

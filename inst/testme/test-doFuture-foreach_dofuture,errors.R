@@ -7,6 +7,7 @@
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
+
 doFuture::registerDoFuture()
 
 strategies <- future:::supportedStrategies()
@@ -104,7 +105,7 @@ for (strategy in strategies) {
   res <- foreach(i = 1:10, .errorhandling = "pass", .options.future = .options.future) %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('pass'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
-  } |> futurize()
+  } |> futurize_and_verify()
   str(res)
   stopifnot(
     is.list(res),
@@ -131,7 +132,7 @@ for (strategy in strategies) {
   res <- foreach(i = 1:10, .errorhandling = "remove", .options.future = .options.future) %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('remove'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
-  } |> futurize()
+  } |> futurize_and_verify()
   str(res)
   stopifnot(
     is.list(res),

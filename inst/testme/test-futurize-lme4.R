@@ -29,16 +29,11 @@ print(gm_all_truth)
 
 message("Futurized processing:")
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-gm_all <- allFit(gm1) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+gm_all <- allFit(gm1) |> futurize_and_verify()
 print(gm_all)
 
 message("Comparing results:")
 stopifnot(all_equal(gm_all, gm_all_truth))
-
 
 if (utils::packageVersion("lme4") >= "2.0.1") {
   ## influence.merMod() via stats::influence() S3 generic dispatch
@@ -50,11 +45,7 @@ if (utils::packageVersion("lme4") >= "2.0.1") {
   inf_truth <- influence(fm1, groups = "Subject")
   
   message("Futurized processing:")
-  counters <- plan("backend")[["counters"]]
-  inf <- influence(fm1, groups = "Subject") |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  inf <- influence(fm1, groups = "Subject") |> futurize_and_verify()
   
   message("Comparing results:")
   stopifnot(all.equal(inf, inf_truth))

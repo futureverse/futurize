@@ -7,6 +7,7 @@ if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
+
 ## WORKAROUND: To avoid `R CMD check --as-cran` on MS Windows triggering:
 ##
 ## * checking for detritus in the temp directory ... NOTE

@@ -23,11 +23,7 @@ m_truth <- mvr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV")
 print(m_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-m <- mvr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+m <- mvr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize_and_verify()
 print(m)
 
 stopifnot(all_equal(m, m_truth))
@@ -42,7 +38,7 @@ set.seed(42)
 m_truth <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV")
 
 set.seed(42)
-m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
+m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize_and_verify()
 stopifnot(all_equal(m, m_truth))
 message("plsr() ... done")
 
@@ -54,7 +50,7 @@ set.seed(42)
 m_truth <- pcr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV")
 
 set.seed(42)
-m <- pcr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
+m <- pcr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize_and_verify()
 stopifnot(all_equal(m, m_truth))
 message("pcr() ... done")
 
@@ -67,7 +63,7 @@ set.seed(42)
 m_truth <- crossval(m1, segments = 10)
 
 set.seed(42)
-m <- crossval(m1, segments = 10) |> futurize()
+m <- crossval(m1, segments = 10) |> futurize_and_verify()
 stopifnot(all_equal(m, m_truth))
 message("crossval() ... done")
 

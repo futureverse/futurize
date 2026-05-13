@@ -16,28 +16,20 @@ if (requireNamespace("stars")) {
   print(result_truth)
 
   ## Futurized via st_apply()
-  counters <- plan("backend")[["counters"]]
-  result <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  result <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize_and_verify()
   print(result)
 
   stopifnot(all.equal(result, result_truth))
 
   ## Futurized via stars::st_apply()
-  counters <- plan("backend")[["counters"]]
-  result2 <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  result2 <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize_and_verify()
   print(result2)
 
   stopifnot(all.equal(result2, result_truth))
 
   ## Assert that future.globals.maxSize is restored
   oopts <- getOption("future.globals.maxSize")
-  result3 <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
+  result3 <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize_and_verify()
   stopifnot(identical(getOption("future.globals.maxSize"), oopts))
 
   plan(sequential)

@@ -14,15 +14,10 @@ pr_truth <- profile(m)
 print(head(pr_truth))
 
 message("Futurized processing:")
-counters <- plan("backend")[["counters"]]
-pr <- profile(m) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+pr <- profile(m) |> futurize_and_verify()
 print(head(pr))
 message("Comparing results:")
 stopifnot(all.equal(pr, pr_truth))
-
 
 ## Skip confint() for 'glmmTMB' until has been fixed per
 ## https://github.com/glmmTMB/glmmTMB/issues/1268
@@ -33,11 +28,7 @@ if (FALSE) {
   print(ci_truth)
   
   message("Futurized processing:")
-  counters <- plan("backend")[["counters"]]
-  ci <- confint(m, method = "profile") |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  ci <- confint(m, method = "profile") |> futurize_and_verify()
   print(ci)
   message("Comparing results:")
   stopifnot(all.equal(ci, ci_truth))

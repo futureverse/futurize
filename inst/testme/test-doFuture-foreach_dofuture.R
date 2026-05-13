@@ -20,7 +20,7 @@ for (strategy in strategies) {
   sigma <- 2.0
   res <- foreach(i = 1:3) %do% {
     dnorm(i, mean = mu, sd = sigma)
-  } |> futurize(packages = "stats")
+  } |> futurize_and_verify(packages = "stats")
   print(res)
 
   if (is.null(res0)) {

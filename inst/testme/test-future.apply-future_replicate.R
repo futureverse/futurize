@@ -4,6 +4,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_replicate() ...")
 
 for (strategy in supportedStrategies()) {
@@ -11,17 +13,17 @@ for (strategy in supportedStrategies()) {
   plan(strategy)
   
   y0 <- replicate(5L, sample(10L, size = 1L))
-  y1 <- replicate(5L, sample(10L, size = 1L)) |> futurize()
+  y1 <- replicate(5L, sample(10L, size = 1L)) |> futurize_and_verify()
   stopifnot(length(y0) == length(y1))
   
   set.seed(0xBEEF)
-  y1 <- replicate(5L, sample(10L, size = 1L)) |> futurize()
+  y1 <- replicate(5L, sample(10L, size = 1L)) |> futurize_and_verify()
   set.seed(0xBEEF)
-  y2 <- replicate(5L, sample(10L, size = 1L)) |> futurize()
+  y2 <- replicate(5L, sample(10L, size = 1L)) |> futurize_and_verify()
   stopifnot(all.equal(y2, y1))
   
-  y3 <- replicate(5L, sample(10L, size = 1L)) |> futurize(seed = 0xBEEF)
-  y4 <- replicate(5L, sample(10L, size = 1L)) |> futurize(seed = 0xBEEF)
+  y3 <- replicate(5L, sample(10L, size = 1L)) |> futurize_and_verify(seed = 0xBEEF)
+  y4 <- replicate(5L, sample(10L, size = 1L)) |> futurize_and_verify(seed = 0xBEEF)
   stopifnot(all.equal(y4, y3))
   
   
@@ -31,7 +33,7 @@ for (strategy in supportedStrategies()) {
   bar0 <- function(n, x) replicate(n, foo(x = x))
   y0 <- bar0(5, x = 3)
   
-  bar1 <- function(n, x) replicate(n, foo(x = x)) |> futurize()
+  bar1 <- function(n, x) replicate(n, foo(x = x)) |> futurize_and_verify()
   y1 <- bar1(5, x = 3)
   stopifnot(all.equal(y1, y0))
   

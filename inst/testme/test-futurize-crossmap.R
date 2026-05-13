@@ -22,12 +22,9 @@ for (kk in seq_along(exprs)) {
   message(sprintf("---------------------------------"))
 
   truth <- eval(expr)
-  counters <- plan("backend")[["counters"]]
-  expr_f <- bquote(.(expr) |> futurize())
+  expr_f <- bquote(.(expr) |> futurize_and_verify())
+
   res <- eval(expr_f)
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
 
   if (!identical(res, truth)) {
     str(list(truth = truth, res = res))

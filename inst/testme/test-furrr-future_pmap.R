@@ -2,6 +2,8 @@
 #' @tags detritus-files
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
+
+
 library(purrr)
 
 # ------------------------------------------------------------------------------
@@ -9,7 +11,7 @@ library(purrr)
 
 message("future_pmap() matches pmap() for simple cases")
 stopifnot(identical(
-  pmap(list(1:3, 4:6, 7:9), ~.x + .y + ..3) |> futurize(),
+  pmap(list(1:3, 4:6, 7:9), ~.x + .y + ..3) |> futurize_and_verify(),
   pmap(list(1:3, 4:6, 7:9), ~.x + .y + ..3)
 ))
 
@@ -17,7 +19,7 @@ stopifnot(identical(
 message("names of `.x` are retained")
 x <- c(a = 1, b = 2)
 y <- c(c = 1, d = 2)
-stopifnot(identical(names(pmap(list(x, y), ~1) |> futurize()), c("a", "b")))
+stopifnot(identical(names(pmap(list(x, y), ~1) |> futurize_and_verify()), c("a", "b")))
 
 
 message("named empty input makes named empty output")
@@ -33,7 +35,7 @@ x <- c(1, 2, 3)
 y <- c(4, 5, 6)
 
 stopifnot(identical(
-  pmap_dbl(list(x, y), ~.x + .y) |> futurize(),
+  pmap_dbl(list(x, y), ~.x + .y) |> futurize_and_verify(),
   pmap_dbl(list(x, y), ~.x + .y)
 ))
 
@@ -43,7 +45,7 @@ x <- c(1L, 2L, 3L)
 y <- c(4L, 5L, 6L)
 
 stopifnot(identical(
-  pmap_int(list(x, y), ~.x + .y) |> futurize(),
+  pmap_int(list(x, y), ~.x + .y) |> futurize_and_verify(),
   pmap_int(list(x, y), ~.x + .y)
 ))
 
@@ -53,7 +55,7 @@ x <- c(TRUE, FALSE, TRUE)
 y <- c(FALSE, TRUE, TRUE)
 
 stopifnot(identical(
-  pmap_lgl(list(x, y), ~.x || .y) |> futurize(),
+  pmap_lgl(list(x, y), ~.x || .y) |> futurize_and_verify(),
   pmap_lgl(list(x, y), ~.x || .y)
 ))
 
@@ -63,7 +65,7 @@ x <- c("a", "b", "c")
 y <- c("d", "e", "f")
 
 stopifnot(identical(
-  pmap_chr(list(x, y), ~.y) |> futurize(),
+  pmap_chr(list(x, y), ~.y) |> futurize_and_verify(),
   pmap_chr(list(x, y), ~.y)
 ))
 
@@ -71,7 +73,7 @@ stopifnot(identical(
 message("names of `.x` are retained")
 x <- c(a = 1, b = 2)
 y <- c(c = 1, d = 2)
-stopifnot(identical(names(pmap_dbl(list(x, y), ~1) |> futurize()), c("a", "b")))
+stopifnot(identical(names(pmap_dbl(list(x, y), ~1) |> futurize_and_verify()), c("a", "b")))
 
 
 # ------------------------------------------------------------------------------
@@ -82,7 +84,7 @@ x <- c("a", "b", "c")
 y <- c("d", "e", "f")
 
 stopifnot(identical(
-  pmap_dfr(list(x, y), ~data.frame(x = .x, y = .y)) |> futurize(),
+  pmap_dfr(list(x, y), ~data.frame(x = .x, y = .y)) |> futurize_and_verify(),
   pmap_dfr(list(x, y), ~data.frame(x = .x, y = .y))
 ))
 
@@ -92,7 +94,7 @@ x <- c("a", "b", "c")
 y <- c("d", "e", "f")
 
 stopifnot(identical(
-  pmap_dfc(list(x, y), ~as.data.frame(set_names(list(.x), .y))) |> futurize(),
+  pmap_dfc(list(x, y), ~as.data.frame(set_names(list(.x), .y))) |> futurize_and_verify(),
   pmap_dfc(list(x, y), ~as.data.frame(set_names(list(.x), .y)))
 ))
 
@@ -118,12 +120,12 @@ stopifnot(identical(pmap_lgl(list(list(), list()), identity) |> futurize(), logi
 
 message("size one recycling works")
 stopifnot(identical(
-  pmap(list(1, 1:2), ~c(.x, .y)) |> futurize(),
+  pmap(list(1, 1:2), ~c(.x, .y)) |> futurize_and_verify(),
   list(c(1, 1), c(1, 2))
 ))
 
 stopifnot(identical(
-  pmap(list(1:2, 1), ~c(.x, .y)) |> futurize(),
+  pmap(list(1:2, 1), ~c(.x, .y)) |> futurize_and_verify(),
   list(c(1, 1), c(2, 1))
 ))
 
@@ -140,12 +142,12 @@ stopifnot(identical(
 
 message("generally can't recycle to size zero")
 res <- tryCatch({
-  pmap(list(1:2, integer(), ~c(.x, .y))) |> futurize()
+  pmap(list(1:2, integer()), ~c(.x, .y)) |> futurize()
 }, error = identity)
 stopifnot(
   inherits(res, "error"),
-  grepl("Can't recycle", conditionMessage(res)
-))
+  grepl("Can't recycle", conditionMessage(res))
+)
 
 res <- tryCatch({
   pmap(list(integer(), 1:2), ~c(.x, .y)) |> futurize()
@@ -167,7 +169,7 @@ vec_mean <- function(.x, .y, na.rm = FALSE) {
 x <- list(c(NA, 1), 1:2)
 
 stopifnot(identical(
-  pmap(x, vec_mean, na.rm = TRUE) |> futurize(),
+  pmap(x, vec_mean, na.rm = TRUE) |> futurize_and_verify(),
   list(1, 1.5)
 ))
 
@@ -179,7 +181,7 @@ fn <- function(y, x) {
   y - x
 }
 
-stopifnot(identical(pmap_dbl(x, fn) |> futurize(), c(2, 3)))
+stopifnot(identical(pmap_dbl(x, fn) |> futurize_and_verify(), c(2, 3)))
 
 
 message("unused components can be absorbed")
@@ -198,7 +200,7 @@ res <- tryCatch({
 stopifnot(
   inherits(res, "error")
 )
-stopifnot(identical(pmap_dbl(x, fn2) |> futurize(), c(1, 2)))
+stopifnot(identical(pmap_dbl(x, fn2) |> futurize_and_verify(), c(1, 2)))
 
 
 message("globals in `.x` and `.y` are found (#16)")
@@ -211,7 +213,7 @@ fns1 <- map(x, ~purrr::partial(fn1, x = .x))
 fns2 <- map(x, ~purrr::partial(fn2, x = .x))
 
 stopifnot(identical(
-  pmap(list(fns1, fns2), ~c(.x(), .y())) |> futurize(),
+  pmap(list(fns1, fns2), ~c(.x(), .y())) |> futurize_and_verify(),
   list(c(3, NA), c(9, 9))
 ))
 
@@ -243,7 +245,7 @@ my_wrapper2 <- local({
 x <- list(my_wrapper1, my_wrapper2)
 
 stopifnot(identical(
-  pmap_lgl(list(x), .f = ~.x(c(1, NA))) |> futurize(),
+  pmap_lgl(list(x), .f = ~.x(c(1, NA))) |> futurize_and_verify(),
   c(TRUE, FALSE)
 ))
 

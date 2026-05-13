@@ -22,11 +22,7 @@ fit_truth <- pvclust(mtcars, nboot = 40, parallel = FALSE)
 print(fit_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-fit <- pvclust(mtcars, nboot = 40, parallel = FALSE) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+fit <- pvclust(mtcars, nboot = 40, parallel = FALSE) |> futurize_and_verify()
 print(fit)
 
 stopifnot(inherits(fit, "pvclust"))

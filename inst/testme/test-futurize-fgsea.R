@@ -19,7 +19,6 @@ pathways <- list(
   pathway3 = paste0("gene", sample(n_genes, 20L))
 )
 
-
 ## ---------------------------------------------------------
 ## fgseaSimple()
 ## ---------------------------------------------------------
@@ -28,22 +27,13 @@ result_truth <- fgseaSimple(pathways, stats, nperm = 10000)
 print(result_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result <- fgseaSimple(pathways, stats, nperm = 10000) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- fgseaSimple(pathways, stats, nperm = 10000) |> futurize_and_verify()
 print(result)
 stopifnot(all.equal(result$pval, result_truth$pval))
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result2 <- fgsea::fgseaSimple(pathways, stats, nperm = 10000) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result2 <- fgsea::fgseaSimple(pathways, stats, nperm = 10000) |> futurize_and_verify()
 stopifnot(all.equal(result2$pval, result_truth$pval))
-
 
 ## ---------------------------------------------------------
 ## fgsea() via fgseaMultilevel()
@@ -79,22 +69,13 @@ result_truth <- fgsea(pathways2, stats2)
 print(result_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result <- fgsea(pathways2, stats2) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- fgsea(pathways2, stats2) |> futurize_and_verify()
 print(result)
 stopifnot(all.equal(result$pval, result_truth$pval))
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result2 <- fgsea::fgsea(pathways2, stats2) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result2 <- fgsea::fgsea(pathways2, stats2) |> futurize_and_verify()
 stopifnot(all.equal(result2$pval, result_truth$pval))
-
 
 plan(sequential)
 } ## if (requireNamespace("fgsea") && ...)

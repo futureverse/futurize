@@ -26,17 +26,12 @@ b_truth <- boot(city, ratio, R = 999, stype = "w")
 print(b_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-b <- boot(city, ratio, R = 999, stype = "w") |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+b <- boot(city, ratio, R = 999, stype = "w") |> futurize_and_verify()
 print(b)
 
 stopifnot(all_equal(b, b_truth))
 
 message("boot() ... done")
-
 
 #------------------------------------------------------------------
 # censboot()
@@ -69,7 +64,7 @@ if (requireNamespace("survival", quietly = TRUE)) {
   print(b_truth)
   
   set.seed(42)
-  b <- censboot(aml, aml.fun, R = R, strata = aml$group) |> futurize()
+  b <- censboot(aml, aml.fun, R = R, strata = aml$group) |> futurize_and_verify()
   print(b)
 
   b_truth$call <- NULL
@@ -78,7 +73,6 @@ if (requireNamespace("survival", quietly = TRUE)) {
 }
 
 message("censboot() ... done")
-
 
 #------------------------------------------------------------------
 # tsboot()
@@ -101,7 +95,7 @@ if (requireNamespace("stats", quietly = TRUE)) {
   str(b_truth)
   
   set.seed(42)
-  b <- tsboot(log(lynx), lynx.fun, R = R, l = 20, sim = "geom") |> futurize()
+  b <- tsboot(log(lynx), lynx.fun, R = R, l = 20, sim = "geom") |> futurize_and_verify()
   str(b)
 
   b_truth$call <- NULL
@@ -110,7 +104,6 @@ if (requireNamespace("stats", quietly = TRUE)) {
 }
 
 message("tsboot() ... done")
-
 
 plan(sequential)
 } ## if (requireNamespace("boot"))

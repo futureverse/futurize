@@ -30,11 +30,7 @@ cv_truth <- cv.glmnet(x, y)
 print(cv_truth)
 
 set.seed(1011)
-counters <- plan("backend")[["counters"]]
-cv <- cv.glmnet(x, y) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+cv <- cv.glmnet(x, y) |> futurize_and_verify()
 print(cv)
 
 res <- all_equal(cv, cv_truth)

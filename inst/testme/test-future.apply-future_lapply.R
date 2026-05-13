@@ -6,6 +6,8 @@
 if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
+
+
 library(listenv)
 
 message("*** future_lapply() ...")
@@ -43,26 +45,26 @@ for (cores in 1:availCores) {
 
     for (scheduling in list(FALSE, TRUE, structure(TRUE, ordering = "random"), structure(TRUE, ordering = function(n) rev(seq_len(n))))) {
       message("- lapply(x, FUN = vector, ...) |> futurize() ...")
-      y <- lapply(x_a, FUN = vector, length = 2L) |> futurize(scheduling = scheduling)
+      y <- lapply(x_a, FUN = vector, length = 2L) |> futurize_and_verify(scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_a))
 
-      y <- lapply(x_a, FUN = "vector", length = 2L) |> futurize(scheduling = scheduling)
+      y <- lapply(x_a, FUN = "vector", length = 2L) |> futurize_and_verify(scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_a))
 
       message("- lapply(x, FUN = base::vector, ...) |> futurize() ...")
-      y <- lapply(x_a, FUN = base::vector, length = 2L) |> futurize(scheduling = scheduling)
+      y <- lapply(x_a, FUN = base::vector, length = 2L) |> futurize_and_verify(scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_a))
 
       message("- lapply(x, FUN = future:::hpaste, ...) |> futurize() ...")
-      y <- lapply(x_b, FUN = future:::hpaste, collapse = "; ", maxHead = 3L) |> futurize(scheduling = scheduling)
+      y <- lapply(x_b, FUN = future:::hpaste, collapse = "; ", maxHead = 3L) |> futurize_and_verify(scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_b))
 
       message("- lapply(x, FUN = listenv::listenv, ...) |> futurize() ...")
-      y <- lapply(x_c, FUN = listenv::mapping) |> futurize(scheduling = scheduling)
+      y <- lapply(x_c, FUN = listenv::mapping) |> futurize_and_verify(scheduling = scheduling)
       str(list(y = y))
       stopifnot(identical(y, y_c))
     } ## for (scheduling ...)
@@ -70,14 +72,14 @@ for (cores in 1:availCores) {
     message("- lapply(x, FUN, ...) |> futurize() for large length(x) ...")
     a <- 3.14
     x_d <- 1:1e4
-    y <- lapply(x_d, FUN = function(z) sqrt(z + a)) |> futurize()
+    y <- lapply(x_d, FUN = function(z) sqrt(z + a)) |> futurize_and_verify()
     y <- unlist(y, use.names = FALSE)
     stopifnot(all.equal(y, sqrt(x_d + a)))
 
     message("- lapply(x, FUN = table, ...) |> futurize() ...")
     x <- list(a = 1:4, b = 5:8)
     y0 <- lapply(x, FUN = table)
-    y1 <- lapply(x, FUN = table) |> futurize()
+    y1 <- lapply(x, FUN = table) |> futurize_and_verify()
     stopifnot(all.equal(y1, y0, check.attributes = FALSE)) ## FIXME
 
     message("- lapply(x, ...) |> futurize() where length(x) != length(as.list(x)) ...")
@@ -86,7 +88,7 @@ for (cores in 1:availCores) {
     registerS3method("as.list", class = "Foo", method = as.list.Foo)
     y0 <- lapply(x, FUN = length)
     stopifnot(identical(y0, list(a = 1L, b = 1L, c = 1L)))
-    y1 <- lapply(x, FUN = length) |> futurize()
+    y1 <- lapply(x, FUN = length) |> futurize_and_verify()
     stopifnot(identical(y1, y0))
     rm(list = "as.list.Foo")
     
@@ -96,7 +98,7 @@ for (cores in 1:availCores) {
     registerS3method("[[", class = "Bar", method = `[[.Bar`)
     y0 <- lapply(x, FUN = identity)
     stopifnot(identical(y0, list(a = 0, b = 0)))
-    y1 <- lapply(x, FUN = identity) |> futurize()
+    y1 <- lapply(x, FUN = identity) |> futurize_and_verify()
     if (getOption("future.apply.chunkWith", "[[") == "[") {
       stopifnot(identical(y1, unclass(x)))
     } else {

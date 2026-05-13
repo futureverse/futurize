@@ -6,12 +6,14 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_mapply() ...")
 
 message("- Parallel RNG truth (for later)...")
 plan(sequential)
 y_rng_0 <- mapply(stats::runif, n = 1:4, max = 2:5,
-                         MoreArgs = list(min = 1)) |> futurize(seed = 0xBEEF)
+                         MoreArgs = list(min = 1)) |> futurize_and_verify(seed = 0xBEEF)
 print(y_rng_0)
 
 for (strategy in supportedStrategies()) {
@@ -20,17 +22,17 @@ for (strategy in supportedStrategies()) {
 
   message("- From example(mapply) ...")
   y0 <- mapply(rep, 1:4, 4:1)
-  y1 <- mapply(rep, 1:4, 4:1) |> futurize()
+  y1 <- mapply(rep, 1:4, 4:1) |> futurize_and_verify()
   stopifnot(identical(y1, y0))
-  y2 <- mapply("rep", 1:4, 4:1) |> futurize()
+  y2 <- mapply("rep", 1:4, 4:1) |> futurize_and_verify()
   stopifnot(identical(y2, y0))
   
   y0 <- mapply(rep, times = 1:4, x = 4:1)
-  y1 <- mapply(rep, times = 1:4, x = 4:1) |> futurize()
+  y1 <- mapply(rep, times = 1:4, x = 4:1) |> futurize_and_verify()
   stopifnot(identical(y1, y0))
   
   y0 <- mapply(rep, times = 1:4, MoreArgs = list(x = 42))
-  y1 <- mapply(rep, times = 1:4, MoreArgs = list(x = 42)) |> futurize()
+  y1 <- mapply(rep, times = 1:4, MoreArgs = list(x = 42)) |> futurize_and_verify()
   stopifnot(identical(y1, y0))
   
   y0 <- mapply(function(x, y) seq_len(x) + y,
@@ -38,7 +40,7 @@ for (strategy in supportedStrategies()) {
                c(A = 10, B = 0, C = -10))
   y1 <- mapply(function(x, y) seq_len(x) + y,
                       c(a =  1, b = 2, c = 3),  # names from first
-                      c(A = 10, B = 0, C = -10)) |> futurize()
+                      c(A = 10, B = 0, C = -10)) |> futurize_and_verify()
   stopifnot(identical(y1, y0))
 
   message("- future_.mapply()")
@@ -53,7 +55,7 @@ for (strategy in supportedStrategies()) {
   word <- function(C, k) paste(rep.int(C, k), collapse = "")
   for (chunk_size in list(1L, structure(2L, ordering = "random"), structure(3L, ordering = 5:1))) {
     y0 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE)
-    y1 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE) |> futurize(chunk_size = chunk_size)
+    y1 <- mapply(word, LETTERS[1:5], 5:1, SIMPLIFY = FALSE) |> futurize_and_verify(chunk_size = chunk_size)
     stopifnot(identical(y1, y0))
 
     dots <- list(LETTERS[1:5], 5:1)
@@ -68,13 +70,13 @@ for (strategy in supportedStrategies()) {
   message("- Subsetting (Issue #17) ...")
   X <- as.Date("2018-06-01")
   y0 <- mapply(FUN = identity, X, SIMPLIFY = FALSE)
-  y1 <- mapply(FUN = identity, X, SIMPLIFY = FALSE) |> futurize()
+  y1 <- mapply(FUN = identity, X, SIMPLIFY = FALSE) |> futurize_and_verify()
   stopifnot(identical(y1, y0))
 
   dots <- list(X)
   y2 <- .mapply(FUN = identity, dots = dots, MoreArgs = MoreArgs)
   stopifnot(identical(y2, y0))
-  y3 <- .mapply(FUN = identity, dots = dots, MoreArgs = MoreArgs) |> futurize()
+  y3 <- .mapply(FUN = identity, dots = dots, MoreArgs = MoreArgs) |> futurize_and_verify()
   stopifnot(identical(y3, y2))
 
   message("- Non-recycling of MoreArgs (Issue #51) ...")
@@ -85,29 +87,29 @@ for (strategy in supportedStrategies()) {
   y1 <- mapply(
     function(x, y) y,
     x = 1:2, MoreArgs = list(y = 3:4)
-  ) |> futurize(seed = FALSE)
+  ) |> futurize_and_verify(seed = FALSE)
   stopifnot(identical(y1, y0))
   y2 <- mapply(
     function(x, y) y,
     x = 1:2, MoreArgs = list(y = 3:4)
-  ) |> futurize(seed = TRUE)
+  ) |> futurize_and_verify(seed = TRUE)
   stopifnot(identical(y2, y0))
 
   dots <- list(x = 1:2)
   MoreArgs <- list(y = 3:4)
   y3 <- .mapply(function(x, y) y, dots = dots, MoreArgs = MoreArgs)
-  y4 <- .mapply(function(x, y) y, dots = dots, MoreArgs = MoreArgs) |> futurize()
+  y4 <- .mapply(function(x, y) y, dots = dots, MoreArgs = MoreArgs) |> futurize_and_verify()
   stopifnot(identical(y4, y3))
 
   message("- Recycle arguments to same length ...")
   y0 <- mapply(rep, 1:4, 2:1)
-  y1 <- mapply(rep, 1:4, 2:1) |> futurize()
+  y1 <- mapply(rep, 1:4, 2:1) |> futurize_and_verify()
   stopifnot(identical(y1, y0))
 
   
   message("- Parallel RNG ...")
   y_rng_1 <- mapply(stats::runif, n = 1:4, max = 2:5,
-                           MoreArgs = list(min = 1)) |> futurize(seed = 0xBEEF)
+                           MoreArgs = list(min = 1)) |> futurize_and_verify(seed = 0xBEEF)
   print(y_rng_1)
   stopifnot(all.equal(y_rng_1, y_rng_0))
 
@@ -115,7 +117,7 @@ for (strategy in supportedStrategies()) {
   xs <- replicate(5, stats::runif(10), simplify = FALSE)
   ws <- replicate(5, stats::rpois(10, 5) + 1, simplify = FALSE)
   y0 <- Map(weighted.mean, xs, ws)
-  y1 <- Map(stats::weighted.mean, xs, ws) |> futurize()
+  y1 <- Map(stats::weighted.mean, xs, ws) |> futurize_and_verify()
   stopifnot(all.equal(y1, y0))
 
   message("- future_mapply() - 'max-or-0-if' recycling rule ...")
@@ -201,7 +203,7 @@ for (strategy in supportedStrategies()) {
     y0 <- Map(`+`, 1, 1:3)
     stopifnot(identical(y0, truth))
   }
-  y <- Map(`+`, 1, 1:3) |> futurize()
+  y <- Map(`+`, 1, 1:3) |> futurize_and_verify()
   stopifnot(identical(y, truth))
   
   truth <- as.list(numeric() + 1:3)
@@ -218,7 +220,7 @@ for (strategy in supportedStrategies()) {
   registerS3method("[[", class = "Foo", method = `[[.Foo`)
   y0 <- mapply(x, FUN = identity)
   stopifnot(identical(y0, c(a = 0, b = 0)))
-  y1 <- mapply(x, FUN = identity) |> futurize()
+  y1 <- mapply(x, FUN = identity) |> futurize_and_verify()
   if (getOption("future.apply.chunkWith", "[[") == "[") {
     stopifnot(identical(y1, unlist(x)))
   } else {

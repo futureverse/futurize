@@ -9,23 +9,25 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 if (packageVersion("future") > "1.49.0" && isTRUE(getOption("future.globals.keepWhere"))) {
 
   library(futurize)
+
+
   options(future.debug = FALSE)
   
   foo <- function(..., FUN = function(...) list(...)) {
     args <- list(...)
     lapply(1L, FUN = function(x) {
       do.call(FUN, args = c(list(x), args))
-    }) |> futurize()
+    }) |> futurize_and_verify()
   }
   
   bar <- function(..., fun = function(...) list(...)) {
-    lapply(1L, FUN = function(x) fun(x, ...)) |> futurize()
+    lapply(1L, FUN = function(x) fun(x, ...)) |> futurize_and_verify()
   }
   
   yaa <- function(..., FUN = function(...) list(...)) {
     lapply(1L, FUN = function(x) {
       do.call(FUN, args = c(list(x), ...))
-    }) |> futurize()
+    }) |> futurize_and_verify()
   }
   
   for (strategy in supportedStrategies()) {
