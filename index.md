@@ -137,6 +137,7 @@ parallelization.
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[pls](https://cran.r-project.org/package=pls)** | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()` | \- |
+| **[pvclust](https://cran.r-project.org/package=pvclust)** | `pvclust()` | \- |
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
@@ -180,6 +181,8 @@ b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
 m <- pls::plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
+
+fit <- pvclust::pvclust(mtcars, nboot = 1000) |> futurize()
 
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,

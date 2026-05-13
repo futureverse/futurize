@@ -4,11 +4,14 @@
 
 ### New Transpilers
 
-- Add support for map-reduce CRAN package **stars**,
-  e.g. `sm <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
-
 - Add support for domain-specific CRAN package **pls**,
   e.g. `m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()`.
+
+- Add support for domain-specific CRAN package **pvclust**,
+  e.g. `fit <- pvclust(mtcars, nboot = 1000) |> futurize()`.
+
+- Add support for map-reduce CRAN package **stars**,
+  e.g. `sm <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
 
 ### Bug Fixes
 
