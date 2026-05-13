@@ -1,13 +1,17 @@
 #' @tags skip_on_cran  ## (35s) to limit total check time
-if (requireNamespace("scuttle") && packageVersion("scuttle") <= "1.21.5" && requireNamespace("doFuture")) {
+if (requireNamespace("scuttle") && requireNamespace("doFuture") && requireNamespace("DelayedArray")) {
 library(futurize)
 library(scuttle)
+library(DelayedArray)
+
+## Use a small block size to ensure multiple blocks and thus multiple futures
+setAutoBlockSize(10000)
 
 plan(multisession)
 
 ## Create a simple SingleCellExperiment
 set.seed(42)
-n_genes <- 50L
+n_genes <- 1000L
 n_cells <- 20L
 counts <- matrix(
   rpois(n_genes * n_cells, lambda = 10),
@@ -37,12 +41,12 @@ stopifnot(all.equal(result2, result_truth))
 
 
 ## ---------------------------------------------------------
-## perCellQCMetrics()
+## perFeatureQCMetrics()
 ## ---------------------------------------------------------
-result_truth <- perCellQCMetrics(sce)
+result_truth <- perFeatureQCMetrics(sce)
 
 counters <- plan("backend")[["counters"]]
-result <- perCellQCMetrics(sce) |> futurize()
+result <- perFeatureQCMetrics(sce) |> futurize()
 delta <- plan("backend")[["counters"]] - counters
 cat(sprintf("Futures created: %d\n", delta[["created"]]))
 stopifnot(delta[["created"]] > 0L)

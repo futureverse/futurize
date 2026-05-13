@@ -236,7 +236,7 @@ sce <- scater::runPCA(sce) |> futurize()
 
 sce <- scuttle::logNormCounts(sce) |> futurize()
 
-result <- SingleCellExperiment::applySCE(sce, scuttle::perCellQCMetrics) |> futurize()
+result <- SingleCellExperiment::applySCE(sce, scuttle::perFeatureQCMetrics) |> futurize()
   
 adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 ```
