@@ -127,6 +127,7 @@ parallelization.
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma' objects | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
+| **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`, `parameters_bootstrap()`      | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
 | **[pls]**                  | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()`                          | -                  |
 | **[pvclust]**              | `pvclust()`                                                                  | -                  |
@@ -166,6 +167,8 @@ fit <- metafor::rma(yi, vi)
 pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
+
+fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 
@@ -262,6 +265,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [lme4]: https://cran.r-project.org/package=lme4
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
+[parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr

@@ -2,6 +2,10 @@
 
 ## New Transpilers
 
+ * Add support for domain-specific CRAN package **parameters**,
+   e.g. `fit <- bootstrap_model(model, iterations = 1000) |>
+   futurize()`.
+
  * Add support for domain-specific CRAN package **pls**,
    e.g. `m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation =
    "CV") |> futurize()`.
