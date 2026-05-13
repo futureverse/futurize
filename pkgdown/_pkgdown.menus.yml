@@ -44,6 +44,8 @@ articles-cran:
     href: articles/futurize-81-partykit.html
   - text: Parallelize 'pls' functions
     href: articles/futurize-81-pls.html
+  - text: Parallelize 'pvclust' functions
+    href: articles/futurize-81-pvclust.html
   - text: Parallelize 'riskRegression' functions
     href: articles/futurize-81-riskRegression.html
 
