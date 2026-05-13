@@ -22,6 +22,13 @@ sce <- logNormCounts(sce) |> futurize()
 qc <- perCellQCMetrics(sce) |> futurize()
 ```
 
+*Comment: The
+[`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
+function is deprecated as of
+**[scuttle](https://bioconductor.org/packages/scuttle/)** (\>= 1.22)
+(part of Bioconductor 3.22 released on 2026-04-29), and more
+importantly, no longer supports parallelization.*
+
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize the
@@ -111,7 +118,8 @@ The following **scuttle** functions are supported by
 - [`calculateAverage()`](https://rdrr.io/pkg/scuttle/man/calculateAverage.html)
 - [`logNormCounts()`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)
 - [`normalizeCounts()`](https://rdrr.io/pkg/scuttle/man/normalizeCounts.html)
-- [`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
+- [`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html) -
+  deprecated in **scuttle** (\>= 1.22)
 - [`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
 - [`addPerCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
 - [`addPerFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)

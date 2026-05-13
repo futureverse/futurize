@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,6 +193,10 @@ sequential code into parallel code by piping the sequential code to the
 <span></span>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><em>Comment: The <code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">scuttle::perCellQCMetrics()</a></code> function is
+deprecated as of <strong><a href="https://bioconductor.org/packages/scuttle/" class="external-link">scuttle</a></strong>
+(&gt;= 1.22) (part of Bioconductor 3.22 released on 2026-04-29), and
+more importantly, no longer supports parallelization.</em></p>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -261,7 +265,9 @@ locally as well as distributed across remote machines, e.g.</p>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/calculateAverage.html" class="external-link">calculateAverage()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/normalizeCounts.html" class="external-link">normalizeCounts()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics()</a></code></li>
+<li>
+<code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics()</a></code> - deprecated in
+<strong>scuttle</strong> (&gt;= 1.22)</li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">perFeatureQCMetrics()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerCellQCMetrics()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerFeatureQCMetrics()</a></code></li>

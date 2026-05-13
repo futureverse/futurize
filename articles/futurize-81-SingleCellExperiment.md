@@ -22,6 +22,17 @@ library(scuttle)
 result <- applySCE(sce, perCellQCMetrics) |> futurize()
 ```
 
+*Comment: The below
+[`SingleCellExperiment::applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+example rely on
+[`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
+for parallelization. The
+[`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
+function is deprecated as of
+**[scuttle](https://bioconductor.org/packages/scuttle/)** (\>= 1.22)
+(part of Bioconductor 3.22 released on 2026-04-29), and more
+importantly, no longer supports parallelization.*
+
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize the
@@ -88,8 +99,9 @@ Here
 [`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
 runs
 [`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
-sequentially on each experiment, but we can easily make it run in
-parallel by piping to
+from the **[scuttle](https://bioconductor.org/packages/scuttle/)**
+package sequentially on each experiment, but we can easily make it run
+in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -99,8 +111,16 @@ library(futurize)
 result <- applySCE(sce, perCellQCMetrics) |> futurize()
 ```
 
-This will distribute the work across the available parallel workers,
-given that we have set up parallel workers, e.g.
+It is actually not
+[`SingleCellExperiment::applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+that orchestrates the parallelization, but
+[`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html),
+which hands of the parallelization to
+**[BiocParallel](https://bioconductor.org/packages/BiocParallel/)**
+which in turn hands it of to futureverse.
+
+The above will distribute the work across the available parallel
+workers, given that we have set up parallel workers, e.g.
 
 ``` r
 
