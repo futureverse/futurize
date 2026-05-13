@@ -2,6 +2,14 @@
 
 ## Version (development version)
 
+### Documentation
+
+- Update **SingleCellExperiment** and **scuttle** examples and tests to
+  use
+  [`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+  instead of the deprecated
+  [`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html).
+
 ### New Transpilers
 
 - Add support for domain-specific CRAN package **parameters**,

@@ -116,28 +116,34 @@ The following **scuttle** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`calculateAverage()`](https://rdrr.io/pkg/scuttle/man/calculateAverage.html)
+- [`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+- [`numDetectedAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/numDetectedAcrossFeatures.html)
+- [`summarizeAssayByGroup()`](https://rdrr.io/pkg/scuttle/man/summarizeAssayByGroup.html)
+- [`medianSizeFactors()`](https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html)
+- [`computeMedianFactors()`](https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html)
+- [`pooledSizeFactors()`](https://rdrr.io/pkg/scuttle/man/computePooledFactors.html)
+- [`computePooledFactors()`](https://rdrr.io/pkg/scuttle/man/computePooledFactors.html)
+- [`fitLinearModel()`](https://rdrr.io/pkg/scuttle/man/fitLinearModel.html)
+
+The following **scuttle** functions are deprecated in **scuttle** (\>=
+1.22) in favor of counter-part functions in Bioconductor package
+**[scrapper](https://bioconductor.org/packages/scrapper/)**. Support for
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+of the these deprecated functions remains, but will be phased out;
+
 - [`logNormCounts()`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)
 - [`normalizeCounts()`](https://rdrr.io/pkg/scuttle/man/normalizeCounts.html)
-- [`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html) -
-  deprecated in **scuttle** (\>= 1.22)
-- [`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+- [`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
 - [`addPerCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
 - [`addPerFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
 - [`addPerCellQC()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
 - [`addPerFeatureQC()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
 - [`numDetectedAcrossCells()`](https://rdrr.io/pkg/scuttle/man/numDetectedAcrossCells.html)
-- [`numDetectedAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/numDetectedAcrossFeatures.html)
 - [`sumCountsAcrossCells()`](https://rdrr.io/pkg/scuttle/man/sumCountsAcrossCells.html)
 - [`sumCountsAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/sumCountsAcrossFeatures.html)
-- [`summarizeAssayByGroup()`](https://rdrr.io/pkg/scuttle/man/summarizeAssayByGroup.html)
 - [`aggregateAcrossCells()`](https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html)
 - [`aggregateAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/aggregateAcrossFeatures.html)
 - [`librarySizeFactors()`](https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html)
 - [`computeLibraryFactors()`](https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html)
 - [`geometricSizeFactors()`](https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html)
 - [`computeGeometricFactors()`](https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html)
-- [`medianSizeFactors()`](https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html)
-- [`computeMedianFactors()`](https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html)
-- [`pooledSizeFactors()`](https://rdrr.io/pkg/scuttle/man/computePooledFactors.html)
-- [`computePooledFactors()`](https://rdrr.io/pkg/scuttle/man/computePooledFactors.html)
-- [`fitLinearModel()`](https://rdrr.io/pkg/scuttle/man/fitLinearModel.html)

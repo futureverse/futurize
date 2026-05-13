@@ -19,19 +19,8 @@ plan(multisession)
 library(SingleCellExperiment)
 library(scuttle)
 
-result <- applySCE(sce, perCellQCMetrics) |> futurize()
+result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
 ```
-
-*Comment: The below
-[`SingleCellExperiment::applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
-example rely on
-[`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
-for parallelization. The
-[`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
-function is deprecated as of
-**[scuttle](https://bioconductor.org/packages/scuttle/)** (\>= 1.22)
-(part of Bioconductor 3.22 released on 2026-04-29), and more
-importantly, no longer supports parallelization.*
 
 ## Introduction
 
@@ -49,7 +38,7 @@ function applies a given function to the main experiment and each
 alternative experiment, passing additional arguments such as `BPPARAM`
 via `...` to enable parallelization of the applied function.
 
-### Example: Computing per-cell QC metrics in parallel
+### Example: Computing per-feature QC metrics in parallel
 
 The
 [`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
@@ -92,13 +81,13 @@ altExp(sce, "spikes") <- SingleCellExperiment(
   assays = list(counts = spike_counts)
 )
 
-result <- applySCE(sce, perCellQCMetrics)
+result <- applySCE(sce, perFeatureQCMetrics)
 ```
 
 Here
 [`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
 runs
-[`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
+[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
 from the **[scuttle](https://bioconductor.org/packages/scuttle/)**
 package sequentially on each experiment, but we can easily make it run
 in parallel by piping to
@@ -108,13 +97,13 @@ in parallel by piping to
 
 library(futurize)
 
-result <- applySCE(sce, perCellQCMetrics) |> futurize()
+result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
 ```
 
 It is actually not
 [`SingleCellExperiment::applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
 that orchestrates the parallelization, but
-[`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html),
+[`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html),
 which hands of the parallelization to
 **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)**
 which in turn hands it of to futureverse.

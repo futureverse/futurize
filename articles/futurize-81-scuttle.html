@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -263,32 +263,37 @@ locally as well as distributed across remote machines, e.g.</p>
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/calculateAverage.html" class="external-link">calculateAverage()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">perFeatureQCMetrics()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/numDetectedAcrossFeatures.html" class="external-link">numDetectedAcrossFeatures()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/summarizeAssayByGroup.html" class="external-link">summarizeAssayByGroup()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html" class="external-link">medianSizeFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html" class="external-link">computeMedianFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html" class="external-link">pooledSizeFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html" class="external-link">computePooledFactors()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/fitLinearModel.html" class="external-link">fitLinearModel()</a></code></li>
+</ul>
+<p>The following <strong>scuttle</strong> functions are deprecated in
+<strong>scuttle</strong> (&gt;= 1.22) in favor of counter-part functions
+in Bioconductor package <strong><a href="https://bioconductor.org/packages/scrapper/" class="external-link">scrapper</a></strong>.
+Support for <code><a href="../reference/futurize.html">futurize()</a></code> of the these deprecated functions
+remains, but will be phased out;</p>
+<ul>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/normalizeCounts.html" class="external-link">normalizeCounts()</a></code></li>
-<li>
-<code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics()</a></code> - deprecated in
-<strong>scuttle</strong> (&gt;= 1.22)</li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">perFeatureQCMetrics()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">perCellQCMetrics()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerCellQCMetrics()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerFeatureQCMetrics()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerCellQC()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html" class="external-link">addPerFeatureQC()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/numDetectedAcrossCells.html" class="external-link">numDetectedAcrossCells()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/numDetectedAcrossFeatures.html" class="external-link">numDetectedAcrossFeatures()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/sumCountsAcrossCells.html" class="external-link">sumCountsAcrossCells()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/sumCountsAcrossFeatures.html" class="external-link">sumCountsAcrossFeatures()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/summarizeAssayByGroup.html" class="external-link">summarizeAssayByGroup()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html" class="external-link">aggregateAcrossCells()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/aggregateAcrossFeatures.html" class="external-link">aggregateAcrossFeatures()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">librarySizeFactors()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">computeLibraryFactors()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html" class="external-link">geometricSizeFactors()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html" class="external-link">computeGeometricFactors()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html" class="external-link">medianSizeFactors()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html" class="external-link">computeMedianFactors()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html" class="external-link">pooledSizeFactors()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/computePooledFactors.html" class="external-link">computePooledFactors()</a></code></li>
-<li><code><a href="https://rdrr.io/pkg/scuttle/man/fitLinearModel.html" class="external-link">fitLinearModel()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
