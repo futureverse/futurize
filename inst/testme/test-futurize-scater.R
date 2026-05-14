@@ -34,18 +34,19 @@ result_truth <- standardize_pca_sign(result_truth)
 str(result_truth)
 
 set.seed(42)
-result <- runPCA(sce) |> futurize()
+result <- runPCA(sce) |> futurize::futurize() ## FIXME: futurize_and_verify()
 result <- reducedDim(result, "PCA")
 result <- standardize_pca_sign(result)
 str(result)
 stopifnot(isTRUE(all.equal(result, result_truth, tolerance = 1e-6)))
 
 set.seed(42)
-result2 <- scater::runPCA(sce) |> futurize()
+result2 <- scater::runPCA(sce) |> futurize::futurize() ## FIXME: futurize_and_verify()
 result2 <- reducedDim(result2, "PCA")
 result2 <- standardize_pca_sign(result2)
 str(result2)
 stopifnot(all.equal(result2, result_truth, tolerance = 1e-6))
+
 
 ## ---------------------------------------------------------
 ## getVarianceExplained()

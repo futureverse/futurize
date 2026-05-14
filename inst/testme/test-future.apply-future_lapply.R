@@ -115,18 +115,18 @@ message("*** future_lapply() - special cases ...")
 
 X <- list()
 names(X) <- character(0L)
-y <- lapply(X, FUN = identity) |> futurize()
+y <- lapply(X, FUN = identity) |> futurize::futurize()
 stopifnot(length(y) == 0L, !is.null(names(y)), identical(y, X))
 
 X <- character(0L)
 y0 <- lapply(X, FUN = identity)
-y <- lapply(X, FUN = identity) |> futurize()
+y <- lapply(X, FUN = identity) |> futurize::futurize()
 stopifnot(identical(y, y0))
 
 X <- character(0L)
 names(X) <- character(0L)
 y0 <- lapply(X, FUN = identity)
-y <- lapply(X, FUN = identity) |> futurize()
+y <- lapply(X, FUN = identity) |> futurize::futurize()
 stopifnot(identical(y, y0))
 
 message("*** future_lapply() - special cases ... DONE")
@@ -135,8 +135,8 @@ message("*** future_lapply() - special cases ... DONE")
 message("*** future_lapply() - exceptions ...")
 
 res <- tryCatch({
-  lapply(1:3, FUN = identity) |> futurize(chunk_size = structure(1L, ordering = "invalid"))
-}, error = identity)
+  lapply(1:3, FUN = identity) |> futurize_and_verify(chunk_size = structure(1L, ordering = "invalid"))
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 message("*** future_lapply() - exceptions ... DONE")

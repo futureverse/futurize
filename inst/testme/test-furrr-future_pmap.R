@@ -24,7 +24,7 @@ stopifnot(identical(names(pmap(list(x, y), ~1) |> futurize_and_verify()), c("a",
 
 message("named empty input makes named empty output")
 x <- set_names(list(), character())
-stopifnot(identical(names(pmap(list(x, x), ~.x) |> futurize()), character()))
+stopifnot(identical(names(pmap(list(x, x), ~.x) |> futurize::futurize()), character()))
 
 
 # ------------------------------------------------------------------------------
@@ -103,19 +103,19 @@ stopifnot(identical(
 # size
 
 message("future_pmap() works with completely empty list")
-stopifnot(identical(pmap(list(), identity) |> futurize(), list()))
-stopifnot(identical(pmap_dbl(list(), identity) |> futurize(), double()))
+stopifnot(identical(pmap(list(), identity) |> futurize::futurize(), list()))
+stopifnot(identical(pmap_dbl(list(), identity) |> futurize::futurize(), double()))
 
 
 message("future_pmap() works with size zero input")
-stopifnot(identical(pmap(list(list(), list()), identity) |> futurize(), list()))
+stopifnot(identical(pmap(list(list(), list()), identity) |> futurize::futurize(), list()))
 
 
 message("atomic variants work with size zero input")
-stopifnot(identical(pmap_chr(list(list(), list()), identity) |> futurize(), character()))
-stopifnot(identical(pmap_dbl(list(list(), list()), identity) |> futurize(), double()))
-stopifnot(identical(pmap_int(list(list(), list()), identity) |> futurize(), integer()))
-stopifnot(identical(pmap_lgl(list(list(), list()), identity) |> futurize(), logical()))
+stopifnot(identical(pmap_chr(list(list(), list()), identity) |> futurize::futurize(), character()))
+stopifnot(identical(pmap_dbl(list(list(), list()), identity) |> futurize::futurize(), double()))
+stopifnot(identical(pmap_int(list(list(), list()), identity) |> futurize::futurize(), integer()))
+stopifnot(identical(pmap_lgl(list(list(), list()), identity) |> futurize::futurize(), logical()))
 
 
 message("size one recycling works")
@@ -130,28 +130,28 @@ stopifnot(identical(
 ))
 
 stopifnot(identical(
-  pmap(list(integer(), 1), ~c(.x, .y)) |> futurize(),
+  pmap(list(integer(), 1), ~c(.x, .y)) |> futurize::futurize(),
   list()
 ))
 
 stopifnot(identical(
-  pmap(list(1, integer()), ~c(.x, .y)) |> futurize(),
+  pmap(list(1, integer()), ~c(.x, .y)) |> futurize::futurize(),
   list()
 ))
 
 
 message("generally can't recycle to size zero")
 res <- tryCatch({
-  pmap(list(1:2, integer()), ~c(.x, .y)) |> futurize()
-}, error = identity)
+  pmap(list(1:2, integer()), ~c(.x, .y)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(
   inherits(res, "error"),
   grepl("Can't recycle", conditionMessage(res))
 )
 
 res <- tryCatch({
-  pmap(list(integer(), 1:2), ~c(.x, .y)) |> futurize()
-}, error = identity)
+  pmap(list(integer(), 1:2), ~c(.x, .y)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(
   inherits(res, "error"),
   grepl("Can't recycle", conditionMessage(res)
@@ -195,8 +195,8 @@ fn2 <- function(x, ...) {
 }
 
 res <- tryCatch({
-  pmap_dbl(x, fn1) |> futurize()
-}, error = identity)
+  pmap_dbl(x, fn1) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(
   inherits(res, "error")
 )

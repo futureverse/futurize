@@ -109,7 +109,7 @@ for (strategy in supportedStrategies()) {
 message("*** apply(X, ...) - prod(dim(X)) == 0 [non-parallel] ...")
 X <- matrix(nrow = 0L, ncol = 2L)
 y0 <- apply(X, MARGIN = 1L, FUN = identity)
-y1 <- apply(X, MARGIN = 1L, FUN = identity) |> futurize()
+y1 <- apply(X, MARGIN = 1L, FUN = identity) |> futurize::futurize()
 print(y1)
 stopifnot(identical(y1, y0))
   
@@ -118,22 +118,22 @@ message("*** exceptions ...")
 
 ## Error: dim(X) must have a positive length
 res <- tryCatch({
-  y <- apply(1L, MARGIN = 1L, FUN = identity) |> futurize()
-}, error = identity)
+  y <- apply(1L, MARGIN = 1L, FUN = identity) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: 'X' must have named dimnames
 X <- matrix(1:2, nrow = 2L, ncol = 1L)
 res <- tryCatch({
-  y <- apply(X, MARGIN = "rows", FUN = identity) |> futurize()
-}, error = identity)
+  y <- apply(X, MARGIN = "rows", FUN = identity) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: not all elements of 'MARGIN' are names of dimensions
 X <- matrix(1:2, nrow = 2L, ncol = 1L, dimnames = list(rows = c("a", "b")))
 res <- tryCatch({
-  y <- apply(X, MARGIN = "cols", FUN = identity) |> futurize()
-}, error = identity)
+  y <- apply(X, MARGIN = "cols", FUN = identity) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 

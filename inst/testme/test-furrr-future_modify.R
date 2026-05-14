@@ -35,7 +35,7 @@ stopifnot(identical(
 message("future_modify() variants work")
 stopifnot(identical(modify(c(1L, 2L, 3L), ~2L) |> futurize_and_verify(), rep(2L, 3)))
 stopifnot(identical(modify(c(1, 2, 3), ~2) |> futurize_and_verify(), rep(2, 3)))
-stopifnot(identical(modify(c("a", "b", "c"), toupper) |> futurize(), c("A", "B", "C")))
+stopifnot(identical(modify(c("a", "b", "c"), toupper) |> futurize_and_verify(), c("A", "B", "C")))
 stopifnot(identical(modify(c(TRUE, FALSE, TRUE), ~TRUE) |> futurize_and_verify(), rep(TRUE, 3)))
 
 

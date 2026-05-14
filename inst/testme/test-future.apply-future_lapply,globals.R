@@ -36,8 +36,8 @@ for (name in names(globals_set)) {
   y <- tryCatch({
     lapply(x, FUN = function(x) {
       median(c(x, a, b))
-    }) |> futurize(globals = globals, packages = "utils")
-  }, error = identity)
+    }) |> futurize_and_verify(globals = globals, packages = "utils")
+  }, FuturizeTestAssertionError = stop, error = identity)
   print(y)
   if (! "covr" %in% loadedNamespaces()) {
     stopifnot((name == "A" && inherits(y, "error")) || 
@@ -56,8 +56,8 @@ stopifnot(identical(y, list(42, 84)))
 
 e <- 42
 res <- tryCatch({
-  lapply(1:2, FUN = function(x) { 2 * e }) |> futurize(globals = structure(TRUE, ignore = "e"))
-}, error = identity)
+  lapply(1:2, FUN = function(x) { 2 * e }) |> futurize_and_verify(globals = structure(TRUE, ignore = "e"))
+}, FuturizeTestAssertionError = stop, error = identity)
 if (! "covr" %in% loadedNamespaces()) {
   stopifnot(inherits(res, "error"))
 }
@@ -173,7 +173,7 @@ for (strategy in supportedStrategies()) {
   z2 <- tryCatch(lapply(1, function(ii) {
     a
     a <- a + 1
-  }) |> futurize(), error = identity)
+  }) |> futurize_and_verify(), FuturizeTestAssertionError = stop, error = identity)
   stopifnot(identical(z2, z0))
 
   ## https://github.com/futureverse/future.apply/issues/85
@@ -228,8 +228,8 @@ cat(sprintf("Baseline size of globals: %.2f KiB\n", sizes[["FUN"]] / 1024))
 message("- true positive ...")
 options(future.globals.maxSize = 1L)
 res <- tryCatch({
-  y <- lapply(X, FUN = FUN) |> futurize()
-}, error = identity)
+  y <- lapply(X, FUN = FUN) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 res <- NULL
 options(future.globals.maxSize = oMaxSize)
@@ -262,30 +262,30 @@ message("*** future_lapply() - too large ... DONE")
 message("*** future_lapply() - globals exceptions ...")
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = 42)
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = 42)
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = list(1))
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = list(1))
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = "...future.FUN")
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = "...future.FUN")
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = "...future.FUN")
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = "...future.FUN")
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ...future.elements_ii <- 42L
 X <- list(function() 2 * ...future.elements_ii)
 res <- tryCatch({
-  y <- lapply(X, FUN = function(f) f()) |> futurize()
-}, error = identity)
+  y <- lapply(X, FUN = function(f) f()) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 if (! "covr" %in% loadedNamespaces()) {
   stopifnot(inherits(res, "error"))
 }

@@ -36,21 +36,21 @@ for (name in names(globals_set)) {
     mapply(function(x) {
       median(c(x, a, b))
     }, x)
-  }, error = identity)
+  }, FuturizeTestAssertionError = stop, error = identity)
 
   y1 <- tryCatch({
     mapply(function(x) {
       median(c(x, a, b))
-    }, x) |> futurize()
-  }, error = identity)
+    }, x) |> futurize_and_verify()
+  }, FuturizeTestAssertionError = stop, error = identity)
   print(y1)
   stopifnot(identical(y1, y_truth))
 
   y2 <- tryCatch({
     mapply(function(x) {
       median(c(x, a, b))
-    }, x) |> futurize(globals = globals, packages = "utils")
-  }, error = identity)
+    }, x) |> futurize_and_verify(globals = globals, packages = "utils")
+  }, FuturizeTestAssertionError = stop, error = identity)
   print(y2)
   stopifnot(identical(y2, y_truth))
 }
@@ -183,8 +183,8 @@ message("- true positive ...")
 oMaxSize <- getOption("future.globals.maxSize")
 options(future.globals.maxSize = 1L)
 res <- tryCatch({
-  y <- mapply(FUN = FUN, X) |> futurize()
-}, error = identity)
+  y <- mapply(FUN = FUN, X) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 res <- NULL
 options(future.globals.maxSize = oMaxSize)
@@ -217,25 +217,25 @@ message("*** future_mapply() - too large ... DONE")
 message("*** future_mapply() - globals exceptions ...")
 
 res <- tryCatch({
-  y <- mapply(function(x) x, 1) |> futurize(globals = 42)
-}, error = identity)
+  y <- mapply(function(x) x, 1) |> futurize_and_verify(globals = 42)
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- mapply(function(x) x, 1) |> futurize(globals = list(1))
-}, error = identity)
+  y <- mapply(function(x) x, 1) |> futurize_and_verify(globals = list(1))
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- mapply(function(x) x, 1) |> futurize(globals = "...future.FUN")
-}, error = identity)
+  y <- mapply(function(x) x, 1) |> futurize_and_verify(globals = "...future.FUN")
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ...future.elements_ii <- 42L
 X <- list(function() 2 * ...future.elements_ii)
 res <- tryCatch({
-  y <- mapply(FUN = function(f) f(), X) |> futurize()
-}, error = identity)
+  y <- mapply(FUN = function(f) f(), X) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 if (! "covr" %in% loadedNamespaces()) {
   stopifnot(inherits(res, "error"))
 }

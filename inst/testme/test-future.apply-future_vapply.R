@@ -21,19 +21,19 @@ for (strategy in supportedStrategies()) {
   fun_value <- logical(1L)
   y0 <- vapply(x, FUN = fun, FUN.VALUE = fun_value)
   str(y0)
-  y1 <- vapply(x, FUN = fun, FUN.VALUE = fun_value) |> futurize()
+  y1 <- vapply(x, FUN = fun, FUN.VALUE = fun_value) |> futurize::futurize()
   str(y1)
   stopifnot(all.equal(y1, y0))
-  y2 <- vapply(x, FUN = fun_name, FUN.VALUE = fun_value) |> futurize()
+  y2 <- vapply(x, FUN = fun_name, FUN.VALUE = fun_value) |> futurize::futurize()
   str(y2)
   stopifnot(all.equal(y2, y0))
-  
+
   x <- list()
   fun <- is.numeric
   fun_value <- logical(1L)
   y0 <- vapply(x, FUN = fun, FUN.VALUE = fun_value)
   str(y0)
-  y1 <- vapply(x, FUN = fun, FUN.VALUE = fun_value) |> futurize()
+  y1 <- vapply(x, FUN = fun, FUN.VALUE = fun_value) |> futurize::futurize()
   str(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -42,10 +42,9 @@ for (strategy in supportedStrategies()) {
   fun_value <- fun(integer(1L))
   y0 <- vapply(x, FUN = fun, FUN.VALUE = fun_value)
   str(y0)
-  y1 <- vapply(x, FUN = fun, FUN.VALUE = fun_value) |> futurize()
+  y1 <- vapply(x, FUN = fun, FUN.VALUE = fun_value) |> futurize::futurize()
   str(y1)
   stopifnot(all.equal(y1, y0))
-  
   
   df <- data.frame(x = 1:10, y = letters[1:10], stringsAsFactors=FALSE)
   fun <- class
@@ -163,11 +162,11 @@ for (strategy in supportedStrategies()) {
   message("- exceptions ...")
   res <- tryCatch({
     y0 <- vapply(1:3, FUN = identity, FUN.VALUE = c(3, 3))
-  }, error = identity)
+  }, FuturizeTestAssertionError = stop, error = identity)
   stopifnot(inherits(res, "error"))
   res <- tryCatch({
-    y1 <- vapply(1:3, FUN = identity, FUN.VALUE = c(3, 3)) |> futurize()
-  }, error = identity)
+    y1 <- vapply(1:3, FUN = identity, FUN.VALUE = c(3, 3)) |> futurize_and_verify()
+  }, FuturizeTestAssertionError = stop, error = identity)
   stopifnot(inherits(res, "error"))
   
   plan(sequential)

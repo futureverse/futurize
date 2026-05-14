@@ -61,21 +61,21 @@ print(y)
 stopifnot(identical(y, 42L))
 
 message("Non-supported %dopar% and %dofuture%")
-res <- tryCatch({ foreach(x = 1) %dopar% x |> futurize() }, error = identity)
+res <- tryCatch({ foreach(x = 1) %dopar% x |> futurize_and_verify() }, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
-res <- tryCatch({ foreach(x = 1) %dofuture% x |> futurize() }, error = identity)
+res <- tryCatch({ foreach(x = 1) %dofuture% x |> futurize_and_verify() }, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 message("Special case: Zero futurize() options")
-y <- foreach(x = 1) %do% identity(x) |> futurize(options = list())
+y <- foreach(x = 1) %do% identity(x) |> futurize_and_verify(options = list())
 
 plan(sequential)
 
 message("Special case: Zero futurize() options")
-y <- times(1L) %do% { 42L } |> futurize(options = list())
+y <- times(1L) %do% { 42L } |> futurize_and_verify(options = list())
 print(y)
 stopifnot(identical(y, 42L))
 

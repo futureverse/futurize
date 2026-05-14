@@ -24,7 +24,7 @@ stopifnot(identical(names(map(x, ~1) |> futurize_and_verify()), c("a", "b")))
 
 message("named empty input makes named empty output")
 x <- set_names(list(), character())
-stopifnot(identical(names(map(x, ~.x) |> futurize()), character()))
+stopifnot(identical(names(map(x, ~.x) |> futurize::futurize()), character()))
 
 
 # ------------------------------------------------------------------------------
@@ -96,14 +96,14 @@ stopifnot(identical(
 # size
 
 message("future_map() works with size zero input")
-stopifnot(identical(map(list(), identity) |> futurize(), list()))
+stopifnot(identical(map(list(), identity) |> futurize::futurize(), list()))
 
 
 message("atomic variants work with size zero input")
-stopifnot(identical(map_chr(list(), identity) |> futurize(), character()))
-stopifnot(identical(map_dbl(list(), identity) |> futurize(), double()))
-stopifnot(identical(map_int(list(), identity) |> futurize(), integer()))
-stopifnot(identical(map_lgl(list(), identity) |> futurize(), logical()))
+stopifnot(identical(map_chr(list(), identity) |> futurize::futurize(), character()))
+stopifnot(identical(map_dbl(list(), identity) |> futurize::futurize(), double()))
+stopifnot(identical(map_int(list(), identity) |> futurize::futurize(), integer()))
+stopifnot(identical(map_lgl(list(), identity) |> futurize::futurize(), logical()))
 
 
 # ------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ stopifnot(identical(
 
 message("names of `.x` are retained")
 x <- list(a = "a", b = "b", c = "c")
-stopifnot(identical(names(map_if(x, ~.x %in% c("a", "c"), ~3) |> futurize()), c("a", "b", "c")))
+stopifnot(identical(names(map_if(x, ~.x %in% c("a", "c"), ~3) |> futurize_and_verify()), c("a", "b", "c")))
 
 
 message("`.else` can be used")
@@ -238,7 +238,7 @@ wrapper <- function(f) {
   map(1:2, f) |> futurize_and_verify()
 }
 
-res <- tryCatch(wrapper(fn), error = identity)
+res <- tryCatch(wrapper(fn), FuturizeTestAssertionError = stop, error = identity)
 stopifnot(
   inherits(res, "error"),
   grepl("'y' not found", conditionMessage(res))

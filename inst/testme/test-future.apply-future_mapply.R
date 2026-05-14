@@ -49,7 +49,7 @@ for (strategy in supportedStrategies()) {
   y2 <- .mapply(function(x, y) seq_len(x) + y, dots = dots, MoreArgs = list())
   names(y0) <- NULL  ## .mapply() don't set names
   stopifnot(all.equal(y2, y0))
-  y3 <- .mapply(function(x, y) seq_len(x) + y, dots = dots, MoreArgs = list()) |> futurize()
+  y3 <- .mapply(function(x, y) seq_len(x) + y, dots = dots, MoreArgs = list()) |> futurize_and_verify()
   stopifnot(all.equal(y3, y2))
 
   word <- function(C, k) paste(rep.int(C, k), collapse = "")
@@ -63,7 +63,7 @@ for (strategy in supportedStrategies()) {
     y2 <- .mapply(word, dots = dots, MoreArgs = list())
     names(y0) <- NULL  ## .mapply() don't set names
     stopifnot(all.equal(y2, y0))
-    y3 <- .mapply(word, dots = dots, MoreArgs = list()) |> futurize()
+    y3 <- .mapply(word, dots = dots, MoreArgs = list()) |> futurize_and_verify()
     stopifnot(all.equal(y3, y2))
   }
 
@@ -129,7 +129,7 @@ for (strategy in supportedStrategies()) {
     y0 <- mapply(`+`, 1:3, NULL)
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(`+`, 1:3, NULL) |> futurize()
+  y <- mapply(`+`, 1:3, NULL) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   truth <- setNames(list(), character())
@@ -137,56 +137,56 @@ for (strategy in supportedStrategies()) {
     y0 <- mapply(paste, character(), NULL)
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, character(), NULL) |> futurize()
+  y <- mapply(paste, character(), NULL) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, character(), letters)
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, character(), letters) |> futurize()
+  y <- mapply(paste, character(), letters) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, "A", character())
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, "A", character()) |> futurize()
+  y <- mapply(paste, "A", character()) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, character(), letters) 
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, character(), letters) |> futurize()
+  y <- mapply(paste, character(), letters) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, character(), NULL)
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, character(), NULL) |> futurize()
+  y <- mapply(paste, character(), NULL) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, character(), letters)
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, character(), letters) |> futurize()
+  y <- mapply(paste, character(), letters) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, "A", character()) 
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, "A", character()) |> futurize()
+  y <- mapply(paste, "A", character()) |> futurize::futurize()
   stopifnot(identical(y, truth))
   
   if (getRversion() >= "4.2.0") {
     y0 <- mapply(paste, character(), letters) 
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, character(), letters) |> futurize()
+  y <- mapply(paste, character(), letters) |> futurize::futurize()
   stopifnot(identical(y, truth))
 
   ## Gives an error in R-devel (2021-11-26 r81252)
@@ -194,7 +194,7 @@ for (strategy in supportedStrategies()) {
     y0 <- mapply(paste, c(a = "A"), character())
     stopifnot(identical(y0, truth))
   }
-  y <- mapply(paste, c(a = "A"), character()) |> futurize()
+  y <- mapply(paste, c(a = "A"), character()) |> futurize::futurize()
   stopifnot(identical(y, truth))
 
   ## R (>= 4.2.0): Map() now recycles similar to basic Ops:
@@ -211,7 +211,7 @@ for (strategy in supportedStrategies()) {
     y0 <- Map(`+`, numeric(), 1:3)
     stopifnot(identical(y0, truth))
   }
-  y <- Map(`+`, numeric(), 1:3) |> futurize()
+  y <- Map(`+`, numeric(), 1:3) |> futurize::futurize()
   stopifnot(identical(y, truth))
 
   message("- mapply(x, ...) |> futurize() where x[[i]] subsets via S3 method ...")
@@ -233,11 +233,11 @@ for (strategy in supportedStrategies()) {
 
 message("- Empty input [non parallel] ...")
 y0 <- mapply(search)
-y1 <- mapply(search) |> futurize()
+y1 <- mapply(search) |> futurize::futurize()
 stopifnot(identical(y1, y0))
 
 y0 <- mapply(list, integer(0L))
-y1 <- mapply(list, integer(0L)) |> futurize()
+y1 <- mapply(list, integer(0L)) |> futurize::futurize()
 stopifnot(identical(y1, y0))
 
 message("*** future_mapply() - special cases ...")
@@ -245,10 +245,10 @@ message("*** future_mapply() - special cases ...")
 X <- list()
 names(X) <- character(0L)
 
-y <- mapply(FUN = identity, X) |> futurize()
+y <- mapply(FUN = identity, X) |> futurize::futurize()
 stopifnot(length(y) == 0L, !is.null(names(y)), identical(y, X))
 
-y <- mapply(FUN = identity, X, X) |> futurize()
+y <- mapply(FUN = identity, X, X) |> futurize::futurize()
 stopifnot(length(y) == 0L, !is.null(names(y)), identical(y, X))
 
 message("*** future_mapply() - special cases ... DONE")

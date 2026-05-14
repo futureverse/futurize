@@ -25,7 +25,7 @@ stopifnot(identical(names(map2(x, y, ~1) |> futurize_and_verify()), c("a", "b"))
 
 message("named empty input makes named empty output")
 x <- set_names(list(), character())
-stopifnot(identical(names(map2(x, x, ~.x) |> futurize()), character()))
+stopifnot(identical(names(map2(x, x, ~.x) |> futurize::futurize()), character()))
 
 
 # ------------------------------------------------------------------------------
@@ -104,14 +104,14 @@ stopifnot(identical(
 # size
 
 message("future_map2() works with size zero input")
-stopifnot(identical(map2(list(), list(), identity) |> futurize(), list()))
+stopifnot(identical(map2(list(), list(), identity) |> futurize::futurize(), list()))
 
 
 message("atomic variants work with size zero input")
-stopifnot(identical(map2_chr(list(), list(), identity) |> futurize(), character()))
-stopifnot(identical(map2_dbl(list(), list(), identity) |> futurize(), double()))
-stopifnot(identical(map2_int(list(), list(), identity) |> futurize(), integer()))
-stopifnot(identical(map2_lgl(list(), list(), identity) |> futurize(), logical()))
+stopifnot(identical(map2_chr(list(), list(), identity) |> futurize::futurize(), character()))
+stopifnot(identical(map2_dbl(list(), list(), identity) |> futurize::futurize(), double()))
+stopifnot(identical(map2_int(list(), list(), identity) |> futurize::futurize(), integer()))
+stopifnot(identical(map2_lgl(list(), list(), identity) |> futurize::futurize(), logical()))
 
 
 message("size one recycling works")
@@ -126,28 +126,28 @@ stopifnot(identical(
 ))
 
 stopifnot(identical(
-  map2(integer(), 1, ~c(.x, .y)) |> futurize(),
+  map2(integer(), 1, ~c(.x, .y)) |> futurize::futurize(),
   list()
 ))
 
 stopifnot(identical(
-  map2(1, integer(), ~c(.x, .y)) |> futurize(),
+  map2(1, integer(), ~c(.x, .y)) |> futurize::futurize(),
   list()
 ))
 
 
 message("generally can't recycle to size zero")
 res <- tryCatch({
-  map2(1:2, integer(), ~c(.x, .y)) |> futurize()
-}, error = identity)
+  map2(1:2, integer(), ~c(.x, .y)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(
   inherits(res, "error"),
   grepl("Can't recycle", conditionMessage(res))
 )
 
 res <- tryCatch({
-  map2(integer(), 1:2, ~c(.x, .y)) |> futurize()
-}, error = identity)
+  map2(integer(), 1:2, ~c(.x, .y)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(
   inherits(res, "error"),
   grepl("Can't recycle", conditionMessage(res))

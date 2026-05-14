@@ -144,10 +144,10 @@ y <- replicate(2, rnorm(1)) |> futurize_and_verify()
 plan(sequential)
 
 message("futurize(seed = FALSE) gives RNG error with replicate()")
-y <- tryCatch(replicate(2, rnorm(1)) |> futurize(seed = FALSE), error = identity)
+y <- tryCatch(replicate(2, rnorm(1)) |> futurize_and_verify(seed = FALSE), FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(y, "error"))
 
 message("Special case: Zero futurize() options")
-y <- lapply(1, identity) |> futurize(options = list())
+y <- lapply(1, identity) |> futurize_and_verify(options = list())
 
 } ## if (requireNamespace("future.apply"))

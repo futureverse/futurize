@@ -80,7 +80,7 @@ if (require("datasets") && require("stats")) { ## warpbreaks & lm()
       ## Defunct /HB 2025-01-11
       res <- tryCatch({
         y4f2 <- future_by2(data, INDICES = data[,"tension"], FUN = "summary")
-      }, error = identity)
+      }, FuturizeTestAssertionError = stop, error = identity)
       stopifnot(inherits(res, "error"))
       if (getRversion() >= "3.6.0") {
         stopifnot(inherits(res, "defunctError"))

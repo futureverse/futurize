@@ -66,7 +66,7 @@ for (strategy in supportedStrategies()[1]) {
     print(y1)
     stopifnot(all.equal(y1, y0))
   }
-  
+
   message("  - Example #6")
   y0 <- tapply(1:n, fac, sum, simplify = FALSE)
   print(y0)
@@ -118,7 +118,7 @@ for (strategy in supportedStrategies()[1]) {
   print(t)
   y0 <- tapply(1:3, ind) #-> the split vector
   print(y0)
-  y1 <- tapply(1:3, ind) |> futurize() #-> the split vector
+  y1 <- tapply(1:3, ind) |> futurize::futurize() #-> the split vector
   print(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -134,7 +134,7 @@ for (strategy in supportedStrategies()[1]) {
   nq <- names(quantile(1:5))
   y_truth <- c(1L, 2L, 4L)
   stopifnot(identical(tapply(1:3, ind), y_truth))
-  stopifnot(identical(tapply(1:3, ind) |> futurize(), y_truth))
+  stopifnot(identical(tapply(1:3, ind) |> futurize::futurize(), y_truth))
   
   message("  - Example #15")
   y_truth <- matrix(c(1L, 2L, NA, 3L), nrow = 2L,
@@ -171,20 +171,20 @@ message("*** exceptions ...")
 
 ## Error: 'INDEX' is of length zero
 res <- tryCatch({
-  y <- tapply(1L, INDEX = list()) |> futurize()
-}, error = identity)
+  y <- tapply(1L, INDEX = list()) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: total number of levels >= 2^31
 res <- tryCatch({
-  y <- tapply(1:216, INDEX = rep(list(1:216), times = 4L)) |> futurize()
-}, error = identity)
+  y <- tapply(1:216, INDEX = rep(list(1:216), times = 4L)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: arguments must have same length
 res <- tryCatch({
-  y <- tapply(1L, INDEX = list(1:2)) |> futurize()
-}, error = identity)
+  y <- tapply(1L, INDEX = list(1:2)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 message("*** future_tapply() ... DONE")

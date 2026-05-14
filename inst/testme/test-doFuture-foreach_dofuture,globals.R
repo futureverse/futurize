@@ -54,9 +54,9 @@ for (strategy in strategies) {
   
   ## (d) explicit, but forgotten '...'
   sub <- function(x, ...) {
-    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize(globals = c("x"))
+    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize_and_verify(globals = c("x"))
   }
-  y <- tryCatch(sub(x, 2:3), error = identity)
+  y <- tryCatch(sub(x, 2:3), FuturizeTestAssertionError = stop, error = identity)
   str(y)
   stopifnot(inherits(y, "simpleError"))
 

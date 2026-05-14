@@ -15,34 +15,34 @@ options(future.debug = FALSE)
 message("* lapply(x, ..., future.seed = <invalid>) |> futurize() ...")
 
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:2) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:2) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = list(1, 2, 3:4) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = list(1, 2, 3:4) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:3) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:3) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 seeds <- lapply(1:3, FUN = as_lecyer_cmrg_seed)
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = lapply(seeds, FUN = as.numeric) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = lapply(seeds, FUN = as.numeric) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 seeds[[1]][1] <- seeds[[1]][1] + 1L
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = seeds) |> futurize()
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = seeds) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 

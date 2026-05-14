@@ -16,7 +16,13 @@ futurize_and_verify <- function(expr, substitute = TRUE, ..., when = TRUE, eval 
   res <- futurize::futurize(expr, substitute = FALSE, ..., when = when, eval = eval, envir = envir)
   
   delta <- backend[["counters"]] - counters
-  stopifnot(delta[["created"]] > 0L)
+
+  ## Assert that at least one future was created
+  if (delta[["created"]] == 0L) {
+    e <- simpleError(sprintf("futurize() test did not result in futures being created"))
+    class(e) <- c("FuturizeTestAssertionError", class(e))
+    stop(e)
+  }
 
   res
 }
