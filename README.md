@@ -125,7 +125,7 @@ parallelization.
 | **[glmnet]**               | `cv.glmnet()`                                                                | **[doFuture]**     |
 | **[kernelshap]**           | `kernelshap()`, `permshap()`                                                 | **[doFuture]**     |
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
-| **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma' objects | -                  |
+| **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
 | **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`, `parameters_bootstrap()`      | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |

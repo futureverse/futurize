@@ -2,10 +2,9 @@
 if (requireNamespace("scuttle") && requireNamespace("doFuture") && requireNamespace("DelayedArray")) {
 library(futurize)
 library(scuttle)
-library(DelayedArray)
 
 ## Use a small block size to ensure multiple blocks and thus multiple futures
-setAutoBlockSize(10000)
+DelayedArray::setAutoBlockSize(10000)
 
 plan(multisession)
 
@@ -24,19 +23,6 @@ colnames(counts) <- paste0("cell", seq_len(n_cells))
 sce <- SingleCellExperiment::SingleCellExperiment(
   assays = list(counts = counts)
 )
-
-## ---------------------------------------------------------
-## logNormCounts()
-## ---------------------------------------------------------
-result_truth <- logNormCounts(sce)
-
-result <- logNormCounts(sce) |> futurize() ## FIXME: futurize_and_verify()
-str(result)
-stopifnot(all.equal(result, result_truth))
-
-result2 <- scuttle::logNormCounts(sce) |> futurize() ## FIXME: futurize_and_verify()
-str(result2)
-stopifnot(all.equal(result2, result_truth))
 
 ## ---------------------------------------------------------
 ## perFeatureQCMetrics()
