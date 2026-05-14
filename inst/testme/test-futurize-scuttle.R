@@ -10,19 +10,7 @@ plan(multisession)
 
 ## Create a simple SingleCellExperiment
 set.seed(42)
-n_genes <- 1000L
-n_cells <- 20L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells
-)
-rownames(counts) <- paste0("gene", seq_len(n_genes))
-colnames(counts) <- paste0("cell", seq_len(n_cells))
-
-sce <- SingleCellExperiment::SingleCellExperiment(
-  assays = list(counts = counts)
-)
+sce <- mockSCE(ncells = 20L, ngenes = 70L, nspikes = 30L)
 
 ## ---------------------------------------------------------
 ## perFeatureQCMetrics()

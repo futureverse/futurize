@@ -30,14 +30,8 @@ library(futurize)
 plan(multisession)
 library(scuttle)
 
-sce <- logNormCounts(sce) |> futurize()
-qc <- perCellQCMetrics(sce) |> futurize()
+qc <- perFeatureQCMetrics(sce) |> futurize()
 ```
-
-_Comment: The `scuttle::perCellQCMetrics()` function is deprecated as
-of **[scuttle]** (>= 1.22) (part of Bioconductor 3.22 released on
-2026-04-29), and more importantly, no longer supports
-parallelization._
 
 
 # Introduction
@@ -48,45 +42,30 @@ the **[scuttle]** functions.
 The **[scuttle]** Bioconductor package provides basic utility
 functions for single-cell RNA-seq data analysis, including quality
 control, normalization, and aggregation, which can be parallelized
-across cells.
+across cells or features.
 
 
-## Example: Log-normalizing counts in parallel
+## Example: Computing per-feature QC metrics in parallel
 
-The `logNormCounts()` function computes log-normalized expression
-values for a `SingleCellExperiment` object:
+The `perFeatureQCMetrics()` function computes quality control metrics
+for each feature (gene) in a `SingleCellExperiment` object:
 
 ```r
 library(scuttle)
 
 # Simulate data
-set.seed(42)
-n_genes <- 200L
-n_cells <- 100L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells,
-  dimnames = list(
-    paste0("gene", seq_len(n_genes)),
-    paste0("cell", seq_len(n_cells))
-  )
-)
+sce <- mockSCE()
 
-sce <- SingleCellExperiment::SingleCellExperiment(
-  assays = list(counts = counts)
-)
-
-sce <- logNormCounts(sce)
+qc <- perFeatureQCMetrics(sce)
 ```
 
-Here `logNormCounts()` runs sequentially, but we can easily make it
-run in parallel by piping to `futurize()`:
+Here `perFeatureQCMetrics()` runs sequentially, but we can easily make
+it run in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
 
-sce <- logNormCounts(sce) |> futurize()
+qc <- perFeatureQCMetrics(sce) |> futurize()
 ```
 
 This will distribute the work across the available parallel workers,

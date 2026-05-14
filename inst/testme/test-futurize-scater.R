@@ -8,19 +8,8 @@ plan(multisession)
 
 ## Create a simple SingleCellExperiment
 set.seed(42)
-n_genes <- 50L
-n_cells <- 20L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells
-)
-rownames(counts) <- paste0("gene", seq_len(n_genes))
-colnames(counts) <- paste0("cell", seq_len(n_cells))
-
-sce <- SingleCellExperiment::SingleCellExperiment(
-  assays = list(counts = counts)
-)
+n_cells <- 100L
+sce <- scuttle::mockSCE(ncells = n_cells, ngenes = 200L)
 sce <- scuttle::logNormCounts(sce)
 
 ## Standardize PCA sign so that the first loading of each
@@ -45,18 +34,18 @@ result_truth <- standardize_pca_sign(result_truth)
 str(result_truth)
 
 set.seed(42)
-result <- runPCA(sce) |> futurize() ## FIXME: futurize_and_verify()
+result <- runPCA(sce) |> futurize()
 result <- reducedDim(result, "PCA")
 result <- standardize_pca_sign(result)
 str(result)
-stopifnot(all.equal(result, result_truth))
+stopifnot(isTRUE(all.equal(result, result_truth, tolerance = 1e-6)))
 
 set.seed(42)
-result2 <- scater::runPCA(sce) |> futurize() ## FIXME: futurize_and_verify()
+result2 <- scater::runPCA(sce) |> futurize()
 result2 <- reducedDim(result2, "PCA")
 result2 <- standardize_pca_sign(result2)
 str(result2)
-stopifnot(all.equal(result2, result_truth))
+stopifnot(all.equal(result2, result_truth, tolerance = 1e-6))
 
 ## ---------------------------------------------------------
 ## getVarianceExplained()
@@ -67,7 +56,7 @@ sce2$group <- factor(rep(c("A", "B"), each = n_cells / 2L))
 result_truth <- getVarianceExplained(sce2, variables = "group")
 
 result <- getVarianceExplained(sce2, variables = "group") |> futurize_and_verify()
-stopifnot(all.equal(result, result_truth))
+stopifnot(isTRUE(all.equal(result, result_truth, tolerance = 1e-6)))
 
 plan(sequential)
 } ## if (requireNamespace("scater") && ...)

@@ -234,7 +234,7 @@ counts <- Rsamtools::countBam(bamViews) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
 
-sce <- scuttle::logNormCounts(sce) |> futurize()
+qc <- scuttle::perFeatureQCMetrics(sce) |> futurize()
 
 result <- SingleCellExperiment::applySCE(sce, scuttle::perFeatureQCMetrics) |> futurize()
   

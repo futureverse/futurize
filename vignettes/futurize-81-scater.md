@@ -56,22 +56,7 @@ object:
 library(scater)
 
 # Simulate data
-set.seed(42)
-n_genes <- 200L
-n_cells <- 100L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells,
-  dimnames = list(
-    paste0("gene", seq_len(n_genes)),
-    paste0("cell", seq_len(n_cells))
-  )
-)
-
-sce <- SingleCellExperiment::SingleCellExperiment(
-  assays = list(counts = counts)
-)
+sce <- scuttle::mockSCE()
 sce <- scuttle::logNormCounts(sce)
 
 sce <- runPCA(sce)

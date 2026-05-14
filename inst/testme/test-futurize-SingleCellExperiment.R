@@ -12,32 +12,7 @@ plan(multisession)
 
 ## Create a simple SingleCellExperiment with alternative experiments
 set.seed(42)
-n_genes <- 1000L
-n_cells <- 20L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells
-)
-rownames(counts) <- paste0("gene", seq_len(n_genes))
-colnames(counts) <- paste0("cell", seq_len(n_cells))
-
-sce <- SingleCellExperiment(
-  assays = list(counts = counts)
-)
-
-## Add an alternative experiment (e.g. spike-ins)
-spike_counts <- matrix(
-  rpois(100L * n_cells, lambda = 5),
-  nrow = 100L,
-  ncol = n_cells
-)
-rownames(spike_counts) <- paste0("spike", seq_len(100L))
-colnames(spike_counts) <- paste0("cell", seq_len(n_cells))
-
-altExp(sce, "spikes") <- SingleCellExperiment(
-  assays = list(counts = spike_counts)
-)
+sce <- mockSCE(ncells = 20L, ngenes = 70L, nspikes = 30L)
 
 ## ---------------------------------------------------------
 ## applySCE() with perFeatureQCMetrics
