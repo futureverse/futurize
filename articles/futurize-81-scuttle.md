@@ -18,16 +18,8 @@ library(futurize)
 plan(multisession)
 library(scuttle)
 
-sce <- logNormCounts(sce) |> futurize()
-qc <- perCellQCMetrics(sce) |> futurize()
+qc <- perFeatureQCMetrics(sce) |> futurize()
 ```
-
-*Comment: The
-[`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
-function is deprecated as of
-**[scuttle](https://bioconductor.org/packages/scuttle/)** (\>= 1.22)
-(part of Bioconductor 3.22 released on 2026-04-29), and more
-importantly, no longer supports parallelization.*
 
 ## Introduction
 
@@ -37,13 +29,13 @@ This vignette demonstrates how to use this approach to parallelize the
 The **[scuttle](https://bioconductor.org/packages/scuttle/)**
 Bioconductor package provides basic utility functions for single-cell
 RNA-seq data analysis, including quality control, normalization, and
-aggregation, which can be parallelized across cells.
+aggregation, which can be parallelized across cells or features.
 
-### Example: Log-normalizing counts in parallel
+### Example: Computing per-feature QC metrics in parallel
 
 The
-[`logNormCounts()`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)
-function computes log-normalized expression values for a
+[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+function computes quality control metrics for each feature (gene) in a
 `SingleCellExperiment` object:
 
 ``` r
@@ -51,28 +43,13 @@ function computes log-normalized expression values for a
 library(scuttle)
 
 # Simulate data
-set.seed(42)
-n_genes <- 200L
-n_cells <- 100L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells,
-  dimnames = list(
-    paste0("gene", seq_len(n_genes)),
-    paste0("cell", seq_len(n_cells))
-  )
-)
+sce <- mockSCE()
 
-sce <- SingleCellExperiment::SingleCellExperiment(
-  assays = list(counts = counts)
-)
-
-sce <- logNormCounts(sce)
+qc <- perFeatureQCMetrics(sce)
 ```
 
 Here
-[`logNormCounts()`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)
+[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
 runs sequentially, but we can easily make it run in parallel by piping
 to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
@@ -81,7 +58,7 @@ to
 
 library(futurize)
 
-sce <- logNormCounts(sce) |> futurize()
+qc <- perFeatureQCMetrics(sce) |> futurize()
 ```
 
 This will distribute the work across the available parallel workers,

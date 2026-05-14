@@ -133,7 +133,7 @@ parallelization.
 | **[glmnet](https://cran.r-project.org/package=glmnet)** | `cv.glmnet()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[kernelshap](https://cran.r-project.org/package=kernelshap)** | `kernelshap()`, `permshap()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
-| **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ objects | \- |
+| **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[parameters](https://cran.r-project.org/package=parameters)** | `bootstrap_model()`, `bootstrap_parameters()`, `parameters_bootstrap()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
@@ -246,7 +246,7 @@ counts <- Rsamtools::countBam(bamViews) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
 
-sce <- scuttle::logNormCounts(sce) |> futurize()
+qc <- scuttle::perFeatureQCMetrics(sce) |> futurize()
 
 result <- SingleCellExperiment::applySCE(sce, scuttle::perFeatureQCMetrics) |> futurize()
   

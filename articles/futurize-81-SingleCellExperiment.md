@@ -51,35 +51,7 @@ library(SingleCellExperiment)
 library(scuttle)
 
 # Simulate data
-set.seed(42)
-n_genes <- 200L
-n_cells <- 100L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells,
-  dimnames = list(
-    paste0("gene", seq_len(n_genes)),
-    paste0("cell", seq_len(n_cells))
-  )
-)
-
-sce <- SingleCellExperiment(
-  assays = list(counts = counts)
-)
-
-# Add an alternative experiment (e.g. spike-ins)
-spike_counts <- matrix(
-  rpois(10L * n_cells, lambda = 5),
-  nrow = 10L,
-  ncol = n_cells
-)
-rownames(spike_counts) <- paste0("spike", seq_len(10L))
-colnames(spike_counts) <- paste0("cell", seq_len(n_cells))
-
-altExp(sce, "spikes") <- SingleCellExperiment(
-  assays = list(counts = spike_counts)
-)
+sce <- mockSCE()
 
 result <- applySCE(sce, perFeatureQCMetrics)
 ```
