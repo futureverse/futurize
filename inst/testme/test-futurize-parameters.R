@@ -20,7 +20,13 @@ data(mtcars, package = "datasets")
 model_lm <- lm(mpg ~ wt, data = mtcars)
 
 set.seed(42)
-fit_lm <- bootstrap_model(model_lm, iterations = 10L) |> futurize::futurize() ## FIXME: futurize_and_verify()
+
+## FIXME: parameters 0.29.0 ignores 'cluster' argument, cf.
+## https://github.com/easystats/parameters/issues
+## When fixed, use futurize_and_verify()
+
+fit_lm <- bootstrap_model(model_lm, iterations = 10L) |> futurize::futurize()
+
 print(head(fit_lm))
 stopifnot(inherits(fit_lm, "bootstrap_model"))
 
@@ -48,7 +54,13 @@ message("bootstrap_model() ... done")
 message("bootstrap_parameters() ...")
 
 set.seed(42)
-params <- bootstrap_parameters(model_lm, iterations = 10L) |> futurize::futurize() ## FIXME: futurize_and_verify()
+
+## FIXME: parameters 0.29.0 ignores 'cluster' argument, cf.
+## https://github.com/easystats/parameters/issues
+## When fixed, use futurize_and_verify()
+
+params <- bootstrap_parameters(model_lm, iterations = 10L) |> futurize::futurize()
+
 print(params)
 stopifnot(inherits(params, "parameters_model"))
 
