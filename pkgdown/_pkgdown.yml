@@ -66,6 +66,8 @@ navbar:
         href: articles/futurize-81-pvclust.html
       - text: Parallelize 'riskRegression' functions
         href: articles/futurize-81-riskRegression.html
+      - text: Parallelize 'sandwich' functions
+        href: articles/futurize-81-sandwich.html
       - text: Parallelize 'seriation' functions
         href: articles/futurize-81-seriation.html
       - text: Parallelize 'shapr' functions

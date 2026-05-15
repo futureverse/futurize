@@ -132,6 +132,7 @@ parallelization.
 | **[pls]**                  | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()`                          | -                  |
 | **[pvclust]**              | `pvclust()`                                                                  | -                  |
 | **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
+| **[sandwich]**             | `vcovBS()`, `vcovJK()`                                                       | **[future.apply]** |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
 | **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
@@ -175,6 +176,8 @@ cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 m <- pls::plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
 
 fit <- pvclust::pvclust(mtcars, nboot = 1000) |> futurize()
+
+v <- sandwich::vcovBS(fm) |> futurize()
 
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,
@@ -273,6 +276,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [pvclust]: https://cran.r-project.org/package=pvclust
 [purrr]: https://cran.r-project.org/package=purrr
 [riskRegression]: https://cran.r-project.org/package=riskRegression
+[sandwich]: https://cran.r-project.org/package=sandwich
 [Rsamtools]: https://bioconductor.org/packages/Rsamtools/
 [scater]: https://bioconductor.org/packages/scater/
 [scuttle]: https://bioconductor.org/packages/scuttle/
