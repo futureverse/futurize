@@ -21,6 +21,9 @@
 - Add support for domain-specific CRAN package **pvclust**,
   e.g. `fit <- pvclust(mtcars, nboot = 1000) |> futurize()`.
 
+- Add support for domain-specific CRAN package **sandwich**,
+  e.g. `v <- vcovBS(fit) |> futurize()`.
+
 - Add support for map-reduce CRAN package **stars**,
   e.g. `sm <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
 
