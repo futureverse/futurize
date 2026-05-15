@@ -27,7 +27,7 @@ append_transpilers_for_parameters <- function() {
   )
 
   transpilers <- make_package_transpilers("parameters", FUN = function(fcn, name) {
-    if (name %in% c("bootstrap_model", "bootstrap_parameters", "parameters_bootstrap")) {
+    if (name %in% c("bootstrap_model", "bootstrap_parameters")) {
       transpiler <- make_futurize_for_makeClusterFuture(
         template = template_ignore_clusterEvalQ,
         args = list(

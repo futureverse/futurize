@@ -46,6 +46,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "pls",            append_transpilers_for_pls)
   transpilers_for_package("futurize::add-on", package = "pvclust",        append_transpilers_for_pvclust)
   transpilers_for_package("futurize::add-on", package = "riskRegression", append_transpilers_for_riskRegression)
+  transpilers_for_package("futurize::add-on", package = "rugarch",       append_transpilers_for_rugarch)
   transpilers_for_package("futurize::add-on", package = "sandwich",       append_transpilers_for_sandwich)
 
   transpilers_for_package("futurize::add-on", package = "seriation",      append_transpilers_for_seriation)

@@ -127,11 +127,12 @@ parallelization.
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
-| **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`, `parameters_bootstrap()`      | -                  |
+| **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`                                | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
 | **[pls]**                  | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()`                          | -                  |
 | **[pvclust]**              | `pvclust()`                                                                  | -                  |
 | **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
+| **[rugarch]**              | `arfimacv()`, `arfimadistribution()`, `arfimaroll()`, `autoarfima()`, `multifilter()`, `multifit()`, `multiforecast()`, `ugarchboot()`, `ugarchdistribution()`, `ugarchroll()` | -                  |
 | **[sandwich]**             | `vcovBS()`, `vcovJK()`                                                       | **[future.apply]** |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
@@ -182,6 +183,9 @@ v <- sandwich::vcovBS(fm) |> futurize()
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,
   split.method = "bootcv") |> futurize()
+
+roll <- rugarch::ugarchroll(spec, sp500ret, n.start = 1000, 
+  refit.window = "moving", refit.every = 100) |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
@@ -276,6 +280,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [pvclust]: https://cran.r-project.org/package=pvclust
 [purrr]: https://cran.r-project.org/package=purrr
 [riskRegression]: https://cran.r-project.org/package=riskRegression
+[rugarch]: https://cran.r-project.org/package=rugarch
 [sandwich]: https://cran.r-project.org/package=sandwich
 [Rsamtools]: https://bioconductor.org/packages/Rsamtools/
 [scater]: https://bioconductor.org/packages/scater/

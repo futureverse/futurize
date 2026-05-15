@@ -106,8 +106,6 @@ The following **parameters** functions are supported by `futurize()`:
 
 * `bootstrap_model()` with `seed = TRUE` as the default
 * `bootstrap_parameters()` with `seed = TRUE` as the default
-* `parameters_bootstrap()` with `seed = TRUE` as the default
-
 
 # Without futurize: Manual PSOCK cluster setup
 
