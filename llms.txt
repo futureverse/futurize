@@ -140,6 +140,7 @@ parallelization.
 | **[pls](https://cran.r-project.org/package=pls)** | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()` | \- |
 | **[pvclust](https://cran.r-project.org/package=pvclust)** | `pvclust()` | \- |
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
+| **[sandwich](https://cran.r-project.org/package=sandwich)** | `vcovBS()`, `vcovJK()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
 | **[SimDesign](https://cran.r-project.org/package=SimDesign)** | `runSimulation()`, `runArraySimulation()` | \- |
@@ -186,6 +187,8 @@ cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
 m <- pls::plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
 
 fit <- pvclust::pvclust(mtcars, nboot = 1000) |> futurize()
+
+v <- sandwich::vcovBS(fm) |> futurize()
 
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,
