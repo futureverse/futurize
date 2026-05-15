@@ -1,6 +1,7 @@
 # Parallelize 'parameters' functions
 
-![The 'futurize' hexlogo](../reference/figures/futurize-logo.webp)+
+![The 'parameters' hexlogo](../reference/figures/parameters-logo.webp)+
+![The 'futurize' hexlogo](../reference/figures/futurize-logo.webp)=
 ![The 'future' logo](../reference/figures/future-logo.webp)
 
 The **futurize** package allows you to easily turn sequential code into
