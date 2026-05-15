@@ -10,8 +10,10 @@
 -->
 
 <div class="logos">
-<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
+<img src="../man/figures/parameters-logo.webp" alt="The 'parameters' hexlogo">
 <span>+</span>
+<img src="../man/figures/futurize-logo.webp" alt="The 'futurize' hexlogo">
+<span>=</span>
 <img src="../man/figures/future-logo.webp" alt="The 'future' logo">
 </div>
 
