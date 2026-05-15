@@ -37,10 +37,10 @@ pkgs
 #> [22] "mgcv"                 "parameters"           "partykit"            
 #> [25] "pbapply"              "pls"                  "plyr"                
 #> [28] "purrr"                "pvclust"              "riskRegression"      
-#> [31] "sandwich"             "scater"               "scuttle"             
-#> [34] "seriation"            "shapr"                "stars"               
-#> [37] "stats"                "strucchange"          "sva"                 
-#> [40] "tm"                   "vegan"               
+#> [31] "rugarch"              "sandwich"             "scater"              
+#> [34] "scuttle"              "seriation"            "shapr"               
+#> [37] "stars"                "stats"                "strucchange"         
+#> [40] "sva"                  "tm"                   "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

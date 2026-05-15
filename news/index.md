@@ -2,14 +2,6 @@
 
 ## Version (development version)
 
-### Documentation
-
-- Update **SingleCellExperiment** and **scuttle** examples and tests to
-  use
-  [`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
-  instead of the deprecated
-  [`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html).
-
 ### New Transpilers
 
 - Add support for domain-specific CRAN package **parameters**,
@@ -21,11 +13,22 @@
 - Add support for domain-specific CRAN package **pvclust**,
   e.g. `fit <- pvclust(mtcars, nboot = 1000) |> futurize()`.
 
+- Add support for domain-specific CRAN package **rugarch**,
+  e.g. `roll <- ugarchroll(spec, sp500ret, n.start = 1000) |> futurize()`.
+
 - Add support for domain-specific CRAN package **sandwich**,
   e.g. `v <- vcovBS(fit) |> futurize()`.
 
 - Add support for map-reduce CRAN package **stars**,
   e.g. `sm <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
+
+### Documentation
+
+- Update **SingleCellExperiment** and **scuttle** examples and tests to
+  use
+  [`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+  instead of the deprecated
+  [`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html).
 
 ### Bug Fixes
 

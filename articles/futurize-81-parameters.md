@@ -105,7 +105,6 @@ The following **parameters** functions are supported by
   with `seed = TRUE` as the default
 - [`bootstrap_parameters()`](https://easystats.github.io/parameters/reference/bootstrap_parameters.html)
   with `seed = TRUE` as the default
-- `parameters_bootstrap()` with `seed = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

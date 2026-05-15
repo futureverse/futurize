@@ -135,11 +135,12 @@ parallelization.
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
-| **[parameters](https://cran.r-project.org/package=parameters)** | `bootstrap_model()`, `bootstrap_parameters()`, `parameters_bootstrap()` | \- |
+| **[parameters](https://cran.r-project.org/package=parameters)** | `bootstrap_model()`, `bootstrap_parameters()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[pls](https://cran.r-project.org/package=pls)** | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()` | \- |
 | **[pvclust](https://cran.r-project.org/package=pvclust)** | `pvclust()` | \- |
 | **[riskRegression](https://cran.r-project.org/package=riskRegression)** | `Score()` for ‘list’ | **[doFuture](https://doFuture.futureverse.org)** |
+| **[rugarch](https://cran.r-project.org/package=rugarch)** | `arfimacv()`, `arfimadistribution()`, `arfimaroll()`, `autoarfima()`, `multifilter()`, `multifit()`, `multiforecast()`, `ugarchboot()`, `ugarchdistribution()`, `ugarchroll()` | \- |
 | **[sandwich](https://cran.r-project.org/package=sandwich)** | `vcovBS()`, `vcovJK()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[seriation](https://cran.r-project.org/package=seriation)** | `seriate_best()`, `seriate_rep()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[shapr](https://cran.r-project.org/package=shapr)** | `explain()`, `explain_forecast()` | \- |
@@ -193,6 +194,9 @@ v <- sandwich::vcovBS(fm) |> futurize()
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,
   split.method = "bootcv") |> futurize()
+
+roll <- rugarch::ugarchroll(spec, sp500ret, n.start = 1000, 
+  refit.window = "moving", refit.every = 100) |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
@@ -334,6 +338,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
   functions](https://futurize.futureverse.org/articles/futurize-81-riskRegression.md):
 - [Parallelize 'Rsamtools'
   functions](https://futurize.futureverse.org/articles/futurize-81-Rsamtools.md):
+- [Parallelize 'rugarch'
+  functions](https://futurize.futureverse.org/articles/futurize-81-rugarch.md):
 - [Parallelize 'sandwich'
   functions](https://futurize.futureverse.org/articles/futurize-81-sandwich.md):
 - [Parallelize 'scater'

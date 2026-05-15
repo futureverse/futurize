@@ -56,6 +56,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-riskRegression.md):
 - [Parallelize 'Rsamtools'
   functions](https://futurize.futureverse.org/articles/futurize-81-Rsamtools.md):
+- [Parallelize 'rugarch'
+  functions](https://futurize.futureverse.org/articles/futurize-81-rugarch.md):
 - [Parallelize 'sandwich'
   functions](https://futurize.futureverse.org/articles/futurize-81-sandwich.md):
 - [Parallelize 'scater'
