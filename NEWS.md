@@ -2,6 +2,9 @@
 
 ## New Transpilers
 
+ * Add support for domain-specific Bioconductor package **multtest**,
+   e.g. `res <- MTP(X, Y, B = 1000) |> futurize()`.
+
  * Add support for domain-specific CRAN package **parameters**,
    e.g. `fit <- bootstrap_model(model, iterations = 1000) |>
    futurize()`.

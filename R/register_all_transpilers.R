@@ -27,6 +27,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "GenomicAlignments",    append_transpilers_for_GenomicAlignments)
   transpilers_for_package("futurize::add-on", package = "Rsamtools",            append_transpilers_for_Rsamtools)
   transpilers_for_package("futurize::add-on", package = "GSVA",                 append_transpilers_for_GSVA)
+  transpilers_for_package("futurize::add-on", package = "multtest",             append_transpilers_for_multtest)
   transpilers_for_package("futurize::add-on", package = "scater",               append_transpilers_for_scater)
   transpilers_for_package("futurize::add-on", package = "scuttle",              append_transpilers_for_scuttle)
   transpilers_for_package("futurize::add-on", package = "SingleCellExperiment", append_transpilers_for_SingleCellExperiment)

@@ -216,6 +216,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 | **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[GenomicAlignments]**    | `summarizeOverlaps()`                                                     | **[doFuture]**     |
 | **[GSVA]**                 | `gsva()`, `gsvaRanks()`, `gsvaScores()`, `spatCor()`                      | **[doFuture]**     |
+| **[multtest]**             | `MTP()`, `EBMTP()`                                                        | -                  |
 | **[Rsamtools]**            | `countBam()`, `scanBam()`                                                 | **[doFuture]**     |
 | **[scater]**               | `calculatePCA()`, `calculateTSNE()`, `calculateUMAP()`, `runPCA()`, `runTSNE()`, `runUMAP()`, `runColDataPCA()`, `nexprs()`, `getVarianceExplained()`, `plotRLE()` | **[doFuture]** |
 | **[scuttle]**              | `calculateAverage()`, `logNormCounts()`, `normalizeCounts()`, `perCellQCMetrics()`, `perFeatureQCMetrics()`, `addPerCellQCMetrics()`, `addPerFeatureQCMetrics()`, `addPerCellQC()`, `addPerFeatureQC()`, `numDetectedAcrossCells()`, `numDetectedAcrossFeatures()`, `sumCountsAcrossCells()`, `sumCountsAcrossFeatures()`, `summarizeAssayByGroup()`, `aggregateAcrossCells()`, `aggregateAcrossFeatures()`, `librarySizeFactors()`, `computeLibraryFactors()`, `geometricSizeFactors()`, `computeGeometricFactors()`, `medianSizeFactors()`, `computeMedianFactors()`, `pooledSizeFactors()`, `computePooledFactors()`, `fitLinearModel()` | **[doFuture]** |
@@ -236,6 +237,8 @@ res <- fgsea::fgsea(pathways, stats) |> futurize()
 se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
 
 es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
+
+res <- multtest::MTP(X, Y) |> futurize()
 
 counts <- Rsamtools::countBam(bamViews) |> futurize()
 
@@ -272,6 +275,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [lme4]: https://cran.r-project.org/package=lme4
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
+[multtest]: https://bioconductor.org/packages/multtest/
 [parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
