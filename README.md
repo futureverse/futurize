@@ -127,6 +127,7 @@ parallelization.
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
+| **[modelsummary]**         | `modelsummary()`, `msummary()`, `modelplot()`                                | **[future.apply]** |
 | **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`                                | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
 | **[pls]**                  | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()`                          | -                  |
@@ -272,6 +273,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [lme4]: https://cran.r-project.org/package=lme4
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
+[modelsummary]: https://cran.r-project.org/package=modelsummary
 [parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply

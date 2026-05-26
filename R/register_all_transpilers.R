@@ -41,6 +41,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "glmmTMB",        append_transpilers_for_glmmTMB)
   transpilers_for_package("futurize::add-on", package = "lme4",           append_transpilers_for_lme4)
   transpilers_for_package("futurize::add-on", package = "metafor",        append_transpilers_for_metafor)
+  transpilers_for_package("futurize::add-on", package = "modelsummary",     append_transpilers_for_modelsummary)
   transpilers_for_package("futurize::add-on", package = "partykit",       append_transpilers_for_partykit)
   transpilers_for_package("futurize::add-on", package = "parameters",     append_transpilers_for_parameters)
   transpilers_for_package("futurize::add-on", package = "pls",            append_transpilers_for_pls)
