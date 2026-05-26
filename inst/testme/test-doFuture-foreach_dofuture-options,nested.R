@@ -12,7 +12,9 @@ message("*** Options in nested parallelization ...")
 
 options(future.debug = FALSE)
 options(future.apply.debug = FALSE)
-options(future.globals.maxSize = 1234000 + future:::objectSize(futurize_and_verify))
+
+delta <- 4.0e6 ## Seems to be needed on Ubuntu R-devel (4.7.0) on GitHub
+options(future.globals.maxSize = 1234000 + delta)
 
 for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))
