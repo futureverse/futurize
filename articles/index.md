@@ -44,6 +44,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-metafor.md):
 - [Parallelize 'mgcv'
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
+- [Parallelize 'modelsummary'
+  functions](https://futurize.futureverse.org/articles/futurize-81-modelsummary.md):
 - [Parallelize 'parameters'
   functions](https://futurize.futureverse.org/articles/futurize-81-parameters.md):
 - [Parallelize 'partykit'

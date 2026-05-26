@@ -135,6 +135,7 @@ parallelization.
 | **[lme4](https://cran.r-project.org/package=lme4)** | `allFit()`, `bootMer()`, [`influence()`](https://rdrr.io/r/stats/lm.influence.html) and [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘merMod’ | \- |
 | **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
+| **[modelsummary](https://cran.r-project.org/package=modelsummary)** | `modelsummary()`, `msummary()`, `modelplot()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[parameters](https://cran.r-project.org/package=parameters)** | `bootstrap_model()`, `bootstrap_parameters()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
 | **[pls](https://cran.r-project.org/package=pls)** | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()` | \- |

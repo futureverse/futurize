@@ -4,6 +4,9 @@
 
 ### New Transpilers
 
+- Add support for domain-specific CRAN package **modelsummary**,
+  e.g. `tbl <- modelsummary(models) |> futurize()`.
+
 - Add support for domain-specific CRAN package **parameters**,
   e.g. `fit <- bootstrap_model(model, iterations = 1000) |> futurize()`.
 
