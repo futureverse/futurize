@@ -23,6 +23,10 @@
  * Add support for domain-specific CRAN package **sandwich**,
    e.g. `v <- vcovBS(fit) |> futurize()`.
 
+ * Add support for domain-specific CRAN package **Sim.DiffProc**,
+   e.g. `res <- MCM.sde(mod1d, statistic = stat, R = 100) |>
+   futurize()`.
+
  * Add support for domain-specific CRAN package **SuperLearner**,
    e.g. `res <- CV.SuperLearner(Y = Y, X = X, SL.library = SL.library)
    |> futurize()`.

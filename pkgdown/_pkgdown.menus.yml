@@ -60,6 +60,8 @@ articles-cran:
     href: articles/futurize-81-seriation.html
   - text: Parallelize 'shapr' functions
     href: articles/futurize-81-shapr.html
+  - text: Parallelize 'Sim.DiffProc' functions
+    href: articles/futurize-81-Sim.DiffProc.html
   - text: Parallelize 'SimDesign' functions
     href: articles/futurize-81-SimDesign.html
   - text: Parallelize 'stars' functions

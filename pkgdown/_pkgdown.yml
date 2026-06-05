@@ -76,12 +76,16 @@ navbar:
         href: articles/futurize-81-seriation.html
       - text: Parallelize 'shapr' functions
         href: articles/futurize-81-shapr.html
+      - text: Parallelize 'Sim.DiffProc' functions
+        href: articles/futurize-81-Sim.DiffProc.html
       - text: Parallelize 'SimDesign' functions
         href: articles/futurize-81-SimDesign.html
       - text: Parallelize 'stars' functions
         href: articles/futurize-81-stars.html
       - text: Parallelize 'strucchange' functions
         href: articles/futurize-81-strucchange.html
+      - text: Parallelize 'SuperLearner' functions
+        href: articles/futurize-81-SuperLearner.html
       - text: Parallelize 'tm' functions
         href: articles/futurize-81-tm.html
       - text: Parallelize 'TSP' functions

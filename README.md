@@ -137,6 +137,7 @@ parallelization.
 | **[sandwich]**             | `vcovBS()`, `vcovJK()`                                                       | **[future.apply]** |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
+| **[Sim.DiffProc]**         | `MCM.sde()`                                                                  | -                  |
 | **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
 | **[stars]**                | `st_apply()`                                                                 | **[future.apply]** |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
@@ -193,6 +194,8 @@ result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0
 
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
+
+res <- Sim.DiffProc::MCM.sde(model, statistic = stat, R = 100) |> futurize()
 
 res <- SimDesign::runSimulation(Design, replications = 1000,
   generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
@@ -293,6 +296,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/
 [seriation]: https://cran.r-project.org/package=seriation
 [shapr]: https://cran.r-project.org/package=shapr
+[Sim.DiffProc]: https://cran.r-project.org/package=Sim.DiffProc
 [SimDesign]: https://cran.r-project.org/package=SimDesign
 [stars]: https://cran.r-project.org/package=stars
 [strucchange]: https://cran.r-project.org/package=strucchange
