@@ -2,6 +2,10 @@
 
 ## New Transpilers
 
+ * Add support for domain-specific CRAN package **DiceKriging**,
+   e.g. `m <- km(~., design = design, response = response,
+   multistart = 8L) |> futurize()`.
+
  * Add support for domain-specific CRAN package **modelsummary**,
    e.g. `tbl <- modelsummary(models) |> futurize()`.
 

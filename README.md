@@ -119,6 +119,7 @@ parallelization.
 |----------------------------|------------------------------------------------------------------------------|--------------------|
 | **[boot]**                 | `boot()`, `censboot()`, `tsboot()`                                           | -                  |
 | **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()`    | **[doFuture]**     |
+| **[DiceKriging]**          | `km()`                                                                       | **[doFuture]**     |
 | **[fwb]**                  | `fwb()`, `vcovFWB()`                                                         | -                  |
 | **[gamlss]**               | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()`           | -                  |
 | **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                    | -                  |
@@ -159,6 +160,8 @@ ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+m <- DiceKriging::km(~., design = design, response = response, multistart = 8L) |> futurize()
 
 cv <- gamlss::gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
 
@@ -267,6 +270,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
+[DiceKriging]: https://cran.r-project.org/package=DiceKriging
 [fgsea]: https://bioconductor.org/packages/fgsea/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
