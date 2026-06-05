@@ -22,6 +22,10 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-caret.md):
 - [Parallelize 'DESeq2'
   functions](https://futurize.futureverse.org/articles/futurize-81-DESeq2.md):
+- [Parallelize 'DiceKriging'
+  functions](https://futurize.futureverse.org/articles/futurize-81-DiceKriging.md):
+- [Parallelize 'ez'
+  functions](https://futurize.futureverse.org/articles/futurize-81-ez.md):
 - [Parallelize 'fgsea'
   functions](https://futurize.futureverse.org/articles/futurize-81-fgsea.md):
 - [Parallelize 'fwb'

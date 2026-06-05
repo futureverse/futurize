@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9031</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,8 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-cran-focus"><li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-boot.html">Parallelize 'boot' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-caret.html">Parallelize 'caret' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-DiceKriging.html">Parallelize 'DiceKriging' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-ez.html">Parallelize 'ez' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-fwb.html">Parallelize 'fwb' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-gamlss.html">Parallelize 'gamlss' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-glmnet.html">Parallelize 'glmnet' functions</a></li>
@@ -154,21 +156,22 @@ required by the futurize transpiler are not installed.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_packages</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pkgs</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "BiocParallel"         "DESeq2"               "GSVA"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "GenomicAlignments"    "Rsamtools"            "Sim.DiffProc"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "SimDesign"            "SingleCellExperiment" "SuperLearner"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "TSP"                  "base"                 "boot"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "caret"                "crossmap"             "fgsea"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "foreach"              "fwb"                  "gamlss"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "glmmTMB"              "glmnet"               "kernelshap"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "lme4"                 "metafor"              "mgcv"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "modelsummary"         "parameters"           "partykit"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "pbapply"              "pls"                  "plyr"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "purrr"                "pvclust"              "riskRegression"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "rugarch"              "sandwich"             "scater"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "scuttle"              "seriation"            "shapr"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "stars"                "stats"                "strucchange"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "sva"                  "tm"                   "vegan"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "BiocParallel"         "DESeq2"               "DiceKriging"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "GSVA"                 "GenomicAlignments"    "Rsamtools"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "Sim.DiffProc"         "SimDesign"            "SingleCellExperiment"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "SuperLearner"         "TSP"                  "base"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "boot"                 "caret"                "crossmap"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "ez"                   "fgsea"                "foreach"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "fwb"                  "gamlss"               "glmmTMB"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "glmnet"               "kernelshap"           "lme4"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "metafor"              "mgcv"                 "modelsummary"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "parameters"           "partykit"             "pbapply"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "pls"                  "plyr"                 "purrr"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "pvclust"              "riskRegression"       "rugarch"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "sandwich"             "scater"               "scuttle"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "seriation"            "shapr"                "stars"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "stats"                "strucchange"          "sva"                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "tm"                   "vegan"               </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"future.apply"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">fcns</span> <span class="op">&lt;-</span> <span class="fu">futurize_supported_functions</span><span class="op">(</span><span class="st">"base"</span><span class="op">)</span></span></span>

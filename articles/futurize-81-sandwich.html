@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9031</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,8 @@
 <li><h6 class="dropdown-header" data-toc-skip>CRAN packages supporting futurize()</h6></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-boot.html">Parallelize 'boot' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-caret.html">Parallelize 'caret' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-DiceKriging.html">Parallelize 'DiceKriging' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-ez.html">Parallelize 'ez' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-fwb.html">Parallelize 'fwb' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-gamlss.html">Parallelize 'gamlss' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-glmnet.html">Parallelize 'glmnet' functions</a></li>
@@ -196,7 +198,7 @@ sequential code into parallel code by piping the sequential code to the
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/" class="external-link">sandwich</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
-<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -207,7 +209,7 @@ package provides model-agnostic robust covariance matrix estimators.</p>
 <h3 id="example-clustered-bootstrap-covariance-matrix">Example: Clustered bootstrap covariance matrix<a class="anchor" aria-label="anchor" href="#example-clustered-bootstrap-covariance-matrix"></a>
 </h3>
 <p>Example adopted from
-<code><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">help("vcovBS", package = "sandwich")</a></code>:</p>
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">help("vcovBS", package = "sandwich")</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
@@ -217,7 +219,7 @@ package provides model-agnostic robust covariance matrix estimators.</p>
 <span><span class="va">fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## bootstrap covariance matrix estimation in parallel</span></span>
-<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span>, R <span class="op">=</span> <span class="fl">250</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span>, R <span class="op">=</span> <span class="fl">250</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## summary of coefficients with robust standard errors</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lmtest</span><span class="op">)</span></span>
@@ -244,10 +246,10 @@ locally as well as distributed across remote machines, e.g.</p>
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
 <li>
-<code><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">vcovBS()</a></code> with <code>seed = TRUE</code> as the
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">vcovBS()</a></code> with <code>seed = TRUE</code> as the
 default</li>
 <li>
-<code><a href="https://rdrr.io/pkg/sandwich/man/vcovJK.html" class="external-link">vcovJK()</a></code> with <code>seed = TRUE</code> as the
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovJK.html" class="external-link">vcovJK()</a></code> with <code>seed = TRUE</code> as the
 default</li>
 </ul>
 </div>
@@ -255,7 +257,7 @@ default</li>
 <h2 id="without-futurize-manual-setup">Without futurize: Manual setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-setup"></a>
 </h2>
 <p>For comparison, here is what it takes to parallelize
-<code><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">vcovBS()</a></code> using the <strong>sandwich</strong> package
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">vcovBS()</a></code> using the <strong>sandwich</strong> package
 directly, without <strong>futurize</strong>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/" class="external-link">sandwich</a></span><span class="op">)</span></span>
@@ -265,7 +267,7 @@ directly, without <strong>futurize</strong>:</p>
 <span><span class="va">fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Bootstrap covariance matrix estimation in parallel using cores</span></span>
-<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span>, R <span class="op">=</span> <span class="fl">250</span>, cores <span class="op">=</span> <span class="fl">4L</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span>, R <span class="op">=</span> <span class="fl">250</span>, cores <span class="op">=</span> <span class="fl">4L</span><span class="op">)</span></span></code></pre></div>
 <p>While <strong>sandwich</strong> has a built-in <code>cores</code>
 argument, it only supports local multicore or PSOCK clusters depending
 on the OS. With <strong>futurize</strong>, you can use any

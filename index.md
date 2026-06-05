@@ -127,6 +127,8 @@ parallelization.
 |----|----|----|
 | **[boot](https://cran.r-project.org/package=boot)** | `boot()`, `censboot()`, `tsboot()` | \- |
 | **[caret](https://cran.r-project.org/package=caret)** | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[DiceKriging](https://cran.r-project.org/package=DiceKriging)** | `km()` | **[doFuture](https://doFuture.futureverse.org)** |
+| **[ez](https://cran.r-project.org/package=ez)** | `ezBoot()`, `ezPerm()`, `ezPlot2()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fwb](https://ngreifer.github.io/fwb/)** | `fwb()`, `vcovFWB()` | \- |
 | **[gamlss](https://cran.r-project.org/package=gamlss)** | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()` | \- |
 | **[glmmTMB](https://cran.r-project.org/package=glmmTMB)** | [`profile()`](https://rdrr.io/r/stats/profile.html) for ‘glmmTMB’ | \- |
@@ -169,7 +171,11 @@ b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 
+rt <- ez::ezBoot(data = ANT, dv = rt, wid = subnum, within = .(cue, flank), between = group) |> futurize()
+
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+m <- DiceKriging::km(~., design = design, response = response, multistart = 8L) |> futurize()
 
 cv <- gamlss::gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
 

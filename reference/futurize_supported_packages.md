@@ -27,21 +27,22 @@ by the futurize transpiler are not installed.
 ``` r
 pkgs <- futurize_supported_packages()
 pkgs
-#>  [1] "BiocParallel"         "DESeq2"               "GSVA"                
-#>  [4] "GenomicAlignments"    "Rsamtools"            "Sim.DiffProc"        
-#>  [7] "SimDesign"            "SingleCellExperiment" "SuperLearner"        
-#> [10] "TSP"                  "base"                 "boot"                
-#> [13] "caret"                "crossmap"             "fgsea"               
-#> [16] "foreach"              "fwb"                  "gamlss"              
-#> [19] "glmmTMB"              "glmnet"               "kernelshap"          
-#> [22] "lme4"                 "metafor"              "mgcv"                
-#> [25] "modelsummary"         "parameters"           "partykit"            
-#> [28] "pbapply"              "pls"                  "plyr"                
-#> [31] "purrr"                "pvclust"              "riskRegression"      
-#> [34] "rugarch"              "sandwich"             "scater"              
-#> [37] "scuttle"              "seriation"            "shapr"               
-#> [40] "stars"                "stats"                "strucchange"         
-#> [43] "sva"                  "tm"                   "vegan"               
+#>  [1] "BiocParallel"         "DESeq2"               "DiceKriging"         
+#>  [4] "GSVA"                 "GenomicAlignments"    "Rsamtools"           
+#>  [7] "Sim.DiffProc"         "SimDesign"            "SingleCellExperiment"
+#> [10] "SuperLearner"         "TSP"                  "base"                
+#> [13] "boot"                 "caret"                "crossmap"            
+#> [16] "ez"                   "fgsea"                "foreach"             
+#> [19] "fwb"                  "gamlss"               "glmmTMB"             
+#> [22] "glmnet"               "kernelshap"           "lme4"                
+#> [25] "metafor"              "mgcv"                 "modelsummary"        
+#> [28] "parameters"           "partykit"             "pbapply"             
+#> [31] "pls"                  "plyr"                 "purrr"               
+#> [34] "pvclust"              "riskRegression"       "rugarch"             
+#> [37] "sandwich"             "scater"               "scuttle"             
+#> [40] "seriation"            "shapr"                "stars"               
+#> [43] "stats"                "strucchange"          "sva"                 
+#> [46] "tm"                   "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")
