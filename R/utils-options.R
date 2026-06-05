@@ -36,14 +36,13 @@
 #' @seealso
 #' To set \R options or environment variables when \R starts (even before the \pkg{futurize} package is loaded), see the \link[base]{Startup} help page.  The \href{https://cran.r-project.org/package=startup}{\pkg{startup}} package provides a friendly mechanism for configuring \R's startup process.
 #'
-#' @aliases
-#' futurize.options 
+#' @aliases futurize.options 
 #'
-#' futurize.debug
-#' futurize.enable
+#' @aliases futurize.debug
+#' @aliases futurize.enable
 #'
-#' R_FUTURIZE_DEBUG
-#' R_FUTURIZE_ENABLE
+#' @aliases R_FUTURIZE_DEBUG
+#' @aliases R_FUTURIZE_ENABLE
 #'
 #' @name zzz-futurize.options 
 NULL
