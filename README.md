@@ -120,6 +120,7 @@ parallelization.
 | **[boot]**                 | `boot()`, `censboot()`, `tsboot()`                                           | -                  |
 | **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()`    | **[doFuture]**     |
 | **[DiceKriging]**          | `km()`                                                                       | **[doFuture]**     |
+| **[ez]**                   | `ezBoot()`, `ezPerm()`, `ezPlot2()`                                          | **[doFuture]**     |
 | **[fwb]**                  | `fwb()`, `vcovFWB()`                                                         | -                  |
 | **[gamlss]**               | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()`           | -                  |
 | **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                    | -                  |
@@ -158,6 +159,8 @@ b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 
 ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
+
+rt <- ez::ezBoot(data = ANT, dv = rt, wid = subnum, within = .(cue, flank), between = group) |> futurize()
 
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
 
@@ -271,6 +274,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [crossmap]: https://cran.r-project.org/package=crossmap
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
 [DiceKriging]: https://cran.r-project.org/package=DiceKriging
+[ez]: https://cran.r-project.org/package=ez
 [fgsea]: https://bioconductor.org/packages/fgsea/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/

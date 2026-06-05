@@ -21,20 +21,10 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "boot",         append_transpilers_for_boot)
   transpilers_for_package("futurize::add-on", package = "mgcv",         append_transpilers_for_mgcv)
 
-  ## Bioconductor packages
-  transpilers_for_package("futurize::add-on", package = "DESeq2",               append_transpilers_for_DESeq2)
-  transpilers_for_package("futurize::add-on", package = "fgsea",                append_transpilers_for_fgsea)
-  transpilers_for_package("futurize::add-on", package = "GenomicAlignments",    append_transpilers_for_GenomicAlignments)
-  transpilers_for_package("futurize::add-on", package = "Rsamtools",            append_transpilers_for_Rsamtools)
-  transpilers_for_package("futurize::add-on", package = "GSVA",                 append_transpilers_for_GSVA)
-  transpilers_for_package("futurize::add-on", package = "scater",               append_transpilers_for_scater)
-  transpilers_for_package("futurize::add-on", package = "scuttle",              append_transpilers_for_scuttle)
-  transpilers_for_package("futurize::add-on", package = "SingleCellExperiment", append_transpilers_for_SingleCellExperiment)
-  transpilers_for_package("futurize::add-on", package = "sva",                  append_transpilers_for_sva)
-
-  ## Domain-specific packages
+  ## Domain-specific CRAN packages
   transpilers_for_package("futurize::add-on", package = "caret",          append_transpilers_for_caret)
   transpilers_for_package("futurize::add-on", package = "DiceKriging",    append_transpilers_for_DiceKriging)
+  transpilers_for_package("futurize::add-on", package = "ez",             append_transpilers_for_ez)
   transpilers_for_package("futurize::add-on", package = "fwb",            append_transpilers_for_fwb)
   transpilers_for_package("futurize::add-on", package = "gamlss",         append_transpilers_for_gamlss)
   transpilers_for_package("futurize::add-on", package = "glmnet",         append_transpilers_for_glmnet)
@@ -42,15 +32,14 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "glmmTMB",        append_transpilers_for_glmmTMB)
   transpilers_for_package("futurize::add-on", package = "lme4",           append_transpilers_for_lme4)
   transpilers_for_package("futurize::add-on", package = "metafor",        append_transpilers_for_metafor)
-  transpilers_for_package("futurize::add-on", package = "modelsummary",     append_transpilers_for_modelsummary)
+  transpilers_for_package("futurize::add-on", package = "modelsummary",   append_transpilers_for_modelsummary)
   transpilers_for_package("futurize::add-on", package = "partykit",       append_transpilers_for_partykit)
   transpilers_for_package("futurize::add-on", package = "parameters",     append_transpilers_for_parameters)
   transpilers_for_package("futurize::add-on", package = "pls",            append_transpilers_for_pls)
   transpilers_for_package("futurize::add-on", package = "pvclust",        append_transpilers_for_pvclust)
   transpilers_for_package("futurize::add-on", package = "riskRegression", append_transpilers_for_riskRegression)
-  transpilers_for_package("futurize::add-on", package = "rugarch",       append_transpilers_for_rugarch)
+  transpilers_for_package("futurize::add-on", package = "rugarch",        append_transpilers_for_rugarch)
   transpilers_for_package("futurize::add-on", package = "sandwich",       append_transpilers_for_sandwich)
-
   transpilers_for_package("futurize::add-on", package = "seriation",      append_transpilers_for_seriation)
   transpilers_for_package("futurize::add-on", package = "Sim.DiffProc",   append_transpilers_for_Sim.DiffProc)
   transpilers_for_package("futurize::add-on", package = "SimDesign",      append_transpilers_for_SimDesign)
@@ -61,4 +50,15 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "tm",             append_transpilers_for_tm)
   transpilers_for_package("futurize::add-on", package = "TSP",            append_transpilers_for_TSP)
   transpilers_for_package("futurize::add-on", package = "vegan",          append_transpilers_for_vegan)
+
+  ## Domain-specific Bioconductor packages
+  transpilers_for_package("futurize::add-on", package = "DESeq2",               append_transpilers_for_DESeq2)
+  transpilers_for_package("futurize::add-on", package = "fgsea",                append_transpilers_for_fgsea)
+  transpilers_for_package("futurize::add-on", package = "GenomicAlignments",    append_transpilers_for_GenomicAlignments)
+  transpilers_for_package("futurize::add-on", package = "Rsamtools",            append_transpilers_for_Rsamtools)
+  transpilers_for_package("futurize::add-on", package = "GSVA",                 append_transpilers_for_GSVA)
+  transpilers_for_package("futurize::add-on", package = "scater",               append_transpilers_for_scater)
+  transpilers_for_package("futurize::add-on", package = "scuttle",              append_transpilers_for_scuttle)
+  transpilers_for_package("futurize::add-on", package = "SingleCellExperiment", append_transpilers_for_SingleCellExperiment)
+  transpilers_for_package("futurize::add-on", package = "sva",                  append_transpilers_for_sva)
 } ## register_all_transpilers()
