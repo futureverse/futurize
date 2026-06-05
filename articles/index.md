@@ -70,6 +70,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-seriation.md):
 - [Parallelize 'shapr'
   functions](https://futurize.futureverse.org/articles/futurize-81-shapr.md):
+- [Parallelize 'Sim.DiffProc'
+  functions](https://futurize.futureverse.org/articles/futurize-81-Sim.DiffProc.md):
 - [Parallelize 'SimDesign'
   functions](https://futurize.futureverse.org/articles/futurize-81-SimDesign.md):
 - [Parallelize 'SingleCellExperiment'
@@ -78,6 +80,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-stars.md):
 - [Parallelize 'strucchange'
   functions](https://futurize.futureverse.org/articles/futurize-81-strucchange.md):
+- [Parallelize 'SuperLearner'
+  functions](https://futurize.futureverse.org/articles/futurize-81-SuperLearner.md):
 - [Parallelize 'sva'
   functions](https://futurize.futureverse.org/articles/futurize-81-sva.md):
 - [Parallelize 'tm'

@@ -17,8 +17,8 @@
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Parallelize Common Functions via One Magic Function">
-<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that can be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages on CRAN (e.g. boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, modelsummary, parameters, partykit, pls, pvclust, riskRegression, rugarch, sandwich, seriation, shapr, SimDesign, stars, strucchange, tm, TSP, and vegan) and on Bioconductor (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
-<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that can be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages on CRAN (e.g. boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, modelsummary, parameters, partykit, pls, pvclust, riskRegression, rugarch, sandwich, seriation, shapr, SimDesign, stars, strucchange, tm, TSP, and vegan) and on Bioconductor (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
+<meta name="description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that can be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages on CRAN (e.g. boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, modelsummary, parameters, partykit, pls, pvclust, riskRegression, rugarch, sandwich, seriation, shapr, Sim.DiffProc, SimDesign, stars, strucchange, SuperLearner, tm, TSP, and vegan) and on Bioconductor (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
+<meta property="og:description" content="The futurize() function transpiles calls to sequential map-reduce functions such as base::lapply(), purrr::map(), foreach::foreach() %do% { ... } into concurrent alternatives, providing you with a simple, straightforward path to scalable parallel computing via the future ecosystem &lt;doi:10.32614/RJ-2021-048&gt;. By combining this function with Rs native pipe operator, you have a convenient way for speeding up iterative computations with minimal refactoring, e.g. lapply(xs, fcn) |&gt; futurize(), purrr::map(xs, fcn) |&gt; futurize(), and foreach::foreach(x = xs) %do% { fcn(x) } |&gt; futurize(). Other map-reduce packages that can be &quot;futurized&quot; are BiocParallel, plyr, crossmap, pbapply packages. There is also support for a growing set of domain-specific packages on CRAN (e.g. boot, caret, fgsea, fwb, gamlss, glmmTMB, glmnet, kernelshap, lme4, metafor, mgcv, modelsummary, parameters, partykit, pls, pvclust, riskRegression, rugarch, sandwich, seriation, shapr, Sim.DiffProc, SimDesign, stars, strucchange, SuperLearner, tm, TSP, and vegan) and on Bioconductor (e.g. DESeq2, GenomicAlignments, GSVA, Rsamtools, scater, scuttle, SingleCellExperiment, and sva').">
 <!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SB3EQSD9FR"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9025</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0-9028</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,9 +82,11 @@
     <li><a class="dropdown-item" href="articles/futurize-81-sandwich.html">Parallelize 'sandwich' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-seriation.html">Parallelize 'seriation' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-shapr.html">Parallelize 'shapr' functions</a></li>
+    <li><a class="dropdown-item" href="articles/futurize-81-Sim.DiffProc.html">Parallelize 'Sim.DiffProc' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-SimDesign.html">Parallelize 'SimDesign' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-stars.html">Parallelize 'stars' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
+    <li><a class="dropdown-item" href="articles/futurize-81-SuperLearner.html">Parallelize 'SuperLearner' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-TSP.html">Parallelize 'TSP' functions</a></li>
     <li><a class="dropdown-item" href="articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
@@ -431,6 +433,11 @@
 <td>-</td>
 </tr>
 <tr>
+<td><strong><a href="https://cran.r-project.org/package=Sim.DiffProc" class="external-link">Sim.DiffProc</a></strong></td>
+<td><code>MCM.sde()</code></td>
+<td>-</td>
+</tr>
+<tr>
 <td><strong><a href="https://cran.r-project.org/package=SimDesign" class="external-link">SimDesign</a></strong></td>
 <td>
 <code>runSimulation()</code>, <code>runArraySimulation()</code>
@@ -447,6 +454,11 @@
 <td>
 <code>breakpoints()</code> for ‘formula’</td>
 <td><strong><a href="https://doFuture.futureverse.org" class="external-link">doFuture</a></strong></td>
+</tr>
+<tr>
+<td><strong><a href="https://cran.r-project.org/package=SuperLearner" class="external-link">SuperLearner</a></strong></td>
+<td><code>CV.SuperLearner()</code></td>
+<td>-</td>
 </tr>
 <tr>
 <td><strong><a href="https://cran.r-project.org/package=tm" class="external-link">tm</a></strong></td>
@@ -500,7 +512,7 @@
 <span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">pvclust</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust</a></span><span class="op">(</span><span class="va">mtcars</span>, nboot <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sandwich/man/vcovBS.html" class="external-link">vcovBS</a></span><span class="op">(</span><span class="va">fm</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">riskRegression</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/riskRegression/man/Score.html" class="external-link">Score</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"CSC"</span> <span class="op">=</span> <span class="va">fit</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span>,</span>
 <span>  formula <span class="op">=</span> <span class="fu">Hist</span><span class="op">(</span><span class="va">time</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, times <span class="op">=</span> <span class="fl">5</span>, B <span class="op">=</span> <span class="fl">100</span>,</span>
@@ -514,6 +526,8 @@
 <span></span>
 <span><span class="va">o</span> <span class="op">&lt;-</span> <span class="fu">seriation</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seriation/man/seriate_best.html" class="external-link">seriate_best</a></span><span class="op">(</span><span class="va">d_supreme</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">Sim.DiffProc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html" class="external-link">MCM.sde</a></span><span class="op">(</span><span class="va">model</span>, statistic <span class="op">=</span> <span class="va">stat</span>, R <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">SimDesign</span><span class="fu">::</span><span class="fu"><a href="http://philchalmers.github.io/SimDesign/reference/runSimulation.html" class="external-link">runSimulation</a></span><span class="op">(</span><span class="va">Design</span>, replications <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  generate <span class="op">=</span> <span class="va">Generate</span>, analyse <span class="op">=</span> <span class="va">Analyse</span>, summarise <span class="op">=</span> <span class="va">Summarise</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -521,6 +535,8 @@
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">stars</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/stars/reference/st_apply.html" class="external-link">st_apply</a></span><span class="op">(</span><span class="va">s</span>, MARGIN <span class="op">=</span> <span class="fl">1</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu">strucchange</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/strucchange/man/breakpoints.html" class="external-link">breakpoints</a></span><span class="op">(</span><span class="va">Nile</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">SuperLearner</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html" class="external-link">CV.SuperLearner</a></span><span class="op">(</span><span class="va">Y</span>, <span class="va">X</span>, SL.library <span class="op">=</span> <span class="va">SL.library</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">tm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tm/man/tm_map.html" class="external-link">tm_map</a></span><span class="op">(</span><span class="va">crude</span>, <span class="fu">content_transformer</span><span class="op">(</span><span class="va">tolower</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
