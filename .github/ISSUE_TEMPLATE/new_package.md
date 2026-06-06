@@ -6,7 +6,7 @@ labels: 'candidate package'
 assignees: ''
 
 ---
-(Please use <https://github.com/futureverse/future/discussions> for Q&A)
+(Please use <https://github.com/futureverse/discussions> for Q&A)
 
 **Feature request**
 
