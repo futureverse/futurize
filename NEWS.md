@@ -1,5 +1,9 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Changed the package license to permissive Apache License (>= 2).
+
 ## New Transpilers
 
  * Add support for domain-specific CRAN package **DiceKriging**,
