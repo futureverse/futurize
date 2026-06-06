@@ -1,6 +1,12 @@
-# Options for how futures are partitioned and resolved
+# Options controlling resources, scheduling and evaluation of futures
 
-Options for how futures are partitioned and resolved
+Some futures require specific **resources** and capabilities (e.g., RNG,
+packages, and globals) in order to be evaluated. These can be declared
+via this function. In addition, this function can control how futures
+are **evaluated**, including what is collected from futures (e.g.,
+standard output and conditions). It can also control how future are
+**scheduled**, including how a set of futures are partitioned (e.g.
+chunking).
 
 ## Usage
 
@@ -21,13 +27,13 @@ futurize_options(
 
 - seed:
 
-  (optional) If TRUE, the random seed, that is, the state of the random
-  number generator (RNG) will be set such that statistically sound
-  random numbers are produced (also during parallelization). If FALSE
-  (default), it is assumed that the future expression neither needs nor
-  uses random number generation. To use a fixed random seed, specify a
-  L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a single
-  integer). If the latter, then a L'Ecuyer-CMRG seed will be
+  (resource; optional) If TRUE, the random seed, that is, the state of
+  the random number generator (RNG) will be set such that statistically
+  sound random numbers are produced (also during parallelization). If
+  FALSE (default), it is assumed that the future expression neither
+  needs nor uses random number generation. To use a fixed random seed,
+  specify a L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a
+  single integer). If the latter, then a L'Ecuyer-CMRG seed will be
   automatically created based on the given seed. Furthermore, if FALSE,
   then the future will be monitored to make sure it does not use random
   numbers. If it does and depending on the value of option
@@ -38,22 +44,22 @@ futurize_options(
 
 - globals:
 
-  (optional) a logical, a character vector, or a named list to control
-  how globals are handled. For details, see section 'Globals used by
-  future expressions' in the help for
+  (resource; optional) a logical, a character vector, or a named list to
+  control how globals are handled. For details, see section 'Globals
+  used by future expressions' in the help for
   [`future()`](https://future.futureverse.org/reference/future.html).
 
 - packages:
 
-  (optional) a character vector specifying packages to be attached in
-  the R environment evaluating the future, *in addition to packages
-  required by global variables* specified or identified via argument
-  `globals`.
+  (resource; optional) a character vector specifying packages to be
+  attached in the R environment evaluating the future, *in addition to
+  packages required by global variables* specified or identified via
+  argument `globals`.
 
 - stdout:
 
-  If TRUE (default), then the standard output is captured, and
-  re-outputted when
+  (evaluation) If TRUE (default), then the standard output is captured,
+  and re-outputted when
   [`value()`](https://future.futureverse.org/reference/value.html) is
   called. If FALSE, any output is silenced (by sinking it to the null
   device as it is outputted). Using
@@ -66,11 +72,11 @@ futurize_options(
 
 - conditions:
 
-  A character string of condition classes to be captured and relayed.
-  The default is to relay all conditions, including messages and
-  warnings. To drop all conditions, use `conditions = character(0)`.
-  Errors are always relayed. Attribute `exclude` can be used to ignore
-  specific classes, e.g.
+  (evaluation) A character string of condition classes to be captured
+  and relayed. The default is to relay all conditions, including
+  messages and warnings. To drop all conditions, use
+  `conditions = character(0)`. Errors are always relayed. Attribute
+  `exclude` can be used to ignore specific classes, e.g.
   `conditions = structure("condition", exclude = "message")` will
   capture all `condition` classes except those that inherit from the
   `message` class. Using `conditions = structure(..., drop = TRUE)`
@@ -84,18 +90,18 @@ futurize_options(
 
 - scheduling:
 
-  Average number of futures ("chunks") per worker. If `0.0`, then a
-  single future is used to process all elements. If `1.0` or `TRUE`,
-  then one future per worker is used. If `2.0`, then each worker will
-  process two futures (if there are enough elements). If `Inf` or
-  `FALSE`, then one future per element is used. Only used if
+  (scheduling) Average number of futures ("chunks") per worker. If
+  `0.0`, then a single future is used to process all elements. If `1.0`
+  or `TRUE`, then one future per worker is used. If `2.0`, then each
+  worker will process two futures (if there are enough elements). If
+  `Inf` or `FALSE`, then one future per element is used. Only used if
   `chunk_size` is `NULL`.
 
 - chunk_size:
 
-  The average number of elements per future ("chunk"). If `Inf`, then
-  all elements are processed in a single future. If `NULL`, then
-  argument `scheduling` is used.
+  (scheduling) The average number of elements per future ("chunk"). If
+  `Inf`, then all elements are processed in a single future. If `NULL`,
+  then argument `scheduling` is used.
 
 - ...:
 

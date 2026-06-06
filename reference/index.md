@@ -6,7 +6,7 @@
   : Turn common R function calls into concurrent calls for parallel
   evaluation
 - [`futurize_options()`](https://futurize.futureverse.org/reference/futurize_options.md)
-  : Options for how futures are partitioned and resolved
+  : Options controlling resources, scheduling and evaluation of futures
 - [`futurize_supported_packages()`](https://futurize.futureverse.org/reference/futurize_supported_packages.md)
   [`futurize_supported_functions()`](https://futurize.futureverse.org/reference/futurize_supported_packages.md)
   : List packages and functions supporting futurization
