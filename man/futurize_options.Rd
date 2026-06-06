@@ -2,7 +2,7 @@
 % Please edit documentation in R/futurize_options.R
 \name{futurize_options}
 \alias{futurize_options}
-\title{Options for how futures are partitioned and resolved}
+\title{Options controlling resources, scheduling and evaluation of futures}
 \usage{
 futurize_options(
   seed = FALSE,
@@ -16,9 +16,10 @@ futurize_options(
 )
 }
 \arguments{
-\item{seed}{(optional) If TRUE, the random seed, that is, the state of the
-random number generator (RNG) will be set such that statistically sound
-random numbers are produced (also during parallelization).
+\item{seed}{(resource; optional) If TRUE, the random seed, that is, the
+state of the random number generator (RNG) will be set such that
+statistically sound random numbers are produced (also during
+parallelization).
 If FALSE (default), it is assumed that the future expression neither
 needs nor uses random number generation.
 To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
@@ -31,18 +32,18 @@ ignored, an informative warning, or error will be produced.
 If \code{seed} is NULL, then the effect is as with \code{seed = FALSE}
 but without the RNG check being performed.}
 
-\item{globals}{(optional) a logical, a character vector, or a named list
-to control how globals are handled.
+\item{globals}{(resource; optional) a logical, a character vector, or
+a named list to control how globals are handled.
 For details, see section 'Globals used by future expressions'
 in the help for \code{\link[future:future]{future()}}.}
 
-\item{packages}{(optional) a character vector specifying packages to be
-attached in the \R environment evaluating the future, \emph{in addition to
-packages required by global variables} specified or identified via argument
-\code{globals}.}
+\item{packages}{(resource; optional) a character vector specifying
+packages to be attached in the \R environment evaluating the future,
+\emph{in addition to packages required by global variables} specified or
+identified via argument \code{globals}.}
 
-\item{stdout}{If TRUE (default), then the standard output is captured,
-and re-outputted when \code{value()} is called.
+\item{stdout}{(evaluation) If TRUE (default), then the standard output is
+captured, and re-outputted when \code{value()} is called.
 If FALSE, any output is silenced (by sinking it to the null device as
 it is outputted).
 Using \code{stdout = structure(TRUE, drop = TRUE)} causes the captured
@@ -52,9 +53,10 @@ captured output across futures.
 Using \code{stdout = NA} fully avoids intercepting the standard output;
 behavior of such unhandled standard output depends on the future backend.}
 
-\item{conditions}{A character string of condition classes to be captured
-and relayed.  The default is to relay all conditions, including messages
-and warnings.  To drop all conditions, use \code{conditions = character(0)}.
+\item{conditions}{(evaluation) A character string of condition classes to
+be captured and relayed.  The default is to relay all conditions,
+including messages and warnings.  To drop all conditions, use
+\code{conditions = character(0)}.
 Errors are always relayed.
 Attribute \code{exclude} can be used to ignore specific classes, e.g.
 \code{conditions = structure("condition", exclude = "message")} will capture
@@ -67,7 +69,8 @@ Using \code{conditions = NULL} (not recommended) avoids intercepting conditions,
 except from errors; behavior of such unhandled conditions depends on the
 future backend and the environment from which R runs.}
 
-\item{scheduling}{Average number of futures ("chunks") per worker.
+\item{scheduling}{(scheduling) Average number of futures ("chunks") per
+worker.
 If \code{0.0}, then a single future is used to process all elements.
 If \code{1.0} or \code{TRUE}, then one future per worker is used.
 If \code{2.0}, then each worker will process two futures
@@ -76,7 +79,8 @@ If \code{Inf} or \code{FALSE}, then one future per element
 is used.
 Only used if \code{chunk_size} is \code{NULL}.}
 
-\item{chunk_size}{The average number of elements per future ("chunk").
+\item{chunk_size}{(scheduling) The average number of elements per future
+("chunk").
 If \code{Inf}, then all elements are processed in a single future.
 If \code{NULL}, then argument \code{scheduling} is used.}
 
@@ -88,7 +92,14 @@ Attribute \code{specified} is a character vector of future options
 that were explicitly specified.
 }
 \description{
-Options for how futures are partitioned and resolved
+Some futures require specific \strong{resources} and capabilities (e.g., RNG,
+packages, and globals) in order to be evaluated. These can be declared
+via this function.
+In addition, this function can control how futures are \strong{evaluated},
+including what is collected from futures (e.g., standard output and
+conditions).
+It can also control how future are \strong{scheduled}, including how a set
+of futures are partitioned (e.g. chunking).
 }
 \examples{
 # Default futurize options

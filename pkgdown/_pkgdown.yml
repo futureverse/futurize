@@ -40,6 +40,10 @@ navbar:
         href: articles/futurize-81-boot.html
       - text: Parallelize 'caret' functions
         href: articles/futurize-81-caret.html
+      - text: Parallelize 'DiceKriging' functions
+        href: articles/futurize-81-DiceKriging.html
+      - text: Parallelize 'ez' functions
+        href: articles/futurize-81-ez.html
       - text: Parallelize 'fwb' functions
         href: articles/futurize-81-fwb.html
       - text: Parallelize 'gamlss' functions
