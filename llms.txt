@@ -31,11 +31,19 @@ tables.
 In addition to getting access to all future-based parallel backends, by
 using
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
-you also get access to all the benefits that comes with **futureverse**.
-Notably, if the function you parallelize outputs messages and warnings,
-they will be relayed from the parallel worker to your main R session,
-just as you get when running sequentially. This is particularly useful
-when troubleshooting or debugging.
+you also get access to all the benefits that come with **futureverse**,
+including **structured concurrency**. For example, it ensures that
+remaining parallel tasks are cancelled if there is an error or an
+interrupt. Also, if the function you parallelize outputs messages and
+warnings, they will be relayed from the parallel worker to your main R
+session, just as you get when running sequentially. This is particularly
+useful when troubleshooting or debugging.
+
+Using **futurize** comes with a zero risk buy-in. If there is ever a
+parallel universe where
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+suddenly stops working, setting `futurize <- identical` avoids rewrites
+while make all code to run sequentially.
 
 ## Supported map-reduce packages
 
