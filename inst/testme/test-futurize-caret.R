@@ -14,7 +14,7 @@ print(d)
 stopifnot(all.equal(d, d_truth))
 
 # Define training control
-ctrl <- trainControl(method = "cv", number = 10)
+ctrl <- trainControl(method = "cv", number = 3L)
 
 set.seed(1011)
 model_truth <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)

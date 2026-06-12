@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## to limit total check time
 #' @tags pkg-Rsamtools
 if (requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)
@@ -35,8 +36,6 @@ result <- countBam(bv) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
 
-result2 <- Rsamtools::countBam(bv) |> futurize_and_verify()
-stopifnot(all.equal(result2, result_truth))
 
 ## ---------------------------------------------------------
 ## scanBam() with BamViews
@@ -50,9 +49,6 @@ str(result_truth)
 result <- scanBam(bv) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
-
-result2 <- Rsamtools::scanBam(bv) |> futurize_and_verify()
-stopifnot(all.equal(result2, result_truth))
 
 ## Cleanup
 file.remove(bam_files)

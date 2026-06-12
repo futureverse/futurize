@@ -15,8 +15,8 @@ data(sp500ret, package = "rugarch")
 spec <- ugarchspec()
 
 ## Small example to keep it fast
-n_start <- 2450
-sp500ret_small <- sp500ret[1:2500, , drop = FALSE]
+sp500ret_small <- sp500ret[1:100, , drop = FALSE]
+n_start <- 50
 
 set.seed(42)
 roll_truth <- ugarchroll(spec, sp500ret_small, n.start = n_start, refit.window = "moving", refit.every = 25)

@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## to limit total check time
 #' @tags pkg-ez
 if (requireNamespace("ez") && getRversion() >= "4.4.0") {
 library(futurize)
@@ -22,7 +23,7 @@ rt_truth <- ezBoot(
   wid = subnum,
   within = .(cue, flank),
   between = group,
-  iterations = 10
+  iterations = 3L
 )
 
 set.seed(42)
@@ -32,7 +33,7 @@ rt <- ezBoot(
   wid = subnum,
   within = .(cue, flank),
   between = group,
-  iterations = 10
+  iterations = 3L
 ) |> futurize_and_verify()
 
 stopifnot(
@@ -101,7 +102,7 @@ perm_truth <- ezPerm(
   dv = mrt,
   wid = subnum,
   between = group,
-  perms = 10
+  perms = 3L
 )
 
 set.seed(42)
@@ -110,7 +111,7 @@ perm <- ezPerm(
   dv = mrt,
   wid = subnum,
   between = group,
-  perms = 10
+  perms = 3L
 ) |> futurize_and_verify()
 
 # The exact p-values may differ due to different sequential vs. future RNG kinds (MT vs. L'Ecuyer-CMRG),

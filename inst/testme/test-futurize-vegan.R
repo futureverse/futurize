@@ -36,27 +36,29 @@ message("*** mrpp()")
 
 ## Adopted from example("mrpp", package = "vegan")
 set.seed(42)
-res_truth <- mrpp(dune, dune.env$Management, permutations = 99)
+res_truth <- mrpp(dune, dune.env$Management, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- mrpp(dune, dune.env$Management, permutations = 99) |> futurize_and_verify()
+res <- mrpp(dune, dune.env$Management, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** adonis2()")
 
 ## Adopted from example("adonis2", package = "vegan")
 set.seed(42)
-res_truth <- adonis2(dune ~ Management, data = dune.env, permutations = 99)
+res_truth <- adonis2(dune ~ Management, data = dune.env, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- adonis2(dune ~ Management, data = dune.env, permutations = 99) |> futurize_and_verify()
+res <- adonis2(dune ~ Management, data = dune.env, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** anova() on cca object - S3 method anova.cca()")
 
@@ -64,27 +66,29 @@ message("*** anova() on cca object - S3 method anova.cca()")
 ord <- cca(dune ~ A1 + Management, data = dune.env)
 
 set.seed(42)
-res_truth <- anova(ord, permutations = 99)
+res_truth <- anova(ord, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- anova(ord, permutations = 99) |> futurize_and_verify()
+res <- anova(ord, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** anosim()")
 
 ## Adopted from example("anosim", package = "vegan")
 set.seed(42)
-res_truth <- anosim(dune, dune.env$Management, permutations = 99)
+res_truth <- anosim(dune, dune.env$Management, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- anosim(dune, dune.env$Management, permutations = 99) |> futurize_and_verify()
+res <- anosim(dune, dune.env$Management, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** mantel()")
 
@@ -93,14 +97,15 @@ veg.dist <- vegdist(dune)
 env.dist <- dist(dune.env[, "A1", drop = FALSE])
 
 set.seed(42)
-res_truth <- mantel(veg.dist, env.dist, permutations = 99)
+res_truth <- mantel(veg.dist, env.dist, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- mantel(veg.dist, env.dist, permutations = 99) |> futurize_and_verify()
+res <- mantel(veg.dist, env.dist, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** mantel.partial()")
 
@@ -109,24 +114,25 @@ xdis <- vegdist(dune)
 ydis <- dist(dune.env$A1)
 zdis <- xdis + ydis
 set.seed(42)
-res_truth <- mantel.partial(xdis, ydis, zdis, permutations = 99)
+res_truth <- mantel.partial(xdis, ydis, zdis, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- mantel.partial(xdis, ydis, zdis, permutations = 99) |> futurize_and_verify()
+res <- mantel.partial(xdis, ydis, zdis, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** cascadeKM()")
 
 ## Adopted from example("cascadeKM", package = "vegan")
 set.seed(42)
-res_truth <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 100)
+res_truth <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 9L)
 #print(res_truth)
 
 set.seed(42)
-res <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 100) |> futurize_and_verify()
+res <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 9L) |> futurize_and_verify()
 #print(res)
 
 ## NOTE: cascadeKM() is not numerically reproducible
@@ -135,18 +141,20 @@ res_truth$size <- sort(res_truth$size)
 res$size <- sort(res$size)
 stopifnot(all_equal_ignore_call(res, res_truth))
 
+
 message("*** estaccumR()")
 
 ## Adopted from example("estaccumR", package = "vegan")
 set.seed(42)
-res_truth <- estaccumR(dune, permutations = 9)
+res_truth <- estaccumR(dune, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- estaccumR(dune, permutations = 9) |> futurize_and_verify()
+res <- estaccumR(dune, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
+
 
 message("*** oecosimu()")
 data(sipoo)

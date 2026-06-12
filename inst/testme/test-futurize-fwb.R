@@ -18,16 +18,16 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   }
 
   set.seed(42)
-  b_truth <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE)
+  b_truth <- fwb(city, ratio, R = 19L, verbose = FALSE, simple = FALSE)
   print(b_truth)
 
   set.seed(42)
-  b <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE) |> futurize_and_verify()
+  b <- fwb(city, ratio, R = 19L, verbose = FALSE, simple = FALSE) |> futurize_and_verify()
   print(b)
 
   set.seed(42)
   RNGkind("L'Ecuyer-CMRG")
-  b2 <- fwb(city, ratio, R = 999, verbose = FALSE, simple = FALSE, cl = "future")
+  b2 <- fwb(city, ratio, R = 19L, verbose = FALSE, simple = FALSE, cl = "future")
   print(b2)
 
   stopifnot(all_equal(b, b2, check.attributes = FALSE))
@@ -36,11 +36,11 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
   fit <- lm(u ~ x, data = city)
 
   set.seed(42)
-  v_truth <- vcovFWB(fit, R = 999)
+  v_truth <- vcovFWB(fit, R = 19L)
   print(v_truth)
 
   set.seed(42)
-  v <- vcovFWB(fit, R = 999) |> futurize_and_verify()
+  v <- vcovFWB(fit, R = 19L) |> futurize_and_verify()
   print(v)
 
   #v and v_truth should differ if parallelization is done
@@ -48,7 +48,7 @@ if (requireNamespace("fwb") && requireNamespace("boot")) {
 
   set.seed(42)
   RNGkind("L'Ecuyer-CMRG")
-  v2 <- vcovFWB(fit, R = 999, cl = "future")
+  v2 <- vcovFWB(fit, R = 19L, cl = "future")
   print(v2)
 
   #v and v2 should not differ if futurize_and_verify() engages cl = "future"

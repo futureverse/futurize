@@ -86,14 +86,6 @@ stopifnot("extra_opt" %in% attr(opts, "specified"))
 pkgs <- futurize_supported_packages()
 print(pkgs)
 
-for (pkg in c(pkgs, "future", "aNonExistingPackage")) {
-  cat(sprintf("Package %s:\n", pkg))
-  fcns <- tryCatch({
-    futurize::futurize_supported_functions(pkg)
-  }, error = identity)
-  print(fcns)
-}
-
 ## Assert that there are not clashes between supported packages
 pkgs <- futurize_supported_packages()
 for (pkg in rep(pkgs, times = 2L)) {

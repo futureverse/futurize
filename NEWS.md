@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.0.0 (2026-06-11)
 
 ## Significant Changes
 
@@ -61,7 +61,7 @@
    clusters. Ignoring expression: library(survival)".
    
 
-# Version 0.3.0 (2026-04-01)
+# Version 0.3.0 [2026-04-01]
 
 ## New Features
 
@@ -79,7 +79,7 @@
    calls.
 
 
-# Version 0.2.0 (2026-03-18)
+# Version 0.2.0 [2026-03-18]
 
 Following the initial CRAN release in January 2026, this version adds
 `futurize()` support for many more CRAN and Bioconductor packages. To
@@ -196,7 +196,7 @@ for futurizing many more packages going forward.
    **vegan**.
    
  
-# Version 0.1.0 (2026-01-18)
+# Version 0.1.0 [2026-01-22]
 
 This is the first version submitted to CRAN.
 

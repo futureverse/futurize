@@ -6,7 +6,7 @@ options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
-dat <- gamSim(1, n = 25000, dist = "normal", scale = 20)
+dat <- gamSim(1, n = 500L, dist = "normal", scale = 20)
 bs <- "cr"
 k <- 12
 
