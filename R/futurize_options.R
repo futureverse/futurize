@@ -1,8 +1,18 @@
-#' Options for how futures are partitioned and resolved
+#' Options controlling resources, scheduling and evaluation of futures
+#'
+#' Some futures require specific **resources** and capabilities (e.g., RNG,
+#' packages, and globals) in order to be evaluated. These can be declared
+#' via this function.
+#' In addition, this function can control how futures are **evaluated**,
+#' including what is collected from futures (e.g., standard output and
+#' conditions).
+#' It can also control how future are **scheduled**, including how a set
+#' of futures are partitioned (e.g. chunking).
 #'
 #' @inheritParams future::future
 #'
-#' @param scheduling Average number of futures ("chunks") per worker.
+#' @param scheduling (scheduling) Average number of futures ("chunks") per
+#'        worker.
 #'        If `0.0`, then a single future is used to process all elements.
 #'        If `1.0` or `TRUE`, then one future per worker is used.
 #'        If `2.0`, then each worker will process two futures
@@ -11,7 +21,8 @@
 #'        is used.
 #'        Only used if `chunk_size` is `NULL`.
 #'
-#' @param chunk_size The average number of elements per future ("chunk").
+#' @param chunk_size (scheduling) The average number of elements per future
+#'        ("chunk").
 #'        If `Inf`, then all elements are processed in a single future.
 #'        If `NULL`, then argument `scheduling` is used.
 #
@@ -29,11 +40,14 @@
 #' @export
 futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", scheduling = 1.0, chunk_size = NULL, ...) {
   args <- list(
+     # Resources:
            seed = seed,
         globals = globals,
        packages = packages,
+     # Evaluation:
          stdout = stdout,
      conditions = conditions,
+     # Scheduling:
      scheduling = scheduling,
      chunk_size = chunk_size,
                   ...

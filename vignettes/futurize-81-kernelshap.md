@@ -121,8 +121,8 @@ ps <- permshap(
 
 The following **kernelshap** functions are supported by `futurize()`:
 
-* `kernelshap()`
-* `permshap()`
+* `kernelshap()` with `seed = TRUE` as the default
+* `permshap()` with `seed = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

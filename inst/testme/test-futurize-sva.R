@@ -20,7 +20,6 @@ colnames(dat) <- paste0("sample", seq_len(n_samples))
 batch <- rep(c(1, 2), each = n_samples / 2L)
 dat[, batch == 2] <- dat[, batch == 2] + 2
 
-
 ## ---------------------------------------------------------
 ## ComBat()
 ## ---------------------------------------------------------
@@ -29,22 +28,13 @@ result_truth <- ComBat(dat = dat, batch = batch)
 str(result_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result <- ComBat(dat = dat, batch = batch) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- ComBat(dat = dat, batch = batch) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result2 <- sva::ComBat(dat = dat, batch = batch) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result2 <- sva::ComBat(dat = dat, batch = batch) |> futurize_and_verify()
 stopifnot(all.equal(result2, result_truth))
-
 
 ## ---------------------------------------------------------
 ## ComBat() with mod
@@ -58,11 +48,7 @@ result_truth <- ComBat(dat = dat, batch = batch, mod = mod)
 str(result_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-result <- ComBat(dat = dat, batch = batch, mod = mod) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+result <- ComBat(dat = dat, batch = batch, mod = mod) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
 

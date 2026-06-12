@@ -165,16 +165,16 @@ cluster, would require a completely different setup. With
 `futurize()` and control the backend with `plan()`.
 
 
-# Progress Reporting via progressr
+# Progress Reporting via progressify
 
 An alternative to using **pbapply** for progress reporting is to use
-the **[progressr]** package, which is specially designed to work with
+the **[progressify]** package, which is specially designed to work with
 the Futureverse ecosystem and provide progress updates from
 parallelized computations in a near-live fashion. See the
 `vignette("futurize-11-apply", package = "futurize")` for more
 details.
 
 
+[progressify]: https://progressify.futureverse.org/
 [pbapply]: https://cran.r-project.org/package=pbapply
-[progressr]: https://cran.r-project.org/package=progressr
 [other parallel backends]: https://www.futureverse.org/backends.html

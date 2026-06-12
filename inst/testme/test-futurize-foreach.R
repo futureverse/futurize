@@ -6,8 +6,6 @@ options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
-
-
 message("%do%")
 if (! "covr" %in% loadedNamespaces()) {
   ## NOTE: This basic foreach() call produces "Error in frameTypes(env) :
@@ -20,25 +18,16 @@ if (! "covr" %in% loadedNamespaces()) {
 }
 str(list(y_truth = y_truth, y_truth_2 = y_truth_2))
 
-
 message("foreach(...) %do% |> futurize()")
-counters <- plan("backend")[["counters"]]
 y <- foreach(x = 1:3, .combine = c) %do% {
   print(x)
   sqrt(x)
-} |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+} |> futurize_and_verify()
 print(y)
 stopifnot(identical(y, y_truth))
 
 message("foreach(...) %:% foreach(...) %do% |> futurize()")
-counters <- plan("backend")[["counters"]]
-y_2 <- foreach(x = 1:2) %:% foreach(y = 3L) %do% c(x,y) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+y_2 <- foreach(x = 1:2) %:% foreach(y = 3L) %do% c(x,y) |> futurize_and_verify()
 str(y_2)
 stopifnot(identical(y_2, y_truth_2))
 
@@ -46,14 +35,13 @@ out <- utils::capture.output({
   y <- foreach(x = 1:3, .combine = c) %do% {
     print(x)
     sqrt(x)
-  } |> futurize(stdout = FALSE)
+  } |> futurize_and_verify(stdout = FALSE)
 })
 print(out)
 stopifnot(
   identical(out, character(0L)),
   identical(y, y_truth)
 )
-
 
 message("Test with RNG:")
 y <- local({
@@ -62,44 +50,37 @@ y <- local({
   foreach(x = 1:3, .combine = c) %do% {
     dummy <- sample.int(2L)
     sqrt(x)
-  } |> futurize(seed = TRUE)
+  } |> futurize_and_verify(seed = TRUE)
 })
 print(y)
 stopifnot(identical(y, y_truth))
 
-
 message("times(...) %do% |> futurize()")
-counters <- plan("backend")[["counters"]]
-y <- times(1L) %do% { 42L } |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+y <- times(1L) %do% { 42L } |> futurize_and_verify()
 print(y)
 stopifnot(identical(y, 42L))
 
-
 message("Non-supported %dopar% and %dofuture%")
-res <- tryCatch({ foreach(x = 1) %dopar% x |> futurize() }, error = identity)
+res <- tryCatch({ foreach(x = 1) %dopar% x |> futurize_and_verify() }, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
-res <- tryCatch({ foreach(x = 1) %dofuture% x |> futurize() }, error = identity)
+res <- tryCatch({ foreach(x = 1) %dofuture% x |> futurize_and_verify() }, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 message("Special case: Zero futurize() options")
-y <- foreach(x = 1) %do% identity(x) |> futurize(options = list())
+y <- foreach(x = 1) %do% identity(x) |> futurize_and_verify(options = list())
 
 plan(sequential)
 
 message("Special case: Zero futurize() options")
-y <- times(1L) %do% { 42L } |> futurize(options = list())
+y <- times(1L) %do% { 42L } |> futurize_and_verify(options = list())
 print(y)
 stopifnot(identical(y, 42L))
 
 message("Internals")
 opts <- futurize:::make_options_for_doFuture(options = list(), defaults = list(stdout = TRUE))
 str(opts)
-
 
 } ## if (requireNamespace("foreach") && requireNamespace("doFuture"))

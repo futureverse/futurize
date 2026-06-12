@@ -1,5 +1,6 @@
+#' @tags skip_on_cran  ## to limit total check time
 #' @tags pkg-gamlss
-if (requireNamespace("gamlss") && getRversion() >= "4.4.0") {
+if (requireNamespace("gamlss") && requireNamespace("gamlss.data") && getRversion() >= "4.4.0") {
 library(futurize)
 library(gamlss)
 options(future.rng.onMisuse = "ignore")
@@ -17,11 +18,7 @@ cv_truth <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 5)
 cat(sprintf("CV truth: %s\n", paste(cv_truth, collapse = ", ")))
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 5) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created (gamlssCV): %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 5) |> futurize_and_verify()
 cat(sprintf("CV futurized: %s\n", paste(cv, collapse = ", ")))
 
 stopifnot(all.equal(cv, cv_truth))
@@ -35,11 +32,7 @@ m <- gamlss(y ~ pb(x) + x, data = abdom)
 drop_truth <- drop1All(m, trace = FALSE)
 print(drop_truth)
 
-counters <- plan("backend")[["counters"]]
-drop_res <- drop1All(m, trace = FALSE) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created (drop1All): %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+drop_res <- drop1All(m, trace = FALSE) |> futurize_and_verify()
 print(drop_res)
 
 plan(sequential)

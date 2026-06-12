@@ -4,6 +4,8 @@
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
+
+
 library(foreach)
 `%dofuture%` <- doFuture::`%dofuture%`
 
@@ -25,7 +27,7 @@ for (strategy in strategies) {
   ## foreach::times() is commonly used for resampling purposes.
   res <- times(3L) %do% {
     dnorm(2L, mean = mu, sd = sigma)
-  } |> futurize(seed = TRUE)
+  } |> futurize_and_verify(seed = TRUE)
   print(res)
 
   if (is.null(res0)) {

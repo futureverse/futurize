@@ -4,13 +4,17 @@
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
+
+
 library(foreach)
 
 message("*** Options in nested parallelization ...")
 
 options(future.debug = FALSE)
 options(future.apply.debug = FALSE)
-options(future.globals.maxSize = 1234000)
+
+delta <- 4.0e6 ## Seems to be needed on Ubuntu R-devel (4.7.0) on GitHub
+options(future.globals.maxSize = 1234000 + delta)
 
 for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))
@@ -36,10 +40,10 @@ for (cores in 1:availCores) {
             idx     = x,
             pid     = Sys.getpid(),
             maxSize = getOption("future.globals.maxSize", NA_real_))
-        } |> futurize()
+        } |> futurize_and_verify()
         inner <- do.call(rbind, inner)
         rbind(outer, inner)
-      } |> futurize()
+      } |> futurize_and_verify()
       v <- do.call(rbind, v)
       print(v)
       stopifnot(!anyNA(v$maxSize))

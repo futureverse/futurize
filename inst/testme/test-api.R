@@ -31,32 +31,32 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 }
 
 ## Cannot futurize non-calls
-res <- tryCatch(base::pi |> futurize(), error = identity)
+res <- tryCatch(base::pi |> futurize::futurize(), error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 ## Cannot futurize non-calls
-res <- tryCatch(quote(1 + 2) |> futurize(), error = identity)
+res <- tryCatch(quote(1 + 2) |> futurize::futurize(), error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 ## Cannot futurize non-existing functions
-res <- tryCatch(futurize:::unknown |> futurize(), error = identity)
+res <- tryCatch(futurize:::unknown |> futurize::futurize(), error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 ## Cannot futurize non-existing infix operators
-res <- tryCatch(futurize:::`%unknown%` |> futurize(), error = identity)
+res <- tryCatch(futurize:::`%unknown%` |> futurize::futurize(), error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 ## Cannot futurize non-supported functions
-res <- tryCatch(futurize:::futurize_supported_packages() |> futurize(), error = identity)
+res <- tryCatch(futurize:::futurize_supported_packages() |> futurize::futurize(), error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
 ## Cannot futurize private functions
-res <- tryCatch(futurize:::import_future() |> futurize(), error = identity)
+res <- tryCatch(futurize:::import_future() |> futurize::futurize(), error = identity)
 print(res)
 stopifnot(inherits(res, "error"))
 
@@ -85,14 +85,6 @@ stopifnot("extra_opt" %in% attr(opts, "specified"))
 # --------------------------------------------------------------------
 pkgs <- futurize_supported_packages()
 print(pkgs)
-
-for (pkg in c(pkgs, "future", "aNonExistingPackage")) {
-  cat(sprintf("Package %s:\n", pkg))
-  fcns <- tryCatch({
-    futurize::futurize_supported_functions(pkg)
-  }, error = identity)
-  print(fcns)
-}
 
 ## Assert that there are not clashes between supported packages
 pkgs <- futurize_supported_packages()

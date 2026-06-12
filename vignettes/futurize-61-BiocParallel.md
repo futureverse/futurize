@@ -152,14 +152,15 @@ performed via the Futureverse, where the parallel backend is
 controlled by `future::plan()`.
 
 
-# Progress Reporting via progressr
+# Progress Reporting via progressify
 
-For progress reporting, please see the **[progressr]** package. It is
+For progress reporting, please see the **[progressify]** package. It is
 specially designed to work with the Futureverse ecosystem and provide
 progress updates from parallelized computations in a near-live
 fashion. See the `vignette("futurize-11-apply", package = "futurize")`
 for more details and an example.
 
 
+[progressify]: https://progressify.futureverse.org/
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [other parallel backends]: https://www.futureverse.org/backends.html

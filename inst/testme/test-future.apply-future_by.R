@@ -6,6 +6,8 @@
 if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
+
+
 library(listenv)
 
 all_equal_but_call <- function(target, current, ...) {
@@ -41,7 +43,7 @@ if (require("datasets") && require("stats")) { ## warpbreaks & lm()
     by(data, INDICES = INDICES, FUN = FUN)
   }
   future_by2 <- function(data, INDICES, FUN) {
-    by(data, INDICES = INDICES, FUN = FUN) |> futurize()
+    by(data, INDICES = INDICES, FUN = FUN) |> futurize_and_verify()
   }
   y4 <- by2(data, INDICES = data[,"tension"], FUN = summary)
 
@@ -54,21 +56,21 @@ if (require("datasets") && require("stats")) { ## warpbreaks & lm()
       message(sprintf("- plan('%s') ...", strategy))
       plan(strategy)
     
-      y0f <- by(data[, 1:2], INDICES = data[,"tension"], FUN = summary) |> futurize()
+      y0f <- by(data[, 1:2], INDICES = data[,"tension"], FUN = summary) |> futurize_and_verify()
       stopifnot(all_equal_but_call(y0f, y0, check.attributes = FALSE))
       
-      y1f <- by(data[, 1], INDICES = data[, -1], FUN = summary, digits = 2L) |> futurize()
+      y1f <- by(data[, 1], INDICES = data[, -1], FUN = summary, digits = 2L) |> futurize_and_verify()
       stopifnot(all_equal_but_call(y1f, y1))
       
       y2f <- by(data, INDICES = data[,"tension"], FUN = function(x, ...) {
         lm(breaks ~ wool, data = x, ...)
-      }, singular.ok = FALSE) |> futurize()
+      }, singular.ok = FALSE) |> futurize_and_verify()
       stopifnot(all_equal_but_call(y2f, y2))
       
       ## now suppose we want to extract the coefficients by group
       tmp <- with(data, by(data, INDICES = tension, FUN = function(x) {
         lm(breaks ~ wool, data = x)
-      }) |> futurize())
+      }) |> futurize_and_verify())
       y3f <- sapply(tmp, coef)
       stopifnot(all_equal_but_call(y3f, y3))
       
@@ -78,7 +80,7 @@ if (require("datasets") && require("stats")) { ## warpbreaks & lm()
       ## Defunct /HB 2025-01-11
       res <- tryCatch({
         y4f2 <- future_by2(data, INDICES = data[,"tension"], FUN = "summary")
-      }, error = identity)
+      }, FuturizeTestAssertionError = stop, error = identity)
       stopifnot(inherits(res, "error"))
       if (getRversion() >= "3.6.0") {
         stopifnot(inherits(res, "defunctError"))

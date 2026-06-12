@@ -7,6 +7,7 @@
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
+
 doFuture::registerDoFuture()
 
 strategies <- future:::supportedStrategies()
@@ -26,8 +27,8 @@ for (strategy in strategies) {
     foreach(i = 1:10) %do% {
       if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
       list(i = i, value = dnorm(i, mean = mu, sd = sigma))
-    } |> futurize()
-  }, error = identity)
+    } |> futurize_and_verify()
+  }, FuturizeTestAssertionError = stop, error = identity)
   str(res)
   stopifnot(
     inherits(res, "error")
@@ -43,15 +44,15 @@ for (strategy in strategies) {
         if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
         list(i = i, value = dnorm(i, mean = mu, sd = sigma))
       }
-    }, error = identity)
+    }, FuturizeTestAssertionError = stop, error = identity)
     str(truth)
 
     res <- tryCatch({
       foreach(i = 1:10, .errorhandling = .errorhandling, .options.future = .options.future) %do% {
         if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
         list(i = i, value = dnorm(i, mean = mu, sd = sigma))
-      } |> futurize()
-    }, error = identity)
+      } |> futurize_and_verify()
+    }, FuturizeTestAssertionError = stop, error = identity)
     str(res)
     stopifnot(
       length(res) == length(truth),
@@ -104,7 +105,7 @@ for (strategy in strategies) {
   res <- foreach(i = 1:10, .errorhandling = "pass", .options.future = .options.future) %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('pass'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
-  } |> futurize()
+  } |> futurize_and_verify()
   str(res)
   stopifnot(
     is.list(res),
@@ -131,7 +132,7 @@ for (strategy in strategies) {
   res <- foreach(i = 1:10, .errorhandling = "remove", .options.future = .options.future) %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('remove'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
-  } |> futurize()
+  } |> futurize_and_verify()
   str(res)
   stopifnot(
     is.list(res),
@@ -150,8 +151,8 @@ message("*** doFuture() - invalid accumulator ...")
 
 boom <- function(...) stop("boom!")
 res <- tryCatch({
-  foreach(i = 1:3, .combine = boom) %do% { i } |> futurize()
-}, error = identity)
+  foreach(i = 1:3, .combine = boom) %do% { i } |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(
   inherits(res, "error"),

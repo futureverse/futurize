@@ -36,9 +36,15 @@ append_transpilers_for_doFuture <- function() {
         EXPR = expr
       )
     } else {
-      name <- if (identical(fcn, as.symbol("%:%")) ||
-                  identical(fcn, quote(foreach::`%:%`))) "%:%" else "foreach"
-      defaults <- list(label = sprintf("fz:foreach::%s-%%d", name))
+      if (identical(fcn, as.symbol("%:%")) ||
+                  identical(fcn, quote(foreach::`%:%`))) {
+        name <- "%:%"
+        label <- "%%:%%"
+      } else {
+        name <- "foreach"
+        label <- "foreach"
+      }
+      defaults <- list(label = sprintf("fz:foreach::%s-%%d", label))
       options <- make_options_for_doFuture(options, defaults = defaults, wrap = TRUE)
       if (identical(fcn, as.symbol("%:%")) ||
                identical(fcn, quote(foreach::`%:%`))) {

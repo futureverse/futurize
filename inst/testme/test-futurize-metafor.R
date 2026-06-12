@@ -13,11 +13,7 @@ dat <- escalc(measure = "RR", ai = tpos, bi = tneg,
               ci = cpos, di = cneg, data = dat.bcg)
 fit <- rma(yi, vi, data = dat)
 
-counters <- plan("backend")[["counters"]]
-prof <- profile(fit) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created (profile): %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+prof <- profile(fit) |> futurize_and_verify()
 print(prof)
 
 plan(sequential)

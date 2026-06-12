@@ -8,8 +8,9 @@ if (requireNamespace("kernelshap") && requireNamespace("doFuture")) {
 
   ## Simple linear model
   set.seed(42)
-  x_train <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-  y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(100)
+  n <- 20L
+  x_train <- data.frame(x1 = rnorm(n), x2 = rnorm(n))
+  y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(n)
   model <- lm(y ~ x1 + x2, data = data.frame(y = y_train, x_train))
   x_explain <- x_train[1:4, ]
   bg_X <- x_train[1:20, ]
@@ -25,13 +26,9 @@ if (requireNamespace("kernelshap") && requireNamespace("doFuture")) {
   print(result_truth)
 
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
   result <- kernelshap(
     model, X = x_explain, bg_X = bg_X
-  ) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  ) |> futurize_and_verify()
   print(result)
 
   stopifnot(all.equal(result$S, result_truth$S))
@@ -48,13 +45,9 @@ if (requireNamespace("kernelshap") && requireNamespace("doFuture")) {
   print(result_truth2)
 
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
   result2 <- permshap(
     model, X = x_explain, bg_X = bg_X
-  ) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  ) |> futurize_and_verify()
   print(result2)
 
   stopifnot(all.equal(result2$S, result_truth2$S))

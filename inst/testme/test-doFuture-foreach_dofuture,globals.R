@@ -7,6 +7,7 @@ if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
+
 options(
   parallelly.debug = TRUE,
   future.debug = TRUE,
@@ -29,7 +30,7 @@ for (strategy in strategies) {
 
   ## (a) automatic
   sub <- function(x, ...) {
-    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize()
+    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize_and_verify()
   }
   y <- sub(x, 2:3)
   str(y)
@@ -37,7 +38,7 @@ for (strategy in strategies) {
 
   ## (b) explicit and with '...'
   sub <- function(x, ...) {
-    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize(globals = c("x", "..."))
+    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize_and_verify(globals = c("x", "..."))
   }
   y <- sub(x, 2:3)
   str(y)
@@ -45,7 +46,7 @@ for (strategy in strategies) {
 
   ## (c) with '...', but not last
   sub <- function(x, ...) {
-    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize(globals = c("...", "x"))
+    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize_and_verify(globals = c("...", "x"))
   }
   y <- sub(x, 2:3)
   str(y)
@@ -53,9 +54,9 @@ for (strategy in strategies) {
   
   ## (d) explicit, but forgotten '...'
   sub <- function(x, ...) {
-    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize(globals = c("x"))
+    foreach(i = 1:2) %do% { x[c(i, ...)] } |> futurize_and_verify(globals = c("x"))
   }
-  y <- tryCatch(sub(x, 2:3), error = identity)
+  y <- tryCatch(sub(x, 2:3), FuturizeTestAssertionError = stop, error = identity)
   str(y)
   stopifnot(inherits(y, "simpleError"))
 
@@ -90,7 +91,7 @@ for (strategy in strategies) {
 
   y <- foreach(rr = 1:nrow(X)) %do% {
     Vectorize(fibonacci)(X[rr, ])
-  } |> futurize()
+  } |> futurize_and_verify()
   str(y)
   stopifnot(all.equal(y, y_truth))
 
@@ -129,7 +130,7 @@ for (strategy in strategies) {
   
   message("- foreach(f = X, ...) - 'f' containing globals ...")
   ## From https://github.com/futureverse/future.apply/issues/12
-  z1 <- foreach(f = F, g = G) %do% list(f(), g()) |> futurize()
+  z1 <- foreach(f = F, g = G) %do% list(f(), g()) |> futurize_and_verify()
   str(z1)
   stopifnot(identical(z1, z0))
 

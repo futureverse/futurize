@@ -6,6 +6,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_apply() ...")
 
 z0 <- NULL
@@ -18,16 +20,16 @@ for (strategy in supportedStrategies()) {
   X <- matrix(c(1:4, 1, 6:8), nrow = 2L)
   
   Y0 <- apply(X, MARGIN = 1L, FUN = table)
-  Y1 <- apply(X, MARGIN = 1L, FUN = table) |> futurize()
+  Y1 <- apply(X, MARGIN = 1L, FUN = table) |> futurize_and_verify()
   print(Y1)
   stopifnot(all.equal(Y1, Y0, check.attributes = FALSE)) ## FIXME
 
-  Y2 <- apply(X, MARGIN = 1L, FUN = "table") |> futurize()
+  Y2 <- apply(X, MARGIN = 1L, FUN = "table") |> futurize_and_verify()
   print(Y2)
   stopifnot(identical(Y2, Y1))
 
   Y0 <- apply(X, MARGIN = 1L, FUN = stats::quantile)
-  Y1 <- apply(X, MARGIN = 1L, FUN = stats::quantile) |> futurize()
+  Y1 <- apply(X, MARGIN = 1L, FUN = stats::quantile) |> futurize_and_verify()
   print(Y1)
   stopifnot(all.equal(Y1, Y0))
 
@@ -38,33 +40,33 @@ for (strategy in supportedStrategies()) {
   
   y0 <- apply(x, MARGIN = 2L, FUN = identity)
   stopifnot(identical(y0, x))
-  y1 <- apply(x, MARGIN = 2L, FUN = identity) |> futurize()
+  y1 <- apply(x, MARGIN = 2L, FUN = identity) |> futurize_and_verify()
   print(y1)
   stopifnot(identical(y1, y0))
   
   y0 <- apply(x3, MARGIN = 2:3, FUN = identity)
   stopifnot(identical(y0, x3))
-  y1 <- apply(x3, MARGIN = 2:3, FUN = identity) |> futurize()
+  y1 <- apply(x3, MARGIN = 2:3, FUN = identity) |> futurize_and_verify()
   print(y1)
   stopifnot(identical(y1, y0))
 
   z <- array(1:24, dim = 2:4)
   y0 <- apply(z, MARGIN = 1:2, FUN = function(x) seq_len(max(x)))
-  y1 <- apply(z, MARGIN = 1:2, FUN = function(x) seq_len(max(x))) |> futurize()
+  y1 <- apply(z, MARGIN = 1:2, FUN = function(x) seq_len(max(x))) |> futurize_and_verify()
   print(y1)
   stopifnot(identical(y1, y0))
 
   message("- apply(X, MARGIN = <character>, ...) ...")
   X <- matrix(1:2, nrow = 2L, ncol = 1L, dimnames = list(rows = c("a", "b")))
   y0 <- apply(X, MARGIN = "rows", FUN = identity)
-  y1 <- apply(X, MARGIN = "rows", FUN = identity) |> futurize()
+  y1 <- apply(X, MARGIN = "rows", FUN = identity) |> futurize_and_verify()
   print(y1)
   stopifnot(identical(y1, y0))
 
   message("- apply(X, ...) - dim(X) > 2 ...")
   X <- array(1:12, dim = c(2, 2, 3))
   y0 <- apply(X, MARGIN = 1L, FUN = identity)
-  y1 <- apply(X, MARGIN = 1L, FUN = identity) |> futurize()
+  y1 <- apply(X, MARGIN = 1L, FUN = identity) |> futurize_and_verify()
   print(y1)
   stopifnot(identical(y1, y0))
 
@@ -75,13 +77,13 @@ for (strategy in supportedStrategies()) {
   }
   X <- matrix(1:4, nrow = 2L, ncol = 2L)
   y0 <- apply(X, MARGIN = 1L, FUN = FUN)
-  y1 <- apply(X, MARGIN = 1L, FUN = FUN) |> futurize()
+  y1 <- apply(X, MARGIN = 1L, FUN = FUN) |> futurize_and_verify()
   print(y1)
   stopifnot(identical(y1, y0))
 
   message("- example(future_apply) - reproducible RNG ...")
   z1 <- apply(X, MARGIN = 1L, FUN = sample) |>
-          futurize(
+          futurize_and_verify(
             seed = 0xBEEF,
             ## Test also all other '*' arguments
             stdout     = TRUE,
@@ -107,7 +109,7 @@ for (strategy in supportedStrategies()) {
 message("*** apply(X, ...) - prod(dim(X)) == 0 [non-parallel] ...")
 X <- matrix(nrow = 0L, ncol = 2L)
 y0 <- apply(X, MARGIN = 1L, FUN = identity)
-y1 <- apply(X, MARGIN = 1L, FUN = identity) |> futurize()
+y1 <- apply(X, MARGIN = 1L, FUN = identity) |> futurize::futurize()
 print(y1)
 stopifnot(identical(y1, y0))
   
@@ -116,22 +118,22 @@ message("*** exceptions ...")
 
 ## Error: dim(X) must have a positive length
 res <- tryCatch({
-  y <- apply(1L, MARGIN = 1L, FUN = identity) |> futurize()
-}, error = identity)
+  y <- apply(1L, MARGIN = 1L, FUN = identity) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: 'X' must have named dimnames
 X <- matrix(1:2, nrow = 2L, ncol = 1L)
 res <- tryCatch({
-  y <- apply(X, MARGIN = "rows", FUN = identity) |> futurize()
-}, error = identity)
+  y <- apply(X, MARGIN = "rows", FUN = identity) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: not all elements of 'MARGIN' are names of dimensions
 X <- matrix(1:2, nrow = 2L, ncol = 1L, dimnames = list(rows = c("a", "b")))
 res <- tryCatch({
-  y <- apply(X, MARGIN = "cols", FUN = identity) |> futurize()
-}, error = identity)
+  y <- apply(X, MARGIN = "cols", FUN = identity) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 

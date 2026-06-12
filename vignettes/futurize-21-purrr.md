@@ -131,14 +131,15 @@ The `futurize()` function supports parallelization of the following **purrr** fu
  * `map_if()`, `map_at()`
 
 
-# Progress Reporting via progressr
+# Progress Reporting via progressify
 
-For progress reporting, please see the **[progressr]** package. It is
+For progress reporting, please see the **[progressify]** package. It is
 specially designed to work with the Futureverse ecosystem and provide
 progress updates from parallelized computations in a near-live
 fashion. See the `vignette("futurize-11-apply", package = "futurize")`
 for more details and an example.
 
 
+[progressify]: https://progressify.futureverse.org/
 [purrr]: https://cran.r-project.org/package=purrr
 [other parallel backends]: https://www.futureverse.org/backends.html

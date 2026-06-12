@@ -7,6 +7,7 @@ if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
+
 ## WORKAROUND: To avoid `R CMD check --as-cran` on MS Windows triggering:
 ##
 ## * checking for detritus in the temp directory ... NOTE
@@ -30,7 +31,7 @@ message("*** doFuture - nested %dofuture% ...")
 message("*** doFuture - nested %dofuture%  and tricky globals ...")
 
 ## This works ...
-x <- foreach(j = 1) %do% { j } |> futurize()
+x <- foreach(j = 1) %do% { j } |> futurize_and_verify()
 str(x)
 rm(list = "x")
 
@@ -38,7 +39,7 @@ rm(list = "x")
 ## doFuture (<= 0.4.0) because 'j' was interpreted as global variable
 x <- foreach(i = 1) %do% {
   foreach(j = 1) %do% { j } |> futurize()
-} |> futurize(packages = "foreach")
+} |> futurize_and_verify(packages = "foreach")
 str(x)
 rm(list = "x")
 
@@ -88,7 +89,7 @@ for (strategy1 in strategies) {
       message("foreach() - level 2 ... DONE")
 
       y
-    } |> futurize(globals = c("bs", "strategy2"), packages = c("foreach", "futurize"))
+    } |> futurize_and_verify(globals = c("bs", "strategy2"), packages = c("foreach", "futurize"))
     message("foreach() - level 1 ... DONE")
 
     local({
@@ -122,7 +123,7 @@ for (strategy1 in strategies) {
     ## from 'R CMD check --as-cran' when running on MS Windows. This looks
     ## like a bug in R, cf. https://bugs.r-project.org/show_bug.cgi?id=18133    
     message("- shut down nested workers")
-    dummy <- foreach(ii = 1:nbrOfWorkers()) %do% plan("sequential") |> futurize()
+    dummy <- foreach(ii = 1:nbrOfWorkers()) %do% plan("sequential") |> futurize_and_verify()
     plan("sequential")
     
     message(sprintf("- plan(list('%s', '%s')) ... DONE", strategy1, strategy2))

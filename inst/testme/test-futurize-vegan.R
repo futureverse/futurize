@@ -23,7 +23,6 @@ all_equal_ignore_call <- function(a, b, ...) {
   res
 }
 
-
 library(futurize)
 library(vegan)
 options(future.rng.onMisuse = "error")
@@ -33,20 +32,15 @@ plan(multisession)
 data(dune)
 data(dune.env)
 
-
 message("*** mrpp()")
 
 ## Adopted from example("mrpp", package = "vegan")
 set.seed(42)
-res_truth <- mrpp(dune, dune.env$Management, permutations = 99)
+res_truth <- mrpp(dune, dune.env$Management, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- mrpp(dune, dune.env$Management, permutations = 99) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- mrpp(dune, dune.env$Management, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -56,15 +50,11 @@ message("*** adonis2()")
 
 ## Adopted from example("adonis2", package = "vegan")
 set.seed(42)
-res_truth <- adonis2(dune ~ Management, data = dune.env, permutations = 99)
+res_truth <- adonis2(dune ~ Management, data = dune.env, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- adonis2(dune ~ Management, data = dune.env, permutations = 99) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- adonis2(dune ~ Management, data = dune.env, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -76,15 +66,11 @@ message("*** anova() on cca object - S3 method anova.cca()")
 ord <- cca(dune ~ A1 + Management, data = dune.env)
 
 set.seed(42)
-res_truth <- anova(ord, permutations = 99)
+res_truth <- anova(ord, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- anova(ord, permutations = 99) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- anova(ord, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -94,15 +80,11 @@ message("*** anosim()")
 
 ## Adopted from example("anosim", package = "vegan")
 set.seed(42)
-res_truth <- anosim(dune, dune.env$Management, permutations = 99)
+res_truth <- anosim(dune, dune.env$Management, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- anosim(dune, dune.env$Management, permutations = 99) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- anosim(dune, dune.env$Management, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -115,15 +97,11 @@ veg.dist <- vegdist(dune)
 env.dist <- dist(dune.env[, "A1", drop = FALSE])
 
 set.seed(42)
-res_truth <- mantel(veg.dist, env.dist, permutations = 99)
+res_truth <- mantel(veg.dist, env.dist, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- mantel(veg.dist, env.dist, permutations = 99) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- mantel(veg.dist, env.dist, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -136,15 +114,11 @@ xdis <- vegdist(dune)
 ydis <- dist(dune.env$A1)
 zdis <- xdis + ydis
 set.seed(42)
-res_truth <- mantel.partial(xdis, ydis, zdis, permutations = 99)
+res_truth <- mantel.partial(xdis, ydis, zdis, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- mantel.partial(xdis, ydis, zdis, permutations = 99) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- mantel.partial(xdis, ydis, zdis, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -154,15 +128,11 @@ message("*** cascadeKM()")
 
 ## Adopted from example("cascadeKM", package = "vegan")
 set.seed(42)
-res_truth <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 100)
+res_truth <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 9L)
 #print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 100) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- cascadeKM(dune, inf.gr = 2, sup.gr = 3, iter = 9L) |> futurize_and_verify()
 #print(res)
 
 ## NOTE: cascadeKM() is not numerically reproducible
@@ -176,15 +146,11 @@ message("*** estaccumR()")
 
 ## Adopted from example("estaccumR", package = "vegan")
 set.seed(42)
-res_truth <- estaccumR(dune, permutations = 9)
+res_truth <- estaccumR(dune, permutations = 9L)
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- estaccumR(dune, permutations = 9) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- estaccumR(dune, permutations = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
@@ -199,15 +165,10 @@ res_truth <- oecosimu(sipoo, nestedchecker, "r0")
 print(res_truth)
 
 set.seed(42)
-counters <- plan("backend")[["counters"]]
-res <- oecosimu(sipoo, nestedchecker, "r0") |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+res <- oecosimu(sipoo, nestedchecker, "r0") |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
-
 
 if (FALSE) {
   ## Skip for now, because of
@@ -222,12 +183,11 @@ if (FALSE) {
   print(res_truth)
    
   set.seed(42)
-  res <- ordiareatest(ord, dune.env$Management, permutations = 9) |> futurize()
+  res <- ordiareatest(ord, dune.env$Management, permutations = 9) |> futurize_and_verify()
   print(res)
    
   stopifnot(all_equal_ignore_call(res, res_truth))
 }
-
 
 ## vegan 2.8.0: simper() ignores argument 'parallel' with warning
 ## "argument 'parallel' is not used (yet)"
@@ -240,16 +200,11 @@ if (FALSE) {
   print(res_truth)
   
   set.seed(42)
-  counters <- plan("backend")[["counters"]]
-  res <- simper(dune, dune.env$Management, permutations = 9) |> futurize()
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
+  res <- simper(dune, dune.env$Management, permutations = 9) |> futurize_and_verify()
   print(res)
   
   stopifnot(all_equal_ignore_call(res, res_truth))
 }
-
 
 plan(sequential)
 } ## if (requireNamespace("vegan"))

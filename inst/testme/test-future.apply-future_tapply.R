@@ -6,6 +6,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 library("datasets") ## warpbreaks, iris
 
 options(future.debug = FALSE)
@@ -24,10 +26,10 @@ for (strategy in supportedStrategies()[1]) {
   print(t)
   y0 <- tapply(groups, INDEX = groups, FUN = length)
   print(y0)
-  y1 <- tapply(groups, INDEX = groups, FUN = length) |> futurize()
+  y1 <- tapply(groups, INDEX = groups, FUN = length) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
-  y2 <- tapply(groups, INDEX = groups, FUN = "length") |> futurize()
+  y2 <- tapply(groups, INDEX = groups, FUN = "length") |> futurize_and_verify()
   print(y2)
   stopifnot(all.equal(y2, y0))
 
@@ -35,14 +37,14 @@ for (strategy in supportedStrategies()[1]) {
   ## contingency table from data.frame : array with named dimnames
   y0 <- tapply(warpbreaks$breaks, INDEX = warpbreaks[,-1], FUN = sum)
   print(y0)
-  y1 <- tapply(warpbreaks$breaks, INDEX = warpbreaks[,-1], FUN = sum) |> futurize()
+  y1 <- tapply(warpbreaks$breaks, INDEX = warpbreaks[,-1], FUN = sum) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
 
   message("  - Example #3")
   y0 <- tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
   print(y0)
-  y1 <- tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum) |> futurize()
+  y1 <- tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -52,7 +54,7 @@ for (strategy in supportedStrategies()[1]) {
   t <- table(fac)  
   y0 <- tapply(1:n, fac, sum)
   print(y0)
-  y1 <- tapply(1:n, fac, sum) |> futurize()
+  y1 <- tapply(1:n, fac, sum) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -60,36 +62,36 @@ for (strategy in supportedStrategies()[1]) {
   if ("default" %in% names(formals(tapply))) {
     y0 <- tapply(1:n, fac, sum, default = 0) # maybe more desirable
     print(y0)
-    y1 <- tapply(1:n, fac, sum, default = 0) |> futurize() # maybe more desirable
+    y1 <- tapply(1:n, fac, sum, default = 0) |> futurize_and_verify() # maybe more desirable
     print(y1)
     stopifnot(all.equal(y1, y0))
   }
-  
+
   message("  - Example #6")
   y0 <- tapply(1:n, fac, sum, simplify = FALSE)
   print(y0)
-  y1 <- tapply(1:n, fac, sum, simplify = FALSE) |> futurize()
+  y1 <- tapply(1:n, fac, sum, simplify = FALSE) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
   message("  - Example #7")
   y0 <- tapply(1:n, fac, range)
   print(y0)
-  y1 <- tapply(1:n, fac, range) |> futurize()
+  y1 <- tapply(1:n, fac, range) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
   message("  - Example #8")
   y0 <- tapply(1:n, fac, quantile)
   print(y0)
-  y1 <- tapply(1:n, fac, quantile) |> futurize()
+  y1 <- tapply(1:n, fac, quantile) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
   message("  - Example #9")
   y0 <- tapply(1:n, fac, length) ## NA's
   print(y0)
-  y1 <- tapply(1:n, fac, length) |> futurize() ## NA's
+  y1 <- tapply(1:n, fac, length) |> futurize_and_verify() ## NA's
   print(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -97,7 +99,7 @@ for (strategy in supportedStrategies()[1]) {
   if ("default" %in% names(formals(tapply))) {
     y0 <- tapply(1:n, fac, length, default = 0) # == table(fac)
     print(y0)
-    y1 <- tapply(1:n, fac, length, default = 0) |> futurize() # == table(fac)
+    y1 <- tapply(1:n, fac, length, default = 0) |> futurize_and_verify() # == table(fac)
     print(y1)
     stopifnot(all.equal(y1, y0))
   }
@@ -106,7 +108,7 @@ for (strategy in supportedStrategies()[1]) {
   ## example of ... argument: find quarterly means
   y0 <- tapply(presidents, cycle(presidents), mean, na.rm = TRUE)
   print(y0)
-  y1 <- tapply(presidents, cycle(presidents), mean, na.rm = TRUE) |> futurize()
+  y1 <- tapply(presidents, cycle(presidents), mean, na.rm = TRUE) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -116,14 +118,14 @@ for (strategy in supportedStrategies()[1]) {
   print(t)
   y0 <- tapply(1:3, ind) #-> the split vector
   print(y0)
-  y1 <- tapply(1:3, ind) |> futurize() #-> the split vector
+  y1 <- tapply(1:3, ind) |> futurize::futurize() #-> the split vector
   print(y1)
   stopifnot(all.equal(y1, y0))
   
   message("  - Example #13")
   y0 <- tapply(1:3, ind, sum)
   print(y0)
-  y1 <- tapply(1:3, ind, sum) |> futurize()
+  y1 <- tapply(1:3, ind, sum) |> futurize_and_verify()
   print(y1)
   stopifnot(all.equal(y1, y0))
   
@@ -132,13 +134,13 @@ for (strategy in supportedStrategies()[1]) {
   nq <- names(quantile(1:5))
   y_truth <- c(1L, 2L, 4L)
   stopifnot(identical(tapply(1:3, ind), y_truth))
-  stopifnot(identical(tapply(1:3, ind) |> futurize(), y_truth))
+  stopifnot(identical(tapply(1:3, ind) |> futurize::futurize(), y_truth))
   
   message("  - Example #15")
   y_truth <- matrix(c(1L, 2L, NA, 3L), nrow = 2L,
                     dimnames = list(c("1", "2"), c("A", "B")))
   stopifnot(identical(tapply(1:3, ind, sum), y_truth))
-  stopifnot(identical(tapply(1:3, ind, sum) |> futurize(), y_truth))
+  stopifnot(identical(tapply(1:3, ind, sum) |> futurize_and_verify(), y_truth))
   
   message("  - Example #16")
   y_truth <- array(list(
@@ -147,16 +149,16 @@ for (strategy in supportedStrategies()[1]) {
     `4` = NULL, `5` = NULL),
     dim = 4L, dimnames = list(as.character(2:5)))
   stopifnot(identical(tapply(1:n, fac, quantile)[-1], y_truth))
-  stopifnot(identical((tapply(1:n, fac, quantile) |> futurize())[-1], y_truth))
+  stopifnot(identical((tapply(1:n, fac, quantile) |> futurize_and_verify())[-1], y_truth))
 
   if (getRversion() >= "4.3.0") {
     data <- iris[, c("Sepal.Length", "Sepal.Width")]
     y_truth <- tapply(data, INDEX = iris$Species, FUN = sum)
-    y <- tapply(data, INDEX = iris$Species, FUN = sum) |> futurize()
+    y <- tapply(data, INDEX = iris$Species, FUN = sum) |> futurize_and_verify()
     stopifnot(identical(y, y_truth))
     
     y_truth2 <- tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum)
-    y2 <- tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum) |> futurize()
+    y2 <- tapply(data, INDEX = ~ iris$Species + iris$Petal.Width, FUN = sum) |> futurize_and_verify()
     stopifnot(identical(y2, y_truth2))
   }
 
@@ -169,20 +171,20 @@ message("*** exceptions ...")
 
 ## Error: 'INDEX' is of length zero
 res <- tryCatch({
-  y <- tapply(1L, INDEX = list()) |> futurize()
-}, error = identity)
+  y <- tapply(1L, INDEX = list()) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: total number of levels >= 2^31
 res <- tryCatch({
-  y <- tapply(1:216, INDEX = rep(list(1:216), times = 4L)) |> futurize()
-}, error = identity)
+  y <- tapply(1:216, INDEX = rep(list(1:216), times = 4L)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ## Error: arguments must have same length
 res <- tryCatch({
-  y <- tapply(1L, INDEX = list(1:2)) |> futurize()
-}, error = identity)
+  y <- tapply(1L, INDEX = list(1:2)) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 message("*** future_tapply() ... DONE")

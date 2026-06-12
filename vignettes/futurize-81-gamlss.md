@@ -150,7 +150,7 @@ The following **gamlss** functions are supported by `futurize()`:
 * `add1TGD()`
 * `drop1All()`
 * `drop1TGD()`
-* `gamlssCV()`
+* `gamlssCV()` with `seed = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

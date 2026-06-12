@@ -6,6 +6,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_*apply() and 'future.stdout' ...")
 
 options(future.debug = TRUE)
@@ -41,14 +43,14 @@ for (cores in 1:availCores) {
         out <- utils::capture.output({
           if (fun == "lapply") {
             y <- lapply(1:0, FUN = function(x) {
-              Sys.sleep(x / 2)  ## make futures resolve out of order
+              Sys.sleep(x / 20)  ## make futures resolve out of order
 	      print(x)
-            }) |> futurize(stdout = stdout)
+            }) |> futurize_and_verify(stdout = stdout)
 	  } else if (fun == "mapply") {
             y <- mapply(1:0, 0:1, FUN = function(x, y) {
-              Sys.sleep(x / 2)  ## make futures resolve out of order
+              Sys.sleep(x / 20)  ## make futures resolve out of order
               print(list(x = x, y = y))
-            }) |> futurize(stdout = stdout)
+            }) |> futurize_and_verify(stdout = stdout)
 	  }
         })
         stopifnot(identical(y, truth[[fun]]$value))

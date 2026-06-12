@@ -27,11 +27,18 @@ dependencies as shown in the below tables.
 
 In addition to getting access to all future-based parallel backends,
 by using `futurize()` you also get access to all the benefits that
-comes with **futureverse**. Notably, if the function you parallelize
-outputs messages and warnings, they will be relayed from the parallel
-worker to your main R session, just as you get when running
-sequentially. This is particularly useful when troubleshooting or
-debugging.
+come with **futureverse**, including **structured concurrency**. For
+example, it ensures that remaining parallel tasks are cancelled if
+there is an error or an interrupt. Also, if the function you
+parallelize outputs messages and warnings, they will be relayed from
+the parallel worker to your main R session, just as you get when
+running sequentially. This is particularly useful when troubleshooting
+or debugging.
+
+Using **futurize** comes with a zero risk buy-in. If there is ever a
+parallel universe where `futurize()` suddenly stops working, setting
+`futurize <- identical` avoids rewrites while make all code to run
+sequentially.
 
 
 ## Supported map-reduce packages
@@ -45,6 +52,7 @@ supported, use:
 ```r
 futurize_supported_packages()
 ```
+
 To see which functions are supported for a specific package, use:
 
 ```r
@@ -119,20 +127,31 @@ parallelization.
 |----------------------------|------------------------------------------------------------------------------|--------------------|
 | **[boot]**                 | `boot()`, `censboot()`, `tsboot()`                                           | -                  |
 | **[caret]**                | `bag()`, `gafs()`, `nearZeroVar()`, `rfe()`, `safs()`, `sbf()`, `train()`    | **[doFuture]**     |
+| **[DiceKriging]**          | `km()`                                                                       | **[doFuture]**     |
+| **[ez]**                   | `ezBoot()`, `ezPerm()`, `ezPlot2()`                                          | **[doFuture]**     |
 | **[fwb]**                  | `fwb()`, `vcovFWB()`                                                         | -                  |
 | **[gamlss]**               | `add1All()`, `add1TGD()`, `drop1All()`, `drop1TGD()`, `gamlssCV()`           | -                  |
 | **[glmmTMB]**              | `profile()` for 'glmmTMB'                                                    | -                  |
 | **[glmnet]**               | `cv.glmnet()`                                                                | **[doFuture]**     |
 | **[kernelshap]**           | `kernelshap()`, `permshap()`                                                 | **[doFuture]**     |
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
-| **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma' objects | -                  |
+| **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
+| **[modelsummary]**         | `modelsummary()`, `msummary()`, `modelplot()`                                | **[future.apply]** |
+| **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`                                | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
+| **[pls]**                  | `mvr()`, `plsr()`, `pcr()`, `cppls()`, `crossval()`                          | -                  |
+| **[pvclust]**              | `pvclust()`                                                                  | -                  |
 | **[riskRegression]**       | `Score()` for 'list'                                                         | **[doFuture]**     |
+| **[rugarch]**              | `arfimacv()`, `arfimadistribution()`, `arfimaroll()`, `autoarfima()`, `multifilter()`, `multifit()`, `multiforecast()`, `ugarchboot()`, `ugarchdistribution()`, `ugarchroll()` | -                  |
+| **[sandwich]**             | `vcovBS()`, `vcovJK()`                                                       | **[future.apply]** |
 | **[seriation]**            | `seriate_best()`, `seriate_rep()`                                            | **[doFuture]**     |
 | **[shapr]**                | `explain()`, `explain_forecast()`                                            | -                  |
+| **[Sim.DiffProc]**         | `MCM.sde()`                                                                  | -                  |
 | **[SimDesign]**            | `runSimulation()`, `runArraySimulation()`                                    | -                  |
+| **[stars]**                | `st_apply()`                                                                 | **[future.apply]** |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
+| **[SuperLearner]**         | `CV.SuperLearner()`                                                          | -                  |
 | **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
 | **[TSP]**                  | `solve_TSP()`                                                                | **[doFuture]**     |
 | **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca'  | -                  |
@@ -149,7 +168,11 @@ b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
 ctrl <- caret::trainControl(method = "cv", number = 10)
 model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
 
+rt <- ez::ezBoot(data = ANT, dv = rt, wid = subnum, within = .(cue, flank), between = group) |> futurize()
+
 f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
+
+m <- DiceKriging::km(~., design = design, response = response, multistart = 8L) |> futurize()
 
 cv <- gamlss::gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
 
@@ -164,22 +187,40 @@ pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
+fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
+
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+
+m <- pls::plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
+
+fit <- pvclust::pvclust(mtcars, nboot = 1000) |> futurize()
+
+v <- sandwich::vcovBS(fm) |> futurize()
 
 sc <- riskRegression::Score(list("CSC" = fit), data = d,
   formula = Hist(time, event) ~ 1, times = 5, B = 100,
   split.method = "bootcv") |> futurize()
+
+roll <- rugarch::ugarchroll(spec, sp500ret, n.start = 1000, 
+  refit.window = "moving", refit.every = 100) |> futurize()
 
 result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
 
 
 o <- seriation::seriate_best(d_supreme) |> futurize()
 
+res <- Sim.DiffProc::MCM.sde(model, statistic = stat, R = 100) |> futurize()
+
 res <- SimDesign::runSimulation(Design, replications = 1000,
   generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
 
+s <- stars::st_as_stars(matrix(1:20, nrow = 5, ncol = 4))
+res <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
+
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
-  
+
+res <- SuperLearner::CV.SuperLearner(Y, X, SL.library = SL.library) |> futurize()
+
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
 tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
@@ -221,9 +262,9 @@ counts <- Rsamtools::countBam(bamViews) |> futurize()
 
 sce <- scater::runPCA(sce) |> futurize()
 
-sce <- scuttle::logNormCounts(sce) |> futurize()
+qc <- scuttle::perFeatureQCMetrics(sce) |> futurize()
 
-result <- SingleCellExperiment::applySCE(sce, scuttle::perCellQCMetrics) |> futurize()
+result <- SingleCellExperiment::applySCE(sce, scuttle::perFeatureQCMetrics) |> futurize()
   
 adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 ```
@@ -240,6 +281,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
+[DiceKriging]: https://cran.r-project.org/package=DiceKriging
+[ez]: https://cran.r-project.org/package=ez
 [fgsea]: https://bioconductor.org/packages/fgsea/
 [foreach]: https://cran.r-project.org/package=foreach
 [fwb]: https://ngreifer.github.io/fwb/
@@ -252,20 +295,29 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [lme4]: https://cran.r-project.org/package=lme4
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
+[modelsummary]: https://cran.r-project.org/package=modelsummary
+[parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit
 [pbapply]: https://cran.r-project.org/package=pbapply
 [plyr]: https://cran.r-project.org/package=plyr
+[pls]: https://cran.r-project.org/package=pls
+[pvclust]: https://cran.r-project.org/package=pvclust
 [purrr]: https://cran.r-project.org/package=purrr
 [riskRegression]: https://cran.r-project.org/package=riskRegression
+[rugarch]: https://cran.r-project.org/package=rugarch
+[sandwich]: https://cran.r-project.org/package=sandwich
 [Rsamtools]: https://bioconductor.org/packages/Rsamtools/
 [scater]: https://bioconductor.org/packages/scater/
 [scuttle]: https://bioconductor.org/packages/scuttle/
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/
 [seriation]: https://cran.r-project.org/package=seriation
 [shapr]: https://cran.r-project.org/package=shapr
+[Sim.DiffProc]: https://cran.r-project.org/package=Sim.DiffProc
 [SimDesign]: https://cran.r-project.org/package=SimDesign
+[stars]: https://cran.r-project.org/package=stars
 [strucchange]: https://cran.r-project.org/package=strucchange
 [sva]: https://bioconductor.org/packages/sva/
+[SuperLearner]: https://cran.r-project.org/package=SuperLearner
 [tm]: https://cran.r-project.org/package=tm
 [vegan]: https://cran.r-project.org/package=vegan
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/

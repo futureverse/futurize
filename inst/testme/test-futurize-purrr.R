@@ -6,13 +6,8 @@ options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
-counters <- plan("backend")[["counters"]]
-y <- map(1:3, function(x) { print(x) }) |> futurize(stdout = FALSE)
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+y <- map(1:3, function(x) { print(x) }) |> futurize_and_verify(stdout = FALSE)
 print(y)
-
 
 xs <- list(aa = 1, bb = 1:2, cc = 1:10, dd = 1:5, .ee = -6:6)
 FUN_no_rng <- function(x, na.rm = TRUE) {
@@ -32,7 +27,6 @@ FUN_rng <- function(x, na.rm = TRUE) {
 
 es <- as.environment(xs)
 
-
 exprs <- list(
       map = quote(map(xs, FUN) ),
   map_dbl = quote(map_dbl(xs, FUN) )
@@ -48,12 +42,9 @@ for (kk in seq_along(exprs)) {
 
   FUN <- FUN_no_rng
   truth <- eval(expr)
-  counters <- plan("backend")[["counters"]]
-  expr_f <- bquote(.(expr) |> futurize())
+  expr_f <- bquote(.(expr) |> futurize_and_verify())
+
   res <- eval(expr_f)
-  delta <- plan("backend")[["counters"]] - counters
-  cat(sprintf("Futures created: %d\n", delta[["created"]]))
-  stopifnot(delta[["created"]] > 0L)
 
   if (!identical(res, truth)) {
     str(list(truth = truth, res = res))
@@ -63,7 +54,7 @@ for (kk in seq_along(exprs)) {
   }
 
   out <- utils::capture.output({
-    expr_f2 <- bquote(.(expr) |> futurize(stdout = FALSE, conditions = character(0L)))
+    expr_f2 <- bquote(.(expr) |> futurize_and_verify(stdout = FALSE, conditions = character(0L)))
     res2 <- eval(expr_f2)
   })
   print(out)
@@ -73,7 +64,7 @@ for (kk in seq_along(exprs)) {
     identical(res2, truth)
   )
 
-  expr_f3 <- bquote(.(expr) |> futurize(chunk_size = 1L))
+  expr_f3 <- bquote(.(expr) |> futurize_and_verify(chunk_size = 1L))
   res3 <- eval(expr_f3)
   stopifnot(
     identical(res3, res),
@@ -82,7 +73,7 @@ for (kk in seq_along(exprs)) {
 
   message("Test with RNG:")
   FUN <- FUN_rng
-  expr_f4 <- bquote(.(expr) |> futurize(seed = TRUE))
+  expr_f4 <- bquote(.(expr) |> futurize_and_verify(seed = TRUE))
   print(expr_f4)
   res4 <- local({
     opts <- options(future.rng.onMisuse = "error")
@@ -96,8 +87,7 @@ for (kk in seq_along(exprs)) {
 }
 
 message("Special case: Zero futurize() options")
-y <- map(1, identity) |> futurize(options = list())
-
+y <- map(1, identity) |> futurize_and_verify(options = list())
 
 plan(sequential)
 } ## if (requireNamespace("purrr") && requireNamespace("furrr"))

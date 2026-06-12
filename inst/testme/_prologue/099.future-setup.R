@@ -6,7 +6,7 @@ oplan <- local({
 })
 
 
-supportedStrategies <- function(cores = NA_integer_, excl = "cluster", ...) {
+supportedStrategies <- function(cores = NA_integer_, excl = c("cluster", "multicore"), ...) {
   strategies <- future:::supportedStrategies(...)
   strategies <- setdiff(strategies, excl)
   

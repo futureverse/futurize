@@ -6,18 +6,14 @@ options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
-dat <- gamSim(1, n = 25000, dist = "normal", scale = 20)
+dat <- gamSim(1, n = 500L, dist = "normal", scale = 20)
 bs <- "cr"
 k <- 12
 
 b_truth <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) + s(x3, bs = bs), data = dat)
 print(b_truth)
 
-counters <- plan("backend")[["counters"]]
-b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) + s(x3, bs = bs), data = dat) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+b <- bam(y ~ s(x0, bs = bs) + s(x1, bs = bs) + s(x2, bs = bs, k = k) + s(x3, bs = bs), data = dat) |> futurize_and_verify()
 print(b)
 
 stopifnot(all.equal(summary(b), summary(b_truth)))
@@ -31,22 +27,13 @@ nrows <- 100 * nbrOfWorkers()
 newdat <- dat[1:nrows, ]
 p_truth <- predict(b_truth, newdata = newdat)
 
-counters <- plan("backend")[["counters"]]
-p <- predict(b_truth, newdata = newdat) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+p <- predict(b_truth, newdata = newdat) |> futurize_and_verify()
 ## NOTE: mgcv::predict.bam() returns an array when run sequentially,
 ## but a named numeric vector when run in parallel via parLapply
 stopifnot(all.equal(as.numeric(p), as.numeric(p_truth)))
 
-counters <- plan("backend")[["counters"]]
-p2 <- stats::predict(b_truth, newdata = newdat) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+p2 <- stats::predict(b_truth, newdata = newdat) |> futurize_and_verify()
 stopifnot(all.equal(as.numeric(p2), as.numeric(p_truth)))
-
 
 plan(sequential)
 } ## if (requireNamespace("mgcv"))

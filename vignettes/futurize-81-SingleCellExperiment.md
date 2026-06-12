@@ -5,6 +5,7 @@
 %\VignetteKeyword{package}
 %\VignetteKeyword{Bioconductor}
 %\VignetteKeyword{SingleCellExperiment}
+%\VignetteKeyword{scuttle}
 %\VignetteKeyword{vignette}
 %\VignetteKeyword{futurize}
 %\VignetteEngine{futurize::selfonly}
@@ -31,7 +32,7 @@ plan(multisession)
 library(SingleCellExperiment)
 library(scuttle)
 
-result <- applySCE(sce, perCellQCMetrics) |> futurize()
+result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
 ```
 
 
@@ -49,7 +50,7 @@ arguments such as `BPPARAM` via `...` to enable parallelization of
 the applied function.
 
 
-## Example: Computing per-cell QC metrics in parallel
+## Example: Computing per-feature QC metrics in parallel
 
 The `applySCE()` function applies a function across the main
 experiment and its alternative experiments:
@@ -59,51 +60,28 @@ library(SingleCellExperiment)
 library(scuttle)
 
 # Simulate data
-set.seed(42)
-n_genes <- 200L
-n_cells <- 100L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells,
-  dimnames = list(
-    paste0("gene", seq_len(n_genes)),
-    paste0("cell", seq_len(n_cells))
-  )
-)
+sce <- mockSCE()
 
-sce <- SingleCellExperiment(
-  assays = list(counts = counts)
-)
-
-# Add an alternative experiment (e.g. spike-ins)
-spike_counts <- matrix(
-  rpois(10L * n_cells, lambda = 5),
-  nrow = 10L,
-  ncol = n_cells
-)
-rownames(spike_counts) <- paste0("spike", seq_len(10L))
-colnames(spike_counts) <- paste0("cell", seq_len(n_cells))
-
-altExp(sce, "spikes") <- SingleCellExperiment(
-  assays = list(counts = spike_counts)
-)
-
-result <- applySCE(sce, perCellQCMetrics)
+result <- applySCE(sce, perFeatureQCMetrics)
 ```
 
-Here `applySCE()` runs `perCellQCMetrics()` sequentially on each
-experiment, but we can easily make it run in parallel by piping to
-`futurize()`:
+Here `applySCE()` runs `perFeatureQCMetrics()` from the **[scuttle]**
+package sequentially on each experiment, but we can easily make it run
+in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
 
-result <- applySCE(sce, perCellQCMetrics) |> futurize()
+result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
 ```
 
-This will distribute the work across the available parallel workers,
-given that we have set up parallel workers, e.g.
+It is actually not `SingleCellExperiment::applySCE()` that
+orchestrates the parallelization, but `scuttle::perFeatureQCMetrics()`,
+which hands of the parallelization to **[BiocParallel]** which in turn
+hands it of to futureverse.
+
+The above will distribute the work across the available parallel
+workers, given that we have set up parallel workers, e.g.
 
 ```r
 plan(multisession)
@@ -133,5 +111,7 @@ The following **SingleCellExperiment** functions are supported by `futurize()`:
 * `applySCE()`
 
 
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [SingleCellExperiment]: https://bioconductor.org/packages/SingleCellExperiment/
+[scuttle]: https://bioconductor.org/packages/scuttle/
 [other parallel backends]: https://www.futureverse.org/backends.html

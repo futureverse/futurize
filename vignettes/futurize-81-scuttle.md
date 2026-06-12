@@ -30,8 +30,7 @@ library(futurize)
 plan(multisession)
 library(scuttle)
 
-sce <- logNormCounts(sce) |> futurize()
-qc <- perCellQCMetrics(sce) |> futurize()
+qc <- perFeatureQCMetrics(sce) |> futurize()
 ```
 
 
@@ -43,45 +42,30 @@ the **[scuttle]** functions.
 The **[scuttle]** Bioconductor package provides basic utility
 functions for single-cell RNA-seq data analysis, including quality
 control, normalization, and aggregation, which can be parallelized
-across cells.
+across cells or features.
 
 
-## Example: Log-normalizing counts in parallel
+## Example: Computing per-feature QC metrics in parallel
 
-The `logNormCounts()` function computes log-normalized expression
-values for a `SingleCellExperiment` object:
+The `perFeatureQCMetrics()` function computes quality control metrics
+for each feature (gene) in a `SingleCellExperiment` object:
 
 ```r
 library(scuttle)
 
 # Simulate data
-set.seed(42)
-n_genes <- 200L
-n_cells <- 100L
-counts <- matrix(
-  rpois(n_genes * n_cells, lambda = 10),
-  nrow = n_genes,
-  ncol = n_cells,
-  dimnames = list(
-    paste0("gene", seq_len(n_genes)),
-    paste0("cell", seq_len(n_cells))
-  )
-)
+sce <- mockSCE()
 
-sce <- SingleCellExperiment::SingleCellExperiment(
-  assays = list(counts = counts)
-)
-
-sce <- logNormCounts(sce)
+qc <- perFeatureQCMetrics(sce)
 ```
 
-Here `logNormCounts()` runs sequentially, but we can easily make it
-run in parallel by piping to `futurize()`:
+Here `perFeatureQCMetrics()` runs sequentially, but we can easily make
+it run in parallel by piping to `futurize()`:
 
 ```r
 library(futurize)
 
-sce <- logNormCounts(sce) |> futurize()
+qc <- perFeatureQCMetrics(sce) |> futurize()
 ```
 
 This will distribute the work across the available parallel workers,
@@ -113,25 +97,9 @@ plan(future.batchtools::batchtools_slurm)
 The following **scuttle** functions are supported by `futurize()`:
 
 * `calculateAverage()`
-* `logNormCounts()`
-* `normalizeCounts()`
-* `perCellQCMetrics()`
 * `perFeatureQCMetrics()`
-* `addPerCellQCMetrics()`
-* `addPerFeatureQCMetrics()`
-* `addPerCellQC()`
-* `addPerFeatureQC()`
-* `numDetectedAcrossCells()`
 * `numDetectedAcrossFeatures()`
-* `sumCountsAcrossCells()`
-* `sumCountsAcrossFeatures()`
 * `summarizeAssayByGroup()`
-* `aggregateAcrossCells()`
-* `aggregateAcrossFeatures()`
-* `librarySizeFactors()`
-* `computeLibraryFactors()`
-* `geometricSizeFactors()`
-* `computeGeometricFactors()`
 * `medianSizeFactors()`
 * `computeMedianFactors()`
 * `pooledSizeFactors()`
@@ -139,5 +107,28 @@ The following **scuttle** functions are supported by `futurize()`:
 * `fitLinearModel()`
 
 
+The following **scuttle** functions are deprecated in **scuttle** (>=
+1.22) in favor of counter-part functions in Bioconductor package
+**[scrapper]**. Support for `futurize()` of the these deprecated
+functions remains, but will be phased out;
+
+* `logNormCounts()`
+* `normalizeCounts()`
+* `perCellQCMetrics()`
+* `addPerCellQCMetrics()`
+* `addPerFeatureQCMetrics()`
+* `addPerCellQC()`
+* `addPerFeatureQC()`
+* `numDetectedAcrossCells()`
+* `sumCountsAcrossCells()`
+* `sumCountsAcrossFeatures()`
+* `aggregateAcrossCells()`
+* `aggregateAcrossFeatures()`
+* `librarySizeFactors()`
+* `computeLibraryFactors()`
+* `geometricSizeFactors()`
+* `computeGeometricFactors()`
+
 [scuttle]: https://bioconductor.org/packages/scuttle/
+[scrapper]: https://bioconductor.org/packages/scrapper/
 [other parallel backends]: https://www.futureverse.org/backends.html

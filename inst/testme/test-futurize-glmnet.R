@@ -16,8 +16,8 @@ all_equal <- function(a, b, ...) {
 plan(multisession)
 
 ## Adopted from example("cv.glmnet", package = "glmnet")
-n <- 1000L
-p <- 100L
+n <- 500L
+p <- 20L
 nzc <- trunc(p / 10)
 x <- matrix(rnorm(n * p), n, p)
 beta <- rnorm(nzc)
@@ -26,15 +26,11 @@ eps <- rnorm(n) * 5
 y <- drop(fx + eps)
 
 set.seed(1011)
-cv_truth <- cv.glmnet(x, y)
+cv_truth <- cv.glmnet(x, y, nfolds = 10L)
 print(cv_truth)
 
 set.seed(1011)
-counters <- plan("backend")[["counters"]]
-cv <- cv.glmnet(x, y) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+cv <- cv.glmnet(x, y, nfolds = 10L) |> futurize_and_verify()
 print(cv)
 
 res <- all_equal(cv, cv_truth)

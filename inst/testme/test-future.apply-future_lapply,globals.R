@@ -5,6 +5,8 @@
 if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
+
+
 library(tools) ## toTitleCase()
 
 options(future.debug = FALSE)
@@ -34,8 +36,8 @@ for (name in names(globals_set)) {
   y <- tryCatch({
     lapply(x, FUN = function(x) {
       median(c(x, a, b))
-    }) |> futurize(globals = globals, packages = "utils")
-  }, error = identity)
+    }) |> futurize_and_verify(globals = globals, packages = "utils")
+  }, FuturizeTestAssertionError = stop, error = identity)
   print(y)
   if (! "covr" %in% loadedNamespaces()) {
     stopifnot((name == "A" && inherits(y, "error")) || 
@@ -49,13 +51,13 @@ message("*** future_lapply() - globals ... DONE")
 message("*** future_lapply() - manual globals ...")
 
 d <- 42
-y <- lapply(1:2, FUN = function(x) { x * d }) |> futurize(globals = structure(FALSE, add = "d"))
+y <- lapply(1:2, FUN = function(x) { x * d }) |> futurize_and_verify(globals = structure(FALSE, add = "d"))
 stopifnot(identical(y, list(42, 84)))
 
 e <- 42
 res <- tryCatch({
-  lapply(1:2, FUN = function(x) { 2 * e }) |> futurize(globals = structure(TRUE, ignore = "e"))
-}, error = identity)
+  lapply(1:2, FUN = function(x) { 2 * e }) |> futurize_and_verify(globals = structure(TRUE, ignore = "e"))
+}, FuturizeTestAssertionError = stop, error = identity)
 if (! "covr" %in% loadedNamespaces()) {
   stopifnot(inherits(res, "error"))
 }
@@ -82,7 +84,7 @@ main <- function(x = 1:2, caller = call_my_add_caller,
                  args = list(FUN = call_my_add)) {
   results <- lapply(x, FUN = function(i) {
     do.call(caller, args = c(list(a = i, b = i + 1L), args))
-  }) |> futurize()
+  }) |> futurize_and_verify()
   results
 }
 
@@ -100,29 +102,29 @@ for (strategy in supportedStrategies()) {
   stopifnot(identical(y, y0))
 
   message("- lapply(x, FUN = do.call, ...) |> futurize() ...")
-  z <- lapply(x, FUN = do.call, what = length) |> futurize()
+  z <- lapply(x, FUN = do.call, what = length) |> futurize_and_verify()
   stopifnot(identical(z, z_length))
-  z <- lapply(x, FUN = do.call, what = fun) |> futurize()
+  z <- lapply(x, FUN = do.call, what = fun) |> futurize_and_verify()
   stopifnot(identical(z, z_fun))
 
   message("- lapply(x, ...) |> futurize() - passing arguments via '...' ...")
   ## typeof() == "list"
   obj <- data.frame(a = 1:2)
   stopifnot(typeof(obj) == "list")
-  y <- lapply(1L, function(a, b) typeof(b), b = obj) |> futurize()
+  y <- lapply(1L, function(a, b) typeof(b), b = obj) |> futurize_and_verify()
   stopifnot(identical(y[[1]], typeof(obj)))
 
   ## typeof() == "environment"
   obj <- new.env()
   stopifnot(typeof(obj) == "environment")
-  y <- lapply(1L, function(a, b) typeof(b), b = obj) |> futurize()
+  y <- lapply(1L, function(a, b) typeof(b), b = obj) |> futurize_and_verify()
   stopifnot(identical(y[[1]], typeof(obj)))
 
   ## typeof() == "S4"
   if (requireNamespace("methods")) {
     obj <- methods::getClass("MethodDefinition")
     stopifnot(typeof(obj) == "S4")
-    y <- lapply(1L, function(a, b) typeof(b), b = obj) |> futurize()
+    y <- lapply(1L, function(a, b) typeof(b), b = obj) |> futurize_and_verify()
     stopifnot(identical(y[[1]], typeof(obj)))
   }
 
@@ -138,7 +140,7 @@ for (strategy in supportedStrategies()) {
   )
   z0 <- lapply(X, FUN = function(f) f())
   str(z0)
-  z1 <- lapply(X, FUN = function(f) f()) |> futurize()
+  z1 <- lapply(X, FUN = function(f) f()) |> futurize_and_verify()
   str(z1)
   stopifnot(identical(z1, z0))
 
@@ -148,7 +150,7 @@ for (strategy in supportedStrategies()) {
 #  z0 <- fcn0(a = 1)
 #  str(list(z0 = z0))
 #  stopifnot(identical(z0, list(list(a = 1))))
-#  fcn <- function(...) { lapply(1, FUN = function(x) list(...)) } |> futurize()
+#  fcn <- function(...) { lapply(1, FUN = function(x) list(...)) } |> futurize_and_verify()
 #  z1 <- fcn(a = 1)
 #  str(list(z1 = z1))
 #  stopifnot(identical(z1, z0))
@@ -163,7 +165,7 @@ for (strategy in supportedStrategies()) {
   z1 <- lapply(1, function(ii) {
     a <- a + 1
     a
-  }) |> futurize()
+  }) |> futurize_and_verify()
   stopifnot(identical(z1, z0))
 
   ## https://github.com/futureverse/future.apply/issues/47
@@ -171,13 +173,13 @@ for (strategy in supportedStrategies()) {
   z2 <- tryCatch(lapply(1, function(ii) {
     a
     a <- a + 1
-  }) |> futurize(), error = identity)
+  }) |> futurize_and_verify(), FuturizeTestAssertionError = stop, error = identity)
   stopifnot(identical(z2, z0))
 
   ## https://github.com/futureverse/future.apply/issues/85
   message("- lapply(..., future.globals = <list>) |> futurize() ...")
   a <- 0
-  y <- lapply(1, FUN = function(x) a) |> futurize(globals = list(a = 42))
+  y <- lapply(1, FUN = function(x) a) |> futurize_and_verify(globals = list(a = 42))
   str(y)
   if (! "covr" %in% loadedNamespaces()) {
     stopifnot(y[[1]] == 42)
@@ -190,7 +192,7 @@ message("*** future_lapply() - tricky globals ... DONE")
 message("*** future_lapply() - missing arguments ...")
 
 ## Here 'abc' becomes missing, i.e. missing(abc) is TRUE
-foo <- function(x, abc) lapply(x, FUN = function(y) y) |> futurize()
+foo <- function(x, abc) lapply(x, FUN = function(y) y) |> futurize_and_verify()
 y <- foo(1:2)
 stopifnot(identical(y, as.list(1:2)))
 
@@ -202,7 +204,7 @@ message("*** future_lapply() - false positives ...")
 ## Here 'abc' becomes a promise, which fails to resolve
 ## iff 'xyz' does not exist. (Issue #161)
 suppressWarnings(rm(list = "xyz"))
-foo <- function(x, abc) lapply(x, FUN = function(y) y) |> futurize()
+foo <- function(x, abc) lapply(x, FUN = function(y) y) |> futurize_and_verify()
 y <- foo(1:2, abc = (xyz >= 3.14))
 stopifnot(identical(y, as.list(1:2)))
 
@@ -226,14 +228,14 @@ cat(sprintf("Baseline size of globals: %.2f KiB\n", sizes[["FUN"]] / 1024))
 message("- true positive ...")
 options(future.globals.maxSize = 1L)
 res <- tryCatch({
-  y <- lapply(X, FUN = FUN) |> futurize()
-}, error = identity)
+  y <- lapply(X, FUN = FUN) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 res <- NULL
 options(future.globals.maxSize = oMaxSize)
 
 maxSize <- getOption("future.globals.maxSize")
-y <- lapply(X, FUN = FUN) |> futurize()
+y <- lapply(X, FUN = FUN) |> futurize_and_verify()
 str(y)
 stopifnot(all(sapply(y, FUN = identical, oMaxSize)))
 
@@ -243,7 +245,7 @@ if ("covr" %in% loadedNamespaces()) maxSize <- maxSize + 65e3
 options(future.globals.maxSize = maxSize)
 
 for (chunk_size in c(1L, 2L, 5L, 10L)) {
-  y <- lapply(X, FUN = FUN) |> futurize(chunk_size = chunk_size)
+  y <- lapply(X, FUN = FUN) |> futurize_and_verify(chunk_size = chunk_size)
   str(y)
   stopifnot(all(unlist(y) == maxSize))
   cat(sprintf("maxSize = %g bytes\nfuture.globals.maxSize = %g bytes\n",
@@ -260,30 +262,30 @@ message("*** future_lapply() - too large ... DONE")
 message("*** future_lapply() - globals exceptions ...")
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = 42)
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = 42)
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = list(1))
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = list(1))
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = "...future.FUN")
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = "...future.FUN")
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 res <- tryCatch({
-  y <- lapply(1, FUN = function(x) x) |> futurize(globals = "...future.FUN")
-}, error = identity)
+  y <- lapply(1, FUN = function(x) x) |> futurize_and_verify(globals = "...future.FUN")
+}, FuturizeTestAssertionError = stop, error = identity)
 stopifnot(inherits(res, "error"))
 
 ...future.elements_ii <- 42L
 X <- list(function() 2 * ...future.elements_ii)
 res <- tryCatch({
-  y <- lapply(X, FUN = function(f) f()) |> futurize()
-}, error = identity)
+  y <- lapply(X, FUN = function(f) f()) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 if (! "covr" %in% loadedNamespaces()) {
   stopifnot(inherits(res, "error"))
 }

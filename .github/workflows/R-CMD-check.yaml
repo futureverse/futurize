@@ -6,7 +6,7 @@ jobs:
   R-CMD-check:
     if: "! contains(github.event.head_commit.message, '[ci skip]')"    
 
-    timeout-minutes: 90
+    timeout-minutes: 120
 
     runs-on: ${{ matrix.config.os }}
 
@@ -16,14 +16,16 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - {os: windows-latest, r: 'devel'    }
           - {os: windows-latest, r: 'release'  }
           - {os: windows-latest, r: 'oldrel'   }
+#          - {os: macOS-latest,   r: 'devel'    }
           - {os: macOS-latest,   r: 'release'  }
-          - {os: ubuntu-latest,  r: 'devel'    }
+#          - {os: ubuntu-latest,  r: 'devel'    } # takes ~1.5 hour to install
           - {os: ubuntu-latest,  r: 'release', label = "w/ all suggests"  }
           - {os: ubuntu-latest,  r: 'release', without_suggests: true, label: 'w/out suggests' }
           - {os: ubuntu-latest,  r: 'oldrel'   }
-#          - {os: ubuntu-latest,  r: '4.1'      }
+          - {os: ubuntu-latest,  r: '4.4'      }
  
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

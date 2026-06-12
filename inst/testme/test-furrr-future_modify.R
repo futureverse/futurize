@@ -1,15 +1,17 @@
 #' @tags pkg-furrr
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
+
+
 library(purrr)
 
 # ------------------------------------------------------------------------------
 # future_modify()
 
 message("future_modify() default method works")
-stopifnot(identical(modify(list(1, 2), ~3) |> futurize(), list(3, 3)))
+stopifnot(identical(modify(list(1, 2), ~3) |> futurize_and_verify(), list(3, 3)))
 stopifnot(identical(
-  modify(data.frame(x = 1, y = 2), ~3) |> futurize(),
+  modify(data.frame(x = 1, y = 2), ~3) |> futurize_and_verify(),
   data.frame(x = 3, y = 3)
 ))
 
@@ -25,43 +27,43 @@ stopifnot(identical(
     } else {
       .x
     }
-  ) |> futurize(),
+  ) |> futurize_and_verify(),
   list(2, 2)
 ))
 
 
 message("future_modify() variants work")
-stopifnot(identical(modify(c(1L, 2L, 3L), ~2L) |> futurize(), rep(2L, 3)))
-stopifnot(identical(modify(c(1, 2, 3), ~2) |> futurize(), rep(2, 3)))
-stopifnot(identical(modify(c("a", "b", "c"), toupper) |> futurize(), c("A", "B", "C")))
-stopifnot(identical(modify(c(TRUE, FALSE, TRUE), ~TRUE) |> futurize(), rep(TRUE, 3)))
+stopifnot(identical(modify(c(1L, 2L, 3L), ~2L) |> futurize_and_verify(), rep(2L, 3)))
+stopifnot(identical(modify(c(1, 2, 3), ~2) |> futurize_and_verify(), rep(2, 3)))
+stopifnot(identical(modify(c("a", "b", "c"), toupper) |> futurize_and_verify(), c("A", "B", "C")))
+stopifnot(identical(modify(c(TRUE, FALSE, TRUE), ~TRUE) |> futurize_and_verify(), rep(TRUE, 3)))
 
 
 message("modify(<pairlist>) |> futurize() works")
 x <- as.pairlist(list(1, 2))
-stopifnot(identical(class(modify(x, ~.x) |> futurize()), "pairlist"))
+stopifnot(identical(class(modify(x, ~.x) |> futurize_and_verify()), "pairlist"))
 
 
 # ------------------------------------------------------------------------------
 # future_modify_at()
 
 message("future_modify_at() default works")
-stopifnot(identical(modify_at(list(1, 2, 3), c(1, 3), ~5) |> futurize(), list(5, 2, 5)))
+stopifnot(identical(modify_at(list(1, 2, 3), c(1, 3), ~5) |> futurize_and_verify(), list(5, 2, 5)))
 stopifnot(identical(
-  modify_at(data.frame(x = 1, y = 2), 2, ~3) |> futurize(),
+  modify_at(data.frame(x = 1, y = 2), 2, ~3) |> futurize_and_verify(),
   data.frame(x = 1, y = 3)
 ))
 
 
 message("future_modify_at() variants works")
-stopifnot(identical(modify_at(c(1L, 2L, 3L), c(1, 3), ~5L) |> futurize(), c(5L, 2L, 5L)))
-stopifnot(identical(modify_at(c(1, 2, 3), c(1, 3), ~5) |> futurize(), c(5, 2, 5)))
+stopifnot(identical(modify_at(c(1L, 2L, 3L), c(1, 3), ~5L) |> futurize_and_verify(), c(5L, 2L, 5L)))
+stopifnot(identical(modify_at(c(1, 2, 3), c(1, 3), ~5) |> futurize_and_verify(), c(5, 2, 5)))
 stopifnot(identical(
-  modify_at(c("a", "b", "c"), c(1, 3), toupper) |> futurize(),
+  modify_at(c("a", "b", "c"), c(1, 3), toupper) |> futurize_and_verify(),
   c("A", "b", "C")
 ))
 stopifnot(identical(
-  modify_at(c(TRUE, FALSE, TRUE), c(1, 3), ~NA) |> futurize(),
+  modify_at(c(TRUE, FALSE, TRUE), c(1, 3), ~NA) |> futurize_and_verify(),
   c(NA, FALSE, NA)
 ))
 
@@ -70,35 +72,35 @@ stopifnot(identical(
 # future_modify_if()
 
 message("future_modify_if() default works")
-stopifnot(identical(modify_if(list(1, 2), ~.x == 1, ~3) |> futurize(), list(3, 2)))
+stopifnot(identical(modify_if(list(1, 2), ~.x == 1, ~3) |> futurize_and_verify(), list(3, 2)))
 stopifnot(identical(
-  modify_if(data.frame(x = 1, y = 2), ~.x == 1, ~3) |> futurize(),
+  modify_if(data.frame(x = 1, y = 2), ~.x == 1, ~3) |> futurize_and_verify(),
   data.frame(x = 3, y = 2)
 ))
 
 
 message("future_modify_if() `.else` works for default")
 stopifnot(identical(
-  modify_if(list(1, 2, 1, 4), ~.x == 1, ~3, .else = ~4) |> futurize(),
+  modify_if(list(1, 2, 1, 4), ~.x == 1, ~3, .else = ~4) |> futurize_and_verify(),
   list(3, 4, 3, 4)
 ))
 
 
 message("future_modify_if() variants works")
 stopifnot(identical(
-  modify_if(c(1L, 2L, 3L), ~.x == 1L, ~2L, .else = ~3L) |> futurize(),
+  modify_if(c(1L, 2L, 3L), ~.x == 1L, ~2L, .else = ~3L) |> futurize_and_verify(),
   c(2L, 3L, 3L)
 ))
 stopifnot(identical(
-  modify_if(c(1, 2, 3), ~.x == 1, ~2, .else = ~3) |> futurize(),
+  modify_if(c(1, 2, 3), ~.x == 1, ~2, .else = ~3) |> futurize_and_verify(),
   c(2, 3, 3)
 ))
 stopifnot(identical(
-  modify_if(c("a", "b", "c"), ~.x == "a", toupper, .else = ~"d") |> futurize(),
+  modify_if(c("a", "b", "c"), ~.x == "a", toupper, .else = ~"d") |> futurize_and_verify(),
   c("A", "d", "d")
 ))
 stopifnot(identical(
-  modify_if(c(TRUE, FALSE, TRUE), ~.x == TRUE, ~TRUE, .else = ~NA) |> futurize(),
+  modify_if(c(TRUE, FALSE, TRUE), ~.x == TRUE, ~TRUE, .else = ~NA) |> futurize_and_verify(),
   c(TRUE, NA, TRUE)
 ))
 

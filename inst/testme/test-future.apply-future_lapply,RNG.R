@@ -6,6 +6,8 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
 
 library(futurize)
 
+
+
 message("*** future_lapply() and RNGs ...")
 
 options(future.debug = FALSE)
@@ -13,34 +15,34 @@ options(future.debug = FALSE)
 message("* lapply(x, ..., future.seed = <invalid>) |> futurize() ...")
 
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:2) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:2) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = list(1, 2, 3:4) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = list(1, 2, 3:4) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:3) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = as.list(1:3) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 seeds <- lapply(1:3, FUN = as_lecyer_cmrg_seed)
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = lapply(seeds, FUN = as.numeric) |> futurize())
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = lapply(seeds, FUN = as.numeric) |> futurize_and_verify())
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
 seeds[[1]][1] <- seeds[[1]][1] + 1L
 res <- tryCatch({
-  y <- lapply(1:3, FUN = identity, future.seed = seeds) |> futurize()
-}, error = identity)
+  y <- lapply(1:3, FUN = identity, future.seed = seeds) |> futurize_and_verify()
+}, FuturizeTestAssertionError = stop, error = identity)
 print(res)
 stopifnot(inherits(res, "simpleError"))
 
@@ -63,7 +65,7 @@ for (cores in 1:availCores) {
   
     set.seed(0xBEEF)
     seed0 <- get_random_seed()
-    y <- lapply(x, FUN = function(i) i) |> futurize(seed = FALSE)
+    y <- lapply(x, FUN = function(i) i) |> futurize_and_verify(seed = FALSE)
     y <- unlist(y)
     seed <- get_random_seed()
     if (is.null(y0)) {
@@ -136,7 +138,7 @@ for (name in names(seed_sets)) {
       seed0 <- get_random_seed()
       y <- lapply(x, FUN = function(i) {
         rnorm(1L)
-      }) |> futurize(seed = future.seed)
+      }) |> futurize_and_verify(seed = future.seed)
       y <- unlist(y)
       seed <- get_random_seed()
       if (is.null(y0)) {
@@ -154,7 +156,7 @@ for (name in names(seed_sets)) {
         seed0 <- get_random_seed()
         y <- lapply(x, FUN = function(i) {
           rnorm(1L)
-        }) |> futurize(seed = future.seed, scheduling = scheduling)
+        }) |> futurize_and_verify(seed = future.seed, scheduling = scheduling)
         seed <- get_random_seed()
         y <- unlist(y)
         str(list(y = y))
@@ -169,14 +171,14 @@ for (name in names(seed_sets)) {
           
           z <- lapply(1:3, FUN = function(j) {
             list(j = j, seed = globalenv()$.Random.seed)
-          }) |> futurize(seed = .seed)
+          }) |> futurize_and_verify(seed = .seed)
     
           ## Assert that all future seeds are unique
           seeds <- lapply(z, FUN = function(x) x$seed)
           for (kk in 2:length(seeds)) stopifnot(!all(seeds[[kk]] == seeds[[1]]))
           
           list(i = i, seed = .seed, sample = rnorm(1L), z = z)
-        }) |> futurize(seed = 42L, scheduling = scheduling)
+        }) |> futurize_and_verify(seed = 42L, scheduling = scheduling)
   
         if (is.null(y0_nested)) y0_nested <- y
         str(list(y = y))

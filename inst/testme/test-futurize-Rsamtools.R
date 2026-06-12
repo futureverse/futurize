@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## to limit total check time
 #' @tags pkg-Rsamtools
 if (requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)
@@ -5,7 +6,6 @@ library(Rsamtools)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
-
 
 ## ---------------------------------------------------------
 ## countBam() with BamViews
@@ -32,20 +32,9 @@ bv <- BamViews(bam_files)
 result_truth <- countBam(bv)
 str(result_truth)
 
-counters <- plan("backend")[["counters"]]
-result <- countBam(bv) |> futurize()
+result <- countBam(bv) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
-
-counters <- plan("backend")[["counters"]]
-result2 <- Rsamtools::countBam(bv) |> futurize()
-stopifnot(all.equal(result2, result_truth))
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
 
 
 ## ---------------------------------------------------------
@@ -57,25 +46,13 @@ stopifnot(delta[["created"]] > 0L)
 result_truth <- scanBam(bv)
 str(result_truth)
 
-counters <- plan("backend")[["counters"]]
-result <- scanBam(bv) |> futurize()
+result <- scanBam(bv) |> futurize_and_verify()
 str(result)
 stopifnot(all.equal(result, result_truth))
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
-
-counters <- plan("backend")[["counters"]]
-result2 <- Rsamtools::scanBam(bv) |> futurize()
-stopifnot(all.equal(result2, result_truth))
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created: %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
 
 ## Cleanup
 file.remove(bam_files)
 file.remove(paste0(bam_files, ".bai"))
-
 
 plan(sequential)
 } ## if (requireNamespace("Rsamtools") && ...)

@@ -38,7 +38,6 @@ Summarise <- function(condition, results, fixed_objects) {
   c(bias = obs_bias, RMSE = obs_RMSE)
 }
 
-counters <- plan("backend")[["counters"]]
 res <- runSimulation(
   design = Design,
   replications = 10,
@@ -46,10 +45,7 @@ res <- runSimulation(
   analyse = Analyse,
   summarise = Summarise,
   save = FALSE
-) |> futurize()
-delta <- plan("backend")[["counters"]] - counters
-cat(sprintf("Futures created (runSimulation): %d\n", delta[["created"]]))
-stopifnot(delta[["created"]] > 0L)
+) |> futurize_and_verify()
 print(res)
 
 plan(sequential)

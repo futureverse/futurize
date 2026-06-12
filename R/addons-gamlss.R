@@ -26,6 +26,7 @@ append_transpilers_for_gamlss <- function() {
     if (all(c("parallel", "ncpus", "cl") %in% names(formals(fcn)))) {
       transpiler <- make_futurize_for_makeClusterFuture(
         defaults = list(
+          seed = (name == "gamlssCV"),
           packages = "gamlss",
           label = sprintf("fz:gamlss::%s", name)
         ),

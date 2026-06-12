@@ -31,9 +31,7 @@ library(vegan)
 
 data(dune)
 data(dune.env)
-dune.mrpp <- with(dune.env, {
-  mrpp(dune, Management) |> futurize()
-})
+dune.mrpp <- with(dune.env, { mrpp(dune, Management) }) |> futurize()
 ```
 
 # Introduction
@@ -53,9 +51,7 @@ library(vegan)
 
 data(dune)
 data(dune.env)
-dune.mrpp <- with(dune.env, {
-  mrpp(dune, Management) |> futurize()
-})
+dune.mrpp <- with(dune.env, { mrpp(dune, Management) }) |> futurize()
 ```
 
 This will parallelize the computations, given that we have set up
@@ -108,7 +104,7 @@ The following **vegan** functions are supported by `futurize()`:
 * `adonis2()`
 * `anova()` for 'cca'
 * `anosim()`
-* `cascadeKM()`
+* `cascadeKM()` with `seed = TRUE` as the default
 * `estaccumR()`
 * `mantel()`
 * `mantel.partial()`

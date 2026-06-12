@@ -129,37 +129,32 @@ The following **stats** package function is also supported:
  * `kernapply()`
 
 
-# Progress Reporting via progressr
+# Progress Reporting via progressify
 
-The **[progressr]** package is specially designed to work with the
-Futureverse ecosystem. With **progressr**, progress can be reported
+The **[progressify]** package is specially designed to work with the
+Futureverse ecosystem. With **progressify**, progress can be reported
 from parallelized computations in a near-live fashion. Progress
 updates are propagated from the workers back to the main process,
 where they are relayed to provide feedback during long-running
 computations. This works because progress is signaled as R
 conditions that the **future** package and most future backends
-relay instantly.
+relay instantly. What is unique about **progressify** is that it
+adds progress reporting to your existing code without you having
+to change your code.
 
 For example:
 
 ```r
 library(futurize)
 plan(multisession)
-library(progressr)
-handlers(global = TRUE)
+library(progressify)
 
 xs <- 1:100
-ys <- local({
-  p <- progressor(along = xs)
-  lapply(xs, function(x) {
-    p()
-    slow_fcn(x)
-  })
-}) |> futurize()
+ys <- lapply(xs, slow_fcn) |> progressify() |> futurize()
 ```
 
-Note also how `futurize()` unwraps the expression - it descends
-through `local()` and `{ }` to identify the `lapply()` call to be
+Note how `futurize()` unwraps the expression - it descends
+through `progressify()` to identify the `lapply()` call to be
 futurized. Using the default progress handler, the above output and
 progress reporting will appear as:
 
@@ -237,6 +232,6 @@ y <- base::lapply(1:3, sqrt) |> futurize()
 ```
 
 
-[progressr]: https://cran.r-project.org/package=progressr
+[progressify]: https://progressify.futureverse.org/
 [other parallel backends]: https://www.futureverse.org/backends.html
 [BiocGenerics]: https://www.bioconductor.org/packages/BiocGenerics/

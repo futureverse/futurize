@@ -1,4 +1,67 @@
-# Version 0.3.0 (2026-04-01)
+# Version 1.0.0 (2026-06-11)
+
+## Significant Changes
+
+ * Changed the package license to permissive Apache License (>= 2).
+
+## New Transpilers
+
+ * Add support for domain-specific CRAN package **DiceKriging**,
+   e.g. `m <- km(~., design = design, response = response, multistart
+   = 8) |> futurize()`.
+   
+ * Add support for domain-specific CRAN package **ez**, e.g. `rt <-
+   ezBoot(data = ANT, dv = rt, wid = subnum, within = .(cue, flank),
+   between = group) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **modelsummary**,
+   e.g. `tbl <- modelsummary(models) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **parameters**,
+   e.g. `fit <- bootstrap_model(model, iterations = 1000) |>
+   futurize()`.
+
+ * Add support for domain-specific CRAN package **pls**, e.g. `m <-
+   plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |>
+   futurize()`.
+
+ * Add support for domain-specific CRAN package **pvclust**,
+   e.g. `fit <- pvclust(mtcars, nboot = 1000) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **rugarch**,
+   e.g. `roll <- ugarchroll(spec, sp500ret, n.start = 1000) |>
+   futurize()`.
+
+ * Add support for domain-specific CRAN package **sandwich**,
+   e.g. `v <- vcovBS(fit) |> futurize()`.
+
+ * Add support for domain-specific CRAN package **Sim.DiffProc**,
+   e.g. `res <- MCM.sde(mod1d, statistic = stat, R = 100) |>
+   futurize()`.
+
+ * Add support for domain-specific CRAN package **SuperLearner**,
+   e.g. `res <- CV.SuperLearner(Y = Y, X = X, SL.library = SL.library)
+   |> futurize()`.
+
+ * Add support for map-reduce CRAN package **stars**, e.g. `sm <-
+   st_apply(s, MARGIN = 1, FUN = mean) |> futurize()`.
+
+## Documentation
+
+ * Update **SingleCellExperiment** and **scuttle** examples and tests to
+   use `scuttle::perFeatureQCMetrics()` instead of the deprecated
+   `scuttle::perCellQCMetrics()`.
+
+## Bug Fixes
+
+ * `futurize()` did not use `seed = TRUE` for `gamlss::gamlssCV()`.
+
+ * `futurize()` on `boot::censboot()` would produce an error on
+   "parallel::clusterEvalQ() is not supported by FutureCluster
+   clusters. Ignoring expression: library(survival)".
+   
+
+# Version 0.3.0 [2026-04-01]
 
 ## New Features
 
@@ -16,7 +79,7 @@
    calls.
 
 
-# Version 0.2.0 (2026-03-18)
+# Version 0.2.0 [2026-03-18]
 
 Following the initial CRAN release in January 2026, this version adds
 `futurize()` support for many more CRAN and Bioconductor packages. To
@@ -133,7 +196,7 @@ for futurizing many more packages going forward.
    **vegan**.
    
  
-# Version 0.1.0 (2026-01-18)
+# Version 0.1.0 [2026-01-22]
 
 This is the first version submitted to CRAN.
 
