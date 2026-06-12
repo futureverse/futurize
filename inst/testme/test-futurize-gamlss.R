@@ -1,5 +1,6 @@
+#' @tags skip_on_cran  ## to limit total check time
 #' @tags pkg-gamlss
-if (requireNamespace("gamlss") && getRversion() >= "4.4.0") {
+if (requireNamespace("gamlss") && requireNamespace("gamlss.data") && getRversion() >= "4.4.0") {
 library(futurize)
 library(gamlss)
 options(future.rng.onMisuse = "ignore")

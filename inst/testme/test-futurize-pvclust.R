@@ -18,11 +18,11 @@ message("pvclust() ...")
 data(mtcars, package = "datasets")
 
 set.seed(42)
-fit_truth <- pvclust(mtcars, nboot = 40, parallel = FALSE)
+fit_truth <- pvclust(mtcars, nboot = 10L, parallel = FALSE)
 print(fit_truth)
 
 set.seed(42)
-fit <- pvclust(mtcars, nboot = 40, parallel = FALSE) |> futurize_and_verify()
+fit <- pvclust(mtcars, nboot = 10L, parallel = FALSE) |> futurize_and_verify()
 print(fit)
 
 stopifnot(inherits(fit, "pvclust"))

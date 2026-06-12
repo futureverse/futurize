@@ -11,16 +11,16 @@ RNGkind("L'Ecuyer-CMRG")
 fm <- lm(dist ~ speed, data = cars)
 
 ## Truth (sequential lapply)
-set.seed(42)
-vcov_truth <- sandwich::vcovBS(fm, R = 50)
-
-## futurize()
-set.seed(42)
-vcov <- sandwich::vcovBS(fm, R = 50) |> futurize()
-
 ## Since the non-parallel version uses a different set of RNG seeds
 ## than the parallel versions, we will not get numerically identical
 ## results
+#set.seed(42)
+#vcov_truth <- sandwich::vcovBS(fm, R = 5L)
+
+## futurize()
+set.seed(42)
+vcov <- sandwich::vcovBS(fm, R = 5L) |> futurize()
+
 stopifnot(
   is.matrix(vcov),
   all(dim(vcov) == c(2, 2))

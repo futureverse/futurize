@@ -1,3 +1,4 @@
+#' @tags skip_on_cran  ## to limit total check time
 #' @tags pkg-Rsamtools
 if (requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)

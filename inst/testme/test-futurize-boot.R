@@ -22,11 +22,11 @@ ratio <- function(d, w) {
 }
 
 set.seed(42)
-b_truth <- boot(city, ratio, R = 999, stype = "w")
+b_truth <- boot(city, ratio, R = 99L, stype = "w")
 print(b_truth)
 
 set.seed(42)
-b <- boot(city, ratio, R = 999, stype = "w") |> futurize_and_verify()
+b <- boot(city, ratio, R = 99L, stype = "w") |> futurize_and_verify()
 print(b)
 
 stopifnot(all_equal(b, b_truth))
