@@ -1,8 +1,54 @@
 pandoc: '3.9'
 pkgdown: 2.2.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2026-07-15T11:29Z
+articles:
+  futurize-11-apply: futurize-11-apply.html
+  futurize-21-purrr: futurize-21-purrr.html
+  futurize-22-crossmap: futurize-22-crossmap.html
+  futurize-31-plyr: futurize-31-plyr.html
+  futurize-51-foreach: futurize-51-foreach.html
+  futurize-55-pbapply: futurize-55-pbapply.html
+  futurize-61-BiocParallel: futurize-61-BiocParallel.html
+  futurize-81-boot: futurize-81-boot.html
+  futurize-81-caret: futurize-81-caret.html
+  futurize-81-DESeq2: futurize-81-DESeq2.html
+  futurize-81-DiceKriging: futurize-81-DiceKriging.html
+  futurize-81-ez: futurize-81-ez.html
+  futurize-81-fgsea: futurize-81-fgsea.html
+  futurize-81-fwb: futurize-81-fwb.html
+  futurize-81-gamlss: futurize-81-gamlss.html
+  futurize-81-GenomicAlignments: futurize-81-GenomicAlignments.html
+  futurize-81-glmmTMB: futurize-81-glmmTMB.html
+  futurize-81-glmnet: futurize-81-glmnet.html
+  futurize-81-GSVA: futurize-81-GSVA.html
+  futurize-81-kernelshap: futurize-81-kernelshap.html
+  futurize-81-lme4: futurize-81-lme4.html
+  futurize-81-metafor: futurize-81-metafor.html
+  futurize-81-mgcv: futurize-81-mgcv.html
+  futurize-81-modelsummary: futurize-81-modelsummary.html
+  futurize-81-parameters: futurize-81-parameters.html
+  futurize-81-partykit: futurize-81-partykit.html
+  futurize-81-pls: futurize-81-pls.html
+  futurize-81-pvclust: futurize-81-pvclust.html
+  futurize-81-riskRegression: futurize-81-riskRegression.html
+  futurize-81-Rsamtools: futurize-81-Rsamtools.html
+  futurize-81-rugarch: futurize-81-rugarch.html
+  futurize-81-sandwich: futurize-81-sandwich.html
+  futurize-81-scater: futurize-81-scater.html
+  futurize-81-scuttle: futurize-81-scuttle.html
+  futurize-81-seriation: futurize-81-seriation.html
+  futurize-81-shapr: futurize-81-shapr.html
+  futurize-81-Sim.DiffProc: futurize-81-Sim.DiffProc.html
+  futurize-81-SimDesign: futurize-81-SimDesign.html
+  futurize-81-SingleCellExperiment: futurize-81-SingleCellExperiment.html
+  futurize-81-stars: futurize-81-stars.html
+  futurize-81-strucchange: futurize-81-strucchange.html
+  futurize-81-SuperLearner: futurize-81-SuperLearner.html
+  futurize-81-sva: futurize-81-sva.html
+  futurize-81-tm: futurize-81-tm.html
+  futurize-81-TSP: futurize-81-TSP.html
+  futurize-81-vegan: futurize-81-vegan.html
+last_built: 2026-07-15T12:15Z
 urls:
   reference: https://futurize.futureverse.org/reference
   article: https://futurize.futureverse.org/articles
