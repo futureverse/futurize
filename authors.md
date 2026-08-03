@@ -17,11 +17,11 @@ in R using Futures, arXiv (2026), doi:10.48550/arXiv.2601.17578
       author = {Henrik Bengtsson},
       title = {A Unified Approach to Concurrent, Parallel Map-Reduce in R using Futures},
       year = {2026},
+      doi = {10.48550/arXiv.2601.17578},
+      url = {https://doi.org/10.48550/arXiv.2601.17578},
       eprint = {2601.17578},
       archiveprefix = {arXiv},
       primaryclass = {cs.DC},
-      doi = {10.48550/arXiv.2601.17578},
-      url = {https://doi.org/10.48550/arXiv.2601.17578},
     }
 
 Henrik Bengtsson, A Unifying Framework for Parallel and Distributed
