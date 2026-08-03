@@ -11,7 +11,7 @@ Source:
 [`inst/CITATION`](https://github.com/futureverse/futurize/blob/HEAD/inst/CITATION)
 
 Henrik Bengtsson, A Unified Approach to Concurrent, Parallel Map-Reduce
-in R using Futures, arXiv (2026), https://arxiv.org/abs/2601.17578
+in R using Futures, arXiv (2026), doi:10.48550/arXiv.2601.17578
 
     @Misc{Bengtsson-Futurize,
       author = {Henrik Bengtsson},
@@ -20,7 +20,8 @@ in R using Futures, arXiv (2026), https://arxiv.org/abs/2601.17578
       eprint = {2601.17578},
       archiveprefix = {arXiv},
       primaryclass = {cs.DC},
-      url = {https://arxiv.org/abs/2601.17578},
+      doi = {10.48550/arXiv.2601.17578},
+      url = {https://doi.org/10.48550/arXiv.2601.17578},
     }
 
 Henrik Bengtsson, A Unifying Framework for Parallel and Distributed
