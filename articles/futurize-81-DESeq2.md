@@ -24,19 +24,20 @@ dds <- DESeq(dds) |> futurize()
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize the
-**[DESeq2](https://bioconductor.org/packages/DESeq2/)** `DESeq()`
-function.
+**[DESeq2](https://bioconductor.org/packages/DESeq2/)**
+[`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) function.
 
 The **[DESeq2](https://bioconductor.org/packages/DESeq2/)** Bioconductor
 package provides methods to test for differential expression in RNA-seq
-data. The main function `DESeq()` runs a pipeline of gene-wise
-dispersion estimation, fitting, and statistical testing, which can be
-parallelized across genes.
+data. The main function
+[`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) runs a pipeline
+of gene-wise dispersion estimation, fitting, and statistical testing,
+which can be parallelized across genes.
 
 ### Example: Running DESeq() in parallel
 
-The `DESeq()` function performs the full differential expression
-analysis:
+The [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) function
+performs the full differential expression analysis:
 
 ``` r
 
@@ -70,8 +71,8 @@ dds <- DESeq(dds)
 res <- results(dds)
 ```
 
-Here `DESeq()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) runs
+sequentially, but we can easily make it run in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -113,6 +114,6 @@ plan(future.batchtools::batchtools_slurm)
 The following **DESeq2** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `DESeq()`
-- `lfcShrink()`
-- `results()`
+- [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)
+- [`lfcShrink()`](https://rdrr.io/pkg/DESeq2/man/lfcShrink.html)
+- [`results()`](https://rdrr.io/pkg/DESeq2/man/results.html)

@@ -135,6 +135,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
@@ -256,14 +257,14 @@ factorial permutation test, and can be parallelized as:</p>
 <span>  .data <span class="op">=</span> <span class="va">ANT</span>,</span>
 <span>  .variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/plyr/man/quoted.html" class="external-link">.</a></span><span class="op">(</span><span class="va">subnum</span>, <span class="va">group</span>, <span class="va">cue</span>, <span class="va">flank</span><span class="op">)</span>,</span>
 <span>  .fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mrt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">rt</span><span class="op">[</span><span class="va">x</span><span class="op">$</span><span class="va">error</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mrt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">rt</span><span class="op">[</span><span class="va">x</span><span class="op">$</span><span class="va">error</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">gmrt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plyr/man/ddply.html" class="external-link">ddply</a></span><span class="op">(</span></span>
 <span>  .data <span class="op">=</span> <span class="va">cell_stats</span>,</span>
 <span>  .variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/plyr/man/quoted.html" class="external-link">.</a></span><span class="op">(</span><span class="va">subnum</span>, <span class="va">group</span><span class="op">)</span>,</span>
 <span>  .fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mrt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">mrt</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mrt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">mrt</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>

@@ -135,6 +135,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
@@ -202,7 +203,7 @@ sequential code into parallel code by piping the sequential code to the
 <span>  x_explain <span class="op">=</span> <span class="va">x_explain</span>,</span>
 <span>  x_train <span class="op">=</span> <span class="va">x_train</span>,</span>
 <span>  approach <span class="op">=</span> <span class="st">"empirical"</span>,</span>
-<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
+<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -237,7 +238,7 @@ of observations. For example, using a simple linear model:</p>
 <span>  x_explain <span class="op">=</span> <span class="va">x_explain</span>,</span>
 <span>  x_train <span class="op">=</span> <span class="va">x_train</span>,</span>
 <span>  approach <span class="op">=</span> <span class="st">"empirical"</span>,</span>
-<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
+<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Here <code><a href="https://norskregnesentral.github.io/shapr/reference/explain.html" class="external-link">explain()</a></code> evaluates the coalitions sequentially,
 but we can easily make it evaluate them in parallel by piping to
@@ -251,7 +252,7 @@ but we can easily make it evaluate them in parallel by piping to
 <span>  x_explain <span class="op">=</span> <span class="va">x_explain</span>,</span>
 <span>  x_train <span class="op">=</span> <span class="va">x_train</span>,</span>
 <span>  approach <span class="op">=</span> <span class="st">"empirical"</span>,</span>
-<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
+<span>  phi0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y_train</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This will distribute the coalition computations across the available
 parallel workers, given that we have set up parallel workers, e.g.</p>

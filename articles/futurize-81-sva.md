@@ -27,15 +27,16 @@ This vignette demonstrates how to use this approach to parallelize the
 
 The **[sva](https://bioconductor.org/packages/sva/)** Bioconductor
 package provides functions for removing batch effects and other unwanted
-variation in high-throughput experiments. The `ComBat()` function is a
+variation in high-throughput experiments. The
+[`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html) function is a
 widely used method for batch effect correction using an empirical Bayes
 framework. It supports parallelization via BiocParallel’s BPPARAM
 argument.
 
 ### Example: Running ComBat() in parallel
 
-The `ComBat()` function adjusts for known batch effects in microarray or
-RNA-seq data:
+The [`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html) function
+adjusts for known batch effects in microarray or RNA-seq data:
 
 ``` r
 
@@ -55,8 +56,8 @@ dat[, batch == 2] <- dat[, batch == 2] + 2
 adjusted <- ComBat(dat = dat, batch = batch)
 ```
 
-Here `ComBat()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html) runs
+sequentially, but we can easily make it run in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -108,5 +109,5 @@ adjusted <- ComBat(dat = dat, batch = batch, mod = mod) |> futurize()
 The following **sva** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `ComBat()`
-- `read.degradation.matrix()`
+- [`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html)
+- [`read.degradation.matrix()`](https://rdrr.io/pkg/sva/man/read.degradation.matrix.html)

@@ -135,6 +135,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
@@ -217,7 +218,7 @@ Futureverse, e.g.</p>
 functions such as <code><a href="https://rdrr.io/pkg/BiocParallel/man/bplapply.html" class="external-link">bplapply()</a></code>, <code><a href="https://rdrr.io/pkg/BiocParallel/man/bpmapply.html" class="external-link">bpmapply()</a></code>, and
 <code><a href="https://rdrr.io/pkg/BiocParallel/man/bpvec.html" class="external-link">bpvec()</a></code> in the <strong>BiocParallel</strong> package. For
 example, consider the <code><a href="https://rdrr.io/pkg/BiocParallel/man/bplapply.html" class="external-link">bplapply()</a></code> function. It works like
-base-R <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, but uses the <strong>BiocParallel</strong>
+base-R <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>, but uses the <strong>BiocParallel</strong>
 framework to process the tasks concurrently. It is commonly used
 something like:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -299,14 +300,14 @@ effectively does not work with <code><a href="../reference/futurize.html">futuri
 <strong>BiocParallel</strong> internally. These packages typically
 expose a <code>BPPARAM</code> argument in their functions, which
 controls the parallel backend used. For example,
-<code>DESeq2::DESeq()</code> has a <code>BPPARAM</code> argument that
+<code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq2::DESeq()</a></code> has a <code>BPPARAM</code> argument that
 defaults to <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::bpparam()</a></code>, which corresponds to
 the currently registered <strong>BiocParallel</strong> backend. This
 means that, in order to parallelize such a function, one can call
 <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">BiocParallel::register()</a></code> to set a parallel backend, and
 then the function will use it automatically.</p>
 <p>However, not all packages default to <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam()</a></code>. For
-example, <code>sva::ComBat()</code> defaults to
+example, <code><a href="https://rdrr.io/pkg/sva/man/ComBat.html" class="external-link">sva::ComBat()</a></code> defaults to
 <code>bpparam("SerialParam")</code>, which means it always runs
 sequentially unless you explicitly pass a parallel <code>BPPARAM</code>
 argument. Because of this, one cannot count on <code><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">bpparam()</a></code>

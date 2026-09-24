@@ -30,13 +30,15 @@ The **[GSVA](https://bioconductor.org/packages/GSVA/)** Bioconductor
 package implements gene set variation analysis, a non-parametric,
 unsupervised method for estimating variation of gene set enrichment
 through the samples of an expression data set. The main function
-`gsva()` computes enrichment scores for each gene set and sample, which
-can be parallelized across gene sets.
+[`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) computes enrichment
+scores for each gene set and sample, which can be parallelized across
+gene sets.
 
 ### Example: Running gsva() in parallel
 
-The `gsva()` function computes gene set enrichment scores using
-different methods depending on the parameter object passed to it:
+The [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) function computes
+gene set enrichment scores using different methods depending on the
+parameter object passed to it:
 
 ``` r
 
@@ -60,8 +62,8 @@ param <- gsvaParam(expr, geneSets)
 es <- gsva(param)
 ```
 
-Here `gsva()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) runs
+sequentially, but we can easily make it run in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -120,7 +122,7 @@ es <- gsva(zscoreParam(expr, geneSets)) |> futurize()
 The following **GSVA** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `gsva()`
-- `gsvaRanks()`
-- `gsvaScores()`
-- `spatCor()`
+- [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html)
+- [`gsvaRanks()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
+- [`gsvaScores()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
+- [`spatCor()`](https://rdrr.io/pkg/GSVA/man/spatCor.html)

@@ -104,6 +104,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/futureverse/futurize/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -151,7 +152,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-1-0-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-0"></a></h3>
-<ul><li>Update <strong>SingleCellExperiment</strong> and <strong>scuttle</strong> examples and tests to use <code>scuttle::perFeatureQCMetrics()</code> instead of the deprecated <code>scuttle::perCellQCMetrics()</code>.</li>
+<ul><li>Update <strong>SingleCellExperiment</strong> and <strong>scuttle</strong> examples and tests to use <code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">scuttle::perFeatureQCMetrics()</a></code> instead of the deprecated <code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">scuttle::perCellQCMetrics()</a></code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
@@ -235,14 +236,14 @@
 <li><p>Add custom <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for transpiled calls such that attributes are displayed for arguments and their content.</p></li>
 <li><p>Transpiler can now handle nested, complex wrapped expressions.</p></li>
 <li><p>Error messages now suggest using <code>%do%</code> when trying to futurize <code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach()</a></code> with <code>%dopar%</code> or <code>%dofuture%</code>.</p></li>
-<li><p>Error messages now distinguish between infix operators (e.g. <code>%do%</code>) and functions (e.g. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>).</p></li>
+<li><p>Error messages now distinguish between infix operators (e.g. <code>%do%</code>) and functions (e.g. <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.5" id="version-005">Version 0.0.5<a class="anchor" aria-label="anchor" href="#version-005"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-5"></a></h3>
-<ul><li>Add support for futurizing calls nested in one or more layers of <code>{ ... }</code>, <code>( ... )</code>, <code>local( ... )</code>, <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>, and <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, e.g. <code>local({ lapply(x, f) }) |&gt; futurize()</code> is the same as <code>local({ lapply(x, f) |&gt; futurize() })</code>.</li>
+<ul><li>Add support for futurizing calls nested in one or more layers of <code>{ ... }</code>, <code>( ... )</code>, <code>local( ... )</code>, <code><a href="https://rdrr.io/pkg/S4Vectors/man/S4Vectors-internals.html" class="external-link">I()</a></code>, and <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, e.g. <code>local({ lapply(x, f) }) |&gt; futurize()</code> is the same as <code>local({ lapply(x, f) |&gt; futurize() })</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">

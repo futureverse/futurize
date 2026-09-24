@@ -43,8 +43,8 @@ functions such as
 **BiocParallel** package. For example, consider the
 [`bplapply()`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)
 function. It works like base-R
-[`lapply()`](https://rdrr.io/r/base/lapply.html), but uses the
-**BiocParallel** framework to process the tasks concurrently. It is
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html), but uses
+the **BiocParallel** framework to process the tasks concurrently. It is
 commonly used something like:
 
 ``` r
@@ -141,7 +141,9 @@ The following functions are currently not supported:
 Most Bioconductor packages that support parallelization do so via
 **BiocParallel** internally. These packages typically expose a `BPPARAM`
 argument in their functions, which controls the parallel backend used.
-For example, `DESeq2::DESeq()` has a `BPPARAM` argument that defaults to
+For example,
+[`DESeq2::DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) has a
+`BPPARAM` argument that defaults to
 [`BiocParallel::bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html),
 which corresponds to the currently registered **BiocParallel** backend.
 This means that, in order to parallelize such a function, one can call
@@ -151,9 +153,10 @@ automatically.
 
 However, not all packages default to
 [`bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html). For
-example, `sva::ComBat()` defaults to `bpparam("SerialParam")`, which
-means it always runs sequentially unless you explicitly pass a parallel
-`BPPARAM` argument. Because of this, one cannot count on
+example, [`sva::ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html)
+defaults to `bpparam("SerialParam")`, which means it always runs
+sequentially unless you explicitly pass a parallel `BPPARAM` argument.
+Because of this, one cannot count on
 [`bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html) being
 the default everywhere - some functions require an explicit `BPPARAM` to
 parallelize. With **futurize**, this is handled automatically:

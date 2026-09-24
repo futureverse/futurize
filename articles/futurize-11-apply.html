@@ -135,6 +135,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
@@ -208,16 +209,16 @@ sequential code into parallel code by piping the sequential code to the
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
-functions such as <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>,
+functions such as <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>, <code><a href="https://rdrr.io/pkg/BiocGenerics/man/tapply.html" class="external-link">tapply()</a></code>,
 <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code>, and <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate()</a></code> in the
 <strong>base</strong> package, and <code><a href="https://rdrr.io/r/stats/kernapply.html" class="external-link">kernapply()</a></code> in the
 <strong>stats</strong> package. For example, consider the base R
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> function, which is commonly used to apply a
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code> function, which is commonly used to apply a
 function to the elements of a vector or a list, as in:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span></span>
 <span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> evaluates sequentially, but we can easily
+<p>Here <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code> evaluates sequentially, but we can easily
 make it evaluate in parallel, by using:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
@@ -271,12 +272,12 @@ common base R functions. The following <strong>base</strong> package
 functions are supported:</p>
 <ul>
 <li>
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>,
-<code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code>, <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">sapply()</a></code>,
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/tapply.html" class="external-link">tapply()</a></code>
 </li>
 <li>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">.mapply()</a></code>,
-<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">.mapply()</a></code>,
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/funprog.html" class="external-link">Map()</a></code>
 </li>
 <li><code><a href="https://rdrr.io/r/base/eapply.html" class="external-link">eapply()</a></code></li>
 <li><code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code></li>
@@ -284,7 +285,7 @@ functions are supported:</p>
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate()</a></code> with <code>seed = TRUE</code> as the
 default</li>
 <li><code><a href="https://rdrr.io/r/base/by.html" class="external-link">by()</a></code></li>
-<li><code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/BiocGenerics/man/funprog.html" class="external-link">Filter()</a></code></li>
 </ul>
 <p>The <code><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply()</a></code> function is not supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>.</p>
@@ -317,7 +318,7 @@ change your code.</p>
 <span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span></span>
 <span><span class="va">ys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">slow_fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://progressify.futureverse.org/reference/progressify.html" class="external-link">progressify</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Note how <code><a href="../reference/futurize.html">futurize()</a></code> unwraps the expression - it descends
-through <code><a href="https://progressify.futureverse.org/reference/progressify.html" class="external-link">progressify()</a></code> to identify the <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>
+through <code><a href="https://progressify.futureverse.org/reference/progressify.html" class="external-link">progressify()</a></code> to identify the <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>
 call to be futurized. Using the default progress handler, the above
 output and progress reporting will appear as:</p>
 <pre class="plain"><code>x = 1
@@ -330,8 +331,8 @@ x = 20
 <h2 id="known-issues">Known issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
 </h2>
 <p>The <strong><a href="https://www.bioconductor.org/packages/BiocGenerics/" class="external-link">BiocGenerics</a></strong>
-package defines generic functions <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>,
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, and <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>.
+package defines generic functions <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>,
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">sapply()</a></code>, <code><a href="https://rdrr.io/pkg/BiocGenerics/man/mapply.html" class="external-link">mapply()</a></code>, and <code><a href="https://rdrr.io/pkg/BiocGenerics/man/tapply.html" class="external-link">tapply()</a></code>.
 These S4 generic functions override the non-generic, counterpart
 functions in the <strong>base</strong> package, which are only used as a
 fallback if there is no matching method. For example, in a vanilla R
@@ -342,10 +343,10 @@ session we have that both of the following calls are identical:</p>
 <p>However, if we attach the <strong>BiocGenerics</strong> package, we
 have that the following two calls are identical:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">BiocGenerics</span><span class="op">)</span></span>
-<span><span class="va">y_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span>
-<span><span class="va">y_3</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu">lapply</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
-<p>The reason is that <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> here is no longer
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/BiocGenerics" class="external-link">BiocGenerics</a></span><span class="op">)</span></span>
+<span><span class="va">y_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span>
+<span><span class="va">y_3</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
+<p>The reason is that <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code> here is no longer
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::lapply()</a></code>, but the one defined by
 <strong>BiocGenerics</strong>, which masks the one in
 <strong>base</strong>. We can see this with:</p>
@@ -355,14 +356,14 @@ have that the following two calls are identical:</p>
 <p>This matters in the context of <strong>futurize</strong>. In a
 vanilla R session,</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>is identical to</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>However, with <strong>BiocGenerics</strong> attached, it is instead
 identical to:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu">lapply</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>which results in:</p>
 <pre><code>Error in transpilers_for_package(type = type, package = ns_name, action = "make",  : 
   There are no factory functions for creating 'futurize::add-on' transpilers for package 'BiocGenerics'</code></pre>

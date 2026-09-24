@@ -135,6 +135,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
@@ -196,10 +197,10 @@ sequential code into parallel code by piping the sequential code to the
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">GSVA</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rcastelo/GSVA" class="external-link">GSVA</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu">gsvaParam</span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">gsva</span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html" class="external-link">gsvaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -211,24 +212,24 @@ functions.</p>
 Bioconductor package implements gene set variation analysis, a
 non-parametric, unsupervised method for estimating variation of gene set
 enrichment through the samples of an expression data set. The main
-function <code>gsva()</code> computes enrichment scores for each gene
+function <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code> computes enrichment scores for each gene
 set and sample, which can be parallelized across gene sets.</p>
 <div class="section level3">
 <h3 id="example-running-gsva-in-parallel">Example: Running gsva() in parallel<a class="anchor" aria-label="anchor" href="#example-running-gsva-in-parallel"></a>
 </h3>
-<p>The <code>gsva()</code> function computes gene set enrichment scores
+<p>The <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code> function computes gene set enrichment scores
 using different methods depending on the parameter object passed to
 it:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">GSVA</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rcastelo/GSVA" class="external-link">GSVA</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create example data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">200L</span></span>
 <span><span class="va">n_samples</span> <span class="op">&lt;-</span> <span class="fl">120L</span></span>
 <span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_genes</span> <span class="op">*</span> <span class="va">n_samples</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">n_genes</span>, ncol <span class="op">=</span> <span class="va">n_samples</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sample"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_samples</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_genes</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sample"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n_samples</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">geneSets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  geneSet1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">30L</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -236,14 +237,14 @@ it:</p>
 <span>  geneSet3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"gene"</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n_genes</span>, <span class="fl">40L</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu">gsvaParam</span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">gsva</span><span class="op">(</span><span class="va">param</span><span class="op">)</span></span></code></pre></div>
-<p>Here <code>gsva()</code> runs sequentially, but we can easily make it
+<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html" class="external-link">gsvaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span></span></code></pre></div>
+<p>Here <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code> runs sequentially, but we can easily make it
 run in parallel by piping to <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">gsva</span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -266,13 +267,13 @@ objects. All of them can be parallelized with
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## ssGSEA method</span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">gsva</span><span class="op">(</span><span class="fu">ssgseaParam</span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/ssgseaParam-class.html" class="external-link">ssgseaParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## PLAGE method</span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">gsva</span><span class="op">(</span><span class="fu">plageParam</span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/plageParam-class.html" class="external-link">plageParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Combined z-score method</span></span>
-<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu">gsva</span><span class="op">(</span><span class="fu">zscoreParam</span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/zscoreParam-class.html" class="external-link">zscoreParam</a></span><span class="op">(</span><span class="va">expr</span>, <span class="va">geneSets</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -281,10 +282,10 @@ objects. All of them can be parallelized with
 <p>The following <strong>GSVA</strong> functions are supported by
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
-<li><code>gsva()</code></li>
-<li><code>gsvaRanks()</code></li>
-<li><code>gsvaScores()</code></li>
-<li><code>spatCor()</code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaRanks()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaScores()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/spatCor.html" class="external-link">spatCor()</a></code></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

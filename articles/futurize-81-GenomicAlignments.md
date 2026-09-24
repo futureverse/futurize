@@ -30,17 +30,20 @@ functions.
 The
 **[GenomicAlignments](https://bioconductor.org/packages/GenomicAlignments/)**
 Bioconductor package provides efficient representation and manipulation
-of short genomic alignments. The `summarizeOverlaps()` function counts
-the number of reads that map to each feature (e.g. gene or exon) from
-one or more BAM files. When called with a `BamFileList`, the work is
-distributed across BAM files using
+of short genomic alignments. The
+[`summarizeOverlaps()`](https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html)
+function counts the number of reads that map to each feature (e.g. gene
+or exon) from one or more BAM files. When called with a `BamFileList`,
+the work is distributed across BAM files using
 [`bplapply()`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html),
 which can be parallelized.
 
 ### Example: Running summarizeOverlaps() in parallel
 
-The `summarizeOverlaps()` function counts reads overlapping genomic
-features across multiple BAM files:
+The
+[`summarizeOverlaps()`](https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html)
+function counts reads overlapping genomic features across multiple BAM
+files:
 
 ``` r
 
@@ -55,8 +58,10 @@ features <- GRanges("chr1",
 se <- summarizeOverlaps(features, bam_files)
 ```
 
-Here `summarizeOverlaps()` processes BAM files sequentially, but we can
-easily make it process them in parallel by piping to
+Here
+[`summarizeOverlaps()`](https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html)
+processes BAM files sequentially, but we can easily make it process them
+in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -97,4 +102,4 @@ plan(future.batchtools::batchtools_slurm)
 The following **GenomicAlignments** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `summarizeOverlaps()`
+- [`summarizeOverlaps()`](https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html)

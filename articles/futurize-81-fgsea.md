@@ -27,14 +27,17 @@ This vignette demonstrates how to use this approach to parallelize the
 
 The **[fgsea](https://bioconductor.org/packages/fgsea/)** Bioconductor
 package implements fast preranked gene set enrichment analysis (GSEA).
-The main functions `fgsea()`, `fgseaMultilevel()`, and `fgseaSimple()`
+The main functions
+[`fgsea()`](https://rdrr.io/pkg/fgsea/man/fgsea.html),
+[`fgseaMultilevel()`](https://rdrr.io/pkg/fgsea/man/fgseaMultilevel.html),
+and [`fgseaSimple()`](https://rdrr.io/pkg/fgsea/man/fgseaSimple.html)
 perform permutation-based enrichment testing, which can be parallelized
 across gene sets.
 
 ### Example: Running fgseaSimple() in parallel
 
-The `fgseaSimple()` function performs permutation-based gene set
-enrichment analysis:
+The [`fgseaSimple()`](https://rdrr.io/pkg/fgsea/man/fgseaSimple.html)
+function performs permutation-based gene set enrichment analysis:
 
 ``` r
 
@@ -55,8 +58,9 @@ pathways <- list(
 res <- fgseaSimple(pathways, stats, nperm = 10000)
 ```
 
-Here `fgseaSimple()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`fgseaSimple()`](https://rdrr.io/pkg/fgsea/man/fgseaSimple.html)
+runs sequentially, but we can easily make it run in parallel by piping
+to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -97,10 +101,10 @@ plan(future.batchtools::batchtools_slurm)
 The following **fgsea** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `fgsea()`
-- `fgseaMultilevel()`
-- `fgseaSimple()`
-- `fgseaLabel()`
-- `geseca()`
-- `gesecaSimple()`
+- [`fgsea()`](https://rdrr.io/pkg/fgsea/man/fgsea.html)
+- [`fgseaMultilevel()`](https://rdrr.io/pkg/fgsea/man/fgseaMultilevel.html)
+- [`fgseaSimple()`](https://rdrr.io/pkg/fgsea/man/fgseaSimple.html)
+- [`fgseaLabel()`](https://rdrr.io/pkg/fgsea/man/fgseaLabel.html)
+- [`geseca()`](https://rdrr.io/pkg/fgsea/man/geseca.html)
+- [`gesecaSimple()`](https://rdrr.io/pkg/fgsea/man/gesecaSimple.html)
 - `collapsePathwaysGeseca()`

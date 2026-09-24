@@ -135,6 +135,7 @@
     <li><a class="external-link dropdown-item" href="https://future.p2p.futureverse.org">future.p2p (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://future.tools.futureverse.org">future.tools (experimental)</a></li>
     <li><a class="external-link dropdown-item" href="https://marshal.futureverse.org">marshal (experimental)</a></li>
+    <li><a class="external-link dropdown-item" href="https://rw.futureverse.org">rw (experimental)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://cloud.r-project.org/package=futurize"><span class="fa fab fa-r-project"></span></a></li>
@@ -222,7 +223,7 @@ cluster object or, when used with <strong>futurize</strong>, the string
 <div class="section level3">
 <h3 id="example-parallel-lapply-with-progress-bar">Example: Parallel lapply with progress bar<a class="anchor" aria-label="anchor" href="#example-parallel-lapply-with-progress-bar"></a>
 </h3>
-<p>The <code><a href="https://peter.solymos.org/pbapply/reference/pbapply.html" class="external-link">pblapply()</a></code> function works like <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>
+<p>The <code><a href="https://peter.solymos.org/pbapply/reference/pbapply.html" class="external-link">pblapply()</a></code> function works like <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>
 but displays a progress bar. For example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/psolymos/pbapply" class="external-link">pbapply</a></span><span class="op">)</span></span>
@@ -264,7 +265,7 @@ locally as well as distributed across remote machines, e.g.</p>
 <h3 id="example-parallel-sapply-with-progress-bar">Example: Parallel sapply with progress bar<a class="anchor" aria-label="anchor" href="#example-parallel-sapply-with-progress-bar"></a>
 </h3>
 <p>The <code><a href="https://peter.solymos.org/pbapply/reference/pbapply.html" class="external-link">pbsapply()</a></code> function simplifies the result like
-<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>:</p>
+<code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">sapply()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>

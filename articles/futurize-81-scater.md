@@ -34,7 +34,8 @@ be parallelized across cells.
 
 ### Example: Running PCA in parallel
 
-The `runPCA()` function performs PCA on a `SingleCellExperiment` object:
+The [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)
+function performs PCA on a `SingleCellExperiment` object:
 
 ``` r
 
@@ -47,8 +48,8 @@ sce <- scuttle::logNormCounts(sce)
 sce <- runPCA(sce)
 ```
 
-Here `runPCA()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html) runs
+sequentially, but we can easily make it run in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -89,13 +90,13 @@ plan(future.batchtools::batchtools_slurm)
 The following **scater** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `calculatePCA()`
-- `calculateTSNE()`
-- `calculateUMAP()`
-- `runPCA()`
-- `runTSNE()`
-- `runUMAP()`
-- `runColDataPCA()`
-- `nexprs()`
-- `getVarianceExplained()`
-- `plotRLE()`
+- [`calculatePCA()`](https://rdrr.io/pkg/scater/man/runPCA.html)
+- [`calculateTSNE()`](https://rdrr.io/pkg/scater/man/runTSNE.html)
+- [`calculateUMAP()`](https://rdrr.io/pkg/scater/man/runUMAP.html)
+- [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)
+- [`runTSNE()`](https://rdrr.io/pkg/scater/man/runTSNE.html)
+- [`runUMAP()`](https://rdrr.io/pkg/scater/man/runUMAP.html)
+- [`runColDataPCA()`](https://rdrr.io/pkg/scater/man/runColDataPCA.html)
+- [`nexprs()`](https://rdrr.io/pkg/scater/man/nexprs.html)
+- [`getVarianceExplained()`](https://rdrr.io/pkg/scater/man/getVarianceExplained.html)
+- [`plotRLE()`](https://rdrr.io/pkg/scater/man/plotRLE.html)

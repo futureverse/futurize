@@ -33,8 +33,10 @@ aggregation, which can be parallelized across cells or features.
 
 ### Example: Computing per-feature QC metrics in parallel
 
-The `perFeatureQCMetrics()` function computes quality control metrics
-for each feature (gene) in a `SingleCellExperiment` object:
+The
+[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+function computes quality control metrics for each feature (gene) in a
+`SingleCellExperiment` object:
 
 ``` r
 
@@ -46,8 +48,10 @@ sce <- mockSCE()
 qc <- perFeatureQCMetrics(sce)
 ```
 
-Here `perFeatureQCMetrics()` runs sequentially, but we can easily make
-it run in parallel by piping to
+Here
+[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+runs sequentially, but we can easily make it run in parallel by piping
+to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -88,15 +92,15 @@ plan(future.batchtools::batchtools_slurm)
 The following **scuttle** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `calculateAverage()`
-- `perFeatureQCMetrics()`
-- `numDetectedAcrossFeatures()`
-- `summarizeAssayByGroup()`
-- `medianSizeFactors()`
-- `computeMedianFactors()`
-- `pooledSizeFactors()`
-- `computePooledFactors()`
-- `fitLinearModel()`
+- [`calculateAverage()`](https://rdrr.io/pkg/scuttle/man/calculateAverage.html)
+- [`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+- [`numDetectedAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/numDetectedAcrossFeatures.html)
+- [`summarizeAssayByGroup()`](https://rdrr.io/pkg/scuttle/man/summarizeAssayByGroup.html)
+- [`medianSizeFactors()`](https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html)
+- [`computeMedianFactors()`](https://rdrr.io/pkg/scuttle/man/medianSizeFactors.html)
+- [`pooledSizeFactors()`](https://rdrr.io/pkg/scuttle/man/computePooledFactors.html)
+- [`computePooledFactors()`](https://rdrr.io/pkg/scuttle/man/computePooledFactors.html)
+- [`fitLinearModel()`](https://rdrr.io/pkg/scuttle/man/fitLinearModel.html)
 
 The following **scuttle** functions are deprecated in **scuttle** (\>=
 1.22) in favor of counter-part functions in Bioconductor package
@@ -104,19 +108,19 @@ The following **scuttle** functions are deprecated in **scuttle** (\>=
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 of the these deprecated functions remains, but will be phased out;
 
-- `logNormCounts()`
-- `normalizeCounts()`
-- `perCellQCMetrics()`
-- `addPerCellQCMetrics()`
-- `addPerFeatureQCMetrics()`
-- `addPerCellQC()`
-- `addPerFeatureQC()`
-- `numDetectedAcrossCells()`
-- `sumCountsAcrossCells()`
-- `sumCountsAcrossFeatures()`
-- `aggregateAcrossCells()`
-- `aggregateAcrossFeatures()`
-- `librarySizeFactors()`
-- `computeLibraryFactors()`
-- `geometricSizeFactors()`
-- `computeGeometricFactors()`
+- [`logNormCounts()`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)
+- [`normalizeCounts()`](https://rdrr.io/pkg/scuttle/man/normalizeCounts.html)
+- [`perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html)
+- [`addPerCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
+- [`addPerFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
+- [`addPerCellQC()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
+- [`addPerFeatureQC()`](https://rdrr.io/pkg/scuttle/man/addPerCellQCMetrics.html)
+- [`numDetectedAcrossCells()`](https://rdrr.io/pkg/scuttle/man/numDetectedAcrossCells.html)
+- [`sumCountsAcrossCells()`](https://rdrr.io/pkg/scuttle/man/sumCountsAcrossCells.html)
+- [`sumCountsAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/sumCountsAcrossFeatures.html)
+- [`aggregateAcrossCells()`](https://rdrr.io/pkg/scuttle/man/aggregateAcrossCells.html)
+- [`aggregateAcrossFeatures()`](https://rdrr.io/pkg/scuttle/man/aggregateAcrossFeatures.html)
+- [`librarySizeFactors()`](https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html)
+- [`computeLibraryFactors()`](https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html)
+- [`geometricSizeFactors()`](https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html)
+- [`computeGeometricFactors()`](https://rdrr.io/pkg/scuttle/man/geometricSizeFactors.html)

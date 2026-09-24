@@ -47,7 +47,8 @@ string `"future"`.
 
 The
 [`pblapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
-function works like [`lapply()`](https://rdrr.io/r/base/lapply.html) but
+function works like
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) but
 displays a progress bar. For example:
 
 ``` r
@@ -109,7 +110,7 @@ plan(future.batchtools::batchtools_slurm)
 The
 [`pbsapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
 function simplifies the result like
-[`sapply()`](https://rdrr.io/r/base/lapply.html):
+[`sapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html):
 
 ``` r
 

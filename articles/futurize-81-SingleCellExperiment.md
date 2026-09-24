@@ -32,15 +32,18 @@ The
 **[SingleCellExperiment](https://bioconductor.org/packages/SingleCellExperiment/)**
 Bioconductor package defines the `SingleCellExperiment` class for
 storing single-cell genomics data, including alternative experiments
-(e.g. spike-in transcripts, antibody tags). The `applySCE()` function
-applies a given function to the main experiment and each alternative
-experiment, passing additional arguments such as `BPPARAM` via `...` to
-enable parallelization of the applied function.
+(e.g. spike-in transcripts, antibody tags). The
+[`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+function applies a given function to the main experiment and each
+alternative experiment, passing additional arguments such as `BPPARAM`
+via `...` to enable parallelization of the applied function.
 
 ### Example: Computing per-feature QC metrics in parallel
 
-The `applySCE()` function applies a function across the main experiment
-and its alternative experiments:
+The
+[`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+function applies a function across the main experiment and its
+alternative experiments:
 
 ``` r
 
@@ -53,10 +56,13 @@ sce <- mockSCE()
 result <- applySCE(sce, perFeatureQCMetrics)
 ```
 
-Here `applySCE()` runs `perFeatureQCMetrics()` from the
-**[scuttle](https://bioconductor.org/packages/scuttle/)** package
-sequentially on each experiment, but we can easily make it run in
-parallel by piping to
+Here
+[`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+runs
+[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+from the **[scuttle](https://bioconductor.org/packages/scuttle/)**
+package sequentially on each experiment, but we can easily make it run
+in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 ``` r
@@ -66,9 +72,11 @@ library(futurize)
 result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
 ```
 
-It is actually not `SingleCellExperiment::applySCE()` that orchestrates
-the parallelization, but `scuttle::perFeatureQCMetrics()`, which hands
-of the parallelization to
+It is actually not
+[`SingleCellExperiment::applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+that orchestrates the parallelization, but
+[`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html),
+which hands of the parallelization to
 **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)**
 which in turn hands it of to futureverse.
 
@@ -103,4 +111,4 @@ plan(future.batchtools::batchtools_slurm)
 The following **SingleCellExperiment** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `applySCE()`
+- [`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)

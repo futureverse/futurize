@@ -29,7 +29,7 @@ provides model-agnostic robust covariance matrix estimators.
 ### Example: Clustered bootstrap covariance matrix
 
 Example adopted from
-[`help("vcovBS", package = "sandwich")`](https://sandwich.R-Forge.R-project.org/reference/vcovBS.html):
+[`help("vcovBS", package = "sandwich")`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html):
 
 ``` r
 
@@ -79,15 +79,15 @@ plan(future.batchtools::batchtools_slurm)
 The following **sandwich** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`vcovBS()`](https://sandwich.R-Forge.R-project.org/reference/vcovBS.html)
+- [`vcovBS()`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
   with `seed = TRUE` as the default
-- [`vcovJK()`](https://sandwich.R-Forge.R-project.org/reference/vcovJK.html)
+- [`vcovJK()`](https://zeileis.codeberg.page/sandwich/reference/vcovJK.html)
   with `seed = TRUE` as the default
 
 ## Without futurize: Manual setup
 
 For comparison, here is what it takes to parallelize
-[`vcovBS()`](https://sandwich.R-Forge.R-project.org/reference/vcovBS.html)
+[`vcovBS()`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
 using the **sandwich** package directly, without **futurize**:
 
 ``` r
