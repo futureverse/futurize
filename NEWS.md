@@ -5,6 +5,9 @@
  * Attempts to futurize() a function not part of a package gave an
    obscure error message suggestion to install a non-existing package.
 
+ * Option `chunk_size` was ignored when futurizing `times(n) %do% {
+   ... }`.
+
 
 # Version 1.0.0 (2026-06-11)
 

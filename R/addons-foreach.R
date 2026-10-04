@@ -25,12 +25,8 @@ append_transpilers_for_doFuture <- function() {
     if (identical(fcn, as.symbol("times")) ||
         identical(fcn, quote(foreach::times))) {
       ## Default to seed = TRUE
-      if (!"seed" %in% attr(options, "specified")) {
-        options[["seed"]] <- TRUE
-      }
-      if (!"label" %in% attr(options, "specified")) {
-        options[["label"]] <- "fz:foreach::times-%d"
-      }
+      defaults <- list(seed = TRUE, label = "fz:foreach::times-%d")
+      options <- make_options_for_doFuture(options, defaults = defaults, wrap = FALSE)
       expr <- bquote_apply(template,
         OPTS = options,
         EXPR = expr
