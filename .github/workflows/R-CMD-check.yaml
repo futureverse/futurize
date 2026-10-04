@@ -78,6 +78,12 @@ jobs:
           ## CRAN package 'Sim.DiffProc' depends on CRAN package 'Deriv',
           ## which requires R (>= 4.5.0) in recent versions
           sed -i '/Sim.DiffProc,/d' DESCRIPTION
+          ## CRAN package 'glmmTMB' depends on 'pbkrtest' -> 'doBy' ->
+          ## 'Deriv', which requires R (>= 4.5.0) in recent versions
+          sed -i '/glmmTMB,/d' DESCRIPTION
+          ## CRAN package 'ez' depends on 'car' -> 'pbkrtest' -> 'doBy' ->
+          ## 'Deriv', which requires R (>= 4.5.0) in recent versions
+          sed -i '/ez,/d' DESCRIPTION
         shell: bash {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
