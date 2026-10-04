@@ -10,17 +10,15 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(DiceKriging)
-
-design <- expand.grid(x1 = seq(0, 1, length = 15), x2 = seq(0, 1, length = 15))
-y <- apply(design, 1, function(x) x[1]^2 + x[2]^2)
-m <- km(~., design = design, response = data.frame(y = y),
-        multistart = 20) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`DiceKriging`](https://dicekrigingclub.github.io/www/)`)`\
+\
+`design`` ``<-`` `[`expand.grid`](https://rdrr.io/r/base/expand.grid.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
+`y`` ``<-`` `[`apply`](https://rdrr.io/r/base/apply.html)`(``design``, ``1``, ``function``(``x``)`` ``x``[``1``]``^``2`` ``+`` ``x``[``2``]``^``2``)`\
+`m`` ``<-`` `[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``y ``=`` ``y``)``,`\
+`        multistart ``=`` ``20``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -37,37 +35,31 @@ multiple points (to avoid local optima), which can be done in parallel.
 
 Fitting a kriging model with a single starting point:
 
-``` r
-
-library(DiceKriging)
-
-design <- expand.grid(x1 = seq(0, 1, length = 15), x2 = seq(0, 1, length = 15))
-y <- apply(design, MARGIN = 1, FUN = function(x) x[1]^2 + x[2]^2)
-m <- km(~., design = design, response = data.frame(y = y))
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`DiceKriging`](https://dicekrigingclub.github.io/www/)`)`\
+\
+`design`` ``<-`` `[`expand.grid`](https://rdrr.io/r/base/expand.grid.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
+`y`` ``<-`` `[`apply`](https://rdrr.io/r/base/apply.html)`(``design``, MARGIN ``=`` ``1``, FUN ``=`` ``function``(``x``)`` ``x``[``1``]``^``2`` ``+`` ``x``[``2``]``^``2``)`\
+`m`` ``<-`` `[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``y ``=`` ``y``)``)`
 
 To run multiple optimizer starts in parallel, set `multistart > 1` and
 pipe to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(DiceKriging)
-
-design <- expand.grid(x1 = seq(0, 1, length = 15), x2 = seq(0, 1, length = 15))
-y <- apply(design, MARGIN = 1, FUN = function(x) x[1]^2 + x[2]^2)
-m <- km(~., design = design, response = data.frame(y = y),
-        multistart = 20) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`DiceKriging`](https://dicekrigingclub.github.io/www/)`)`\
+\
+`design`` ``<-`` `[`expand.grid`](https://rdrr.io/r/base/expand.grid.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
+`y`` ``<-`` `[`apply`](https://rdrr.io/r/base/apply.html)`(``design``, MARGIN ``=`` ``1``, FUN ``=`` ``function``(``x``)`` ``x``[``1``]``^``2`` ``+`` ``x``[``2``]``^``2``)`\
+`m`` ``<-`` `[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``y ``=`` ``y``)``,`\
+`        multistart ``=`` ``20``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This distributes the multi-start runs across the available parallel
 workers, given that we have set up a parallel plan, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -75,17 +67,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 

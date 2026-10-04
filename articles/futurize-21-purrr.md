@@ -11,21 +11,19 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(purrr)
-
-slow_fcn <- function(x) {
-  message("x = ", x)
-  Sys.sleep(0.1)  # emulate work
-  x^2
-}
-
-xs <- 1:10
-ys <- xs |> map(slow_fcn) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`purrr`](https://purrr.tidyverse.org/)`)`\
+\
+`slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`message`](https://rdrr.io/r/base/message.html)`(``"x = "``, ``x``)`\
+`  `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.1``)``  ``# emulate work`\
+`  ``x``^``2`\
+`}`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` ``xs`` ``|>`` `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -39,39 +37,33 @@ The **purrr** [`map()`](https://purrr.tidyverse.org/reference/map.html)
 function is commonly used to apply a function to the elements of a
 vector or a list. For example,
 
-``` r
-
-library(purrr)
-xs <- 1:1000
-ys <- map(xs, slow_fcn)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`purrr`](https://purrr.tidyverse.org/)`)`\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``xs``, ``slow_fcn``)`
 
 or equivalently using pipe syntax
 
-``` r
-
-xs <- 1:1000
-ys <- xs |> map(slow_fcn)
-```
+\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` ``xs`` ``|>`` `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`
 
 Here [`map()`](https://purrr.tidyverse.org/reference/map.html) evaluates
 sequentially, but we can easily make it evaluate in parallel, by using:
 
-``` r
-
-library(purrr)
-
-library(futurize)
-plan(multisession) ## parallelize on local machine
-
-xs <- 1:1000
-ys <- xs |> map(slow_fcn) |> futurize()
-#> x = 1
-#> x = 2
-#> x = 3
-#> ...
-#> x = 10
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`purrr`](https://purrr.tidyverse.org/)`)`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`` ``## parallelize on local machine`\
+\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` ``xs`` ``|>`` `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`#> x = 1`\
+`#> x = 2`\
+`#> x = 3`\
+`#> ...`\
+`#> x = 10`
 
 Note how messages produced on parallel workers are relayed as-is back to
 the main R session as they complete. Not only messages, but also
@@ -92,30 +84,24 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 Another example is:
 
-``` r
-
-library(purrr)
-library(futurize)
-plan(future.mirai::mirai_multisession)
-
-ys <- 1:10 |>
-        map(rnorm, n = 10) |> futurize(seed = TRUE) |>
-        map_dbl(mean) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`purrr`](https://purrr.tidyverse.org/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`\
+\
+`ys`` ``<-`` ``1``:``10`` ``|>`\
+`        `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``rnorm``, n ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``seed ``=`` ``TRUE``)`` ``|>`\
+`        `[`map_dbl`](https://purrr.tidyverse.org/reference/map.html)`(``mean``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 

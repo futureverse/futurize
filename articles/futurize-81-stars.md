@@ -10,16 +10,14 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(stars)
-
-m <- matrix(1:20, nrow = 5, ncol = 4)
-s <- st_as_stars(m)
-res <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`stars`](https://r-spatial.github.io/stars/)`)`\
+\
+`m`` ``<-`` `[`matrix`](https://rdrr.io/r/base/matrix.html)`(``1``:``20``, nrow ``=`` ``5``, ncol ``=`` ``4``)`\
+`s`` ``<-`` `[`st_as_stars`](https://r-spatial.github.io/stars/reference/st_as_stars.html)`(``m``)`\
+`res`` ``<-`` `[`st_apply`](https://r-spatial.github.io/stars/reference/st_apply.html)`(``s``, MARGIN ``=`` ``1``, FUN ``=`` ``mean``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -43,18 +41,16 @@ object. By default, it runs sequentially. By piping the result to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md),
 we can easily enable parallel processing.
 
-``` r
-
-library(futurize)
-library(stars)
-
-## Create a small stars object
-m <- matrix(1:10000, nrow = 100, ncol = 100)
-s <- st_as_stars(m)
-
-## Calculate the mean across the first dimension
-res <- st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`stars`](https://r-spatial.github.io/stars/)`)`\
+\
+`## Create a small stars object`\
+`m`` ``<-`` `[`matrix`](https://rdrr.io/r/base/matrix.html)`(``1``:``10000``, nrow ``=`` ``100``, ncol ``=`` ``100``)`\
+`s`` ``<-`` `[`st_as_stars`](https://r-spatial.github.io/stars/reference/st_as_stars.html)`(``m``)`\
+\
+`## Calculate the mean across the first dimension`\
+`res`` ``<-`` `[`st_apply`](https://r-spatial.github.io/stars/reference/st_apply.html)`(``s``, MARGIN ``=`` ``1``, FUN ``=`` ``mean``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 When you pipe a
 [`st_apply()`](https://r-spatial.github.io/stars/reference/st_apply.html)
@@ -68,10 +64,8 @@ your current
 
 For example, to parallelize on your local machine:
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The **futurize** package handles all the details of setting up the
 parallel environment, ensuring that global variables and packages are

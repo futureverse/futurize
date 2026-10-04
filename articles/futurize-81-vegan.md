@@ -11,16 +11,14 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(vegan)
-
-data(dune)
-data(dune.env)
-dune.mrpp <- with(dune.env, { mrpp(dune, Management) }) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`vegan`](https://vegandevs.github.io/vegan/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune.env``)`\
+`dune.mrpp`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``dune.env``, ``{`` `[`mrpp`](https://vegandevs.github.io/vegan/reference/mrpp.html)`(``dune``, ``Management``)`` ``}``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -34,24 +32,20 @@ simplifies further.
 Example adopted from
 [`help("mrpp", package = "vegan")`](https://vegandevs.github.io/vegan/reference/mrpp.html):
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(vegan)
-
-data(dune)
-data(dune.env)
-dune.mrpp <- with(dune.env, { mrpp(dune, Management) }) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`vegan`](https://vegandevs.github.io/vegan/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune.env``)`\
+`dune.mrpp`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``dune.env``, ``{`` `[`mrpp`](https://vegandevs.github.io/vegan/reference/mrpp.html)`(``dune``, ``Management``)`` ``}``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will parallelize the computations, given that we have set up
 parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -59,17 +53,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ### Example: anova() for ‘cca’ objects
 
@@ -78,17 +68,15 @@ objects supports parallelization via the `parallel` argument. With
 **futurize**, you can parallelize this directly. Example adopted from
 [`help("anova.cca", package = "vegan")`](https://vegandevs.github.io/vegan/reference/anova.cca.html):
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(vegan)
-
-data(dune)
-data(dune.env)
-ord <- cca(dune ~ A1 + Management, data = dune.env)
-res <- anova(ord, permutations = 99) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`vegan`](https://vegandevs.github.io/vegan/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune.env``)`\
+`ord`` ``<-`` `[`cca`](https://vegandevs.github.io/vegan/reference/cca.html)`(``dune`` ``~`` ``A1`` ``+`` ``Management``, data ``=`` ``dune.env``)`\
+`res`` ``<-`` `[`anova`](https://rdrr.io/r/stats/anova.html)`(``ord``, permutations ``=`` ``99``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -117,26 +105,24 @@ For comparison, here is what it takes to parallelize
 [`mrpp()`](https://vegandevs.github.io/vegan/reference/mrpp.html) using
 the **parallel** package directly, without **futurize**:
 
-``` r
-
-library(vegan)
-library(parallel)
-
-data(dune)
-data(dune.env)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Run MRPP in parallel
-dune.mrpp <- with(dune.env, {
-  mrpp(dune, Management, parallel = cl)
-})
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`vegan`](https://vegandevs.github.io/vegan/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune``)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``dune.env``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Run MRPP in parallel`\
+`dune.mrpp`` ``<-`` `[`with`](https://rdrr.io/r/base/with.html)`(``dune.env``, ``{`\
+`  `[`mrpp`](https://vegandevs.github.io/vegan/reference/mrpp.html)`(``dune``, ``Management``, parallel ``=`` ``cl``)`\
+`}``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

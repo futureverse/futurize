@@ -10,16 +10,14 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(rugarch)
-
-data(sp500ret, package = "rugarch")
-spec <- ugarchspec()
-roll <- ugarchroll(spec, sp500ret, n.start = 1000, refit.window = "moving", refit.every = 100) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rugarch`](https://github.com/alexiosg/rugarch)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``sp500ret``, package ``=`` ``"rugarch"``)`\
+`spec`` ``<-`` `[`ugarchspec`](https://rdrr.io/pkg/rugarch/man/ugarchspec-methods.html)`(``)`\
+`roll`` ``<-`` `[`ugarchroll`](https://rdrr.io/pkg/rugarch/man/ugarchroll-methods.html)`(``spec``, ``sp500ret``, n.start ``=`` ``1000``, refit.window ``=`` ``"moving"``, refit.every ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -44,19 +42,17 @@ The
 function performs rolling estimation and forecasting. This can be
 time-consuming as it involves multiple fits of the GARCH model.
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(rugarch)
-
-data(sp500ret, package = "rugarch")
-spec <- ugarchspec()
-
-## Perform rolling estimation
-roll <- ugarchroll(spec, sp500ret, n.start = 1000, 
-                   refit.window = "moving", refit.every = 100) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rugarch`](https://github.com/alexiosg/rugarch)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``sp500ret``, package ``=`` ``"rugarch"``)`\
+`spec`` ``<-`` `[`ugarchspec`](https://rdrr.io/pkg/rugarch/man/ugarchspec-methods.html)`(``)`\
+\
+`## Perform rolling estimation`\
+`roll`` ``<-`` `[`ugarchroll`](https://rdrr.io/pkg/rugarch/man/ugarchroll-methods.html)`(``spec``, ``sp500ret``, n.start ``=`` ``1000``, `\
+`                   refit.window ``=`` ``"moving"``, refit.every ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ### Example: GARCH parameter distribution
 
@@ -65,19 +61,17 @@ The
 function simulates and estimates the parameter distribution of a GARCH
 model.
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(rugarch)
-
-data(sp500ret, package = "rugarch")
-spec <- ugarchspec()
-fit <- ugarchfit(spec, sp500ret)
-
-## Estimate parameter distribution
-dist <- ugarchdistribution(fit, n.sim = 100, n.hist = 10) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rugarch`](https://github.com/alexiosg/rugarch)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``sp500ret``, package ``=`` ``"rugarch"``)`\
+`spec`` ``<-`` `[`ugarchspec`](https://rdrr.io/pkg/rugarch/man/ugarchspec-methods.html)`(``)`\
+`fit`` ``<-`` `[`ugarchfit`](https://rdrr.io/pkg/rugarch/man/ugarchfit-methods.html)`(``spec``, ``sp500ret``)`\
+\
+`## Estimate parameter distribution`\
+`dist`` ``<-`` `[`ugarchdistribution`](https://rdrr.io/pkg/rugarch/man/ugarchdistribution-methods.html)`(``fit``, n.sim ``=`` ``100``, n.hist ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -111,26 +105,24 @@ For comparison, here is what it takes to parallelize
 [`ugarchroll()`](https://rdrr.io/pkg/rugarch/man/ugarchroll-methods.html)
 using the **parallel** package directly, without **futurize**:
 
-``` r
-
-library(rugarch)
-library(parallel)
-
-data(sp500ret, package = "rugarch")
-spec <- ugarchspec()
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Run rolling estimation in parallel
-roll <- ugarchroll(spec, sp500ret, n.start = 1000, 
-                   refit.window = "moving", refit.every = 100,
-                   cluster = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rugarch`](https://github.com/alexiosg/rugarch)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``sp500ret``, package ``=`` ``"rugarch"``)`\
+`spec`` ``<-`` `[`ugarchspec`](https://rdrr.io/pkg/rugarch/man/ugarchspec-methods.html)`(``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Run rolling estimation in parallel`\
+`roll`` ``<-`` `[`ugarchroll`](https://rdrr.io/pkg/rugarch/man/ugarchroll-methods.html)`(``spec``, ``sp500ret``, n.start ``=`` ``1000``, `\
+`                   refit.window ``=`` ``"moving"``, refit.every ``=`` ``100``,`\
+`                   cluster ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

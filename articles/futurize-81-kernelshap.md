@@ -11,16 +11,14 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(kernelshap)
-
-ks <- kernelshap(
-  model, X = x_explain, bg_X = bg_X
-) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`kernelshap`](https://github.com/ModelOriented/kernelshap)`)`\
+\
+`ks`` ``<-`` `[`kernelshap`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)`(`\
+`  ``model``, X ``=`` ``x_explain``, bg_X ``=`` ``bg_X`\
+`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -43,20 +41,18 @@ The [`kernelshap()`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)
 function computes Kernel SHAP values for a set of observations. For
 example, using a simple linear model:
 
-``` r
-
-library(kernelshap)
-
-## Fit a model
-x_train <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(100)
-model <- lm(y ~ ., data = cbind(y = y_train, x_train))
-
-## Compute Kernel SHAP values
-x_explain <- x_train[1:5, ]
-bg_X <- x_train[1:20, ]
-ks <- kernelshap(model, X = x_explain, bg_X = bg_X)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`kernelshap`](https://github.com/ModelOriented/kernelshap)`)`\
+\
+`## Fit a model`\
+`x_train`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x1 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``, x2 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``)`\
+`y_train`` ``<-`` ``2`` ``*`` ``x_train``$``x1`` ``+`` ``x_train``$``x2`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)`\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``.``, data ``=`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``y ``=`` ``y_train``, ``x_train``)``)`\
+\
+`## Compute Kernel SHAP values`\
+`x_explain`` ``<-`` ``x_train``[``1``:``5``, ``]`\
+`bg_X`` ``<-`` ``x_train``[``1``:``20``, ``]`\
+`ks`` ``<-`` `[`kernelshap`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)`(``model``, X ``=`` ``x_explain``, bg_X ``=`` ``bg_X``)`
 
 Here
 [`kernelshap()`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)
@@ -64,24 +60,20 @@ processes observations sequentially, but we can easily make it process
 them in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(kernelshap)
-
-ks <- kernelshap(
-  model, X = x_explain, bg_X = bg_X
-) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`kernelshap`](https://github.com/ModelOriented/kernelshap)`)`\
+\
+`ks`` ``<-`` `[`kernelshap`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)`(`\
+`  ``model``, X ``=`` ``x_explain``, bg_X ``=`` ``bg_X`\
+`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the observation-level computations across the
 available parallel workers, given that we have set up parallel workers,
 e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -89,32 +81,26 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ### Example: Computing permutation SHAP values in parallel
 
 The [`permshap()`](https://rdrr.io/pkg/kernelshap/man/permshap.html)
 function works the same way:
 
-``` r
-
-library(futurize)
-library(kernelshap)
-
-ps <- permshap(
-  model, X = x_explain, bg_X = bg_X
-) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`kernelshap`](https://github.com/ModelOriented/kernelshap)`)`\
+\
+`ps`` ``<-`` `[`permshap`](https://rdrr.io/pkg/kernelshap/man/permshap.html)`(`\
+`  ``model``, X ``=`` ``x_explain``, bg_X ``=`` ``bg_X`\
+`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -133,32 +119,30 @@ For comparison, here is what it takes to parallelize
 using the **parallel** and **doParallel** packages directly, without
 **futurize**:
 
-``` r
-
-library(kernelshap)
-library(parallel)
-library(doParallel)
-
-## Fit a model
-x_train <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(100)
-model <- lm(y ~ ., data = cbind(y = y_train, x_train))
-
-x_explain <- x_train[1:5, ]
-bg_X <- x_train[1:20, ]
-
-## Set up a PSOCK cluster and register it with foreach
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-registerDoParallel(cl)
-
-## Compute Kernel SHAP values in parallel via foreach
-ks <- kernelshap(model, X = x_explain, bg_X = bg_X, parallel = TRUE)
-
-## Tear down the cluster
-stopCluster(cl)
-registerDoSEQ()  ## reset foreach to sequential
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`kernelshap`](https://github.com/ModelOriented/kernelshap)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`doParallel`](https://github.com/RevolutionAnalytics/doparallel)`)`\
+\
+`## Fit a model`\
+`x_train`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x1 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``, x2 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``)`\
+`y_train`` ``<-`` ``2`` ``*`` ``x_train``$``x1`` ``+`` ``x_train``$``x2`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)`\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``.``, data ``=`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``y ``=`` ``y_train``, ``x_train``)``)`\
+\
+`x_explain`` ``<-`` ``x_train``[``1``:``5``, ``]`\
+`bg_X`` ``<-`` ``x_train``[``1``:``20``, ``]`\
+\
+`## Set up a PSOCK cluster and register it with foreach`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+[`registerDoParallel`](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)`(``cl``)`\
+\
+`## Compute Kernel SHAP values in parallel via foreach`\
+`ks`` ``<-`` `[`kernelshap`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)`(``model``, X ``=`` ``x_explain``, bg_X ``=`` ``bg_X``, parallel ``=`` ``TRUE``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`\
+[`registerDoSEQ`](https://rdrr.io/pkg/foreach/man/registerDoSEQ.html)`(``)``  ``## reset foreach to sequential`
 
 This requires you to manually create a cluster, register it with
 **doParallel**, and remember to tear it down and reset the **foreach**

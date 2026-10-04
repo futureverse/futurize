@@ -11,16 +11,14 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(scater)
-
-sce <- scuttle::logNormCounts(sce)
-sce <- runPCA(sce) |> futurize()
-sce <- runUMAP(sce) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``scater``)`\
+\
+`sce`` ``<-`` ``scuttle``::``logNormCounts``(``sce``)`\
+`sce`` ``<-`` ``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`sce`` ``<-`` ``runUMAP``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -34,38 +32,31 @@ be parallelized across cells.
 
 ### Example: Running PCA in parallel
 
-The [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)
-function performs PCA on a `SingleCellExperiment` object:
+The `runPCA()` function performs PCA on a `SingleCellExperiment` object:
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(``scater``)`\
+\
+`# Simulate data`\
+`sce`` ``<-`` ``scuttle``::``mockSCE``(``)`\
+`sce`` ``<-`` ``scuttle``::``logNormCounts``(``sce``)`\
+\
+`sce`` ``<-`` ``runPCA``(``sce``)`
 
-library(scater)
-
-# Simulate data
-sce <- scuttle::mockSCE()
-sce <- scuttle::logNormCounts(sce)
-
-sce <- runPCA(sce)
-```
-
-Here [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html) runs
-sequentially, but we can easily make it run in parallel by piping to
+Here `runPCA()` runs sequentially, but we can easily make it run in
+parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-
-sce <- runPCA(sce) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+\
+`sce`` ``<-`` ``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -73,30 +64,26 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
 The following **scater** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`calculatePCA()`](https://rdrr.io/pkg/scater/man/runPCA.html)
-- [`calculateTSNE()`](https://rdrr.io/pkg/scater/man/runTSNE.html)
-- [`calculateUMAP()`](https://rdrr.io/pkg/scater/man/runUMAP.html)
-- [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)
-- [`runTSNE()`](https://rdrr.io/pkg/scater/man/runTSNE.html)
-- [`runUMAP()`](https://rdrr.io/pkg/scater/man/runUMAP.html)
-- [`runColDataPCA()`](https://rdrr.io/pkg/scater/man/runColDataPCA.html)
-- [`nexprs()`](https://rdrr.io/pkg/scater/man/nexprs.html)
-- [`getVarianceExplained()`](https://rdrr.io/pkg/scater/man/getVarianceExplained.html)
-- [`plotRLE()`](https://rdrr.io/pkg/scater/man/plotRLE.html)
+- `calculatePCA()`
+- `calculateTSNE()`
+- `calculateUMAP()`
+- `runPCA()`
+- `runTSNE()`
+- `runUMAP()`
+- `runColDataPCA()`
+- `nexprs()`
+- `getVarianceExplained()`
+- `plotRLE()`

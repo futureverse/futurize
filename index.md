@@ -8,12 +8,10 @@ calls. All you need to know is that there is a single function called
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 that will take care of everything, e.g.
 
-``` r
-
-y <- lapply(x, fcn) |> futurize()
-y <- map(x, fcn) |> futurize()
-b <- boot(city, ratio, R = 999) |> futurize()
-```
+\
+`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``x``, ``fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`y`` ``<-`` ``map``(``x``, ``fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`b`` ``<-`` ``boot``(``city``, ``ratio``, R ``=`` ``999``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 The
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -52,17 +50,13 @@ multiple packages. The tables below summarize the supported map-reduce
 (Table 1) and domain-specific (Tables 2 and 3) functions, respectively.
 To programmatically see which packages are currently supported, use:
 
-``` r
-
-futurize_supported_packages()
-```
+\
+[`futurize_supported_packages`](https://futurize.futureverse.org/reference/futurize_supported_packages.md)`(``)`
 
 To see which functions are supported for a specific package, use:
 
-``` r
-
-futurize_supported_functions("caret")
-```
+\
+[`futurize_supported_functions`](https://futurize.futureverse.org/reference/futurize_supported_packages.md)`(``"caret"``)`
 
 | Package | Functions | Requires |
 |----|----|----|
@@ -81,47 +75,43 @@ for parallel transpilation.*
 
 Here are some examples:
 
-``` r
-
-library(futurize)
-plan(multisession)
-
-xs <- 1:10
-ys <- lapply(xs, sqrt) |> futurize()
-
-xs <- 1:10
-ys <- purrr::map(xs, sqrt) |> futurize()
-
-xs <- 1:10
-ys <- crossmap::xmap_dbl(xs, ~ .y * .x) |> futurize()
-
-library(foreach)
-xs <- 1:10
-ys <- foreach(x = xs) %do% { sqrt(x) } |> futurize()
-
-xs <- 1:10
-ys <- plyr::llply(xs, sqrt) |> futurize()
-
-xs <- 1:10
-ys <- pbapply::pblapply(xs, sqrt) |> futurize()
-
-xs <- 1:10
-ys <- BiocParallel::bplapply(xs, sqrt) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` ``purrr``::`[`map`](https://purrr.tidyverse.org/reference/map.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` ``crossmap``::`[`xmap_dbl`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)`(``xs``, ``~`` ``.y`` ``*`` ``.x``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`foreach`](https://github.com/RevolutionAnalytics/foreach)`)`\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``xs``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``{`` `[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(``x``)`` ``}`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` ``plyr``::`[`llply`](https://rdrr.io/pkg/plyr/man/llply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` ``pbapply``::`[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` ``BiocParallel``::``bplapply``(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 and
 
-``` r
-
-ys <- replicate(3, rnorm(1)) |> futurize()
-
-y <- by(warpbreaks, warpbreaks[,"tension"],
-        function(x) lm(breaks ~ wool, data = x)) |> futurize()
-
-xs <- EuStockMarkets[, 1:2]
-k <- kernel("daniell", 50)
-xs_smooth <- stats::kernapply(xs, k = k) |> futurize()
-```
+\
+`ys`` ``<-`` `[`replicate`](https://rdrr.io/r/base/lapply.html)`(``3``, `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``1``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`y`` ``<-`` `[`by`](https://rdrr.io/r/base/by.html)`(``warpbreaks``, ``warpbreaks``[``,``"tension"``]``,`\
+`        ``function``(``x``)`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``breaks`` ``~`` ``wool``, data ``=`` ``x``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`xs`` ``<-`` ``EuStockMarkets``[``, ``1``:``2``]`\
+`k`` ``<-`` `[`kernel`](https://rdrr.io/r/stats/kernel.html)`(``"daniell"``, ``50``)`\
+`xs_smooth`` ``<-`` ``stats``::`[`kernapply`](https://rdrr.io/r/stats/kernapply.html)`(``xs``, k ``=`` ``k``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported domain-specific packages
 
@@ -171,73 +161,71 @@ for parallel transpilation.*
 
 Here are some examples:
 
-``` r
-
-ratio <- function(d, w) sum(d$x * w)/sum(d$u * w)
-b <- boot::boot(boot::city, ratio, R = 999) |> futurize()
-
-ctrl <- caret::trainControl(method = "cv", number = 10)
-model <- caret::train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
-
-rt <- ez::ezBoot(data = ANT, dv = rt, wid = subnum, within = .(cue, flank), between = group) |> futurize()
-
-f <- fwb::fwb(boot::city, ratio, R = 999) |> futurize()
-
-m <- DiceKriging::km(~., design = design, response = response, multistart = 8L) |> futurize()
-
-cv <- gamlss::gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
-
-cv <- glmnet::cv.glmnet(x, y) |> futurize()
-
-ks <- kernelshap::kernelshap(model, X = x_explain, bg_X = bg_X) |> futurize()
-
-m <- lme4::allFit(models) |> futurize()
-
-fit <- metafor::rma(yi, vi)
-pr <- profile(fit) |> futurize()
-
-b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
-
-fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
-
-cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
-
-m <- pls::plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
-
-fit <- pvclust::pvclust(mtcars, nboot = 1000) |> futurize()
-
-v <- sandwich::vcovBS(fm) |> futurize()
-
-sc <- riskRegression::Score(list("CSC" = fit), data = d,
-  formula = Hist(time, event) ~ 1, times = 5, B = 100,
-  split.method = "bootcv") |> futurize()
-
-roll <- rugarch::ugarchroll(spec, sp500ret, n.start = 1000, 
-  refit.window = "moving", refit.every = 100) |> futurize()
-
-result <- shapr::explain(model, x_explain, x_train, approach = "empirical", phi0 = phi0) |> futurize()
-
-
-o <- seriation::seriate_best(d_supreme) |> futurize()
-
-res <- Sim.DiffProc::MCM.sde(model, statistic = stat, R = 100) |> futurize()
-
-res <- SimDesign::runSimulation(Design, replications = 1000,
-  generate = Generate, analyse = Analyse, summarise = Summarise) |> futurize()
-
-s <- stars::st_as_stars(matrix(1:20, nrow = 5, ncol = 4))
-res <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
-
-bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
-
-res <- SuperLearner::CV.SuperLearner(Y, X, SL.library = SL.library) |> futurize()
-
-m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
-
-tour <- TSP::solve_TSP(USCA50, method = "nn", rep = 10) |> futurize()
-
-md <- vegan::mrpp(dune, Management) |> futurize()
-```
+\
+`ratio`` ``<-`` ``function``(``d``, ``w``)`` `[`sum`](https://rdrr.io/r/base/sum.html)`(``d``$``x`` ``*`` ``w``)``/`[`sum`](https://rdrr.io/r/base/sum.html)`(``d``$``u`` ``*`` ``w``)`\
+`b`` ``<-`` ``boot``::`[`boot`](https://rdrr.io/pkg/boot/man/boot.html)`(``boot``::`[`city`](https://rdrr.io/pkg/boot/man/bigcity.html)`, ``ratio``, R ``=`` ``999``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`ctrl`` ``<-`` ``caret``::`[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
+`model`` ``<-`` ``caret``::`[`train`](https://rdrr.io/pkg/caret/man/train.html)`(``Species`` ``~`` ``.``, data ``=`` ``iris``, method ``=`` ``"rf"``, trControl ``=`` ``ctrl``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`rt`` ``<-`` ``ez``::`[`ezBoot`](https://rdrr.io/pkg/ez/man/ezBoot.html)`(``data ``=`` ``ANT``, dv ``=`` ``rt``, wid ``=`` ``subnum``, within ``=`` ``.``(``cue``, ``flank``)``, between ``=`` ``group``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`f`` ``<-`` ``fwb``::`[`fwb`](https://ngreifer.github.io/fwb/reference/fwb.html)`(``boot``::`[`city`](https://rdrr.io/pkg/boot/man/bigcity.html)`, ``ratio``, R ``=`` ``999``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`m`` ``<-`` ``DiceKriging``::`[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` ``response``, multistart ``=`` ``8L``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`cv`` ``<-`` ``gamlss``::`[`gamlssCV`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html)`(``y`` ``~`` ``pb``(``x``)``, data ``=`` ``abdom``, K.fold ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`cv`` ``<-`` ``glmnet``::`[`cv.glmnet`](https://glmnet.stanford.edu/reference/cv.glmnet.html)`(``x``, ``y``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`ks`` ``<-`` ``kernelshap``::`[`kernelshap`](https://rdrr.io/pkg/kernelshap/man/kernelshap.html)`(``model``, X ``=`` ``x_explain``, bg_X ``=`` ``bg_X``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`m`` ``<-`` ``lme4``::`[`allFit`](https://rdrr.io/pkg/lme4/man/allFit.html)`(``models``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`fit`` ``<-`` ``metafor``::`[`rma`](https://wviechtb.github.io/metafor/reference/rma.uni.html)`(``yi``, ``vi``)`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``fit``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`b`` ``<-`` ``mgcv``::`[`bam`](https://rdrr.io/pkg/mgcv/man/bam.html)`(``y`` ``~`` ``s``(``x0``, bs ``=`` ``bs``)`` ``+`` ``s``(``x1``, bs ``=`` ``bs``)``, data ``=`` ``dat``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`fit`` ``<-`` ``parameters``::`[`bootstrap_model`](https://easystats.github.io/parameters/reference/bootstrap_model.html)`(``model``, iterations ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`cf`` ``<-`` ``partykit``::`[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`m`` ``<-`` ``pls``::`[`plsr`](https://khliland.github.io/pls/reference/mvr.html)`(``density`` ``~`` ``NIR``, ncomp ``=`` ``10``, data ``=`` ``yarn``, validation ``=`` ``"CV"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`fit`` ``<-`` ``pvclust``::`[`pvclust`](https://rdrr.io/pkg/pvclust/man/pvclust.html)`(``mtcars``, nboot ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`v`` ``<-`` ``sandwich``::`[`vcovBS`](https://rdrr.io/pkg/sandwich/man/vcovBS.html)`(``fm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`sc`` ``<-`` ``riskRegression``::`[`Score`](https://rdrr.io/pkg/riskRegression/man/Score.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(``"CSC"`` ``=`` ``fit``)``, data ``=`` ``d``,`\
+`  formula ``=`` ``Hist``(``time``, ``event``)`` ``~`` ``1``, times ``=`` ``5``, B ``=`` ``100``,`\
+`  split.method ``=`` ``"bootcv"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`roll`` ``<-`` ``rugarch``::`[`ugarchroll`](https://rdrr.io/pkg/rugarch/man/ugarchroll-methods.html)`(``spec``, ``sp500ret``, n.start ``=`` ``1000``, `\
+`  refit.window ``=`` ``"moving"``, refit.every ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`result`` ``<-`` ``shapr``::`[`explain`](https://norskregnesentral.github.io/shapr/reference/explain.html)`(``model``, ``x_explain``, ``x_train``, approach ``=`` ``"empirical"``, phi0 ``=`` ``phi0``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+\
+`o`` ``<-`` ``seriation``::`[`seriate_best`](https://rdrr.io/pkg/seriation/man/seriate_best.html)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`res`` ``<-`` ``Sim.DiffProc``::`[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``model``, statistic ``=`` ``stat``, R ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`res`` ``<-`` ``SimDesign``::`[`runSimulation`](http://philchalmers.github.io/SimDesign/reference/runSimulation.md)`(``Design``, replications ``=`` ``1000``,`\
+`  generate ``=`` ``Generate``, analyse ``=`` ``Analyse``, summarise ``=`` ``Summarise``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`s`` ``<-`` ``stars``::`[`st_as_stars`](https://r-spatial.github.io/stars/reference/st_as_stars.html)`(`[`matrix`](https://rdrr.io/r/base/matrix.html)`(``1``:``20``, nrow ``=`` ``5``, ncol ``=`` ``4``)``)`\
+`res`` ``<-`` ``stars``::`[`st_apply`](https://r-spatial.github.io/stars/reference/st_apply.html)`(``s``, MARGIN ``=`` ``1``, FUN ``=`` ``mean``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`bp`` ``<-`` ``strucchange``::`[`breakpoints`](https://rdrr.io/pkg/strucchange/man/breakpoints.html)`(``Nile`` ``~`` ``1``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`res`` ``<-`` ``SuperLearner``::`[`CV.SuperLearner`](https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html)`(``Y``, ``X``, SL.library ``=`` ``SL.library``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`m`` ``<-`` ``tm``::`[`tm_map`](https://rdrr.io/pkg/tm/man/tm_map.html)`(``crude``, ``content_transformer``(``tolower``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`tour`` ``<-`` ``TSP``::`[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`md`` ``<-`` ``vegan``::`[`mrpp`](https://vegandevs.github.io/vegan/reference/mrpp.html)`(``dune``, ``Management``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ### Bioconductor packages with support for futurize
 
@@ -260,23 +248,21 @@ for parallel transpilation.*
 
 Here are some examples:
 
-``` r
-
-dds <- DESeq2::DESeq(dds) |> futurize()
-
-res <- fgsea::fgsea(pathways, stats) |> futurize()
-
-se <- GenomicAlignments::summarizeOverlaps(features, bam_files) |> futurize()
-
-es <- GSVA::gsva(GSVA::gsvaParam(expr, geneSets)) |> futurize()
-
-counts <- Rsamtools::countBam(bamViews) |> futurize()
-
-sce <- scater::runPCA(sce) |> futurize()
-
-qc <- scuttle::perFeatureQCMetrics(sce) |> futurize()
-
-result <- SingleCellExperiment::applySCE(sce, scuttle::perFeatureQCMetrics) |> futurize()
-  
-adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
-```
+\
+`dds`` ``<-`` ``DESeq2``::``DESeq``(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`res`` ``<-`` ``fgsea``::``fgsea``(``pathways``, ``stats``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`se`` ``<-`` ``GenomicAlignments``::``summarizeOverlaps``(``features``, ``bam_files``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`es`` ``<-`` ``GSVA``::``gsva``(``GSVA``::``gsvaParam``(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`counts`` ``<-`` ``Rsamtools``::``countBam``(``bamViews``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`sce`` ``<-`` ``scater``::``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`qc`` ``<-`` ``scuttle``::``perFeatureQCMetrics``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`result`` ``<-`` ``SingleCellExperiment``::``applySCE``(``sce``, ``scuttle``::``perFeatureQCMetrics``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`  `\
+`adjusted`` ``<-`` ``sva``::``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`

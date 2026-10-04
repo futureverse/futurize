@@ -11,15 +11,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(crossmap)
-
-xs <- list(1:5, 1:5)
-ys <- xmap(xs, ~ .y * .x) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`crossmap`](https://pkg.rossellhayes.com/crossmap/)`)`\
+\
+`xs`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``1``:``5``, ``1``:``5``)`\
+`ys`` ``<-`` `[`xmap`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)`(``xs``, ``~`` ``.y`` ``*`` ``.x``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -29,14 +27,12 @@ functions. For example,
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
 can apply a function to every combination of elements in a list, e.g.
 
-``` r
-
-library(crossmap)
-
-# Multiply the 15 combinations of values in 1:3 and -2:2
-xs <- list(1:3, -2:2)
-ys <- xmap(xs, function(x, y) x * y) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`crossmap`](https://pkg.rossellhayes.com/crossmap/)`)`\
+\
+`# Multiply the 15 combinations of values in 1:3 and -2:2`\
+`xs`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``1``:``3``, ``-``2``:``2``)`\
+`ys`` ``<-`` `[`xmap`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)`(``xs``, ``function``(``x``, ``y``)`` ``x`` ``*`` ``y``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 Here
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
@@ -54,24 +50,20 @@ into
 [`future_xmap()`](https://pkg.rossellhayes.com/crossmap/reference/future_xmap.html),
 meaning you can do:
 
-``` r
-
-library(futurize)
-
-# Multiply the 15 combinations of values in 1:3 and -2:2
-xs <- list(1:3, -2:2)
-ys <- xmap(xs, function(x, y) x * y) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+\
+`# Multiply the 15 combinations of values in 1:3 and -2:2`\
+`xs`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``1``:``3``, ``-``2``:``2``)`\
+`ys`` ``<-`` `[`xmap`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)`(``xs``, ``function``(``x``, ``y``)`` ``x`` ``*`` ``y``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 to process this
 [`xmap()`](https://pkg.rossellhayes.com/crossmap/reference/xmap.html)
 call concurrently, which allows you to execute it on a set of parallel
 workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and it works on all operating systems. There are [other parallel
@@ -79,17 +71,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 

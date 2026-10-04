@@ -12,21 +12,19 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(foreach)
-
-slow_fcn <- function(x) {
-  message("x = ", x)
-  Sys.sleep(0.1)  # emulate work
-  x^2
-}
-
-xs <- 1:10
-ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`foreach`](https://github.com/RevolutionAnalytics/foreach)`)`\
+\
+`slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`message`](https://rdrr.io/r/base/message.html)`(``"x = "``, ``x``)`\
+`  `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.1``)``  ``# emulate work`\
+`  ``x``^``2`\
+`}`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``xs``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -37,12 +35,10 @@ functions such as
 **[foreach](https://cran.r-project.org/package=foreach)** package. For
 example, consider:
 
-``` r
-
-library(foreach)
-xs <- 1:1000
-ys <- foreach(x = xs) %do% slow_fcn(x)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`foreach`](https://github.com/RevolutionAnalytics/foreach)`)`\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``xs``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`
 
 This [`foreach()`](https://rdrr.io/pkg/foreach/man/foreach.html)
 construct is resolved sequentially. We can use the **futurize** package
@@ -51,21 +47,19 @@ futureverse. All we need to do is to pass the expression to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 as in:
 
-``` r
-
-library(foreach)
-
-library(futurize)
-plan(multisession) ## parallelize on local machine
-
-xs <- 1:1000
-ys <- foreach(x = xs) %do% slow_fcn(x) |> futurize()
-#> x = 1
-#> x = 2
-#> x = 3
-#> ...
-#> x = 10
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`foreach`](https://github.com/RevolutionAnalytics/foreach)`)`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`` ``## parallelize on local machine`\
+\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` `[`foreach`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``x ``=`` ``xs``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` ``slow_fcn``(``x``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`#> x = 1`\
+`#> x = 2`\
+`#> x = 3`\
+`#> ...`\
+`#> x = 10`
 
 Note how messages produced on parallel workers are relayed as-is back to
 the main R session as they complete. Not only messages, but also
@@ -86,28 +80,22 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 Here is another example that parallelizes
 [`times()`](https://rdrr.io/pkg/foreach/man/foreach.html) of the
 **foreach** package via the futureverse ecosystem:
 
-``` r
-
-library(foreach)
-library(futurize)
-ys <- times(10) %do% rnorm(3) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`foreach`](https://github.com/RevolutionAnalytics/foreach)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+`ys`` ``<-`` `[`times`](https://rdrr.io/pkg/foreach/man/foreach.html)`(``10``)`` `[`%do%`](https://rdrr.io/pkg/foreach/man/foreach.html)` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``3``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 

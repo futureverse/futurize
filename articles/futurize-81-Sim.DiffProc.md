@@ -10,20 +10,18 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(Sim.DiffProc)
-
-# Define 1D SDE model
-f <- expression(0)
-g <- expression(1)
-mod1d <- snssde1d(drift = f, diffusion = g, x0 = 1, M = 10, N = 100)
-stat <- function(x, ...) mean(x)
-
-res <- MCM.sde(mod1d, statistic = stat, R = 10, time = 0.5) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`Sim.DiffProc`](https://github.com/acguidoum/Sim.DiffProc)`)`\
+\
+`# Define 1D SDE model`\
+`f`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``0``)`\
+`g`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``1``)`\
+`mod1d`` ``<-`` `[`snssde1d`](https://rdrr.io/pkg/Sim.DiffProc/man/snssde1d.html)`(``drift ``=`` ``f``, diffusion ``=`` ``g``, x0 ``=`` ``1``, M ``=`` ``10``, N ``=`` ``100``)`\
+`stat`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)`\
+\
+`res`` ``<-`` `[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``mod1d``, statistic ``=`` ``stat``, R ``=`` ``10``, time ``=`` ``0.5``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -43,37 +41,31 @@ replications in parallel can significantly reduce execution times.
 The [`MCM.sde()`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)
 function performs Monte Carlo simulations for SDEs. For example:
 
-``` r
-
-library(Sim.DiffProc)
-
-f <- expression(0)
-g <- expression(1)
-mod1d <- snssde1d(drift = f, diffusion = g, x0 = 1, M = 10, N = 100)
-stat <- function(x, ...) mean(x)
-
-res <- MCM.sde(mod1d, statistic = stat, R = 10, time = 0.5)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`Sim.DiffProc`](https://github.com/acguidoum/Sim.DiffProc)`)`\
+\
+`f`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``0``)`\
+`g`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``1``)`\
+`mod1d`` ``<-`` `[`snssde1d`](https://rdrr.io/pkg/Sim.DiffProc/man/snssde1d.html)`(``drift ``=`` ``f``, diffusion ``=`` ``g``, x0 ``=`` ``1``, M ``=`` ``10``, N ``=`` ``100``)`\
+`stat`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)`\
+\
+`res`` ``<-`` `[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``mod1d``, statistic ``=`` ``stat``, R ``=`` ``10``, time ``=`` ``0.5``)`
 
 Here [`MCM.sde()`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)
 evaluates sequentially. To run in parallel, pipe to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(Sim.DiffProc)
-
-res <- MCM.sde(mod1d, statistic = stat, R = 10, time = 0.5) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`Sim.DiffProc`](https://github.com/acguidoum/Sim.DiffProc)`)`\
+\
+`res`` ``<-`` `[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``mod1d``, statistic ``=`` ``stat``, R ``=`` ``10``, time ``=`` ``0.5``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the Monte Carlo replications across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -81,17 +73,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 

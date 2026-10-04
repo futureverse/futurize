@@ -11,16 +11,14 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(lme4)
-
-gm <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
-             data = cbpp, family = binomial)
-gm_all <- allFit(gm) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+\
+`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/r/base/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
+`             data ``=`` ``cbpp``, family ``=`` ``binomial``)`\
+`gm_all`` ``<-`` `[`allFit`](https://rdrr.io/pkg/lme4/man/allFit.html)`(``gm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -42,40 +40,34 @@ parallelization.
 The [`allFit()`](https://rdrr.io/pkg/lme4/man/allFit.html) function fits
 a model with each available optimizer, which can be done in parallel:
 
-``` r
-
-library(lme4)
-
-## Fit a generalized linear mixed model
-gm <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
-            data = cbpp, family = binomial)
-
-## Try all available optimizers
-gm_all <- allFit(gm)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+\
+`## Fit a generalized linear mixed model`\
+`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/r/base/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
+`            data ``=`` ``cbpp``, family ``=`` ``binomial``)`\
+\
+`## Try all available optimizers`\
+`gm_all`` ``<-`` `[`allFit`](https://rdrr.io/pkg/lme4/man/allFit.html)`(``gm``)`
 
 Here [`allFit()`](https://rdrr.io/pkg/lme4/man/allFit.html) evaluates
 sequentially, but we can easily make it evaluate in parallel by piping
 to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(lme4)
-
-gm <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
-            data = cbpp, family = binomial)
-gm_all <- allFit(gm) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+\
+`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/r/base/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
+`            data ``=`` ``cbpp``, family ``=`` ``binomial``)`\
+`gm_all`` ``<-`` `[`allFit`](https://rdrr.io/pkg/lme4/man/allFit.html)`(``gm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the optimizer fits across the available parallel
 workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 Unlike other parallel backends in R,
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -103,36 +95,30 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ### Example: Parametric bootstrap
 
 The [`bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html) function
 performs parametric bootstrap inference on fitted models:
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(lme4)
-
-## Fit a linear mixed model
-fm <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-
-## Bootstrap the fixed-effect coefficients
-boot_coef <- function(model) fixef(model)
-b <- bootMer(fm, boot_coef, nsim = 100) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+\
+`## Fit a linear mixed model`\
+`fm`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(``Reaction`` ``~`` ``Days`` ``+`` ``(``Days`` ``|`` ``Subject``)``, data ``=`` ``sleepstudy``)`\
+\
+`## Bootstrap the fixed-effect coefficients`\
+`boot_coef`` ``<-`` ``function``(``model``)`` `[`fixef`](https://rdrr.io/pkg/nlme/man/fixed.effects.html)`(``model``)`\
+`b`` ``<-`` `[`bootMer`](https://rdrr.io/pkg/lme4/man/bootMer.html)`(``fm``, ``boot_coef``, nsim ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -151,26 +137,24 @@ For comparison, here is what it takes to parallelize
 [`bootMer()`](https://rdrr.io/pkg/lme4/man/bootMer.html) using the
 **parallel** package directly, without **futurize**:
 
-``` r
-
-library(lme4)
-library(parallel)
-
-## Fit a linear mixed model
-fm <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Bootstrap the fixed-effect coefficients
-boot_coef <- function(model) fixef(model)
-b <- bootMer(fm, boot_coef, nsim = 100,
-             parallel = "snow", ncpus = ncpus, cl = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`## Fit a linear mixed model`\
+`fm`` ``<-`` `[`lmer`](https://rdrr.io/pkg/lme4/man/lmer.html)`(``Reaction`` ``~`` ``Days`` ``+`` ``(``Days`` ``|`` ``Subject``)``, data ``=`` ``sleepstudy``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Bootstrap the fixed-effect coefficients`\
+`boot_coef`` ``<-`` ``function``(``model``)`` `[`fixef`](https://rdrr.io/pkg/nlme/man/fixed.effects.html)`(``model``)`\
+`b`` ``<-`` `[`bootMer`](https://rdrr.io/pkg/lme4/man/bootMer.html)`(``fm``, ``boot_coef``, nsim ``=`` ``100``,`\
+`             parallel ``=`` ``"snow"``, ncpus ``=`` ``ncpus``, cl ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

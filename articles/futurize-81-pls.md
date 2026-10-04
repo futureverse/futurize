@@ -10,15 +10,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(pls)
-
-data(yarn)
-m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pls`](https://github.com/khliland/pls)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``yarn``)`\
+`m`` ``<-`` `[`plsr`](https://khliland.github.io/pls/reference/mvr.html)`(``density`` ``~`` ``NIR``, ncomp ``=`` ``10``, data ``=`` ``yarn``, validation ``=`` ``"CV"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -41,35 +39,29 @@ The [`plsr()`](https://khliland.github.io/pls/reference/mvr.html)
 function is used to perform PLS regression. When `validation = "CV"` is
 specified, it performs cross-validation.
 
-``` r
-
-library(pls)
-data(yarn)
-
-## Sequential evaluation
-m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pls`](https://github.com/khliland/pls)`)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``yarn``)`\
+\
+`## Sequential evaluation`\
+`m`` ``<-`` `[`plsr`](https://khliland.github.io/pls/reference/mvr.html)`(``density`` ``~`` ``NIR``, ncomp ``=`` ``10``, data ``=`` ``yarn``, validation ``=`` ``"CV"``)`
 
 To make it evaluate in parallel, simply pipe the call to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(pls)
-data(yarn)
-
-## Parallel evaluation
-m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV") |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pls`](https://github.com/khliland/pls)`)`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``yarn``)`\
+\
+`## Parallel evaluation`\
+`m`` ``<-`` `[`plsr`](https://khliland.github.io/pls/reference/mvr.html)`(``density`` ``~`` ``NIR``, ncomp ``=`` ``10``, data ``=`` ``yarn``, validation ``=`` ``"CV"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will automatically use the parallel backend set by
 [`plan()`](https://future.futureverse.org/reference/plan.html), e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 ### Example: Stand-alone Cross-Validation
 
@@ -78,18 +70,16 @@ The
 function can be used to perform cross-validation on an already fitted
 model:
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(pls)
-
-data(yarn)
-m1 <- plsr(density ~ NIR, ncomp = 10, data = yarn)
-
-## Parallel cross-validation
-m_cv <- crossval(m1, segments = 10) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pls`](https://github.com/khliland/pls)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``yarn``)`\
+`m1`` ``<-`` `[`plsr`](https://khliland.github.io/pls/reference/mvr.html)`(``density`` ``~`` ``NIR``, ncomp ``=`` ``10``, data ``=`` ``yarn``)`\
+\
+`## Parallel cross-validation`\
+`m_cv`` ``<-`` `[`crossval`](https://khliland.github.io/pls/reference/crossval.html)`(``m1``, segments ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -108,26 +98,24 @@ The following **pls** functions are supported by
 For comparison, here is what it takes to parallelize `pls` functions
 using the **parallel** package directly, without **futurize**:
 
-``` r
-
-library(pls)
-library(parallel)
-
-## Set up a cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Configure pls to use the cluster
-old_opts <- pls.options(parallel = cl)
-
-## Run regression with cross-validation
-data(yarn)
-m <- plsr(density ~ NIR, ncomp = 10, data = yarn, validation = "CV")
-
-## Restore original options and stop the cluster
-pls.options(old_opts)
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pls`](https://github.com/khliland/pls)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`## Set up a cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Configure pls to use the cluster`\
+`old_opts`` ``<-`` `[`pls.options`](https://khliland.github.io/pls/reference/pls.options.html)`(``parallel ``=`` ``cl``)`\
+\
+`## Run regression with cross-validation`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``yarn``)`\
+`m`` ``<-`` `[`plsr`](https://khliland.github.io/pls/reference/mvr.html)`(``density`` ``~`` ``NIR``, ncomp ``=`` ``10``, data ``=`` ``yarn``, validation ``=`` ``"CV"``)`\
+\
+`## Restore original options and stop the cluster`\
+[`pls.options`](https://khliland.github.io/pls/reference/pls.options.html)`(``old_opts``)`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually manage the cluster lifecycle and the
 global

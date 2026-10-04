@@ -12,18 +12,16 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(modelsummary)
-
-fit1 <- lm(mpg ~ cyl, data = mtcars)
-fit2 <- lm(mpg ~ cyl + hp, data = mtcars)
-models <- list(Model1 = fit1, Model2 = fit2)
-
-modelsummary(models) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`modelsummary`](https://modelsummary.com)`)`\
+\
+`fit1`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``cyl``, data ``=`` ``mtcars``)`\
+`fit2`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``cyl`` ``+`` ``hp``, data ``=`` ``mtcars``)`\
+`models`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``Model1 ``=`` ``fit1``, Model2 ``=`` ``fit2``)`\
+\
+[`modelsummary`](https://modelsummary.com/man/modelsummary.html)`(``models``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -31,29 +29,25 @@ The **[modelsummary](https://cran.r-project.org/package=modelsummary)**
 package creates customizable tables and plots to summarize statistical
 models side-by-side. For example,
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(modelsummary)
-
-## fit multiple linear models
-fit1 <- lm(mpg ~ cyl, data = mtcars)
-fit2 <- lm(mpg ~ cyl + hp, data = mtcars)
-models <- list(Model1 = fit1, Model2 = fit2)
-
-## generate modelsummary table in parallel
-tbl <- modelsummary(models, output = "data.frame") |> futurize()
-print(tbl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`modelsummary`](https://modelsummary.com)`)`\
+\
+`## fit multiple linear models`\
+`fit1`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``cyl``, data ``=`` ``mtcars``)`\
+`fit2`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``cyl`` ``+`` ``hp``, data ``=`` ``mtcars``)`\
+`models`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``Model1 ``=`` ``fit1``, Model2 ``=`` ``fit2``)`\
+\
+`## generate modelsummary table in parallel`\
+`tbl`` ``<-`` `[`modelsummary`](https://modelsummary.com/man/modelsummary.html)`(``models``, output ``=`` ``"data.frame"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+[`print`](https://rdrr.io/r/base/print.html)`(``tbl``)`
 
 will parallelize model summary statistics extraction, given that we have
 set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -61,17 +55,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 

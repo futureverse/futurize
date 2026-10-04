@@ -11,15 +11,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(parameters)
-
-model <- lm(mpg ~ wt, data = mtcars)
-fit <- bootstrap_model(model, iterations = 1000) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt``, data ``=`` ``mtcars``)`\
+`fit`` ``<-`` `[`bootstrap_model`](https://easystats.github.io/parameters/reference/bootstrap_model.html)`(``model``, iterations ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -45,37 +43,31 @@ is a perfect candidate for parallelization.
 Consider a linear model where we want to obtain bootstrapped estimates
 of the coefficients:
 
-``` r
-
-library(parameters)
-
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-
-## Generate 1000 bootstrap replicates (sequentially)
-boot_dist <- bootstrap_model(model, iterations = 1000)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``cyl``, data ``=`` ``mtcars``)`\
+\
+`## Generate 1000 bootstrap replicates (sequentially)`\
+`boot_dist`` ``<-`` `[`bootstrap_model`](https://easystats.github.io/parameters/reference/bootstrap_model.html)`(``model``, iterations ``=`` ``1000``)`
 
 To parallelize this using **futurize**, simply pipe the call to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(parameters)
-
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-
-## Generate 1000 bootstrap replicates (in parallel)
-boot_dist <- bootstrap_model(model, iterations = 1000) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``cyl``, data ``=`` ``mtcars``)`\
+\
+`## Generate 1000 bootstrap replicates (in parallel)`\
+`boot_dist`` ``<-`` `[`bootstrap_model`](https://easystats.github.io/parameters/reference/bootstrap_model.html)`(``model``, iterations ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the bootstrap iterations across the available
 parallel workers, given that we have set up a parallel backend, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 ### Example: Bootstrapped parameters summary
 
@@ -86,15 +78,13 @@ function is a higher-level wrapper that calls
 and then summarizes the results. It can also be parallelized in the same
 way:
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(parameters)
-
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-boot_params <- bootstrap_parameters(model, iterations = 1000) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``cyl``, data ``=`` ``mtcars``)`\
+`boot_params`` ``<-`` `[`bootstrap_parameters`](https://easystats.github.io/parameters/reference/bootstrap_parameters.html)`(``model``, iterations ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -112,25 +102,23 @@ For comparison, here is what it takes to parallelize
 [`bootstrap_model()`](https://easystats.github.io/parameters/reference/bootstrap_model.html)
 using the **parallel** package directly, without **futurize**:
 
-``` r
-
-library(parameters)
-library(parallel)
-
-model <- lm(mpg ~ wt + cyl, data = mtcars)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Run bootstrapping in parallel
-boot_dist <- bootstrap_model(model, iterations = 1000, 
-                             parallel = "snow", n_cpus = ncpus, 
-                             cluster = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`parameters`](https://easystats.github.io/parameters/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``cyl``, data ``=`` ``mtcars``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Run bootstrapping in parallel`\
+`boot_dist`` ``<-`` `[`bootstrap_model`](https://easystats.github.io/parameters/reference/bootstrap_model.html)`(``model``, iterations ``=`` ``1000``, `\
+`                             parallel ``=`` ``"snow"``, n_cpus ``=`` ``ncpus``, `\
+`                             cluster ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 With **futurize**, the cluster management is handled automatically. You
 just control the backend with

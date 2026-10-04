@@ -12,20 +12,18 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(riskRegression)
-library(survival)
-
-set.seed(42)
-d <- sampleData(200, outcome = "competing.risks")
-fit <- CSC(Hist(time, event) ~ X1 + X2 + X7 + X8, data = d)
-sc <- Score(list("CSC" = fit), data = d,
-            formula = Hist(time, event) ~ 1,
-            times = 5, B = 100, split.method = "bootcv") |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`riskRegression`](https://github.com/tagteam/riskRegression)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`survival`](https://github.com/therneau/survival)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
+`d`` ``<-`` `[`sampleData`](https://rdrr.io/pkg/riskRegression/man/sampleData.html)`(``200``, outcome ``=`` ``"competing.risks"``)`\
+`fit`` ``<-`` `[`CSC`](https://rdrr.io/pkg/riskRegression/man/CSC.html)`(``Hist``(``time``, ``event``)`` ``~`` ``X1`` ``+`` ``X2`` ``+`` ``X7`` ``+`` ``X8``, data ``=`` ``d``)`\
+`sc`` ``<-`` `[`Score`](https://rdrr.io/pkg/riskRegression/man/Score.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(``"CSC"`` ``=`` ``fit``)``, data ``=`` ``d``,`\
+`            formula ``=`` ``Hist``(``time``, ``event``)`` ``~`` ``1``,`\
+`            times ``=`` ``5``, B ``=`` ``100``, split.method ``=`` ``"bootcv"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -50,48 +48,42 @@ The [`Score()`](https://rdrr.io/pkg/riskRegression/man/Score.html)
 function evaluates prediction models via bootstrap cross-validation with
 metrics such as time-dependent AUC and Brier scores:
 
-``` r
-
-library(riskRegression)
-library(survival)
-
-set.seed(42)
-d <- sampleData(200, outcome = "competing.risks")
-fit <- CSC(Hist(time, event) ~ X1 + X2 + X7 + X8, data = d)
-
-## Bootstrap cross-validation with 100 bootstrap samples
-sc <- Score(list("CSC" = fit), data = d,
-            formula = Hist(time, event) ~ 1,
-            times = 5, B = 100, split.method = "bootcv")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`riskRegression`](https://github.com/tagteam/riskRegression)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`survival`](https://github.com/therneau/survival)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
+`d`` ``<-`` `[`sampleData`](https://rdrr.io/pkg/riskRegression/man/sampleData.html)`(``200``, outcome ``=`` ``"competing.risks"``)`\
+`fit`` ``<-`` `[`CSC`](https://rdrr.io/pkg/riskRegression/man/CSC.html)`(``Hist``(``time``, ``event``)`` ``~`` ``X1`` ``+`` ``X2`` ``+`` ``X7`` ``+`` ``X8``, data ``=`` ``d``)`\
+\
+`## Bootstrap cross-validation with 100 bootstrap samples`\
+`sc`` ``<-`` `[`Score`](https://rdrr.io/pkg/riskRegression/man/Score.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(``"CSC"`` ``=`` ``fit``)``, data ``=`` ``d``,`\
+`            formula ``=`` ``Hist``(``time``, ``event``)`` ``~`` ``1``,`\
+`            times ``=`` ``5``, B ``=`` ``100``, split.method ``=`` ``"bootcv"``)`
 
 Here [`Score()`](https://rdrr.io/pkg/riskRegression/man/Score.html)
 evaluates sequentially, but we can easily make it evaluate in parallel
 by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(riskRegression)
-library(survival)
-
-set.seed(42)
-d <- sampleData(200, outcome = "competing.risks")
-fit <- CSC(Hist(time, event) ~ X1 + X2 + X7 + X8, data = d)
-
-sc <- Score(list("CSC" = fit), data = d,
-            formula = Hist(time, event) ~ 1,
-            times = 5, B = 100, split.method = "bootcv") |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`riskRegression`](https://github.com/tagteam/riskRegression)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`survival`](https://github.com/therneau/survival)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
+`d`` ``<-`` `[`sampleData`](https://rdrr.io/pkg/riskRegression/man/sampleData.html)`(``200``, outcome ``=`` ``"competing.risks"``)`\
+`fit`` ``<-`` `[`CSC`](https://rdrr.io/pkg/riskRegression/man/CSC.html)`(``Hist``(``time``, ``event``)`` ``~`` ``X1`` ``+`` ``X2`` ``+`` ``X7`` ``+`` ``X8``, data ``=`` ``d``)`\
+\
+`sc`` ``<-`` `[`Score`](https://rdrr.io/pkg/riskRegression/man/Score.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(``"CSC"`` ``=`` ``fit``)``, data ``=`` ``d``,`\
+`            formula ``=`` ``Hist``(``time``, ``event``)`` ``~`` ``1``,`\
+`            times ``=`` ``5``, B ``=`` ``100``, split.method ``=`` ``"bootcv"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the bootstrap samples across the available parallel
 workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -99,17 +91,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
@@ -125,32 +113,30 @@ For comparison, here is what it takes to parallelize
 [`Score()`](https://rdrr.io/pkg/riskRegression/man/Score.html) using the
 **parallel** and **doParallel** packages directly, without **futurize**:
 
-``` r
-
-library(riskRegression)
-library(survival)
-library(parallel)
-library(doParallel)
-
-set.seed(42)
-d <- sampleData(200, outcome = "competing.risks")
-fit <- CSC(Hist(time, event) ~ X1 + X2 + X7 + X8, data = d)
-
-## Set up a PSOCK cluster and register it with foreach
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-registerDoParallel(cl)
-
-## Bootstrap cross-validation in parallel via foreach
-sc <- Score(list("CSC" = fit), data = d,
-            formula = Hist(time, event) ~ 1,
-            times = 5, B = 100, split.method = "bootcv",
-            parallel = "as.registered")
-
-## Tear down the cluster
-stopCluster(cl)
-registerDoSEQ()  ## reset foreach to sequential
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`riskRegression`](https://github.com/tagteam/riskRegression)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`survival`](https://github.com/therneau/survival)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`doParallel`](https://github.com/RevolutionAnalytics/doparallel)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
+`d`` ``<-`` `[`sampleData`](https://rdrr.io/pkg/riskRegression/man/sampleData.html)`(``200``, outcome ``=`` ``"competing.risks"``)`\
+`fit`` ``<-`` `[`CSC`](https://rdrr.io/pkg/riskRegression/man/CSC.html)`(``Hist``(``time``, ``event``)`` ``~`` ``X1`` ``+`` ``X2`` ``+`` ``X7`` ``+`` ``X8``, data ``=`` ``d``)`\
+\
+`## Set up a PSOCK cluster and register it with foreach`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+[`registerDoParallel`](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)`(``cl``)`\
+\
+`## Bootstrap cross-validation in parallel via foreach`\
+`sc`` ``<-`` `[`Score`](https://rdrr.io/pkg/riskRegression/man/Score.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(``"CSC"`` ``=`` ``fit``)``, data ``=`` ``d``,`\
+`            formula ``=`` ``Hist``(``time``, ``event``)`` ``~`` ``1``,`\
+`            times ``=`` ``5``, B ``=`` ``100``, split.method ``=`` ``"bootcv"``,`\
+`            parallel ``=`` ``"as.registered"``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`\
+[`registerDoSEQ`](https://rdrr.io/pkg/foreach/man/registerDoSEQ.html)`(``)``  ``## reset foreach to sequential`
 
 This requires you to manually create a cluster, register it with
 **doParallel**, and remember to tear it down and reset the **foreach**

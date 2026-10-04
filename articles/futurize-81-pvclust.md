@@ -10,15 +10,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(pvclust)
-
-data(mtcars, package = "datasets")
-fit <- pvclust(mtcars, nboot = 1000) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pvclust`](http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``mtcars``, package ``=`` ``"datasets"``)`\
+`fit`` ``<-`` `[`pvclust`](https://rdrr.io/pkg/pvclust/man/pvclust.html)`(``mtcars``, nboot ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -42,35 +40,29 @@ The core function
 multiscale bootstrap resampling to assess the uncertainty in
 hierarchical cluster analysis. For example, using the `mtcars` dataset:
 
-``` r
-
-library(pvclust)
-
-## Assess the uncertainty of hierarchical clustering of mtcars
-## variables using 1000 bootstrap replicates
-fit <- pvclust(mtcars, nboot = 1000)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pvclust`](http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/)`)`\
+\
+`## Assess the uncertainty of hierarchical clustering of mtcars`\
+`## variables using 1000 bootstrap replicates`\
+`fit`` ``<-`` `[`pvclust`](https://rdrr.io/pkg/pvclust/man/pvclust.html)`(``mtcars``, nboot ``=`` ``1000``)`
 
 Here [`pvclust()`](https://rdrr.io/pkg/pvclust/man/pvclust.html)
 evaluates sequentially. We can easily make it evaluate in parallel by
 piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(pvclust)
-
-fit <- pvclust(mtcars, nboot = 1000) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pvclust`](http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/)`)`\
+\
+`fit`` ``<-`` `[`pvclust`](https://rdrr.io/pkg/pvclust/man/pvclust.html)`(``mtcars``, nboot ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the bootstrap replications across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -78,17 +70,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
@@ -104,21 +92,19 @@ For comparison, here is what it takes to parallelize
 [`pvclust()`](https://rdrr.io/pkg/pvclust/man/pvclust.html) using the
 **parallel** package directly, without **futurize**:
 
-``` r
-
-library(pvclust)
-library(parallel)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Run pvclust in parallel
-fit <- pvclust(mtcars, nboot = 1000, parallel = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pvclust`](http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Run pvclust in parallel`\
+`fit`` ``<-`` `[`pvclust`](https://rdrr.io/pkg/pvclust/man/pvclust.html)`(``mtcars``, nboot ``=`` ``1000``, parallel ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

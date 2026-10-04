@@ -11,19 +11,17 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(fwb)
-
-set.seed(123)
-lm_fit <- lm(mpg ~ wt + am, data = mtcars)
-b <- fwb(mtcars, statistic = function(data, w) {
-  fit <- lm(mpg ~ wt + am, data = data, weights = w)
-  coef(fit)
-}, R = 999) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`fwb`](https://ngreifer.github.io/fwb/)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`lm_fit`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``am``, data ``=`` ``mtcars``)`\
+`b`` ``<-`` `[`fwb`](https://ngreifer.github.io/fwb/reference/fwb.html)`(``mtcars``, statistic ``=`` ``function``(``data``, ``w``)`` ``{`\
+`  ``fit`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``am``, data ``=`` ``data``, weights ``=`` ``w``)`\
+`  `[`coef`](https://rdrr.io/r/stats/coef.html)`(``fit``)`\
+`}``, R ``=`` ``999``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -46,42 +44,36 @@ function produces fractional weighted bootstrap samples of a statistic
 applied to data. For example, consider bootstrapping a linear model on
 the `mtcars` dataset:
 
-``` r
-
-library(fwb)
-
-## Draw 999 bootstrap samples of the regression coefficients
-set.seed(123)
-b <- fwb(mtcars, statistic = function(data, w) {
-  fit <- lm(mpg ~ wt + am, data = data, weights = w)
-  coef(fit)
-}, R = 999)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`fwb`](https://ngreifer.github.io/fwb/)`)`\
+\
+`## Draw 999 bootstrap samples of the regression coefficients`\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`b`` ``<-`` `[`fwb`](https://ngreifer.github.io/fwb/reference/fwb.html)`(``mtcars``, statistic ``=`` ``function``(``data``, ``w``)`` ``{`\
+`  ``fit`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``am``, data ``=`` ``data``, weights ``=`` ``w``)`\
+`  `[`coef`](https://rdrr.io/r/stats/coef.html)`(``fit``)`\
+`}``, R ``=`` ``999``)`
 
 Here [`fwb()`](https://ngreifer.github.io/fwb/reference/fwb.html)
 evaluates sequentially, but we can easily make it evaluate in parallel
 by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(fwb)
-library(futurize)
-
-set.seed(123)
-b <- fwb(mtcars, statistic = function(data, w) {
-  fit <- lm(mpg ~ wt + am, data = data, weights = w)
-  coef(fit)
-}, R = 999) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`fwb`](https://ngreifer.github.io/fwb/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``123``)`\
+`b`` ``<-`` `[`fwb`](https://ngreifer.github.io/fwb/reference/fwb.html)`(``mtcars``, statistic ``=`` ``function``(``data``, ``w``)`` ``{`\
+`  ``fit`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``am``, data ``=`` ``data``, weights ``=`` ``w``)`\
+`  `[`coef`](https://rdrr.io/r/stats/coef.html)`(``fit``)`\
+`}``, R ``=`` ``999``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the 999 bootstrap samples across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -89,17 +81,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ### Example: Bootstrap variance-covariance matrix
 
@@ -107,15 +95,13 @@ The [`vcovFWB()`](https://ngreifer.github.io/fwb/reference/vcovFWB.html)
 function computes a bootstrap variance-covariance matrix for model
 coefficients:
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(fwb)
-
-lm_fit <- lm(mpg ~ wt + am, data = mtcars)
-V <- vcovFWB(lm_fit, R = 999) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`fwb`](https://ngreifer.github.io/fwb/)`)`\
+\
+`lm_fit`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``mpg`` ``~`` ``wt`` ``+`` ``am``, data ``=`` ``mtcars``)`\
+`V`` ``<-`` `[`vcovFWB`](https://ngreifer.github.io/fwb/reference/vcovFWB.html)`(``lm_fit``, R ``=`` ``999``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 

@@ -11,15 +11,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(tm)
-
-data("crude")
-m <- tm_map(crude, content_transformer(tolower)) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tm`](https://tm.r-forge.r-project.org/)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"crude"``)`\
+`m`` ``<-`` `[`tm_map`](https://rdrr.io/pkg/tm/man/tm_map.html)`(``crude``, `[`content_transformer`](https://rdrr.io/pkg/tm/man/content_transformer.html)`(``tolower``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -40,39 +38,33 @@ these operations benefit greatly from parallelization.
 The [`tm_map()`](https://rdrr.io/pkg/tm/man/tm_map.html) function
 applies a transformation to each document in a corpus:
 
-``` r
-
-library(tm)
-
-## Load the crude oil news corpus holding 20 documents
-data("crude")
-
-## Convert all text to lowercase
-m <- tm_map(crude, content_transformer(tolower))
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tm`](https://tm.r-forge.r-project.org/)`)`\
+\
+`## Load the crude oil news corpus holding 20 documents`\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"crude"``)`\
+\
+`## Convert all text to lowercase`\
+`m`` ``<-`` `[`tm_map`](https://rdrr.io/pkg/tm/man/tm_map.html)`(``crude``, `[`content_transformer`](https://rdrr.io/pkg/tm/man/content_transformer.html)`(``tolower``)``)`
 
 Here [`tm_map()`](https://rdrr.io/pkg/tm/man/tm_map.html) evaluates
 sequentially, but we can easily make it evaluate in parallel by piping
 to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(tm)
-library(futurize)
-plan(multisession)
-
-data("crude")
-m <- tm_map(crude, content_transformer(tolower)) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tm`](https://tm.r-forge.r-project.org/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"crude"``)`\
+`m`` ``<-`` `[`tm_map`](https://rdrr.io/pkg/tm/man/tm_map.html)`(``crude``, `[`content_transformer`](https://rdrr.io/pkg/tm/man/content_transformer.html)`(``tolower``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the document transformations across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -80,17 +72,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
@@ -107,28 +95,26 @@ For comparison, here is what it takes to parallelize
 [`tm_map()`](https://rdrr.io/pkg/tm/man/tm_map.html) using the
 **parallel** package directly, without **futurize**:
 
-``` r
-
-library(tm)
-library(parallel)
-
-data("crude")
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Configure tm to use the cluster
-old_engine <- tm_parLapply_engine()
-tm_parLapply_engine(function(X, FUN, ...) parLapply(cl, X, FUN, ...))
-
-## Transform the corpus in parallel
-m <- tm_map(crude, content_transformer(tolower))
-
-## Restore the old engine and tear down the cluster
-tm_parLapply_engine(old_engine)
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tm`](https://tm.r-forge.r-project.org/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"crude"``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Configure tm to use the cluster`\
+`old_engine`` ``<-`` `[`tm_parLapply_engine`](https://rdrr.io/pkg/tm/man/hpc.html)`(``)`\
+[`tm_parLapply_engine`](https://rdrr.io/pkg/tm/man/hpc.html)`(``function``(``X``, ``FUN``, ``...``)`` `[`parLapply`](https://rdrr.io/r/parallel/clusterApply.html)`(``cl``, ``X``, ``FUN``, ``...``)``)`\
+\
+`## Transform the corpus in parallel`\
+`m`` ``<-`` `[`tm_map`](https://rdrr.io/pkg/tm/man/tm_map.html)`(``crude``, `[`content_transformer`](https://rdrr.io/pkg/tm/man/content_transformer.html)`(``tolower``)``)`\
+\
+`## Restore the old engine and tear down the cluster`\
+[`tm_parLapply_engine`](https://rdrr.io/pkg/tm/man/hpc.html)`(``old_engine``)`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create a cluster, configure **tm**’s
 internal parallel engine, and remember to restore the engine and tear

@@ -11,15 +11,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(TSP)
-
-data("USCA50")
-tour <- solve_TSP(USCA50, method = "nn", rep = 10L) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`TSP`](https://github.com/mhahsler/TSP)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"USCA50"``)`\
+`tour`` ``<-`` `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10L``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -31,33 +29,29 @@ algorithms for solving the traveling salesperson problem (TSP).
 Example adopted from
 [`help("solve_TSP", package = "TSP")`](https://rdrr.io/pkg/TSP/man/solve_TSP.html):
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(TSP)
-
-data("USCA50")
-methods <- c(
-  "identity", "random", "nearest_insertion", "cheapest_insertion",
-  "farthest_insertion", "arbitrary_insertion", "nn", "repetitive_nn", 
-  "two_opt", "sa"
-)
-
-## calculate tours - each tour in parallel
-tours <- lapply(methods, FUN = function(m) {
-  solve_TSP(USCA50, rep = 10L, method = m) |> futurize()
-})
-names(tours) <- methods
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`TSP`](https://github.com/mhahsler/TSP)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"USCA50"``)`\
+`methods`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(`\
+`  ``"identity"``, ``"random"``, ``"nearest_insertion"``, ``"cheapest_insertion"``,`\
+`  ``"farthest_insertion"``, ``"arbitrary_insertion"``, ``"nn"``, ``"repetitive_nn"``, `\
+`  ``"two_opt"``, ``"sa"`\
+`)`\
+\
+`## calculate tours - each tour in parallel`\
+`tours`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``methods``, FUN ``=`` ``function``(``m``)`` ``{`\
+`  `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, rep ``=`` ``10L``, method ``=`` ``m``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`}``)`\
+[`names`](https://rdrr.io/r/base/names.html)`(``tours``)`` ``<-`` ``methods`
 
 This will parallelize the computations, given that we have set up
 parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -65,17 +59,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
@@ -91,26 +81,24 @@ For comparison, here is what it takes to parallelize
 [`solve_TSP()`](https://rdrr.io/pkg/TSP/man/solve_TSP.html) using the
 **parallel** and **doParallel** packages directly, without **futurize**:
 
-``` r
-
-library(TSP)
-library(parallel)
-library(doParallel)
-
-data("USCA50")
-
-## Set up a PSOCK cluster and register it with foreach
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-registerDoParallel(cl)
-
-## Solve the TSP in parallel via foreach
-tour <- solve_TSP(USCA50, method = "nn", rep = 10L)
-
-## Tear down the cluster
-stopCluster(cl)
-registerDoSEQ()  ## reset foreach to sequential
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`TSP`](https://github.com/mhahsler/TSP)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`doParallel`](https://github.com/RevolutionAnalytics/doparallel)`)`\
+\
+[`data`](https://rdrr.io/r/utils/data.html)`(``"USCA50"``)`\
+\
+`## Set up a PSOCK cluster and register it with foreach`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+[`registerDoParallel`](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)`(``cl``)`\
+\
+`## Solve the TSP in parallel via foreach`\
+`tour`` ``<-`` `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10L``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`\
+[`registerDoSEQ`](https://rdrr.io/pkg/foreach/man/registerDoSEQ.html)`(``)``  ``## reset foreach to sequential`
 
 This requires you to manually create a cluster, register it with
 **doParallel**, and remember to tear it down and reset the **foreach**

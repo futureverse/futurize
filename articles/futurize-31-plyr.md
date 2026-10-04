@@ -11,21 +11,19 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(plyr)
-library(futurize)
-plan(multisession)
-
-slow_fcn <- function(x) {
-  message("x = ", x)
-  Sys.sleep(0.1)  # emulate work
-  x^2
-}
-
-xs <- 1:10
-ys <- llply(xs, slow_fcn) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`plyr`](http://had.co.nz/plyr)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+\
+`slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`message`](https://rdrr.io/r/base/message.html)`(``"x = "``, ``x``)`\
+`  `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.1``)``  ``# emulate work`\
+`  ``x``^``2`\
+`}`\
+\
+`xs`` ``<-`` ``1``:``10`\
+`ys`` ``<-`` `[`llply`](https://rdrr.io/pkg/plyr/man/llply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -39,31 +37,27 @@ The **plyr** [`llply()`](https://rdrr.io/pkg/plyr/man/llply.html)
 function is commonly used to apply a function to the elements of a list
 and return a list. For example,
 
-``` r
-
-library(plyr)
-xs <- 1:1000
-ys <- llply(xs, slow_fcn)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`plyr`](http://had.co.nz/plyr)`)`\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` `[`llply`](https://rdrr.io/pkg/plyr/man/llply.html)`(``xs``, ``slow_fcn``)`
 
 Here [`llply()`](https://rdrr.io/pkg/plyr/man/llply.html) evaluates
 sequentially, but we can easily make it evaluate in parallel, by using:
 
-``` r
-
-library(plyr)
-
-library(futurize)
-plan(multisession) ## parallelize on local machine
-
-xs <- 1:1000
-ys <- xs |> llply(slow_fcn) |> futurize()
-#> x = 1
-#> x = 2
-#> x = 3
-#> ...
-#> x = 10
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`plyr`](http://had.co.nz/plyr)`)`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`` ``## parallelize on local machine`\
+\
+`xs`` ``<-`` ``1``:``1000`\
+`ys`` ``<-`` ``xs`` ``|>`` `[`llply`](https://rdrr.io/pkg/plyr/man/llply.html)`(``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`#> x = 1`\
+`#> x = 2`\
+`#> x = 3`\
+`#> ...`\
+`#> x = 10`
 
 Note how messages produced on parallel workers are relayed as-is back to
 the main R session as they complete. Not only messages, but also
@@ -84,28 +78,22 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 Another example is:
 
-``` r
-
-library(plyr)
-library(futurize)
-plan(future.mirai::mirai_multisession)
-
-ys <- llply(baseball, summary) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`plyr`](http://had.co.nz/plyr)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`\
+\
+`ys`` ``<-`` `[`llply`](https://rdrr.io/pkg/plyr/man/llply.html)`(``baseball``, ``summary``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 

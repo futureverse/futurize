@@ -12,15 +12,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(glmmTMB)
-
-m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
-pr <- profile(m) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`glmmTMB`](https://github.com/glmmTMB/glmmTMB)`)`\
+\
+`m`` ``<-`` `[`glmmTMB`](https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html)`(``count`` ``~`` ``mined`` ``+`` ``(``1`` ``|`` ``site``)``, data ``=`` ``Salamanders``, family ``=`` ``nbinom2``)`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``m``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -42,38 +40,32 @@ The [`profile()`](https://rdrr.io/r/stats/profile.html) function
 computes the likelihood profile for each model parameter. For example,
 using the built-in `Salamanders` dataset to model salamander counts:
 
-``` r
-
-library(glmmTMB)
-
-## Fit a negative binomial GLMM
-m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
-
-## Compute likelihood profile
-pr <- profile(m)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`glmmTMB`](https://github.com/glmmTMB/glmmTMB)`)`\
+\
+`## Fit a negative binomial GLMM`\
+`m`` ``<-`` `[`glmmTMB`](https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html)`(``count`` ``~`` ``mined`` ``+`` ``(``1`` ``|`` ``site``)``, data ``=`` ``Salamanders``, family ``=`` ``nbinom2``)`\
+\
+`## Compute likelihood profile`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``m``)`
 
 Here [`profile()`](https://rdrr.io/r/stats/profile.html) is calculated
 sequentially. To calculate in parallel, we can pipe to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(glmmTMB)
-
-m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
-pr <- profile(m) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`glmmTMB`](https://github.com/glmmTMB/glmmTMB)`)`\
+\
+`m`` ``<-`` `[`glmmTMB`](https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html)`(``count`` ``~`` ``mined`` ``+`` ``(``1`` ``|`` ``site``)``, data ``=`` ``Salamanders``, family ``=`` ``nbinom2``)`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``m``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the per-parameter profile computations across the
 available parallel workers, given that we have set up parallel workers,
 e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -81,17 +73,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
@@ -106,24 +94,22 @@ For comparison, here is what it takes to parallelize
 [`profile()`](https://rdrr.io/r/stats/profile.html) using the
 **parallel** package directly, without **futurize**:
 
-``` r
-
-library(glmmTMB)
-library(parallel)
-
-## Fit a negative binomial GLMM
-m <- glmmTMB(count ~ mined + (1 | site), data = Salamanders, family = nbinom2)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Compute likelihood profile in parallel
-pr <- profile(m, parallel = "snow", ncpus = ncpus, cl = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`glmmTMB`](https://github.com/glmmTMB/glmmTMB)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`## Fit a negative binomial GLMM`\
+`m`` ``<-`` `[`glmmTMB`](https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html)`(``count`` ``~`` ``mined`` ``+`` ``(``1`` ``|`` ``site``)``, data ``=`` ``Salamanders``, family ``=`` ``nbinom2``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Compute likelihood profile in parallel`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``m``, parallel ``=`` ``"snow"``, ncpus ``=`` ``ncpus``, cl ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

@@ -11,15 +11,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(caret)
-
-ctrl <- trainControl(method = "cv", number = 10)
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret/)`)`\
+\
+`ctrl`` ``<-`` `[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
+`model`` ``<-`` `[`train`](https://rdrr.io/pkg/caret/man/train.html)`(``Species`` ``~`` ``.``, data ``=`` ``iris``, method ``=`` ``"rf"``, trControl ``=`` ``ctrl``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -38,38 +36,32 @@ excellent candidate for parallelization.
 The [`train()`](https://rdrr.io/pkg/caret/man/train.html) function fits
 models across multiple resampling iterations:
 
-``` r
-
-library(caret)
-
-## Set up 10-fold cross-validation
-ctrl <- trainControl(method = "cv", number = 10)
-
-## Train a random forest model
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret/)`)`\
+\
+`## Set up 10-fold cross-validation`\
+`ctrl`` ``<-`` `[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
+\
+`## Train a random forest model`\
+`model`` ``<-`` `[`train`](https://rdrr.io/pkg/caret/man/train.html)`(``Species`` ``~`` ``.``, data ``=`` ``iris``, method ``=`` ``"rf"``, trControl ``=`` ``ctrl``)`
 
 Here [`train()`](https://rdrr.io/pkg/caret/man/train.html) evaluates
 sequentially, but we can easily make it evaluate in parallel by piping
 to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(caret)
-
-ctrl <- trainControl(method = "cv", number = 10)
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret/)`)`\
+\
+`ctrl`` ``<-`` `[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
+`model`` ``<-`` `[`train`](https://rdrr.io/pkg/caret/man/train.html)`(``Species`` ``~`` ``.``, data ``=`` ``iris``, method ``=`` ``"rf"``, trControl ``=`` ``ctrl``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the cross-validation folds across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -77,17 +69,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 

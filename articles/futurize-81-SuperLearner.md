@@ -10,14 +10,12 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(SuperLearner)
-
-res <- CV.SuperLearner(Y = Y, X = X, SL.library = SL.library) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`SuperLearner`](https://github.com/ecpolley/SuperLearner)`)`\
+\
+`res`` ``<-`` `[`CV.SuperLearner`](https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html)`(``Y ``=`` ``Y``, X ``=`` ``X``, SL.library ``=`` ``SL.library``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -40,40 +38,34 @@ The
 function evaluates the cross-validated risk of the Super Learner
 ensemble. For example:
 
-``` r
-
-library(SuperLearner)
-
-n <- 100
-p <- 5
-X <- as.data.frame(matrix(rnorm(n * p), n, p))
-Y <- X[, 1] + X[, 2] + rnorm(n)
-SL.library <- c("SL.glm", "SL.mean")
-
-res <- CV.SuperLearner(Y = Y, X = X, V = 10, SL.library = SL.library)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`SuperLearner`](https://github.com/ecpolley/SuperLearner)`)`\
+\
+`n`` ``<-`` ``100`\
+`p`` ``<-`` ``5`\
+`X`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(`[`matrix`](https://rdrr.io/r/base/matrix.html)`(`[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n`` ``*`` ``p``)``, ``n``, ``p``)``)`\
+`Y`` ``<-`` ``X``[``, ``1``]`` ``+`` ``X``[``, ``2``]`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n``)`\
+`SL.library`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"SL.glm"``, ``"SL.mean"``)`\
+\
+`res`` ``<-`` `[`CV.SuperLearner`](https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html)`(``Y ``=`` ``Y``, X ``=`` ``X``, V ``=`` ``10``, SL.library ``=`` ``SL.library``)`
 
 Here
 [`CV.SuperLearner()`](https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html)
 evaluates sequentially. To run in parallel, pipe to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(SuperLearner)
-
-res <- CV.SuperLearner(Y = Y, X = X, V = 10, SL.library = SL.library) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`SuperLearner`](https://github.com/ecpolley/SuperLearner)`)`\
+\
+`res`` ``<-`` `[`CV.SuperLearner`](https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html)`(``Y ``=`` ``Y``, X ``=`` ``X``, V ``=`` ``10``, SL.library ``=`` ``SL.library``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the cross-validation fold evaluations across the
 available parallel workers, given that we have set up parallel workers,
 e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -81,17 +73,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 

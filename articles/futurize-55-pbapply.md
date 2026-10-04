@@ -11,21 +11,19 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(pbapply)
-
-slow_fcn <- function(x) {
-  message("x = ", x)
-  Sys.sleep(0.1)  # emulate work
-  sqrt(x)
-}
-
-xs <- 1:100
-ys <- pblapply(xs, slow_fcn) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pbapply`](https://github.com/psolymos/pbapply)`)`\
+\
+`slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`message`](https://rdrr.io/r/base/message.html)`(``"x = "``, ``x``)`\
+`  `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.1``)``  ``# emulate work`\
+`  `[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(``x``)`\
+`}`\
+\
+`xs`` ``<-`` ``1``:``100`\
+`ys`` ``<-`` `[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -47,23 +45,20 @@ string `"future"`.
 
 The
 [`pblapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
-function works like
-[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) but
+function works like [`lapply()`](https://rdrr.io/r/base/lapply.html) but
 displays a progress bar. For example:
 
-``` r
-
-library(pbapply)
-
-slow_fcn <- function(x) {
-  Sys.sleep(0.1)  # emulate work
-  sqrt(x)
-}
-
-## Apply a function to each element with a progress bar
-xs <- 1:100
-ys <- pblapply(xs, slow_fcn)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pbapply`](https://github.com/psolymos/pbapply)`)`\
+\
+`slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`Sys.sleep`](https://rdrr.io/r/base/Sys.sleep.html)`(``0.1``)``  ``# emulate work`\
+`  `[`sqrt`](https://rdrr.io/r/base/MathFun.html)`(``x``)`\
+`}`\
+\
+`## Apply a function to each element with a progress bar`\
+`xs`` ``<-`` ``1``:``100`\
+`ys`` ``<-`` `[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``slow_fcn``)`
 
 Here
 [`pblapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
@@ -71,16 +66,14 @@ evaluates sequentially, but we can easily make it evaluate in parallel
 by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(pbapply)
-
-library(futurize)
-plan(multisession) ## parallelize on local machine
-
-xs <- 1:100
-ys <- pblapply(xs, slow_fcn) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pbapply`](https://github.com/psolymos/pbapply)`)`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`` ``## parallelize on local machine`\
+\
+`xs`` ``<-`` ``1``:``100`\
+`ys`` ``<-`` `[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 Comment: The `message("x = ", x)` output is not relayed to the main R
 session by design, because if it were, it would clutter up the progress
@@ -93,34 +86,28 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ### Example: Parallel sapply with progress bar
 
 The
 [`pbsapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
 function simplifies the result like
-[`sapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html):
+[`sapply()`](https://rdrr.io/r/base/lapply.html):
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(pbapply)
-
-xs <- 1:100
-ys <- pbsapply(xs, slow_fcn) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pbapply`](https://github.com/psolymos/pbapply)`)`\
+\
+`xs`` ``<-`` ``1``:``100`\
+`ys`` ``<-`` `[`pbsapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
@@ -143,22 +130,20 @@ For comparison, here is what it takes to parallelize
 [`pblapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
 using the **parallel** package directly, without **futurize**:
 
-``` r
-
-library(pbapply)
-library(parallel)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Run pblapply in parallel
-xs <- 1:100
-ys <- pblapply(xs, slow_fcn, cl = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`pbapply`](https://github.com/psolymos/pbapply)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Run pblapply in parallel`\
+`xs`` ``<-`` ``1``:``100`\
+`ys`` ``<-`` `[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``slow_fcn``, cl ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

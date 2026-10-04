@@ -11,14 +11,12 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(sva)
-
-adjusted <- ComBat(dat = dat, batch = batch) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``sva``)`\
+\
+`adjusted`` ``<-`` ``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -27,53 +25,46 @@ This vignette demonstrates how to use this approach to parallelize the
 
 The **[sva](https://bioconductor.org/packages/sva/)** Bioconductor
 package provides functions for removing batch effects and other unwanted
-variation in high-throughput experiments. The
-[`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html) function is a
+variation in high-throughput experiments. The `ComBat()` function is a
 widely used method for batch effect correction using an empirical Bayes
 framework. It supports parallelization via BiocParallel’s BPPARAM
 argument.
 
 ### Example: Running ComBat() in parallel
 
-The [`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html) function
-adjusts for known batch effects in microarray or RNA-seq data:
+The `ComBat()` function adjusts for known batch effects in microarray or
+RNA-seq data:
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(``sva``)`\
+\
+`# Create example data with batch effect`\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
+`n_genes`` ``<-`` ``200L`\
+`n_samples`` ``<-`` ``40L`\
+`dat`` ``<-`` `[`matrix`](https://rdrr.io/r/base/matrix.html)`(`[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n_genes`` ``*`` ``n_samples``)``, nrow ``=`` ``n_genes``, ncol ``=`` ``n_samples``)`\
+[`rownames`](https://rdrr.io/r/base/colnames.html)`(``dat``)`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"gene"``, `[`seq_len`](https://rdrr.io/r/base/seq.html)`(``n_genes``)``)`\
+[`colnames`](https://rdrr.io/r/base/colnames.html)`(``dat``)`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"sample"``, `[`seq_len`](https://rdrr.io/r/base/seq.html)`(``n_samples``)``)`\
+\
+`batch`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``)``, each ``=`` ``n_samples`` ``/`` ``2L``)`\
+`dat``[``, ``batch`` ``==`` ``2``]`` ``<-`` ``dat``[``, ``batch`` ``==`` ``2``]`` ``+`` ``2`\
+\
+`adjusted`` ``<-`` ``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``)`
 
-library(sva)
-
-# Create example data with batch effect
-set.seed(42)
-n_genes <- 200L
-n_samples <- 40L
-dat <- matrix(rnorm(n_genes * n_samples), nrow = n_genes, ncol = n_samples)
-rownames(dat) <- paste0("gene", seq_len(n_genes))
-colnames(dat) <- paste0("sample", seq_len(n_samples))
-
-batch <- rep(c(1, 2), each = n_samples / 2L)
-dat[, batch == 2] <- dat[, batch == 2] + 2
-
-adjusted <- ComBat(dat = dat, batch = batch)
-```
-
-Here [`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html) runs
-sequentially, but we can easily make it run in parallel by piping to
+Here `ComBat()` runs sequentially, but we can easily make it run in
+parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-
-adjusted <- ComBat(dat = dat, batch = batch) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+\
+`adjusted`` ``<-`` ``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -81,33 +72,27 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ### Using ComBat() with a model matrix
 
 You can also include a model matrix for biological covariates of
 interest, which will be protected during batch correction:
 
-``` r
-
-mod <- model.matrix(~ group)
-adjusted <- ComBat(dat = dat, batch = batch, mod = mod) |> futurize()
-```
+\
+`mod`` ``<-`` `[`model.matrix`](https://rdrr.io/r/stats/model.matrix.html)`(``~`` ``group``)`\
+`adjusted`` ``<-`` ``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``, mod ``=`` ``mod``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
 The following **sva** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html)
-- [`read.degradation.matrix()`](https://rdrr.io/pkg/sva/man/read.degradation.matrix.html)
+- `ComBat()`
+- `read.degradation.matrix()`

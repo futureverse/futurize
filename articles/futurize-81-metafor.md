@@ -12,17 +12,15 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(metafor)
-
-dat <- escalc(measure = "RR", ai = tpos, bi = tneg,
-              ci = cpos, di = cneg, data = dat.bcg)
-fit <- rma(yi, vi, data = dat)
-pr <- profile(fit) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`metafor`](https://www.metafor-project.org)`)`\
+\
+`dat`` ``<-`` `[`escalc`](https://wviechtb.github.io/metafor/reference/escalc.html)`(``measure ``=`` ``"RR"``, ai ``=`` ``tpos``, bi ``=`` ``tneg``,`\
+`              ci ``=`` ``cpos``, di ``=`` ``cneg``, data ``=`` ``dat.bcg``)`\
+`fit`` ``<-`` `[`rma`](https://wviechtb.github.io/metafor/reference/rma.uni.html)`(``yi``, ``vi``, data ``=`` ``dat``)`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``fit``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -48,43 +46,37 @@ computes the likelihood profile for model parameters such as the
 variance component in a random-effects meta-analysis. For example, using
 the built-in BCG vaccine dataset:
 
-``` r
-
-library(metafor)
-
-## Calculate log risk ratios and sampling variances
-dat <- escalc(measure = "RR", ai = tpos, bi = tneg,
-              ci = cpos, di = cneg, data = dat.bcg)
-
-## Fit a random-effects model
-fit <- rma(yi, vi, data = dat)
-
-## Compute likelihood profile
-pr <- profile(fit)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`metafor`](https://www.metafor-project.org)`)`\
+\
+`## Calculate log risk ratios and sampling variances`\
+`dat`` ``<-`` `[`escalc`](https://wviechtb.github.io/metafor/reference/escalc.html)`(``measure ``=`` ``"RR"``, ai ``=`` ``tpos``, bi ``=`` ``tneg``,`\
+`              ci ``=`` ``cpos``, di ``=`` ``cneg``, data ``=`` ``dat.bcg``)`\
+\
+`## Fit a random-effects model`\
+`fit`` ``<-`` `[`rma`](https://wviechtb.github.io/metafor/reference/rma.uni.html)`(``yi``, ``vi``, data ``=`` ``dat``)`\
+\
+`## Compute likelihood profile`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``fit``)`
 
 Here [`profile()`](https://rdrr.io/r/stats/profile.html) is calculated
 sequentially. To calculate in parallel, we can pipe to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(metafor)
-
-dat <- escalc(measure = "RR", ai = tpos, bi = tneg,
-              ci = cpos, di = cneg, data = dat.bcg)
-fit <- rma(yi, vi, data = dat)
-pr <- profile(fit) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`metafor`](https://www.metafor-project.org)`)`\
+\
+`dat`` ``<-`` `[`escalc`](https://wviechtb.github.io/metafor/reference/escalc.html)`(``measure ``=`` ``"RR"``, ai ``=`` ``tpos``, bi ``=`` ``tneg``,`\
+`              ci ``=`` ``cpos``, di ``=`` ``cneg``, data ``=`` ``dat.bcg``)`\
+`fit`` ``<-`` `[`rma`](https://wviechtb.github.io/metafor/reference/rma.uni.html)`(``yi``, ``vi``, data ``=`` ``dat``)`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``fit``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the profile computations across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -92,17 +84,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
@@ -124,28 +112,26 @@ For comparison, here is what it takes to parallelize
 [`profile()`](https://rdrr.io/r/stats/profile.html) using the
 **parallel** package directly, without **futurize**:
 
-``` r
-
-library(metafor)
-library(parallel)
-
-## Calculate log risk ratios and sampling variances
-dat <- escalc(measure = "RR", ai = tpos, bi = tneg,
-              ci = cpos, di = cneg, data = dat.bcg)
-
-## Fit a random-effects model
-fit <- rma(yi, vi, data = dat)
-
-## Set up a PSOCK cluster
-ncpus <- 4L
-cl <- makeCluster(ncpus)
-
-## Compute likelihood profile in parallel
-pr <- profile(fit, parallel = "snow", ncpus = ncpus, cl = cl)
-
-## Tear down the cluster
-stopCluster(cl)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`metafor`](https://www.metafor-project.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
+\
+`## Calculate log risk ratios and sampling variances`\
+`dat`` ``<-`` `[`escalc`](https://wviechtb.github.io/metafor/reference/escalc.html)`(``measure ``=`` ``"RR"``, ai ``=`` ``tpos``, bi ``=`` ``tneg``,`\
+`              ci ``=`` ``cpos``, di ``=`` ``cneg``, data ``=`` ``dat.bcg``)`\
+\
+`## Fit a random-effects model`\
+`fit`` ``<-`` `[`rma`](https://wviechtb.github.io/metafor/reference/rma.uni.html)`(``yi``, ``vi``, data ``=`` ``dat``)`\
+\
+`## Set up a PSOCK cluster`\
+`ncpus`` ``<-`` ``4L`\
+`cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
+\
+`## Compute likelihood profile in parallel`\
+`pr`` ``<-`` `[`profile`](https://rdrr.io/r/stats/profile.html)`(``fit``, parallel ``=`` ``"snow"``, ncpus ``=`` ``ncpus``, cl ``=`` ``cl``)`\
+\
+`## Tear down the cluster`\
+[`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`
 
 This requires you to manually create and manage the cluster lifecycle.
 If you forget to call

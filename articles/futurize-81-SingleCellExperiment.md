@@ -12,15 +12,13 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(SingleCellExperiment)
-library(scuttle)
-
-result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``SingleCellExperiment``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``scuttle``)`\
+\
+`result`` ``<-`` ``applySCE``(``sce``, ``perFeatureQCMetrics``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -32,61 +30,47 @@ The
 **[SingleCellExperiment](https://bioconductor.org/packages/SingleCellExperiment/)**
 Bioconductor package defines the `SingleCellExperiment` class for
 storing single-cell genomics data, including alternative experiments
-(e.g. spike-in transcripts, antibody tags). The
-[`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
-function applies a given function to the main experiment and each
-alternative experiment, passing additional arguments such as `BPPARAM`
-via `...` to enable parallelization of the applied function.
+(e.g. spike-in transcripts, antibody tags). The `applySCE()` function
+applies a given function to the main experiment and each alternative
+experiment, passing additional arguments such as `BPPARAM` via `...` to
+enable parallelization of the applied function.
 
 ### Example: Computing per-feature QC metrics in parallel
 
-The
-[`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
-function applies a function across the main experiment and its
-alternative experiments:
+The `applySCE()` function applies a function across the main experiment
+and its alternative experiments:
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(``SingleCellExperiment``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``scuttle``)`\
+\
+`# Simulate data`\
+`sce`` ``<-`` ``mockSCE``(``)`\
+\
+`result`` ``<-`` ``applySCE``(``sce``, ``perFeatureQCMetrics``)`
 
-library(SingleCellExperiment)
-library(scuttle)
-
-# Simulate data
-sce <- mockSCE()
-
-result <- applySCE(sce, perFeatureQCMetrics)
-```
-
-Here
-[`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
-runs
-[`perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
-from the **[scuttle](https://bioconductor.org/packages/scuttle/)**
-package sequentially on each experiment, but we can easily make it run
-in parallel by piping to
+Here `applySCE()` runs `perFeatureQCMetrics()` from the
+**[scuttle](https://bioconductor.org/packages/scuttle/)** package
+sequentially on each experiment, but we can easily make it run in
+parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+\
+`result`` ``<-`` ``applySCE``(``sce``, ``perFeatureQCMetrics``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
-library(futurize)
-
-result <- applySCE(sce, perFeatureQCMetrics) |> futurize()
-```
-
-It is actually not
-[`SingleCellExperiment::applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
-that orchestrates the parallelization, but
-[`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html),
-which hands of the parallelization to
+It is actually not `SingleCellExperiment::applySCE()` that orchestrates
+the parallelization, but `scuttle::perFeatureQCMetrics()`, which hands
+of the parallelization to
 **[BiocParallel](https://bioconductor.org/packages/BiocParallel/)**
 which in turn hands it of to futureverse.
 
 The above will distribute the work across the available parallel
 workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -94,21 +78,17 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
 The following **SingleCellExperiment** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`applySCE()`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)
+- `applySCE()`

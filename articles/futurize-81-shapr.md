@@ -11,20 +11,18 @@ function. Easy!
 
 ## TL;DR
 
-``` r
-
-library(futurize)
-plan(multisession)
-library(shapr)
-
-result <- explain(
-  model = model,
-  x_explain = x_explain,
-  x_train = x_train,
-  approach = "empirical",
-  phi0 = mean(y_train)
-) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`shapr`](https://norskregnesentral.github.io/shapr/)`)`\
+\
+`result`` ``<-`` `[`explain`](https://norskregnesentral.github.io/shapr/reference/explain.html)`(`\
+`  model ``=`` ``model``,`\
+`  x_explain ``=`` ``x_explain``,`\
+`  x_train ``=`` ``x_train``,`\
+`  approach ``=`` ``"empirical"``,`\
+`  phi0 ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``y_train``)`\
+`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -47,25 +45,23 @@ The
 function computes Shapley values for a set of observations. For example,
 using a simple linear model:
 
-``` r
-
-library(shapr)
-
-## Fit a model
-x_train <- data.frame(x1 = rnorm(100), x2 = rnorm(100))
-y_train <- 2 * x_train$x1 + x_train$x2 + rnorm(100)
-model <- lm(y_train ~ x1 + x2, data = x_train)
-
-## Explain predictions
-x_explain <- data.frame(x1 = rnorm(5), x2 = rnorm(5))
-result <- explain(
-  model = model,
-  x_explain = x_explain,
-  x_train = x_train,
-  approach = "empirical",
-  phi0 = mean(y_train)
-)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`shapr`](https://norskregnesentral.github.io/shapr/)`)`\
+\
+`## Fit a model`\
+`x_train`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x1 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``, x2 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``)`\
+`y_train`` ``<-`` ``2`` ``*`` ``x_train``$``x1`` ``+`` ``x_train``$``x2`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)`\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y_train`` ``~`` ``x1`` ``+`` ``x2``, data ``=`` ``x_train``)`\
+\
+`## Explain predictions`\
+`x_explain`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x1 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``5``)``, x2 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``5``)``)`\
+`result`` ``<-`` `[`explain`](https://norskregnesentral.github.io/shapr/reference/explain.html)`(`\
+`  model ``=`` ``model``,`\
+`  x_explain ``=`` ``x_explain``,`\
+`  x_train ``=`` ``x_train``,`\
+`  approach ``=`` ``"empirical"``,`\
+`  phi0 ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``y_train``)`\
+`)`
 
 Here
 [`explain()`](https://norskregnesentral.github.io/shapr/reference/explain.html)
@@ -73,27 +69,23 @@ evaluates the coalitions sequentially, but we can easily make it
 evaluate them in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-``` r
-
-library(futurize)
-library(shapr)
-
-result <- explain(
-  model = model,
-  x_explain = x_explain,
-  x_train = x_train,
-  approach = "empirical",
-  phi0 = mean(y_train)
-) |> futurize()
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`shapr`](https://norskregnesentral.github.io/shapr/)`)`\
+\
+`result`` ``<-`` `[`explain`](https://norskregnesentral.github.io/shapr/reference/explain.html)`(`\
+`  model ``=`` ``model``,`\
+`  x_explain ``=`` ``x_explain``,`\
+`  x_train ``=`` ``x_train``,`\
+`  approach ``=`` ``"empirical"``,`\
+`  phi0 ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``y_train``)`\
+`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the coalition computations across the available
 parallel workers, given that we have set up parallel workers, e.g.
 
-``` r
-
-plan(multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -101,17 +93,13 @@ backends](https://www.futureverse.org/backends.html) to choose from,
 including alternatives to parallelize locally as well as distributed
 across remote machines, e.g.
 
-``` r
-
-plan(future.mirai::mirai_multisession)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`
 
 and
 
-``` r
-
-plan(future.batchtools::batchtools_slurm)
-```
+\
+[`plan`](https://future.futureverse.org/reference/plan.html)`(``future.batchtools``::`[`batchtools_slurm`](https://future.batchtools.futureverse.org/reference/batchtools_slurm.html)`)`
 
 ## Supported Functions
 
