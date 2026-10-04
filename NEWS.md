@@ -1,5 +1,11 @@
 # Version (development version)
 
+## New Features
+
+ * Futurization of **lme4** functions now uses `parallel = "future"`
+   available in **lme4** (>= 2.0-6). Older versions are still
+   supported.
+
 ## Bug Fixes
 
  * Attempts to futurize() a function not part of a package gave an

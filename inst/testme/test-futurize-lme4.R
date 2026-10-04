@@ -1,5 +1,5 @@
 #' @tags pkg-lme4
-if (requireNamespace("lme4") && getRversion() >= "4.4.0") {
+if (requireNamespace("lme4") && (getRversion() >= "4.4.0" || utils::packageVersion("lme4") >= "2.0-6")) {
 library(futurize)
 library(lme4)
 options(future.rng.onMisuse = "error")
@@ -49,6 +49,22 @@ if (utils::packageVersion("lme4") >= "2.0.1") {
   
   message("Comparing results:")
   stopifnot(all.equal(inf, inf_truth))
+}
+
+if (utils::packageVersion("lme4") >= "2.0-6") {
+  ## bootMer() requires parallel RNG
+  ## Adopted from example("bootMer", package = "lme4")
+  fm01ML <- lmer(Yield ~ 1 | Batch, Dyestuff, REML = FALSE)
+  mySumm <- function(.) { s <- sigma(.); c(beta = getME(., "beta"), sigma = s) }
+
+  message("Futurized processing:")
+  set.seed(42)
+  boo_1 <- bootMer(fm01ML, mySumm, nsim = 10) |> futurize_and_verify()
+  set.seed(42)
+  boo_2 <- bootMer(fm01ML, mySumm, nsim = 10) |> futurize()
+
+  message("Comparing results:")
+  stopifnot(all.equal(boo_1$t, boo_2$t))
 }
 
 plan(sequential)
