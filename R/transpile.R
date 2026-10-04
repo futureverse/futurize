@@ -239,6 +239,16 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   transpiler_sets <- get_transpilers(type)
   transpilers <- transpiler_sets[[ns_name]]
   if (is.null(transpilers)) {
+    ## Trying to transpile a non-supported function not part of a package?
+    if (!isNamespaceLoaded(ns_name)) {
+      info <- if (grepl("^%.*%$", fcn_name)) {
+        sprintf("`%s`", fcn_name)
+      } else {
+        sprintf("%s()", fcn_name)
+      }
+      stop_with_version(sprintf("Do not know how to %s %s, because it is not part of a package (it lives in environment %s)", what, info, sQuote(ns_name)))
+    }
+
     if (!requireNamespace(ns_name, quietly = TRUE)) {
       info <- if (grepl("^%.*%$", fcn_name)) {
         sprintf("%s::`%s`", ns_name, fcn_name)

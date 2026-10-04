@@ -60,6 +60,27 @@ res <- tryCatch(futurize:::import_future() |> futurize::futurize(), error = iden
 print(res)
 stopifnot(inherits(res, "error"))
 
+## Cannot futurize functions that are not part of a package
+my_fcn <- function(x) x
+res <- tryCatch(my_fcn(1) |> futurize::futurize(), error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  !grepl("Please install", conditionMessage(res)),
+  grepl("not part of a package", conditionMessage(res))
+)
+
+res <- local({
+  my_local_fcn <- function(x) x
+  tryCatch(my_local_fcn(1) |> futurize::futurize(), error = identity)
+})
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  !grepl("Please install", conditionMessage(res)),
+  grepl("not part of a package", conditionMessage(res))
+)
+
 
 # --------------------------------------------------------------------
 # futurize_options()
