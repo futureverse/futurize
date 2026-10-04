@@ -6,6 +6,21 @@ str(opts)
 opts <- futurize:::make_options_for_makeClusterFuture(options = list(), defaults = list(packages = character(0L), stdout = TRUE))
 str(opts)
 
+## Required packages are appended to the default packages
+opts <- futurize:::make_options_for_makeClusterFuture(options = futurize_options(), defaults = list(packages = "lme4"))
+str(opts)
+stopifnot(identical(opts[["packages"]], "lme4"))
+
+## Required packages are appended to user-specified packages
+opts <- futurize:::make_options_for_makeClusterFuture(options = futurize_options(packages = "tools"), defaults = list(packages = "lme4"))
+str(opts)
+stopifnot(identical(opts[["packages"]], c("tools", "lme4")))
+
+## ... without duplicates
+opts <- futurize:::make_options_for_makeClusterFuture(options = futurize_options(packages = c("lme4", "tools")), defaults = list(packages = "lme4"))
+str(opts)
+stopifnot(identical(opts[["packages"]], c("lme4", "tools")))
+
 message("*** make_options_for_doFuture()")
 if (requireNamespace("doFuture", quietly = TRUE)) {
   opts <- futurize_options(chunk_size = 10L)

@@ -19,11 +19,12 @@ make_options_for_makeClusterFuture <- local({
     if (length(defaults) > 0) {
       names <- setdiff(names(defaults), attr(options, "specified"))
       for (name in names) {
-        if (name == "packages") {
-          options[[name]] <- c(options[[name]], defaults[[name]])
-        } else {
-          options[[name]] <- defaults[[name]]
-        }
+        options[[name]] <- defaults[[name]]
+      }
+
+      ## Packages required by the transpiler are always appended
+      if ("packages" %in% names(defaults)) {
+        options[["packages"]] <- unique(c(options[["packages"]], defaults[["packages"]]))
       }
     }
 

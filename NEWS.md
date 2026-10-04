@@ -11,6 +11,9 @@
  * All futurize options, e.g. `seed`, `packages`, and `label`, were
    ignored when futurizing **BiocParallel** functions.
 
+ * Futurize option `packages` would drop packages that the transpiler
+   declares as required on parallel workers.
+
 
 # Version 1.0.0 (2026-06-11)
 
