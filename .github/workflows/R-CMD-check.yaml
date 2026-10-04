@@ -72,6 +72,14 @@ jobs:
           sed -i '/scater,/d' DESCRIPTION
         shell: bash {0}
 
+      - name: Remove Suggests that require a newer version of R (R 4.4)
+        if: matrix.config.r == '4.4'
+        run: |
+          ## CRAN package 'Sim.DiffProc' depends on CRAN package 'Deriv',
+          ## which requires R (>= 4.5.0) in recent versions
+          sed -i '/Sim.DiffProc,/d' DESCRIPTION
+        shell: bash {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
