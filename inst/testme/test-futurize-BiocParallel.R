@@ -9,6 +9,11 @@ plan(multisession)
 y <- bplapply(1:3, function(x) { print(x) }) |> futurize_and_verify(stdout = FALSE)
 print(y)
 
+message("futurize() options are passed on to the futures")
+y <- bplapply(1:2, function(x) "package:tools" %in% search()) |> futurize_and_verify(packages = "tools")
+print(y)
+stopifnot(all(unlist(y)))
+
 xs <- list(aa = 1, bb = 1:2, cc = 1:10, dd = 1:5, .ee = -6:6)
 FUN_no_rng <- function(x, na.rm = TRUE) {
   a <- 1:5

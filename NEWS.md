@@ -8,6 +8,9 @@
  * Option `chunk_size` was ignored when futurizing `times(n) %do% {
    ... }`.
 
+ * All futurize options, e.g. `seed`, `packages`, and `label`, were
+   ignored when futurizing **BiocParallel** functions.
+
 
 # Version 1.0.0 (2026-06-11)
 
