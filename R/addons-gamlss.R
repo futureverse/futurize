@@ -17,6 +17,7 @@ append_transpilers_for_gamlss <- function() {
   ##
   ## Functions that use parallel::clusterEvalQ(), which is not
   ## supported: chooseDist(), chooseDistPred().
+  ## See also https://github.com/gamlss-dev/gamlss/issues/29.
   skip <- c("stepGAIC", "stepGAICAll.A", "stepGAICAll.B",
             "stepTGD", "stepTGDAll.A",
             "chooseDist", "chooseDistPred")
