@@ -22,7 +22,7 @@ jobs:
 #          - {os: macOS-latest,   r: 'devel'    }
           - {os: macOS-latest,   r: 'release'  }
 #          - {os: ubuntu-latest,  r: 'devel'    } # takes ~1.5 hour to install
-          - {os: ubuntu-latest,  r: 'release', label = "w/ all suggests"  }
+          - {os: ubuntu-latest,  r: 'release', label: 'w/ all suggests'  }
           - {os: ubuntu-latest,  r: 'release', without_suggests: true, label: 'w/out suggests' }
           - {os: ubuntu-latest,  r: 'oldrel'   }
           - {os: ubuntu-latest,  r: '4.4'      }
