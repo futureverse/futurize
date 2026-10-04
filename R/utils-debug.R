@@ -41,6 +41,17 @@ mdebugf_push <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
   invisible(msg)
 }
 
+# Get or set current stack
+mdebug_stack <- function(stack = NULL) {
+  if (!is.null(stack)) {
+    ## Keep the indentation in sync with the stack
+    delta <- length(stack) - length(.debug$stack)
+    for (kk in seq_len(abs(delta))) debug_indent(sign(delta))
+    .debug$stack <- stack
+  }
+  invisible(.debug$stack)
+}
+
 mdebug_pop <- function(..., debug = isTRUE(getOption("futurize.debug"))) {
   n <- length(.debug$stack)
   if (n == 0) stop("Called mdebug_pop() on an empty debug stack")

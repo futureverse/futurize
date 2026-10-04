@@ -32,7 +32,11 @@ transpile <- local({
   function(expr, options = list(...), ..., when = TRUE, eval = TRUE, envir = parent.frame(), disable = FALSE, type = "built-in", what = "transpile", unwrap = list(base::`{`, base::`(`, base::`!`, base::local, base::with, base::I, base::identity, base::invisible, base::suppressMessages, base::suppressWarnings, base::suppressPackageStartupMessages), debug = FALSE) {
     if (debug) {
       mdebug_push("transpile() ...")
-      on.exit(mdebug_pop())
+      debug_stack <- mdebug_stack()
+      on.exit({
+        mdebug_stack(debug_stack)
+        mdebug_pop()
+      })
     }
   
     stopifnot(
@@ -203,7 +207,11 @@ find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = 
 get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, what, debug = FALSE) {
   if (debug) {
     mdebug_push("get_transpiler() ...")
-    on.exit(mdebug_pop())
+    debug_stack <- mdebug_stack()
+    on.exit({
+      mdebug_stack(debug_stack)
+      mdebug_pop()
+    })
     mdebug_push("Finding call to be transpiled ...")
   }
   
