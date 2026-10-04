@@ -7,8 +7,10 @@ export(futurize_supported_functions)
 export(futurize_supported_packages)
 export(fz)
 importFrom(future,plan)
-importFrom(utils,capture.output)
-importFrom(utils,getS3method)
-importFrom(utils,globalVariables)
-importFrom(utils,packageName)
-importFrom(utils,packageVersion)
+importFrom(utils,
+  capture.output,
+  getS3method,
+  globalVariables,
+  packageName,
+  packageVersion
+)
