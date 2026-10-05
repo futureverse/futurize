@@ -39,8 +39,8 @@ descend_wrappers <- function(expr, envir = parent.frame(), unwrap, what = "unwra
         2L
       }
 
-      ## Safety check
-      if (index > length(expr)) return(1L)
+      ## Safety check, e.g. an empty { }
+      if (index < 2L || index > length(expr)) return(1L)
 
       return(c(index, descend_wrappers(expr[[index]], envir = envir, unwrap = unwrap, what = what, debug = debug)))
     } ## if (identical(fcn, wrapper)

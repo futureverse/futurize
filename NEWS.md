@@ -42,6 +42,9 @@
  * Attempts to futurize a function not part of a package gave an
    obscure error message suggestion to install a non-existing package.
 
+ * Attempts to futurize an expression that is not a function call,
+   e.g. `{ x } |> futurize()`, gave an obscure error message.
+
 
 # Version 1.0.0 (2026-06-11)
 

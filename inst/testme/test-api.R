@@ -81,6 +81,27 @@ stopifnot(
   grepl("not part of a package", conditionMessage(res))
 )
 
+## Cannot futurize expressions that are not function calls
+x <- 1:3
+exprs <- list(
+  quote(x),
+  quote(42),
+  quote({ x }),
+  quote({}),
+  quote(( x )),
+  quote(identity(x)),
+  quote(local(x)),
+  quote(suppressWarnings({ x }))
+)
+for (expr in exprs) {
+  res <- tryCatch(futurize::futurize(expr, substitute = FALSE), error = identity)
+  print(res)
+  stopifnot(
+    inherits(res, "error"),
+    grepl("not a function call", conditionMessage(res), fixed = TRUE)
+  )
+}
+
 
 # --------------------------------------------------------------------
 # futurize_options()

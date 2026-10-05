@@ -217,6 +217,13 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
   
   call_pos <- descend_wrappers(expr, envir = envir, unwrap = unwrap, what = what, debug = debug)
 
+  ## Assert that the (unwrapped) expression is a function call
+  target <- if (length(call_pos) == 1L) expr else expr[[call_pos[-length(call_pos)]]]
+  is_empty_braces <- is.call(target) && length(target) == 1L && identical(target[[1]], as.symbol("{"))
+  if (!is.call(target) || is_empty_braces) {
+    stop_with_version(sprintf("Do not know how to %s %s, because it is not a function call", what, sQuote(paste(deparse(target), collapse = " "))))
+  }
+
   call <- expr[[call_pos]]
   call_info <- parse_call(call, envir = envir, what = what, debug = debug)
   fcn <- call_info[["fcn"]]
