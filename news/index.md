@@ -38,8 +38,17 @@
   registered” warning when using a single parallel worker,
   e.g. `plan(sequential)`.
 
+- Futurizing a call that specifies an argument that
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  sets, e.g. `bplapply(xs, fcn, BPPARAM = SerialParam())`, or
+  `boot(..., parallel = "multicore")`, gave an obscure error message.
+  Now it gives an informative error.
+
 - Attempts to futurize a function not part of a package gave an obscure
   error message suggestion to install a non-existing package.
+
+- Attempts to futurize an expression that is not a function call,
+  e.g. `{ x } |> futurize()`, gave an obscure error message.
 
 ## Version 1.0.0
 

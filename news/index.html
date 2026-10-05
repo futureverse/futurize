@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +143,9 @@
 <li><p>Futurize option <code>packages</code> would drop packages that the transpiler declares as required on parallel workers.</p></li>
 <li><p>Futurizing <strong>plyr</strong> functions with argument <code>.paropts</code> gave an obscure error. Now the <code>.paropts</code> options are passed on as-is, unless they specify <code>.options.future</code>, which gives an informative error suggesting to pass such options to <code><a href="../reference/futurize.html">futurize()</a></code> instead.</p></li>
 <li><p>Futurizing <strong>plyr</strong> functions produced a “No parallel backend registered” warning when using a single parallel worker, e.g. <code>plan(sequential)</code>.</p></li>
+<li><p>Futurizing a call that specifies an argument that <code><a href="../reference/futurize.html">futurize()</a></code> sets, e.g. <code>bplapply(xs, fcn, BPPARAM = SerialParam())</code>, or <code>boot(..., parallel = "multicore")</code>, gave an obscure error message. Now it gives an informative error.</p></li>
 <li><p>Attempts to futurize a function not part of a package gave an obscure error message suggestion to install a non-existing package.</p></li>
+<li><p>Attempts to futurize an expression that is not a function call, e.g. <code>{ x } |&gt; futurize()</code>, gave an obscure error message.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
