@@ -21,6 +21,26 @@ opts <- futurize:::make_options_for_makeClusterFuture(options = futurize_options
 str(opts)
 stopifnot(identical(opts[["packages"]], c("lme4", "tools")))
 
+message("make_options_for_future.apply()")
+if (requireNamespace("future.apply", quietly = TRUE)) {
+  fcn <- future.apply::future_lapply
+
+  ## Required packages are appended to the default packages
+  opts <- futurize:::make_options_for_future.apply(options = futurize_options(), fcn = fcn, defaults = list(future.packages = "lme4"))
+  str(opts)
+  stopifnot(identical(opts[["future.packages"]], "lme4"))
+
+  ## Required packages are appended to user-specified packages
+  opts <- futurize:::make_options_for_future.apply(options = futurize_options(packages = "tools"), fcn = fcn, defaults = list(future.packages = "lme4"))
+  str(opts)
+  stopifnot(identical(opts[["future.packages"]], c("tools", "lme4")))
+
+  ## ... without duplicates
+  opts <- futurize:::make_options_for_future.apply(options = futurize_options(packages = c("lme4", "tools")), fcn = fcn, defaults = list(future.packages = "lme4"))
+  str(opts)
+  stopifnot(identical(opts[["future.packages"]], c("lme4", "tools")))
+}
+
 message("*** make_options_for_doFuture()")
 if (requireNamespace("doFuture", quietly = TRUE)) {
   opts <- futurize_options(chunk_size = 10L)
