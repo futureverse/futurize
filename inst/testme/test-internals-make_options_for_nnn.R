@@ -49,6 +49,16 @@ if (requireNamespace("doFuture", quietly = TRUE)) {
   stopifnot(!("chunk_size" %in% names(result)))
 }
 
+## Required packages are appended to user-specified packages
+opts <- futurize:::make_options_for_doFuture(futurize_options(packages = "tools"), defaults = list(packages = "lme4"), wrap = FALSE)
+str(opts)
+stopifnot(identical(opts[["packages"]], c("tools", "lme4")))
+
+## ... without duplicates
+opts <- futurize:::make_options_for_doFuture(futurize_options(packages = c("lme4", "tools")), defaults = list(packages = "lme4"), wrap = FALSE)
+str(opts)
+stopifnot(identical(opts[["packages"]], c("lme4", "tools")))
+
 ## Assert that future options are properly named
 options <- list(seed = TRUE)
 attr(options, "specified") <- "seed"

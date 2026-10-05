@@ -1,6 +1,5 @@
 #' @tags pkg-doFuture
 #' @tags %dofuture%
-#' @tags %dopar%
 #' @tags detritus-files
 #' @tags sequential multisession cluster multicore
 
@@ -8,13 +7,10 @@ if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
-doFuture::registerDoFuture()
-
 strategies <- future:::supportedStrategies()
 
 message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ...")
 
-.options.future <- list(errors = "foreach")
 for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
   plan(strategy)
@@ -40,7 +36,7 @@ for (strategy in strategies) {
     message(sprintf(".errorhandling = '%s' ...", .errorhandling))
     
     truth <- tryCatch({
-      foreach(i = 1:10, .errorhandling = .errorhandling, .options.future = .options.future) %dopar% {
+      foreach(i = 1:10, .errorhandling = .errorhandling) %do% {
         if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
         list(i = i, value = dnorm(i, mean = mu, sd = sigma))
       }
@@ -48,7 +44,7 @@ for (strategy in strategies) {
     str(truth)
 
     res <- tryCatch({
-      foreach(i = 1:10, .errorhandling = .errorhandling, .options.future = .options.future) %do% {
+      foreach(i = 1:10, .errorhandling = .errorhandling) %do% {
         if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
         list(i = i, value = dnorm(i, mean = mu, sd = sigma))
       } |> futurize_and_verify()
@@ -102,7 +98,7 @@ for (strategy in strategies) {
 
   mu <- 1.0
   sigma <- 2.0
-  res <- foreach(i = 1:10, .errorhandling = "pass", .options.future = .options.future) %do% {
+  res <- foreach(i = 1:10, .errorhandling = "pass") %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('pass'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
   } |> futurize_and_verify()
@@ -129,7 +125,7 @@ for (strategy in strategies) {
 
   mu <- 1.0
   sigma <- 2.0
-  res <- foreach(i = 1:10, .errorhandling = "remove", .options.future = .options.future) %do% {
+  res <- foreach(i = 1:10, .errorhandling = "remove") %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('remove'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
   } |> futurize_and_verify()

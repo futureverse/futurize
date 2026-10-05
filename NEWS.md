@@ -1,5 +1,13 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Futurizing `foreach(..., .options.future = list(...)) %do% { ... }`
+   is now an error, because `%do%` never supported such options in the
+   first place. Instead, pass future options to `futurize()`, e.g.
+   `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
+   such attempts were silently ignored.
+
 ## New Features
 
  * Futurization of **lme4** functions now uses `parallel = "future"`
