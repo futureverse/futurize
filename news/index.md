@@ -34,6 +34,10 @@
   [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
   instead.
 
+- Futurizing **plyr** functions produced a “No parallel backend
+  registered” warning when using a single parallel worker,
+  e.g. `plan(sequential)`.
+
 - Attempts to futurize a function not part of a package gave an obscure
   error message suggestion to install a non-existing package.
 

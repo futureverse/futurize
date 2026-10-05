@@ -223,7 +223,6 @@ str(y)
 #> The following object is masked from ‘package:purrr’:
 #> 
 #>     compact
-#> Warning: No parallel backend registered
 #> List of 4
 #>  $ : num 1
 #>  $ : int 3
