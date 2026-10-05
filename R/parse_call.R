@@ -121,6 +121,8 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
 #'
 #' @return
 #' Return the expression with arguments appended.
+#' An informative error is produced if one of the arguments is already
+#' specified in the call expression.
 #'
 #' @examples
 #' call <- quote(my_fcn(x, y))
@@ -133,6 +135,13 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
 #'
 #' @noRd
 append_call_arguments <- function(expr, ..., .args = list(...)) {
+  ## Assert that the arguments are not already specified
+  names <- intersect(names(.args), names(expr)[-1])
+  names <- names[nzchar(names)]
+  if (length(names) > 0) {
+    stop(sprintf("Cannot futurize %s(...), because argument %s is controlled by futurize(). Remove it from the call, and pass any future options to futurize() instead, e.g. futurize(seed = TRUE)", paste(deparse(expr[[1]]), collapse = ""), commaq(names)), call. = FALSE)
+  }
+
   ## Update 'EXPR'
   as.call(c(
     as.list(expr),
