@@ -132,8 +132,8 @@ class(transpile) <- c("transpiler", class(transpile))
 #' A transpiler function, or NULL if none exists.
 #'
 #' @noRd
-find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = FALSE) {
-  method <- find_s3_method(fcn, fcn_name = fcn_name, call = call, envir = envir, debug = debug)
+find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "transpile", debug = FALSE) {
+  method <- find_s3_method(fcn, fcn_name = fcn_name, call = call, envir = envir, what = what, debug = debug)
   if (is.null(method)) return(NULL)
 
   pkg <- method[["package"]]
@@ -159,8 +159,8 @@ find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = 
 } ## find_s3_method_transpiler()
 
 
-find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, debug = FALSE) {
-  method <- find_s4_method(fcn, fcn_name = fcn_name, call = call, envir = envir, debug = debug)
+find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "transpile", debug = FALSE) {
+  method <- find_s4_method(fcn, fcn_name = fcn_name, call = call, envir = envir, what = what, debug = debug)
   if (is.null(method)) return(NULL)
 
   pkg <- method[["package"]]
@@ -315,9 +315,9 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     ## match.call(), so we reconstruct it here.
     full_call <- if (length(call_pos) == 1L) expr else expr[[call_pos[-length(call_pos)]]]
     if (is_s3_generic(fcn)) {
-      transpiler <- find_s3_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+      transpiler <- find_s3_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, what = what, debug = debug)
     } else if (inherits(fcn, "standardGeneric")) {
-      transpiler <- find_s4_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, debug = debug)
+      transpiler <- find_s4_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, what = what, debug = debug)
     } else {
       transpiler <- NULL
     }

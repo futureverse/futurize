@@ -7,6 +7,9 @@
 #' @param envir The environment in which the dispatch object should be
 #' resolved.
 #'
+#' @param what A character string used in error messages describing what
+#' type of transpiler is used.
+#'
 #' @param debug If TRUE, debug output is given.
 #'
 #' @return
@@ -14,7 +17,7 @@
 #' otherwise NULL.
 #'
 #' @noRd
-find_s4_method <- function(fcn, fcn_name, call, envir, debug = FALSE) {
+find_s4_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug = FALSE) {
   if (!methods::isGeneric(fcn_name)) return(NULL)
 
   ## Get the name of the first argument (dispatch argument)
@@ -35,6 +38,13 @@ find_s4_method <- function(fcn, fcn_name, call, envir, debug = FALSE) {
   dispatch_expr <- matched_call[[dispatch_arg_name]]
   if (is.null(dispatch_expr)) return(NULL)
   if (!is.symbol(dispatch_expr) && !is.call(dispatch_expr)) return(NULL)
+
+  ## The dispatch argument must be evaluated to identify the method.
+  ## To avoid evaluating it twice, it must be a variable, or a formula,
+  ## which is safe to evaluate, e.g. breakpoints(y ~ 1)
+  if (is.call(dispatch_expr) && !identical(dispatch_expr[[1]], as.symbol("~"))) {
+    stop_dispatch_argument_not_variable(call, dispatch_expr = dispatch_expr, fcn_name = fcn_name, type = "S4", what = what)
+  }
 
   ## Evaluate the dispatch argument to get its class
   dispatch_obj <- tryCatch(

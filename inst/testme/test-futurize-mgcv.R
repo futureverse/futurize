@@ -35,5 +35,21 @@ stopifnot(all.equal(as.numeric(p), as.numeric(p_truth)))
 p2 <- stats::predict(b_truth, newdata = newdat) |> futurize_and_verify()
 stopifnot(all.equal(as.numeric(p2), as.numeric(p_truth)))
 
+## The S3 dispatch argument should produce an error if not an object.
+n_fits <- 0L
+fit_model <- function() {
+  n_fits <<- n_fits + 1L
+  b_truth
+}
+res <- tryCatch({
+  predict(fit_model(), newdata = newdat) |> futurize()
+}, error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  grepl("not a variable", conditionMessage(res)),
+  n_fits == 0L
+)
+
 plan(sequential)
 } ## if (requireNamespace("mgcv"))
