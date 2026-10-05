@@ -25,6 +25,11 @@
  * Futurize option `packages` would drop packages that the transpiler
    declares as required on parallel workers.
 
+ * Futurizing **plyr** functions with argument `.paropts` gave an
+   obscure error. Now the `.paropts` options are passed on as-is,
+   unless they specify `.options.future`, which gives an informative
+   error suggesting to pass such options to `futurize()` instead.
+
  * Attempts to futurize a function not part of a package gave an
    obscure error message suggestion to install a non-existing package.
 

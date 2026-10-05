@@ -15,10 +15,17 @@ append_transpilers_for_plyr <- function() {
   template2 <- bquote_compile(function(expr, options = NULL) {
     defaults <- list(label = sprintf("fz:plyr::%s-%%d", .(NAME)))
     options <- make_options_for_doFuture(options, defaults = defaults, wrap = TRUE)
-    expr <- append_call_arguments(expr,
-      .parallel = TRUE,
-      .paropts = options
-    )
+    paropts <- expr[[".paropts"]]
+    if (is.null(paropts)) {
+      expr <- append_call_arguments(expr,
+        .parallel = TRUE,
+        .paropts = options
+      )
+    } else {
+      ## Add futurize options to the parallel options of the user
+      expr[[".paropts"]] <- merge_paropts_call(paropts, options = options)
+      expr <- append_call_arguments(expr, .parallel = TRUE)
+    }
     bquote_apply(template, EXPR = expr)
   })
 
@@ -37,3 +44,25 @@ append_transpilers_for_plyr <- function() {
   ## Return required packages
   c("plyr", "doFuture")
 }
+
+
+#' Create an expression adding futurize options to plyr's '.paropts'
+#'
+#' @param paropts An \R expression hold a '.paropts' expression.
+#'
+#' @param options A named list with element `.options.future`.
+#'
+#' @return
+#' The \R expression with `options` appended.
+#' If `paropts` specified `.options.future`, then an error is thrown.
+#'
+#' @noRd
+merge_paropts_call <- function(paropts, options) {
+  bquote(local({
+    paropts <- as.list(.(paropts))
+    if (".options.future" %in% names(paropts)) {
+      stop("Cannot futurize plyr functions called with .paropts = list(.options.future = ...). Instead, pass future options to futurize(), e.g. futurize(seed = TRUE)", call. = FALSE)
+    }
+    c(paropts, .(options))
+  }))
+} ## merge_paropts_call()
