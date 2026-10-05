@@ -375,7 +375,12 @@ get_transpilers <- function(type) {
 append_transpilers <- function(type, ...) {
   transpiler_db <- .env[["transpiler_db"]]
   transpilers <- transpiler_db[[type]]
-  transpilers <- c(transpilers, ...)
+  if (is.null(transpilers)) transpilers <- list()
+
+  ## Add new, or replace existing, transpiler sets per package
+  sets <- c(...)
+  for (name in names(sets)) transpilers[name] <- sets[name]
+
   transpiler_db[[type]] <- transpilers
   .env[["transpiler_db"]] <- transpiler_db
 }
