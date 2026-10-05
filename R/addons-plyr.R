@@ -1,15 +1,25 @@
 # plyr::llply(xs, fcn) =>
 #
-# with(doFuture::registerDoFuture(flavor = "%dofuture%"), 
+# with(doFuture::registerDoFuture(flavor = "%dofuture%"), withCallingHandlers(
 #   plyr::llply(xs, fcn,
 #     .parallel = TRUE,
 #     .paropts = list(.options.future = <future arguments>)
-#   )
-# )
+#   ),
+#   warning = <muffle plyr's "No parallel backend registered" warning>
+# ))
 #
 append_transpilers_for_plyr <- function() {
   template <- bquote_compile(
-    with(doFuture::registerDoFuture(flavor = "%dofuture%"), (.(EXPR)))
+    with(doFuture::registerDoFuture(flavor = "%dofuture%"), (withCallingHandlers(
+      .(EXPR),
+      warning = function(w) {
+        ## plyr warns "No parallel backend registered" when
+        ## nbrOfWorkers() == 1, e.g. plan(sequential)
+        if (identical(conditionCall(w), quote(setup_parallel()))) {
+          invokeRestart("muffleWarning")
+        }
+      }
+    )))
   )
 
   template2 <- bquote_compile(function(expr, options = NULL) {

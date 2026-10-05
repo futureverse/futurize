@@ -10,7 +10,7 @@ if (requireNamespace("plyr", quietly = TRUE) && requireNamespace("doFuture", qui
   expr <- quote(plyr::llply(1:2, identity, .paropts = list(.inorder = TRUE)))
   expr2 <- futurize(expr, substitute = FALSE, packages = "stats", eval = FALSE)
   print(expr2)
-  call <- expr2[[3]][[2]]
+  call <- expr2[[c(3, 2, 2)]]  ## with(<backend>, (withCallingHandlers(<call>, ...)))
   stopifnot(sum(names(call) == ".paropts") == 1L)
   paropts <- eval(call[[".paropts"]])
   str(paropts)
