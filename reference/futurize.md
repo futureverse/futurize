@@ -87,8 +87,10 @@ Some functions can be futurized only via their S3 or S4 methods, e.g.
 package dispatches to the `influence.merMod()` method of the lme4
 package. To identify which method is called, `futurize()` has to
 evaluate the first argument of the generic function. To avoid evaluating
-it twice, the first argument must be a variable, or a formula, but not a
-function call. For example,
+it twice, the first argument must be a variable, a formula, or a
+[`list()`](https://rdrr.io/r/base/list.html) or
+[`c()`](https://rdrr.io/r/base/c.html) of variables, but not a function
+call. For example,
 
     fit <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
     inf <- influence(fit) |> futurize()

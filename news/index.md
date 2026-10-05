@@ -17,7 +17,10 @@
   once for identifying the method to be called, and once more when
   calling it. Assign the first argument to a variable first,
   e.g. `fit <- lmer(...)` and `influence(fit) |> futurize()`. Formulas
-  are allowed, e.g. `breakpoints(y ~ 1) |> futurize()`.
+  are allowed, e.g. `breakpoints(y ~ 1) |> futurize()`, as are
+  [`list()`](https://rdrr.io/r/base/list.html) and
+  [`c()`](https://rdrr.io/r/base/c.html) of variables,
+  e.g. `Score(list(CSC = fit)) |> futurize()`.
 
 ### New Features
 
