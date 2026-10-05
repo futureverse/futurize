@@ -40,9 +40,8 @@ find_s4_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
   if (!is.symbol(dispatch_expr) && !is.call(dispatch_expr)) return(NULL)
 
   ## The dispatch argument must be evaluated to identify the method.
-  ## To avoid evaluating it twice, it must be a variable, or a formula,
-  ## which is safe to evaluate, e.g. breakpoints(y ~ 1)
-  if (is.call(dispatch_expr) && !identical(dispatch_expr[[1]], as.symbol("~"))) {
+  ## To avoid evaluating it twice, it must be safe to evaluate
+  if (!is_safe_dispatch_expr(dispatch_expr, envir = envir)) {
     stop_dispatch_argument_not_variable(call, dispatch_expr = dispatch_expr, fcn_name = fcn_name, type = "S4", what = what)
   }
 

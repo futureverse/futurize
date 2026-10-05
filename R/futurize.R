@@ -53,7 +53,8 @@
 #' `influence.merMod()` method of the \pkg{lme4} package. To identify
 #' which method is called, `futurize()` has to evaluate the first argument
 #' of the generic function. To avoid evaluating it twice, the first
-#' argument must be a variable, or a formula, but not a function call.
+#' argument must be a variable, a formula, or a `list()` or `c()` of
+#' variables, but not a function call.
 #' For example,
 #'
 #' ```r

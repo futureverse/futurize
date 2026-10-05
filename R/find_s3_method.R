@@ -39,9 +39,8 @@ find_s3_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
   if (!is.symbol(dispatch_expr) && !is.call(dispatch_expr)) return(NULL)
 
   ## The dispatch argument must be evaluated to identify the method.
-  ## To avoid evaluating it twice, it must be a variable, or a formula,
-  ## which is safe to evaluate, e.g. breakpoints(y ~ 1)
-  if (is.call(dispatch_expr) && !identical(dispatch_expr[[1]], as.symbol("~"))) {
+  ## To avoid evaluating it twice, it must be safe to evaluate
+  if (!is_safe_dispatch_expr(dispatch_expr, envir = envir)) {
     stop_dispatch_argument_not_variable(call, dispatch_expr = dispatch_expr, fcn_name = fcn_name, type = "S3", what = what)
   }
 
@@ -86,6 +85,53 @@ find_s3_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
 } ## find_s3_method()
 
 
+
+
+#' Checks whether a dispatch argument is safe to evaluate
+#'
+#' An expression is safe to evaluate, if evaluating it more than once
+#' has no side effects and is cheap. This is the case for:
+#'
+#'  * variables and literals, e.g. `fit` and `42`
+#'
+#'  * formulas, e.g. `y ~ 1`
+#'
+#'  * calls to `base::list()` and `base::c()`, where all elements are
+#'    variables or literals, e.g. `list(CSC = fit)`
+#'
+#' @param expr An \R expression.
+#'
+#' @param envir The environment in which `list()` and `c()` are resolved.
+#'
+#' @return
+#' TRUE if `expr` is safe to evaluate, otherwise FALSE.
+#'
+#' @noRd
+is_safe_dispatch_expr <- function(expr, envir) {
+  if (!is.call(expr)) return(TRUE)
+
+  head <- expr[[1]]
+  if (!is.symbol(head)) return(FALSE)
+  name <- as.character(head)
+
+  ## Formula?
+  if (name == "~") return(TRUE)
+
+  ## list(...) or c(...) of variables and literals?
+  if (name %in% c("list", "c")) {
+    fcn <- get0(name, envir = envir, mode = "function", inherits = TRUE)
+    if (!identical(fcn, get(name, envir = baseenv(), mode = "function"))) {
+      return(FALSE)
+    }
+    args <- as.list(expr)[-1]
+    for (arg in args) {
+      if (is.call(arg)) return(FALSE)
+    }
+    return(TRUE)
+  }
+
+  FALSE
+} ## is_safe_dispatch_expr()
 
 
 #' Signals an error that the dispatch argument is not a variable
