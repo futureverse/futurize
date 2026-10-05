@@ -2,10 +2,21 @@
 
 ## Version (development version)
 
-### Bug Fixes
+### Significant Changes
 
-- Attempts to futurize() a function not part of a package gave an
-  obscure error message suggestion to install a non-existing package.
+- Futurizing `foreach(..., .options.future = list(...)) %do% { ... }` is
+  now an error, because `%do%` never supported such options in the first
+  place. Instead, pass future options to
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md),
+  e.g. `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
+  such attempts were silently ignored.
+
+### New Features
+
+- Futurization of **lme4** functions now uses `parallel = "future"`
+  available in **lme4** (\>= 2.0-6). Older versions are still supported.
+
+### Bug Fixes
 
 - Option `chunk_size` was ignored when futurizing
   `times(n) %do% { ... }`.
@@ -15,6 +26,16 @@
 
 - Futurize option `packages` would drop packages that the transpiler
   declares as required on parallel workers.
+
+- Futurizing **plyr** functions with argument `.paropts` gave an obscure
+  error. Now the `.paropts` options are passed on as-is, unless they
+  specify `.options.future`, which gives an informative error suggesting
+  to pass such options to
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  instead.
+
+- Attempts to futurize a function not part of a package gave an obscure
+  error message suggestion to install a non-existing package.
 
 ## Version 1.0.0
 

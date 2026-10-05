@@ -17,7 +17,7 @@ function. Easy!
 [`library`](https://rdrr.io/r/base/library.html)`(`[`sandwich`](https://zeileis.codeberg.page/sandwich/)`)`\
 \
 `fm`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`\
-`v`` ``<-`` `[`vcovBS`](https://rdrr.io/pkg/sandwich/man/vcovBS.html)`(``fm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`v`` ``<-`` `[`vcovBS`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)`(``fm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -27,7 +27,7 @@ provides model-agnostic robust covariance matrix estimators.
 ### Example: Clustered bootstrap covariance matrix
 
 Example adopted from
-[`help("vcovBS", package = "sandwich")`](https://rdrr.io/pkg/sandwich/man/vcovBS.html):
+[`help("vcovBS", package = "sandwich")`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
@@ -38,7 +38,7 @@ Example adopted from
 `fm`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`\
 \
 `## bootstrap covariance matrix estimation in parallel`\
-`v`` ``<-`` `[`vcovBS`](https://rdrr.io/pkg/sandwich/man/vcovBS.html)`(``fm``, R ``=`` ``250``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`v`` ``<-`` `[`vcovBS`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)`(``fm``, R ``=`` ``250``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `## summary of coefficients with robust standard errors`\
 [`library`](https://rdrr.io/r/base/library.html)`(``lmtest``)`\
@@ -69,16 +69,16 @@ and
 The following **sandwich** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`vcovBS()`](https://rdrr.io/pkg/sandwich/man/vcovBS.html) with
-  `seed = TRUE` as the default
-- [`vcovJK()`](https://rdrr.io/pkg/sandwich/man/vcovJK.html) with
-  `seed = TRUE` as the default
+- [`vcovBS()`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
+  with `seed = TRUE` as the default
+- [`vcovJK()`](https://zeileis.codeberg.page/sandwich/reference/vcovJK.html)
+  with `seed = TRUE` as the default
 
 ## Without futurize: Manual setup
 
 For comparison, here is what it takes to parallelize
-[`vcovBS()`](https://rdrr.io/pkg/sandwich/man/vcovBS.html) using the
-**sandwich** package directly, without **futurize**:
+[`vcovBS()`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
+using the **sandwich** package directly, without **futurize**:
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`sandwich`](https://zeileis.codeberg.page/sandwich/)`)`\
@@ -88,7 +88,7 @@ For comparison, here is what it takes to parallelize
 `fm`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`\
 \
 `## Bootstrap covariance matrix estimation in parallel using cores`\
-`v`` ``<-`` `[`vcovBS`](https://rdrr.io/pkg/sandwich/man/vcovBS.html)`(``fm``, R ``=`` ``250``, cores ``=`` ``4L``)`
+`v`` ``<-`` `[`vcovBS`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)`(``fm``, R ``=`` ``250``, cores ``=`` ``4L``)`
 
 While **sandwich** has a built-in `cores` argument, it only supports
 local multicore or PSOCK clusters depending on the OS. With

@@ -195,7 +195,7 @@ Here are some examples:
 \
 `fit`` ``<-`` ``pvclust``::`[`pvclust`](https://rdrr.io/pkg/pvclust/man/pvclust.html)`(``mtcars``, nboot ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`v`` ``<-`` ``sandwich``::`[`vcovBS`](https://rdrr.io/pkg/sandwich/man/vcovBS.html)`(``fm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`v`` ``<-`` ``sandwich``::`[`vcovBS`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)`(``fm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `sc`` ``<-`` ``riskRegression``::`[`Score`](https://rdrr.io/pkg/riskRegression/man/Score.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(``"CSC"`` ``=`` ``fit``)``, data ``=`` ``d``,`\
 `  formula ``=`` ``Hist``(``time``, ``event``)`` ``~`` ``1``, times ``=`` ``5``, B ``=`` ``100``,`\
