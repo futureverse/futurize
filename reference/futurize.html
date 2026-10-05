@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9017</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9020</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -202,6 +202,22 @@ patterns like:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">fcn</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+    </div>
+    <div class="section level2">
+    <h2 id="generic-functions">Generic functions<a class="anchor" aria-label="anchor" href="#generic-functions"></a></h2>
+
+
+<p>Some functions can be futurized only via their S3 or S4 methods, e.g.
+<code><a href="https://rdrr.io/r/stats/lm.influence.html" class="external-link">influence()</a></code> of the <span class="pkg">stats</span> package dispatches to the
+<code>influence.merMod()</code> method of the <span class="pkg">lme4</span> package. To identify
+which method is called, <code>futurize()</code> has to evaluate the first argument
+of the generic function. To avoid evaluating it twice, the first
+argument must be a variable, or a formula, but not a function call.
+For example,</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lmer</span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span></span>
+<span><span class="va">inf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.influence.html" class="external-link">influence</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>Attempting to futurize <code>influence(lmer(...))</code>, or equivalently
+<code>lmer(...) |&gt; influence() |&gt; futurize()</code>, gives an informative error.</p>
     </div>
     <div class="section level2">
     <h2 id="conditional-futurization">Conditional futurization<a class="anchor" aria-label="anchor" href="#conditional-futurization"></a></h2>

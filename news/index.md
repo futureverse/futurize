@@ -11,6 +11,14 @@
   e.g. `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
   such attempts were silently ignored.
 
+- Futurizing a call to an S3 or S4 generic function, whose first
+  argument is not a variable, e.g. `influence(lmer(...)) |> futurize()`,
+  is now an error. Previously, the first argument was evaluated twice,
+  once for identifying the method to be called, and once more when
+  calling it. Assign the first argument to a variable first,
+  e.g. `fit <- lmer(...)` and `influence(fit) |> futurize()`. Formulas
+  are allowed, e.g. `breakpoints(y ~ 1) |> futurize()`.
+
 ### New Features
 
 - Futurization of **lme4** functions now uses `parallel = "future"`

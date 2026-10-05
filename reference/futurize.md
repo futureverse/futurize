@@ -80,6 +80,22 @@ avoiding having to write:
       lapply(xs, fcn) |> futurize()
     } |> suppressMessages()
 
+## Generic functions
+
+Some functions can be futurized only via their S3 or S4 methods, e.g.
+[`influence()`](https://rdrr.io/r/stats/lm.influence.html) of the stats
+package dispatches to the `influence.merMod()` method of the lme4
+package. To identify which method is called, `futurize()` has to
+evaluate the first argument of the generic function. To avoid evaluating
+it twice, the first argument must be a variable, or a formula, but not a
+function call. For example,
+
+    fit <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+    inf <- influence(fit) |> futurize()
+
+Attempting to futurize `influence(lmer(...))`, or equivalently
+`lmer(...) |> influence() |> futurize()`, gives an informative error.
+
 ## Conditional futurization
 
 It is possible to control whether futurization should take place at
