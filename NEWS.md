@@ -8,16 +8,6 @@
    `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
    such attempts were silently ignored.
 
- * Futurizing a call to an S3 or S4 generic function, whose first
-   argument is not a variable, e.g. `influence(lmer(...)) |>
-   futurize()`, is now an error. Previously, the first argument was
-   evaluated twice, once for identifying the method to be called, and
-   once more when calling it. Assign the first argument to a variable
-   first, e.g. `fit <- lmer(...)` and `influence(fit) |> futurize()`.
-   Formulas are allowed, e.g. `breakpoints(y ~ 1) |> futurize()`, as
-   are `list()` and `c()` of variables, e.g. `Score(list(CSC = fit))
-   |> futurize()`.
-
 ## New Features
 
  * Futurization of **lme4** functions now uses `parallel = "future"`
@@ -48,6 +38,12 @@
    sets, e.g. `bplapply(xs, fcn, BPPARAM = SerialParam())`, or
    `boot(..., parallel = "multicore")`, gave an obscure error
    message. Now it gives an informative error.
+
+ * Futurizing a call to an S3 or S4 generic function, whose first
+   argument is a function call, e.g. `influence(lmer(...)) |>
+   futurize()`, would evaluate that first argument twice; once to
+   identify the method to be called, and once more when calling it.
+   Now it is evaluated only once.
 
  * Attempts to futurize a function not part of a package gave an
    obscure error message suggestion to install a non-existing package.

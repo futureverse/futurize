@@ -46,5 +46,20 @@ set.seed(42)
 result2 <- DESeq2::DESeq(dds) |> futurize_and_verify()
 stopifnot(all.equal(results(result2), results(result_truth)))
 
+## With DESeq2 attached, so is BiocGenerics, which masks base::lapply()
+## with an S4 generic. The S4 dispatch argument must be evaluated only
+## once, also when it is not a variable
+stopifnot(methods::is(lapply, "standardGeneric"))
+n_calls <- 0L
+make_xs <- function() {
+  n_calls <<- n_calls + 1L
+  1:3
+}
+y_truth <- base::lapply(1:3, sqrt)
+y <- lapply(1:3, sqrt) |> futurize_and_verify()
+stopifnot(identical(y, y_truth))
+y <- lapply(make_xs(), sqrt) |> futurize_and_verify()
+stopifnot(identical(y, y_truth), n_calls == 1L)
+
 plan(sequential)
 } ## if (requireNamespace("DESeq2") && ...)

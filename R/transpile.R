@@ -136,6 +136,11 @@ find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
   method <- find_s3_method(fcn, fcn_name = fcn_name, call = call, envir = envir, what = what, debug = debug)
   if (is.null(method)) return(NULL)
 
+  ## Identify method at run time?
+  if (isTRUE(method[["deferred"]])) {
+    return(make_deferred_dispatch_transpiler(fcn_name, index = method[["index"]]))
+  }
+
   pkg <- method[["package"]]
   name <- method[["name"]]
 
@@ -163,6 +168,11 @@ find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
   method <- find_s4_method(fcn, fcn_name = fcn_name, call = call, envir = envir, what = what, debug = debug)
   if (is.null(method)) return(NULL)
 
+  ## Identify method at run time?
+  if (isTRUE(method[["deferred"]])) {
+    return(make_deferred_dispatch_transpiler(fcn_name, index = method[["index"]]))
+  }
+
   pkg <- method[["package"]]
   name <- method[["name"]]
 
@@ -184,6 +194,37 @@ find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
 
   transpilers[[name]]
 } ## find_s4_method_transpiler()
+
+
+#' Creates a transpiler that identifies the S3 or S4 method at run time
+#'
+#' The transpiled expression evaluates the dispatch argument once,
+#' assigns it to a variable, and then futurizes the call with the
+#' dispatch argument replaced by that variable.
+#'
+#' @param fcn_name The name of the generic function.
+#'
+#' @param index The position of the dispatch argument in the call.
+#'
+#' @return
+#' A transpiler, which is a named list with elements `label` and
+#' `transpiler`.
+#'
+#' @noRd
+make_deferred_dispatch_transpiler <- function(fcn_name, index) {
+  list(
+    label = sprintf("%s() ~> evaluate dispatch argument once, then futurize()", fcn_name),
+    transpiler = function(expr, options = NULL) {
+      if (is.null(options)) options <- futurize_options()
+      value <- expr[[index]]
+      expr[[index]] <- as.symbol("...futurize.x")
+      bquote(local({
+        `...futurize.x` <- .(value)
+        futurize::futurize(.(expr), options = .(options))
+      }))
+    }
+  )
+} ## make_deferred_dispatch_transpiler()
 
 
 #' Get a registered transpiler for an R expression

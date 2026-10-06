@@ -40,8 +40,14 @@ find_s4_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
   if (!is.symbol(dispatch_expr) && !is.call(dispatch_expr)) return(NULL)
 
   ## The dispatch argument must be evaluated to identify the method.
-  ## To avoid evaluating it twice, it must be safe to evaluate
+  ## To avoid evaluating it twice, it must be safe to evaluate. If not,
+  ## futurize() defers identifying the method until run time, when the
+  ## dispatch argument is evaluated once and assigned to a variable
   if (!is_safe_dispatch_expr(dispatch_expr, envir = envir)) {
+    if (what == "futurize") {
+      index <- dispatch_arg_index(fcn, call = call, dispatch_arg_name = dispatch_arg_name)
+      if (!is.null(index)) return(list(deferred = TRUE, index = index))
+    }
     stop_dispatch_argument_not_variable(call, dispatch_expr = dispatch_expr, fcn_name = fcn_name, type = "S4", what = what)
   }
 

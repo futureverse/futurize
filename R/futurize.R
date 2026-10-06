@@ -52,18 +52,32 @@
 #' `influence()` of the \pkg{stats} package dispatches to the
 #' `influence.merMod()` method of the \pkg{lme4} package. To identify
 #' which method is called, `futurize()` has to evaluate the first argument
-#' of the generic function. To avoid evaluating it twice, the first
-#' argument must be a variable, a formula, or a `list()` or `c()` of
-#' variables, but not a function call.
-#' For example,
+#' of the generic function. If the first argument is a variable, a
+#' formula, or a `list()` or `c()` of variables, it is evaluated
+#' directly. Otherwise, `futurize()` makes sure it is evaluated only once,
+#' by first assigning it to a temporary variable. For example,
+#'
+#' ```r
+#' inf <- influence(lmer(...)) |> futurize()
+#' ```
+#'
+#' is evaluated as:
+#'
+#' ```r
+#' inf <- local({
+#'   ...futurize.x <- lmer(...)
+#'   influence(...futurize.x) |> futurize()
+#' })
+#' ```
+#'
+#' Because of this, methods that use `substitute()` or `match.call()` on
+#' the first argument, e.g. for labeling, see `...futurize.x`. To avoid
+#' this, assign the first argument to a variable yourself, e.g.
 #'
 #' ```r
 #' fit <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #' inf <- influence(fit) |> futurize()
 #' ```
-#'
-#' Attempting to futurize `influence(lmer(...))`, or equivalently
-#' `lmer(...) |> influence() |> futurize()`, gives an informative error.
 #'
 #'
 #' @section Conditional futurization:

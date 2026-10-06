@@ -39,8 +39,15 @@ find_s3_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
   if (!is.symbol(dispatch_expr) && !is.call(dispatch_expr)) return(NULL)
 
   ## The dispatch argument must be evaluated to identify the method.
-  ## To avoid evaluating it twice, it must be safe to evaluate
+  ## To avoid evaluating it twice, it must be safe to evaluate. If not
+  ## safe, futurize() will defer identification of the method until
+  ## run time, when the dispatch argument is evaluated once and
+  ## assigned to a variable
   if (!is_safe_dispatch_expr(dispatch_expr, envir = envir)) {
+    if (what == "futurize") {
+      index <- dispatch_arg_index(fcn, call = call, dispatch_arg_name = dispatch_arg_name)
+      if (!is.null(index)) return(list(deferred = TRUE, index = index))
+    }
     stop_dispatch_argument_not_variable(call, dispatch_expr = dispatch_expr, fcn_name = fcn_name, type = "S3", what = what)
   }
 
@@ -132,6 +139,40 @@ is_safe_dispatch_expr <- function(expr, envir) {
 
   FALSE
 } ## is_safe_dispatch_expr()
+
+
+#' Gets the position of the dispatch argument in a call
+#'
+#' @param fcn The generic function.
+#'
+#' @param call The generic function call.
+#'
+#' @param dispatch_arg_name The name of the dispatch argument.
+#'
+#' @return
+#' The index of the dispatch argument in `call`, such that
+#' `call[[index]]` is the dispatch argument expression, or NULL if
+#' it could not be identified.
+#'
+#' @noRd
+dispatch_arg_index <- function(fcn, call, dispatch_arg_name) {
+  ## Replace each argument by its index, and let match.call() tell which
+  ## one is the dispatch argument
+  call_idxs <- call
+  for (kk in seq_along(call)[-1]) {
+    call_idxs[[kk]] <- kk
+  }
+  matched_call <- tryCatch({
+    match.call(fcn, call = call_idxs)
+  }, error = function(e) NULL)
+
+  if (is.null(matched_call)) return(NULL)
+  
+  index <- matched_call[[dispatch_arg_name]]
+  if (!is.numeric(index) || length(index) != 1L) return(NULL)
+  
+  as.integer(index)
+} ## dispatch_arg_index()
 
 
 #' Signals an error that the dispatch argument is not a variable
