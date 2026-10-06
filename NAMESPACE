@@ -12,5 +12,6 @@ importFrom(utils,
   getS3method,
   globalVariables,
   packageName,
-  packageVersion
+  packageVersion,
+  str
 )
