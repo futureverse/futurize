@@ -37,7 +37,7 @@ revdep/run.R --rm rtemis
 #revdep/run.R --rm ...
 
 ## Packages failing on Rocky 8 (2026-10-05)
-revdep/run.R --rm marcxmlr
+#revdep/run.R --rm marcxmlr
 
 ## Requires sequential processing due to clashes, e.g. port and cache 
 pkgs_seq=()
