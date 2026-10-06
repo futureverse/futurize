@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,8 +130,7 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li><p>Futurizing <code>foreach(..., .options.future = list(...)) %do% { ... }</code> is now an error, because <code>%do%</code> never supported such options in the first place. Instead, pass future options to <code><a href="../reference/futurize.html">futurize()</a></code>, e.g. <code>foreach(...) %do% { ... } |&gt; futurize(seed = TRUE)</code>. Previously, such attempts were silently ignored.</p></li>
-<li><p>Futurizing a call to an S3 or S4 generic function, whose first argument is not a variable, e.g. <code>influence(lmer(...)) |&gt; futurize()</code>, is now an error. Previously, the first argument was evaluated twice, once for identifying the method to be called, and once more when calling it. Assign the first argument to a variable first, e.g. <code>fit &lt;- lmer(...)</code> and <code>influence(fit) |&gt; futurize()</code>. Formulas are allowed, e.g. <code>breakpoints(y ~ 1) |&gt; futurize()</code>, as are <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> and <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> of variables, e.g. <code>Score(list(CSC = fit)) |&gt; futurize()</code>.</p></li>
+<ul><li>Futurizing <code>foreach(..., .options.future = list(...)) %do% { ... }</code> is now an error, because <code>%do%</code> never supported such options in the first place. Instead, pass future options to <code><a href="../reference/futurize.html">futurize()</a></code>, e.g. <code>foreach(...) %do% { ... } |&gt; futurize(seed = TRUE)</code>. Previously, such attempts were silently ignored.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
@@ -145,6 +144,7 @@
 <li><p>Futurizing <strong>plyr</strong> functions with argument <code>.paropts</code> gave an obscure error. Now the <code>.paropts</code> options are passed on as-is, unless they specify <code>.options.future</code>, which gives an informative error suggesting to pass such options to <code><a href="../reference/futurize.html">futurize()</a></code> instead.</p></li>
 <li><p>Futurizing <strong>plyr</strong> functions produced a “No parallel backend registered” warning when using a single parallel worker, e.g. <code>plan(sequential)</code>.</p></li>
 <li><p>Futurizing a call that specifies an argument that <code><a href="../reference/futurize.html">futurize()</a></code> sets, e.g. <code>bplapply(xs, fcn, BPPARAM = SerialParam())</code>, or <code>boot(..., parallel = "multicore")</code>, gave an obscure error message. Now it gives an informative error.</p></li>
+<li><p>Futurizing a call to an S3 or S4 generic function, whose first argument is a function call, e.g. <code>influence(lmer(...)) |&gt; futurize()</code>, would evaluate that first argument twice; once to identify the method to be called, and once more when calling it. Now it is evaluated only once.</p></li>
 <li><p>Attempts to futurize a function not part of a package gave an obscure error message suggestion to install a non-existing package.</p></li>
 <li><p>Attempts to futurize an expression that is not a function call, e.g. <code>{ x } |&gt; futurize()</code>, gave an obscure error message.</p></li>
 </ul></div>

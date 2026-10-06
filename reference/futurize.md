@@ -86,17 +86,30 @@ Some functions can be futurized only via their S3 or S4 methods, e.g.
 [`influence()`](https://rdrr.io/r/stats/lm.influence.html) of the stats
 package dispatches to the `influence.merMod()` method of the lme4
 package. To identify which method is called, `futurize()` has to
-evaluate the first argument of the generic function. To avoid evaluating
-it twice, the first argument must be a variable, a formula, or a
+evaluate the first argument of the generic function. If the first
+argument is a variable, a formula, or a
 [`list()`](https://rdrr.io/r/base/list.html) or
-[`c()`](https://rdrr.io/r/base/c.html) of variables, but not a function
-call. For example,
+[`c()`](https://rdrr.io/r/base/c.html) of variables, it is evaluated
+directly. Otherwise, `futurize()` makes sure it is evaluated only once,
+by first assigning it to a temporary variable. For example,
+
+    inf <- influence(lmer(...)) |> futurize()
+
+is evaluated as:
+
+    inf <- local({
+      ...futurize.x <- lmer(...)
+      influence(...futurize.x) |> futurize()
+    })
+
+Because of this, methods that use
+[`substitute()`](https://rdrr.io/r/base/substitute.html) or
+[`match.call()`](https://rdrr.io/r/base/match.call.html) on the first
+argument, e.g. for labeling, see `...futurize.x`. To avoid this, assign
+the first argument to a variable yourself, e.g.
 
     fit <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
     inf <- influence(fit) |> futurize()
-
-Attempting to futurize `influence(lmer(...))`, or equivalently
-`lmer(...) |> influence() |> futurize()`, gives an informative error.
 
 ## Conditional futurization
 

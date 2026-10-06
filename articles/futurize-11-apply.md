@@ -197,28 +197,32 @@ can see this with:
 [`find`](https://rdrr.io/r/utils/apropos.html)`(``"lapply"``)`\
 `#> [1] "package:BiocGenerics" "package:base" `
 
-This matters in the context of **futurize**. In a vanilla R session,
+This matters in the context of **futurize**. With **BiocGenerics**
+attached,
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+identifies which method [`lapply()`](https://rdrr.io/r/base/lapply.html)
+dispatches to. If it is the **base** fallback, as for `1:3`, then
 
 \
 `y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``3``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
-is identical to
+is futurized as if we had called `base::lapply(1:3, sqrt)`. However, if
+the object has its own [`lapply()`](https://rdrr.io/r/base/lapply.html)
+method, such as a `List` of the **S4Vectors** package, then that method
+cannot be futurized, e.g.
 
 \
-`y`` ``<-`` ``base``::`[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``3``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+[`library`](https://rdrr.io/r/base/library.html)`(``S4Vectors``)`\
+`x`` ``<-`` ``List``(``a ``=`` ``1``:``3``, b ``=`` ``4``:``6``)`\
+`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``x``, ``sum``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
-However, with **BiocGenerics** attached, it is instead identical to:
+results in:
 
-\
-`y`` ``<-`` ``BiocGenerics``::``lapply``(``1``:``3``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+    Error: [futurize 1.0.0] Function BiocGenerics::lapply() is not in one
+    of the registered futurize namespaces: 'base', 'stats'
 
-which results in:
-
-    Error in transpilers_for_package(type = type, package = ns_name, action = "make",  : 
-      There are no factory functions for creating 'futurize::add-on' transpilers for package 'BiocGenerics'
-
-The solution is to specify that it is the **base** version we wish to
-futurize, i.e.
+The solution is to coerce the object to a regular list and specify that
+it is the **base** version we wish to futurize, i.e.
 
 \
-`y`` ``<-`` ``base``::`[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``3``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`y`` ``<-`` ``base``::`[`lapply`](https://rdrr.io/r/base/lapply.html)`(`[`as.list`](https://rdrr.io/r/base/list.html)`(``x``)``, ``sum``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
