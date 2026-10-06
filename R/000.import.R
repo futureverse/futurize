@@ -8,11 +8,3 @@ import_from <- function(name, mode = "function", default = NULL, package) {
     stop(sprintf("No such '%s' function: %s()", package, name))
   }
 }
-
-## The 'futurize' package don't really need to have a hard dependency on
-## the 'future' package. However, we make 'futurize' attach 'future' for
-## conveniency so that `plan()` is available.
-#' @importFrom future plan
-import_future <- function(name, default = NULL) {
-  import_from(name, default = default, package = "future")
-}
