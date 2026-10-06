@@ -131,7 +131,7 @@
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
-  debug <- isTRUE(getOption("futurize.debug"))
+  debug <- isDebugEnabled()
   if (debug) {
     mdebug_push("futurize() ...")
     on.exit(mdebug_pop())

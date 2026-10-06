@@ -139,7 +139,10 @@ append_call_arguments <- function(expr, ..., .args = list(...)) {
   names <- intersect(names(.args), names(expr)[-1])
   names <- names[nzchar(names)]
   if (length(names) > 0) {
-    stop(sprintf("Cannot futurize %s(...), because argument %s is controlled by futurize(). Remove it from the call, and pass any future options to futurize() instead, e.g. futurize(seed = TRUE)", paste(deparse(expr[[1]]), collapse = ""), commaq(names)), call. = FALSE)
+    msg <- sprintf("Cannot %s %s(...), because argument %s is controlled by %s(). Remove it from the call", .packageName, paste(deparse(expr[[1]]), collapse = ""), commaq(names), .packageName)
+    hint <- controlled_argument_hint()
+    if (!is.null(hint)) msg <- sprintf("%s, and %s", msg, hint)
+    stop(msg, call. = FALSE)
   }
 
   ## Update 'EXPR'
