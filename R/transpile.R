@@ -128,6 +128,8 @@ class(transpile) <- c("transpiler", class(transpile))
 #'
 #' @inheritParams find_s3_method
 #'
+#' @param type Type of the transpiler to use.
+#'
 #' @return
 #' A transpiler function, or NULL if none exists.
 #'
@@ -207,7 +209,7 @@ find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
 #' Creates a transpiler that identifies the S3 or S4 method at run time
 #'
 #' The transpiled expression evaluates the dispatch argument once,
-#' assigns it to a variable, and then futurizes the call with the
+#' assigns it to a variable, and then transpiles the call with the
 #' dispatch argument replaced by that variable.
 #'
 #' @param fcn_name The name of the generic function.
@@ -221,14 +223,16 @@ find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
 #' @noRd
 make_deferred_dispatch_transpiler <- function(fcn_name, index) {
   list(
-    label = sprintf("%s() ~> evaluate dispatch argument once, then futurize()", fcn_name),
+    label = sprintf("%s() ~> evaluate dispatch argument once, then %s()", fcn_name, .packageName),
     transpiler = function(expr, options = NULL) {
-      if (is.null(options)) options <- futurize_options()
+      ## e.g. '...futurize.x'
+      name <- as.symbol(sprintf("...%s.x", .packageName))
       value <- expr[[index]]
-      expr[[index]] <- as.symbol("...futurize.x")
+      expr[[index]] <- name
+      call <- make_runtime_transpile_call(expr, options = options)
       bquote(local({
-        `...futurize.x` <- .(value)
-        futurize::futurize(.(expr), options = .(options))
+        .(name) <- .(value)
+        .(call)
       }))
     }
   )
