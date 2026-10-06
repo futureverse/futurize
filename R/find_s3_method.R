@@ -88,7 +88,7 @@ find_s3_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
             fcn_name, method_pkg, method_name, sQuote(dispatch_class))
   }
 
-  list(package = method_pkg, name = method_name)
+  list(package = method_pkg, name = method_name, class = dispatch_class)
 } ## find_s3_method()
 
 

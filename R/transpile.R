@@ -157,10 +157,14 @@ find_s3_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
     }, error = function(e) NULL)
   }
 
-  ## No transpilers registered for this package?
-  if (is.null(transpilers)) return(NULL)
+  transpiler <- transpilers[[name]]
 
-  transpilers[[name]]
+  ## Method found, but there is no transpiler for it?
+  if (is.null(transpiler)) {
+    transpiler <- list(unsupported = c(method, type = "S3"))
+  }
+
+  transpiler
 } ## find_s3_method_transpiler()
 
 
@@ -189,10 +193,14 @@ find_s4_method_transpiler <- function(fcn, fcn_name, call, envir, type, what = "
     }, error = function(e) NULL)
   }
 
-  ## No transpilers registered for this package?
-  if (is.null(transpilers)) return(NULL)
+  transpiler <- transpilers[[name]]
 
-  transpilers[[name]]
+  ## Method found, but there is no transpiler for it?
+  if (is.null(transpiler)) {
+    transpiler <- list(unsupported = c(method, type = "S4"))
+  }
+
+  transpiler
 } ## find_s4_method_transpiler()
 
 
@@ -225,6 +233,39 @@ make_deferred_dispatch_transpiler <- function(fcn_name, index) {
     }
   )
 } ## make_deferred_dispatch_transpiler()
+
+
+#' Signals an error that an S3 or S4 method is not supported
+#'
+#' @param method A named list with elements `package`, `name`, `class`,
+#' and `type` (`"S3"` or `"S4"`) of the method dispatched to.
+#'
+#' @param fcn_name,ns_name The name of the generic function and the
+#' namespace where it lives.
+#'
+#' @param what A character string describing what type of transpiler
+#' is used.
+#'
+#' @return
+#' Nothing; produces an error.
+#'
+#' @noRd
+stop_unsupported_method <- function(method, fcn_name, ns_name, what) {
+  type <- method[["type"]]
+  if (type == "S3") {
+    info <- sprintf("S3 method %s()", method[["name"]])
+  } else {
+    info <- "S4 method"
+  }
+  msg <- sprintf("Do not know how to %s %s(), because it dispatches to the %s of package %s for class %s, which is not supported", what, fcn_name, info, sQuote(method[["package"]]), sQuote(method[["class"]]))
+
+  ## A generic masking a base function, e.g. BiocGenerics::lapply()?
+  if (ns_name != "base" && exists(fcn_name, envir = baseenv(), mode = "function", inherits = FALSE)) {
+    msg <- sprintf("%s. If you meant base::%s(), call it explicitly, e.g. 'base::%s(...) |> %s()', possibly after coercing the first argument to a basic R object", msg, fcn_name, fcn_name, what)
+  }
+
+  stop_with_version(msg)
+} ## stop_unsupported_method()
 
 
 #' Get a registered transpiler for an R expression
@@ -361,6 +402,10 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
       transpiler <- find_s4_method_transpiler(fcn, fcn_name, full_call, type, envir = envir, what = what, debug = debug)
     } else {
       transpiler <- NULL
+    }
+    unsupported <- transpiler[["unsupported"]]
+    if (!is.null(unsupported)) {
+      stop_unsupported_method(unsupported, fcn_name = fcn_name, ns_name = ns_name, what = what)
     }
     if (is.null(transpiler)) {
       if (is.null(transpilers)) {

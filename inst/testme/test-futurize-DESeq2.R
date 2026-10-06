@@ -61,5 +61,17 @@ stopifnot(identical(y, y_truth))
 y <- lapply(make_xs(), sqrt) |> futurize_and_verify()
 stopifnot(identical(y, y_truth), n_calls == 1L)
 
+## An S4 method that is not supported, here lapply() for an S4Vectors
+## 'List', should give an informative error naming the method's package,
+## and suggest using base::lapply()
+x <- S4Vectors::List(a = 1:3, b = 4:6)
+res <- tryCatch(lapply(x, sum) |> futurize(), error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  grepl("S4Vectors", conditionMessage(res), fixed = TRUE),
+  grepl("base::lapply()", conditionMessage(res), fixed = TRUE)
+)
+
 plan(sequential)
 } ## if (requireNamespace("DESeq2") && ...)

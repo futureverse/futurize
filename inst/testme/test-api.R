@@ -81,6 +81,17 @@ stopifnot(
   grepl("not part of a package", conditionMessage(res))
 )
 
+## Cannot futurize S3 methods that are not supported, which should
+## give an informative error naming the method and its package
+fit <- lm(dist ~ speed, data = cars)
+res <- tryCatch(summary(fit) |> futurize::futurize(), error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  grepl("summary.lm()", conditionMessage(res), fixed = TRUE),
+  grepl("stats", conditionMessage(res), fixed = TRUE)
+)
+
 ## Cannot futurize expressions that are not function calls
 x <- 1:3
 exprs <- list(

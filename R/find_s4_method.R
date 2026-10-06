@@ -77,5 +77,5 @@ find_s4_method <- function(fcn, fcn_name, call, envir, what = "transpile", debug
             fcn_name, method_pkg, fcn_name, sQuote(dispatch_class))
   }
 
-  list(package = method_pkg, name = fcn_name)
+  list(package = method_pkg, name = fcn_name, class = dispatch_class)
 } ## find_s4_method()

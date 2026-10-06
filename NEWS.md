@@ -45,6 +45,13 @@
    identify the method to be called, and once more when calling it.
    Now it is evaluated only once.
 
+ * Attempts to futurize a generic function that dispatches to an
+   unsupported S3 or S4 method gave an uninformative error message,
+   e.g. `summary(fit) |> futurize()` and, with **BiocGenerics**
+   attached, `lapply(x, fcn) |> futurize()` for an **S4Vectors**
+   `List`. Now the error message names the method, its package, and
+   the class dispatched on.
+
  * Attempts to futurize a function not part of a package gave an
    obscure error message suggestion to install a non-existing package.
 
