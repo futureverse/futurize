@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9024</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -191,7 +191,8 @@ whether futurization was previously enabled or disabled.</p>
 <p>The transpilation mechanism includes logic to "unwrap" expressions
 enclosed in constructs such as <code>!</code>, <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>, <code>( )</code>, <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code>, <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>,
 <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, <code><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible()</a></code>, <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code>, <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code>,
-and <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. The transpiler descends through wrapping
+<code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages()</a></code>, <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">withCallingHandlers()</a></code>, and
+<code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. The transpiler descends through wrapping
 constructs until it finds a transpilable expression, avoiding the
 need to place <code>futurize()</code> inside such constructs. This allows for
 patterns like:</p>

@@ -218,8 +218,11 @@ cannot be futurized, e.g.
 
 results in:
 
-    Error: [futurize 1.0.0] Function BiocGenerics::lapply() is not in one
-    of the registered futurize namespaces: 'base', 'stats'
+    Error: Do not know how to futurize lapply(), because it dispatches to
+    the S4 method of package 'S4Vectors' for class 'SimpleList', which is
+    not supported. If you meant base::lapply(), call it explicitly, e.g.
+    'base::lapply(...) |> futurize()', possibly after coercing the first
+    argument to a basic R object
 
 The solution is to coerce the object to a regular list and specify that
 it is the **base** version we wish to futurize, i.e.

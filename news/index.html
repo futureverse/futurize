@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9022</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9024</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +134,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>Futurization of <strong>lme4</strong> functions now uses <code>parallel = "future"</code> available in <strong>lme4</strong> (&gt;= 2.0-6). Older versions are still supported.</li>
+<ul><li><p><code><a href="../reference/futurize.html">futurize()</a></code> now unwraps <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">withCallingHandlers()</a></code>, e.g. <code>withCallingHandlers(lapply(xs, fcn), warning = ...) |&gt; futurize()</code>.</p></li>
+<li><p>Futurization of <strong>lme4</strong> functions now uses <code>parallel = "future"</code> available in <strong>lme4</strong> (&gt;= 2.0-6). Older versions are still supported.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
@@ -145,6 +146,7 @@
 <li><p>Futurizing <strong>plyr</strong> functions produced a “No parallel backend registered” warning when using a single parallel worker, e.g. <code>plan(sequential)</code>.</p></li>
 <li><p>Futurizing a call that specifies an argument that <code><a href="../reference/futurize.html">futurize()</a></code> sets, e.g. <code>bplapply(xs, fcn, BPPARAM = SerialParam())</code>, or <code>boot(..., parallel = "multicore")</code>, gave an obscure error message. Now it gives an informative error.</p></li>
 <li><p>Futurizing a call to an S3 or S4 generic function, whose first argument is a function call, e.g. <code>influence(lmer(...)) |&gt; futurize()</code>, would evaluate that first argument twice; once to identify the method to be called, and once more when calling it. Now it is evaluated only once.</p></li>
+<li><p>Attempts to futurize a generic function that dispatches to an unsupported S3 or S4 method gave an uninformative error message, e.g. <code>summary(fit) |&gt; futurize()</code> and, with <strong>BiocGenerics</strong> attached, <code>lapply(x, fcn) |&gt; futurize()</code> for an <strong>S4Vectors</strong> <code>List</code>. Now the error message names the method, its package, and the class dispatched on.</p></li>
 <li><p>Attempts to futurize a function not part of a package gave an obscure error message suggestion to install a non-existing package.</p></li>
 <li><p>Attempts to futurize an expression that is not a function call, e.g. <code>{ x } |&gt; futurize()</code>, gave an obscure error message.</p></li>
 </ul></div>

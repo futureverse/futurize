@@ -13,6 +13,12 @@
 
 ### New Features
 
+- [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  now unwraps
+  [`withCallingHandlers()`](https://rdrr.io/r/base/conditions.html),
+  e.g.
+  `withCallingHandlers(lapply(xs, fcn), warning = ...) |> futurize()`.
+
 - Futurization of **lme4** functions now uses `parallel = "future"`
   available in **lme4** (\>= 2.0-6). Older versions are still supported.
 
@@ -49,6 +55,13 @@
   e.g. `influence(lmer(...)) |> futurize()`, would evaluate that first
   argument twice; once to identify the method to be called, and once
   more when calling it. Now it is evaluated only once.
+
+- Attempts to futurize a generic function that dispatches to an
+  unsupported S3 or S4 method gave an uninformative error message,
+  e.g. `summary(fit) |> futurize()` and, with **BiocGenerics** attached,
+  `lapply(x, fcn) |> futurize()` for an **S4Vectors** `List`. Now the
+  error message names the method, its package, and the class dispatched
+  on.
 
 - Attempts to futurize a function not part of a package gave an obscure
   error message suggestion to install a non-existing package.

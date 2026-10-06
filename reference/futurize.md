@@ -64,7 +64,9 @@ enclosed in constructs such as `!`,
 [`identity()`](https://rdrr.io/r/base/identity.html),
 [`invisible()`](https://rdrr.io/r/base/invisible.html),
 [`suppressMessages()`](https://rdrr.io/r/base/message.html),
-[`suppressWarnings()`](https://rdrr.io/r/base/warning.html), and
+[`suppressWarnings()`](https://rdrr.io/r/base/warning.html),
+[`suppressPackageStartupMessages()`](https://rdrr.io/r/base/message.html),
+[`withCallingHandlers()`](https://rdrr.io/r/base/conditions.html), and
 [`with()`](https://rdrr.io/r/base/with.html). The transpiler descends
 through wrapping constructs until it finds a transpilable expression,
 avoiding the need to place `futurize()` inside such constructs. This
