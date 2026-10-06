@@ -10,6 +10,9 @@
 
 ## New Features
 
+ * `futurize()` now unwraps `withCallingHandlers()`, e.g.
+   `withCallingHandlers(lapply(xs, fcn), warning = ...) |> futurize()`.
+
  * Futurization of **lme4** functions now uses `parallel = "future"`
    available in **lme4** (>= 2.0-6). Older versions are still
    supported.
