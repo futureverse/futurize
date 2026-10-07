@@ -10,14 +10,15 @@ append_transpilers_for_gamlss <- function() {
     stop(sprintf("You are running R %s, but futurization of 'gamlss' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  ## Functions that do NOT respect a user-provided 'cl' argument:
-  ## stepGAIC(), stepGAICAll.A(), stepGAICAll.B(), stepTGD(),
-  ## stepTGDAll.A() always create their own cluster via
-  ## parallel::makeForkCluster() regardless of the 'cl' value.
+  ## Functions that do _not_ respect a user-provided 'cl' argument:
+  ##  - stepGAIC(), stepGAICAll.A(), stepGAICAll.B(), stepTGD(),
+  ##    stepTGDAll.A()
+  ## They create their own cluster via parallel::makeForkCluster()
+  ## regardless of the 'cl' value.
   ##
-  ## Functions that use parallel::clusterEvalQ(), which is not
-  ## supported: chooseDist(), chooseDistPred().
-  ## See also https://github.com/gamlss-dev/gamlss/issues/29.
+  ## Function that have bugs:
+  ##  - chooseDist() and chooseDistPred()
+  ## See https://github.com/gamlss-dev/gamlss/issues/30
   skip <- c("stepGAIC", "stepGAICAll.A", "stepGAICAll.B",
             "stepTGD", "stepTGDAll.A",
             "chooseDist", "chooseDistPred")
