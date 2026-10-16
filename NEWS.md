@@ -28,6 +28,13 @@
  * Futurize option `packages` would drop packages that the transpiler
    declares as required on parallel workers.
 
+ * `inst/testme/test-futurize-mgcv.R` simulated its test data via
+   `mgcv::gamSim()` without a `set.seed()`, so the fitted `fREML`
+   value differed from run to run, which could look like a
+   reproducibility regression (e.g. flagged as such against an
+   lme4 update) when it was really just unseeded randomness in the
+   test itself.
+
  * Futurizing **plyr** functions with argument `.paropts` gave an
    obscure error. Now the `.paropts` options are passed on as-is,
    unless they specify `.options.future`, which gives an informative
