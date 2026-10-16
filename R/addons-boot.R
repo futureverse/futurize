@@ -10,31 +10,14 @@ append_transpilers_for_boot <- function() {
     stop(sprintf("You are running R %s, but futurization of 'boot' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  ## censboot() calls clusterEvalQ(cl, library(...)), which is not
-  ## supported by future (< 1.76.0)
-  old_future <- (packageVersion("future") < "1.76.0")
-  template <- NULL
-  if (old_future) {
-    template <- bquote_compile(
-      local({
-        cl <- do.call(.(CALL), args = .(OPTS))
-        oopts <- options(future.ClusterFuture.clusterEvalQ = "ignore")
-        on.exit(options(oopts))
-        .(EXPR)
-      })
-    )
-  }
-
   transpilers <- make_package_transpilers("boot", FUN = function(fcn, name) {
     if ("parallel" %in% names(formals(fcn))) {
       transpiler <- make_futurize_for_makeClusterFuture(
-        template = template,
         args = list(
           parallel = "snow",
           ncpus = 2L,   ## only used for test ncpus > 1
           cl = quote(cl)
         ), defaults = list(
-          packages = if (old_future && name == "censboot") "survival",
           label = sprintf("fz:boot::%s", name)
         )
       )

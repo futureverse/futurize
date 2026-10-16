@@ -11,24 +11,9 @@ append_transpilers_for_Sim.DiffProc <- function() {
     stop(sprintf("You are running R %s, but futurization of 'Sim.DiffProc' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  ## Sim.DiffProc calls clusterEvalQ(cl, library(...)), which is not
-  ## supported by future (< 1.76.0)
-  template <- NULL
-  if (packageVersion("future") < "1.76.0") {
-    template <- bquote_compile(
-      local({
-        cl <- do.call(.(CALL), args = .(OPTS))
-        oopts <- options(future.ClusterFuture.clusterEvalQ = "ignore")
-        on.exit(options(oopts))
-        .(EXPR)
-      })
-    )
-  }
-
   transpilers <- make_package_transpilers("Sim.DiffProc", FUN = function(fcn, name) {
     if ("cl" %in% names(formals(fcn))) {
       transpiler <- make_futurize_for_makeClusterFuture(
-        template = template,
         args = list(
           parallel = "snow",
           ncpus = 2L,   ## only used for test ncpus > 1
@@ -49,7 +34,6 @@ append_transpilers_for_Sim.DiffProc <- function() {
 
   ## Register both generic and method calls
   transpiler_generic <- make_futurize_for_makeClusterFuture(
-    template = template,
     args = list(
       parallel = "snow",
       ncpus = 2L,
