@@ -22,9 +22,45 @@ geneSets <- list(
   geneSet3 = paste0("gene", sample(n_genes, 20L))
 )
 
+## GSVA (>= 2.7.0) uses BiocParallel::bpiterate(), which is not supported
+## by DoparParam - the only bridge between futures and BiocParallel
+## https://github.com/futureverse/futurize/issues/14
+gsva_doparparam_broken <- (utils::packageVersion("GSVA") >= "2.7.0")
+
+if (gsva_doparparam_broken) {
+  param <- gsvaParam(expr, geneSets)
+  gsvarnorm <- gsvaRowNorm(param, verbose = FALSE)
+  gsvaranks <- gsvaColRanks(gsvarnorm, verbose = FALSE)
+
+  assert_not_supported <- function(res) {
+    stopifnot(inherits(res, "error"))
+    stopifnot(grepl("futurize[(][)] does not support", conditionMessage(res)))
+  }
+
+  res <- tryCatch({
+    gsva(param, verbose = FALSE) |> futurize(),
+  }, error = identity)
+  assert_not_supported(res)
+
+  res <- tryCatch({
+    gsvaRowNorm(param, verbose = FALSE) |> futurize()
+  }, error = identity)
+  assert_not_supported(res)
+
+  res <- tryCatch({
+    gsvaColRanks(gsvarnorm, verbose = FALSE) |> futurize()
+  }, error = identity)
+  assert_not_supported(res)
+
+  res <- tryCatch({
+    gsvaColScores(gsvaranks, geneSets(param), verbose = FALSE) |> futurize()
+  }, error = identity)
+  assert_not_supported(res)
+}
+
 ## gsva() in GSVA (< 2.4) relies on BiocParallel::bpiterate(),
 ## which does _not_ support DoparParam by design.
-if ("gsva" %in% futurize_supported_functions("GSVA")) {
+if (!gsva_doparparam_broken && "gsva" %in% futurize_supported_functions("GSVA")) {
   ## ---------------------------------------------------------
   ## gsva() with gsvaParam()
   ## ---------------------------------------------------------
@@ -72,7 +108,30 @@ if ("gsva" %in% futurize_supported_functions("GSVA")) {
   result <- gsva(param_plage, verbose = FALSE) |> futurize_and_verify()
   str(result)
   stopifnot(all.equal(result, result_truth))
-} ## if ("gsva" %in% futurize_supported_functions("GSVA"))  
+} ## if ("gsva" %in% futurize_supported_functions("GSVA"))
+
+## gsvaRowNorm(), gsvaColRanks(), and gsvaColScores() replace
+## deprecated gsvaRanks() and gsvaScores() as of GSVA (>= 2.7.5)
+## https://github.com/futureverse/futurize/issues/14
+if (!gsva_doparparam_broken && "gsvaColRanks" %in% futurize_supported_functions("GSVA")) {
+  ## ---------------------------------------------------------
+  ## gsvaRowNorm() + gsvaColRanks() + gsvaColScores()
+  ## ---------------------------------------------------------
+  param <- gsvaParam(expr, geneSets)
+
+  set.seed(42)
+  rnorm_truth <- gsvaRowNorm(param, verbose = FALSE)
+  ranks_truth <- gsvaColRanks(rnorm_truth, verbose = FALSE)
+  result_truth <- gsvaColScores(ranks_truth, geneSets(param), verbose = FALSE)
+  str(result_truth)
+
+  set.seed(42)
+  rnorm <- gsvaRowNorm(param, verbose = FALSE) |> futurize_and_verify()
+  ranks <- gsvaColRanks(rnorm, verbose = FALSE) |> futurize_and_verify()
+  result <- gsvaColScores(ranks, geneSets(param), verbose = FALSE) |> futurize_and_verify()
+  str(result)
+  stopifnot(all.equal(result, result_truth))
+} ## if ("gsvaColRanks" %in% futurize_supported_functions("GSVA"))
 
 plan(sequential)
 } ## if (requireNamespace("GSVA") && ...)

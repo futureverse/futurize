@@ -8,6 +8,9 @@
    `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
    such attempts were silently ignored.
 
+ * Futurization of **GSVA** functions will stop working with **GSVA**
+   (>= 2.7.0).
+ 
 ## New Features
 
  * `futurize()` now unwraps `withCallingHandlers()`, e.g.
@@ -22,28 +25,9 @@
  * Option `chunk_size` was ignored when futurizing `times(n) %do% {
    ... }`.
 
- * All futurize options, e.g. `seed`, `packages`, and `label`, were
-   ignored when futurizing **BiocParallel** functions.
-
  * Futurize option `packages` would drop packages that the transpiler
    declares as required on parallel workers.
-
- * `inst/testme/test-futurize-mgcv.R` simulated its test data via
-   `mgcv::gamSim()` without a `set.seed()`, so the fitted `fREML`
-   value differed from run to run, which could look like a
-   reproducibility regression (e.g. flagged as such against an
-   lme4 update) when it was really just unseeded randomness in the
-   test itself.
-
- * Futurizing **plyr** functions with argument `.paropts` gave an
-   obscure error. Now the `.paropts` options are passed on as-is,
-   unless they specify `.options.future`, which gives an informative
-   error suggesting to pass such options to `futurize()` instead.
-
- * Futurizing **plyr** functions produced a "No parallel backend
-   registered" warning when using a single parallel worker,
-   e.g. `plan(sequential)`.
-
+   
  * Futurizing a call that specifies an argument that `futurize()`
    sets, e.g. `bplapply(xs, fcn, BPPARAM = SerialParam())`, or
    `boot(..., parallel = "multicore")`, gave an obscure error
@@ -67,6 +51,18 @@
 
  * Attempts to futurize an expression that is not a function call,
    e.g. `{ x } |> futurize()`, gave an obscure error message.
+
+ * All futurize options, e.g. `seed`, `packages`, and `label`, were
+   ignored when futurizing **BiocParallel** functions.
+
+ * Futurizing **plyr** functions with argument `.paropts` gave an
+   obscure error. Now the `.paropts` options are passed on as-is,
+   unless they specify `.options.future`, which gives an informative
+   error suggesting to pass such options to `futurize()` instead.
+
+ * Futurizing **plyr** functions produced a "No parallel backend
+   registered" warning when using a single parallel worker,
+   e.g. `plan(sequential)`.
 
 
 # Version 1.0.0 (2026-06-11)
