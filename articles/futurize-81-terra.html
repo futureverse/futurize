@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9030</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9031</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -207,18 +207,17 @@ sequential code into parallel code by piping the sequential code to the
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
 <strong><a href="https://cran.r-project.org/package=terra" class="external-link">terra</a></strong>
-functions such as <code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code> and
-<code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code>.</p>
+functions such as <code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code>,
+<code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/lapp.html" class="external-link">lapp()</a></code>, and <code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code>.</p>
 <p>The <strong><a href="https://cran.r-project.org/package=terra" class="external-link">terra</a></strong>
 package provides classes and methods for spatial data analysis with
 raster and vector data. Operations that apply a function to each cell,
 window, or tile of a large raster can be computationally intensive,
 making them candidates for parallelization.</p>
-<p>Two of <strong>terra</strong>’s function have support for
-parallelization via futures: <code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code> and
-<code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code>. That is enabled by specifying argument
-<code>cores = "future"</code>. To simplify it, you can achieve the same
-by piping to <code><a href="../reference/futurize.html">futurize()</a></code>.</p>
+<p>Several of <strong>terra</strong>’s functions have support for
+parallelization, which allows <strong>futurize</strong> to support them:
+<code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/lapp.html" class="external-link">lapp()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code>,
+<code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code> and <code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code>.</p>
 <div class="section level3">
 <h3 id="example-parallelizing-a-moving-window-calculation">Example: Parallelizing a moving-window calculation<a class="anchor" aria-label="anchor" href="#example-parallelizing-a-moving-window-calculation"></a>
 </h3>
@@ -248,9 +247,9 @@ conditions (like messages and warnings) are relayed back to your main R
 session.</p>
 <p>Note that <strong>terra</strong> recognizes a small set of built-in
 functions, such as <code><a href="https://rspatial.github.io/terra/reference/summarize-generics.html" class="external-link">mean()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/summarize-generics.html" class="external-link">median()</a></code>, and
-<code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>. For those special functions, it will always runs
-them via its own C++ code, ignoring <code><a href="../reference/futurize.html">futurize()</a></code>. To override
-this behavior for these special casee, use something like
+<code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>. For those special functions, it always runs them via
+its own C++ code, ignoring <code><a href="../reference/futurize.html">futurize()</a></code>. To override this
+behavior for these special cases, use something like
 <code>fun = function(v) mean(v, na.rm = TRUE)</code>.</p>
 </div>
 <div class="section level3">
@@ -268,6 +267,23 @@ single raster. This too can be parallelized via
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply</a></span><span class="op">(</span><span class="va">r</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="example-applying-a-function-cell-by-cell-or-predicting-from-a-model">Example: Applying a function cell-by-cell or predicting from a
+model<a class="anchor" aria-label="anchor" href="#example-applying-a-function-cell-by-cell-or-predicting-from-a-model"></a>
+</h3>
+<p>The <code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code> and <code><a href="https://rspatial.github.io/terra/reference/lapp.html" class="external-link">lapp()</a></code> functions apply a
+custom function to the layers of each cell of a raster, and
+<code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code> produces a raster of predictions from a fitted
+model (e.g. <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code>, or
+<code>randomForest()</code>). We can parallelize these as:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/elev.tif"</span>, package <span class="op">=</span> <span class="st">"terra"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app</a></span><span class="op">(</span><span class="va">r</span>, fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">v</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="supported-functions">Supported Functions<a class="anchor" aria-label="anchor" href="#supported-functions"></a>
@@ -276,15 +292,12 @@ single raster. This too can be parallelized via
 <code><a href="../reference/futurize.html">futurize()</a></code>, with <code>seed = TRUE</code> as the
 default:</p>
 <ul>
+<li><code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code></li>
 <li><code><a href="https://rspatial.github.io/terra/reference/focal.html" class="external-link">focal()</a></code></li>
+<li><code><a href="https://rspatial.github.io/terra/reference/lapp.html" class="external-link">lapp()</a></code></li>
+<li><code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code></li>
 <li><code><a href="https://rspatial.github.io/terra/reference/tile_apply.html" class="external-link">tile_apply()</a></code></li>
 </ul>
-<p>Other <strong>terra</strong> functions that accept a
-<code>cores</code> argument, such as <code><a href="https://rspatial.github.io/terra/reference/app.html" class="external-link">app()</a></code>,
-<code><a href="https://rspatial.github.io/terra/reference/lapp.html" class="external-link">lapp()</a></code>, and <code><a href="https://rspatial.github.io/terra/reference/predict.html" class="external-link">predict()</a></code>, build and drive a
-<code>parallel</code> cluster directly and do not go through
-<code>future</code>, and are therefore not (yet) supported by
-<code><a href="../reference/futurize.html">futurize()</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -150,7 +150,7 @@ parallelization.
 | **[stars](https://cran.r-project.org/package=stars)** | `st_apply()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[SuperLearner](https://cran.r-project.org/package=SuperLearner)** | `CV.SuperLearner()` | \- |
-| **[terra](https://cran.r-project.org/package=terra)** | `focal()`, `tile_apply()` | **[future.apply](https://future.apply.futureverse.org)** |
+| **[terra](https://cran.r-project.org/package=terra)** | `app()`, `focal()`, `lapp()`, [`predict()`](https://rdrr.io/r/stats/predict.html), `tile_apply()` | **[future](https://future.futureverse.org)**, **[future.apply](https://future.apply.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_TSP()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
