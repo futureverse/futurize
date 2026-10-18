@@ -42,7 +42,7 @@ pkgs
 #> [37] "sandwich"             "scater"               "scuttle"             
 #> [40] "seriation"            "shapr"                "stars"               
 #> [43] "stats"                "strucchange"          "sva"                 
-#> [46] "tm"                   "vegan"               
+#> [46] "terra"                "tm"                   "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

@@ -47,7 +47,7 @@ example, using a simple linear model:
 `## Fit a model`\
 `x_train`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x1 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``, x2 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``)`\
 `y_train`` ``<-`` ``2`` ``*`` ``x_train``$``x1`` ``+`` ``x_train``$``x2`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)`\
-`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``.``, data ``=`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``y ``=`` ``y_train``, ``x_train``)``)`\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``.``, data ``=`` `[`cbind`](https://rdrr.io/pkg/BiocGenerics/man/cbind.html)`(``y ``=`` ``y_train``, ``x_train``)``)`\
 \
 `## Compute Kernel SHAP values`\
 `x_explain`` ``<-`` ``x_train``[``1``:``5``, ``]`\
@@ -127,7 +127,7 @@ using the **parallel** and **doParallel** packages directly, without
 `## Fit a model`\
 `x_train`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x1 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``, x2 ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)``)`\
 `y_train`` ``<-`` ``2`` ``*`` ``x_train``$``x1`` ``+`` ``x_train``$``x2`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``100``)`\
-`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``.``, data ``=`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``y ``=`` ``y_train``, ``x_train``)``)`\
+`model`` ``<-`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``y`` ``~`` ``.``, data ``=`` `[`cbind`](https://rdrr.io/pkg/BiocGenerics/man/cbind.html)`(``y ``=`` ``y_train``, ``x_train``)``)`\
 \
 `x_explain`` ``<-`` ``x_train``[``1``:``5``, ``]`\
 `bg_X`` ``<-`` ``x_train``[``1``:``20``, ``]`\

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9024</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-stars.html">Parallelize 'stars' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-SuperLearner.html">Parallelize 'SuperLearner' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-terra.html">Parallelize 'terra' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-TSP.html">Parallelize 'TSP' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
@@ -130,7 +131,12 @@
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>Futurizing <code>foreach(..., .options.future = list(...)) %do% { ... }</code> is now an error, because <code>%do%</code> never supported such options in the first place. Instead, pass future options to <code><a href="../reference/futurize.html">futurize()</a></code>, e.g. <code>foreach(...) %do% { ... } |&gt; futurize(seed = TRUE)</code>. Previously, such attempts were silently ignored.</li>
+<ul><li><p>Futurizing <code>foreach(..., .options.future = list(...)) %do% { ... }</code> is now an error, because <code>%do%</code> never supported such options in the first place. Instead, pass future options to <code><a href="../reference/futurize.html">futurize()</a></code>, e.g. <code>foreach(...) %do% { ... } |&gt; futurize(seed = TRUE)</code>. Previously, such attempts were silently ignored.</p></li>
+<li><p>Futurization of <strong>GSVA</strong> functions will stop working with <strong>GSVA</strong> (&gt;= 2.7.0).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
+<ul><li>Add support for domain-specific CRAN package <strong>terra</strong>, e.g. <code>res &lt;- focal(r, w = 5, fun = function(v) mean(v, na.rm = TRUE)) |&gt; futurize()</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
@@ -140,15 +146,15 @@
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li><p>Option <code>chunk_size</code> was ignored when futurizing <code>times(n) %do% { ... }</code>.</p></li>
-<li><p>All futurize options, e.g. <code>seed</code>, <code>packages</code>, and <code>label</code>, were ignored when futurizing <strong>BiocParallel</strong> functions.</p></li>
 <li><p>Futurize option <code>packages</code> would drop packages that the transpiler declares as required on parallel workers.</p></li>
-<li><p>Futurizing <strong>plyr</strong> functions with argument <code>.paropts</code> gave an obscure error. Now the <code>.paropts</code> options are passed on as-is, unless they specify <code>.options.future</code>, which gives an informative error suggesting to pass such options to <code><a href="../reference/futurize.html">futurize()</a></code> instead.</p></li>
-<li><p>Futurizing <strong>plyr</strong> functions produced a “No parallel backend registered” warning when using a single parallel worker, e.g. <code>plan(sequential)</code>.</p></li>
 <li><p>Futurizing a call that specifies an argument that <code><a href="../reference/futurize.html">futurize()</a></code> sets, e.g. <code>bplapply(xs, fcn, BPPARAM = SerialParam())</code>, or <code>boot(..., parallel = "multicore")</code>, gave an obscure error message. Now it gives an informative error.</p></li>
 <li><p>Futurizing a call to an S3 or S4 generic function, whose first argument is a function call, e.g. <code>influence(lmer(...)) |&gt; futurize()</code>, would evaluate that first argument twice; once to identify the method to be called, and once more when calling it. Now it is evaluated only once.</p></li>
 <li><p>Attempts to futurize a generic function that dispatches to an unsupported S3 or S4 method gave an uninformative error message, e.g. <code>summary(fit) |&gt; futurize()</code> and, with <strong>BiocGenerics</strong> attached, <code>lapply(x, fcn) |&gt; futurize()</code> for an <strong>S4Vectors</strong> <code>List</code>. Now the error message names the method, its package, and the class dispatched on.</p></li>
 <li><p>Attempts to futurize a function not part of a package gave an obscure error message suggestion to install a non-existing package.</p></li>
 <li><p>Attempts to futurize an expression that is not a function call, e.g. <code>{ x } |&gt; futurize()</code>, gave an obscure error message.</p></li>
+<li><p>All futurize options, e.g. <code>seed</code>, <code>packages</code>, and <code>label</code>, were ignored when futurizing <strong>BiocParallel</strong> functions.</p></li>
+<li><p>Futurizing <strong>plyr</strong> functions with argument <code>.paropts</code> gave an obscure error. Now the <code>.paropts</code> options are passed on as-is, unless they specify <code>.options.future</code>, which gives an informative error suggesting to pass such options to <code><a href="../reference/futurize.html">futurize()</a></code> instead.</p></li>
+<li><p>Futurizing <strong>plyr</strong> functions produced a “No parallel backend registered” warning when using a single parallel worker, e.g. <code>plan(sequential)</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -173,7 +179,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-1-0-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-0"></a></h3>
-<ul><li>Update <strong>SingleCellExperiment</strong> and <strong>scuttle</strong> examples and tests to use <code>scuttle::perFeatureQCMetrics()</code> instead of the deprecated <code>scuttle::perCellQCMetrics()</code>.</li>
+<ul><li>Update <strong>SingleCellExperiment</strong> and <strong>scuttle</strong> examples and tests to use <code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">scuttle::perFeatureQCMetrics()</a></code> instead of the deprecated <code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">scuttle::perCellQCMetrics()</a></code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
@@ -257,14 +263,14 @@
 <li><p>Add custom <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for transpiled calls such that attributes are displayed for arguments and their content.</p></li>
 <li><p>Transpiler can now handle nested, complex wrapped expressions.</p></li>
 <li><p>Error messages now suggest using <code>%do%</code> when trying to futurize <code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach()</a></code> with <code>%dopar%</code> or <code>%dofuture%</code>.</p></li>
-<li><p>Error messages now distinguish between infix operators (e.g. <code>%do%</code>) and functions (e.g. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>).</p></li>
+<li><p>Error messages now distinguish between infix operators (e.g. <code>%do%</code>) and functions (e.g. <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.5" id="version-005">Version 0.0.5<a class="anchor" aria-label="anchor" href="#version-005"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-5"></a></h3>
-<ul><li>Add support for futurizing calls nested in one or more layers of <code>{ ... }</code>, <code>( ... )</code>, <code>local( ... )</code>, <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>, and <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, e.g. <code>local({ lapply(x, f) }) |&gt; futurize()</code> is the same as <code>local({ lapply(x, f) |&gt; futurize() })</code>.</li>
+<ul><li>Add support for futurizing calls nested in one or more layers of <code>{ ... }</code>, <code>( ... )</code>, <code>local( ... )</code>, <code><a href="https://rdrr.io/pkg/S4Vectors/man/S4Vectors-internals.html" class="external-link">I()</a></code>, and <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, e.g. <code>local({ lapply(x, f) }) |&gt; futurize()</code> is the same as <code>local({ lapply(x, f) |&gt; futurize() })</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">

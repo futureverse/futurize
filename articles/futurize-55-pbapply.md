@@ -45,7 +45,8 @@ string `"future"`.
 
 The
 [`pblapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
-function works like [`lapply()`](https://rdrr.io/r/base/lapply.html) but
+function works like
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) but
 displays a progress bar. For example:
 
 \
@@ -99,7 +100,7 @@ and
 The
 [`pbsapply()`](https://peter.solymos.org/pbapply/reference/pbapply.html)
 function simplifies the result like
-[`sapply()`](https://rdrr.io/r/base/lapply.html):
+[`sapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\

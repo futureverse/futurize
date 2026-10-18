@@ -15,7 +15,7 @@ function. Easy!
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`DiceKriging`](https://dicekrigingclub.github.io/www/)`)`\
 \
-`design`` ``<-`` `[`expand.grid`](https://rdrr.io/r/base/expand.grid.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
+`design`` ``<-`` `[`expand.grid`](https://rdrr.io/pkg/S4Vectors/man/Vector-class.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
 `y`` ``<-`` `[`apply`](https://rdrr.io/r/base/apply.html)`(``design``, ``1``, ``function``(``x``)`` ``x``[``1``]``^``2`` ``+`` ``x``[``2``]``^``2``)`\
 `m`` ``<-`` `[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``y ``=`` ``y``)``,`\
 `        multistart ``=`` ``20``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
@@ -38,7 +38,7 @@ Fitting a kriging model with a single starting point:
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`DiceKriging`](https://dicekrigingclub.github.io/www/)`)`\
 \
-`design`` ``<-`` `[`expand.grid`](https://rdrr.io/r/base/expand.grid.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
+`design`` ``<-`` `[`expand.grid`](https://rdrr.io/pkg/S4Vectors/man/Vector-class.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
 `y`` ``<-`` `[`apply`](https://rdrr.io/r/base/apply.html)`(``design``, MARGIN ``=`` ``1``, FUN ``=`` ``function``(``x``)`` ``x``[``1``]``^``2`` ``+`` ``x``[``2``]``^``2``)`\
 `m`` ``<-`` `[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``y ``=`` ``y``)``)`
 
@@ -50,7 +50,7 @@ pipe to
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`DiceKriging`](https://dicekrigingclub.github.io/www/)`)`\
 \
-`design`` ``<-`` `[`expand.grid`](https://rdrr.io/r/base/expand.grid.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
+`design`` ``<-`` `[`expand.grid`](https://rdrr.io/pkg/S4Vectors/man/Vector-class.html)`(``x1 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``, x2 ``=`` `[`seq`](https://rdrr.io/r/base/seq.html)`(``0``, ``1``, length ``=`` ``15``)``)`\
 `y`` ``<-`` `[`apply`](https://rdrr.io/r/base/apply.html)`(``design``, MARGIN ``=`` ``1``, FUN ``=`` ``function``(``x``)`` ``x``[``1``]``^``2`` ``+`` ``x``[``2``]``^``2``)`\
 `m`` ``<-`` `[`km`](https://rdrr.io/pkg/DiceKriging/man/km.html)`(``~``.``, design ``=`` ``design``, response ``=`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``y ``=`` ``y``)``,`\
 `        multistart ``=`` ``20``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`

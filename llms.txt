@@ -99,7 +99,7 @@ Here are some examples:
 `ys`` ``<-`` ``pbapply``::`[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `xs`` ``<-`` ``1``:``10`\
-`ys`` ``<-`` ``BiocParallel``::``bplapply``(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`ys`` ``<-`` ``BiocParallel``::`[`bplapply`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 and
 
@@ -150,6 +150,7 @@ parallelization.
 | **[stars](https://cran.r-project.org/package=stars)** | `st_apply()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[strucchange](https://cran.r-project.org/package=strucchange)** | `breakpoints()` for ‘formula’ | **[doFuture](https://doFuture.futureverse.org)** |
 | **[SuperLearner](https://cran.r-project.org/package=SuperLearner)** | `CV.SuperLearner()` | \- |
+| **[terra](https://cran.r-project.org/package=terra)** | `focal()`, `tile_apply()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[tm](https://cran.r-project.org/package=tm)** | `TermDocumentMatrix()`, `tm_index()`, `tm_map()` | \- |
 | **[TSP](https://cran.r-project.org/package=TSP)** | `solve_TSP()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[vegan](https://cran.r-project.org/package=vegan)** | `adonis()`, `adonis2()`, [`anova()`](https://rdrr.io/r/stats/anova.html) for ‘cca’, `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for ‘betadisper’, and ‘cca’ | \- |
@@ -207,7 +208,7 @@ Here are some examples:
 `result`` ``<-`` ``shapr``::`[`explain`](https://norskregnesentral.github.io/shapr/reference/explain.html)`(``model``, ``x_explain``, ``x_train``, approach ``=`` ``"empirical"``, phi0 ``=`` ``phi0``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 \
-`o`` ``<-`` ``seriation``::`[`seriate_best`](https://rdrr.io/pkg/seriation/man/seriate_best.html)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`o`` ``<-`` ``seriation``::`[`seriate_best`](http://michael.hahsler.net/seriation/reference/seriate_best.md)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `res`` ``<-`` ``Sim.DiffProc``::`[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``model``, statistic ``=`` ``stat``, R ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
@@ -220,6 +221,9 @@ Here are some examples:
 `bp`` ``<-`` ``strucchange``::`[`breakpoints`](https://rdrr.io/pkg/strucchange/man/breakpoints.html)`(``Nile`` ``~`` ``1``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `res`` ``<-`` ``SuperLearner``::`[`CV.SuperLearner`](https://rdrr.io/pkg/SuperLearner/man/CV.SuperLearner.html)`(``Y``, ``X``, SL.library ``=`` ``SL.library``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`r`` ``<-`` ``terra``::`[`rast`](https://rspatial.github.io/terra/reference/rast.html)`(`[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"ex/elev.tif"``, package ``=`` ``"terra"``)``)`\
+`res`` ``<-`` ``terra``::`[`focal`](https://rspatial.github.io/terra/reference/focal.html)`(``r``, w ``=`` ``5``, fun ``=`` ``function``(``v``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``v``, na.rm ``=`` ``TRUE``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `m`` ``<-`` ``tm``::`[`tm_map`](https://rdrr.io/pkg/tm/man/tm_map.html)`(``crude``, ``content_transformer``(``tolower``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
@@ -249,23 +253,23 @@ for parallel transpilation.*
 Here are some examples:
 
 \
-`dds`` ``<-`` ``DESeq2``::``DESeq``(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`dds`` ``<-`` ``DESeq2``::`[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`res`` ``<-`` ``fgsea``::``fgsea``(``pathways``, ``stats``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`res`` ``<-`` ``fgsea``::`[`fgsea`](https://rdrr.io/pkg/fgsea/man/fgsea.html)`(``pathways``, ``stats``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`se`` ``<-`` ``GenomicAlignments``::``summarizeOverlaps``(``features``, ``bam_files``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`se`` ``<-`` ``GenomicAlignments``::`[`summarizeOverlaps`](https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html)`(``features``, ``bam_files``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`es`` ``<-`` ``GSVA``::``gsva``(``GSVA``::``gsvaParam``(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`es`` ``<-`` ``GSVA``::`[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(``GSVA``::`[`gsvaParam`](https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html)`(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`counts`` ``<-`` ``Rsamtools``::``countBam``(``bamViews``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`counts`` ``<-`` ``Rsamtools``::`[`countBam`](https://rdrr.io/pkg/Rsamtools/man/scanBam.html)`(``bamViews``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`sce`` ``<-`` ``scater``::``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`sce`` ``<-`` ``scater``::`[`runPCA`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`qc`` ``<-`` ``scuttle``::``perFeatureQCMetrics``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`qc`` ``<-`` ``scuttle``::`[`perFeatureQCMetrics`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`result`` ``<-`` ``SingleCellExperiment``::``applySCE``(``sce``, ``scuttle``::``perFeatureQCMetrics``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`result`` ``<-`` ``SingleCellExperiment``::`[`applySCE`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)`(``sce``, ``scuttle``::`[`perFeatureQCMetrics`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 `  `\
-`adjusted`` ``<-`` ``sva``::``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`adjusted`` ``<-`` ``sva``::`[`ComBat`](https://rdrr.io/pkg/sva/man/ComBat.html)`(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 # Package index
 
@@ -377,6 +381,8 @@ Here are some examples:
   functions](https://futurize.futureverse.org/articles/futurize-81-SuperLearner.md):
 - [Parallelize 'sva'
   functions](https://futurize.futureverse.org/articles/futurize-81-sva.md):
+- [Parallelize 'terra'
+  functions](https://futurize.futureverse.org/articles/futurize-81-terra.md):
 - [Parallelize 'tm'
   functions](https://futurize.futureverse.org/articles/futurize-81-tm.md):
 - [Parallelize 'TSP'

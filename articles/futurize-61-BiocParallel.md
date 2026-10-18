@@ -20,7 +20,7 @@ Futureverse, e.g.
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(``BiocParallel``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`BiocParallel`](https://github.com/Bioconductor/BiocParallel)`)`\
 \
 `slow_fcn`` ``<-`` ``function``(``x``)`` ``{`\
 `  `[`message`](https://rdrr.io/r/base/message.html)`(``"x = "``, ``x``)`\
@@ -29,24 +29,29 @@ Futureverse, e.g.
 `}`\
 \
 `xs`` ``<-`` ``1``:``10`\
-`ys`` ``<-`` ``bplapply``(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`ys`` ``<-`` `[`bplapply`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize
-functions such as `bplapply()`, `bpmapply()`, and `bpvec()` in the
-**BiocParallel** package. For example, consider the `bplapply()`
+functions such as
+[`bplapply()`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html),
+[`bpmapply()`](https://rdrr.io/pkg/BiocParallel/man/bpmapply.html), and
+[`bpvec()`](https://rdrr.io/pkg/BiocParallel/man/bpvec.html) in the
+**BiocParallel** package. For example, consider the
+[`bplapply()`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)
 function. It works like base-R
-[`lapply()`](https://rdrr.io/r/base/lapply.html), but uses the
-**BiocParallel** framework to process the tasks concurrently. It is
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html), but uses
+the **BiocParallel** framework to process the tasks concurrently. It is
 commonly used something like:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(``BiocParallel``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`BiocParallel`](https://github.com/Bioconductor/BiocParallel)`)`\
 `xs`` ``<-`` ``1``:``1000`\
-`ys`` ``<-`` ``bplapply``(``xs``, ``slow_fcn``)`
+`ys`` ``<-`` `[`bplapply`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)`(``xs``, ``slow_fcn``)`
 
-The parallel backend is controlled by the `BiocParallel::register()`,
+The parallel backend is controlled by the
+[`BiocParallel::register()`](https://rdrr.io/pkg/BiocParallel/man/register.html),
 similar to how we use
 [`future::plan()`](https://future.futureverse.org/reference/plan.html)
 in Futureverse. We can use the **futurize** package to tell
@@ -56,13 +61,13 @@ Futureverse. All we need to do is to pass the expression to
 as in:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(``BiocParallel``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`BiocParallel`](https://github.com/Bioconductor/BiocParallel)`)`\
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`` ``## parallelize on local machine`\
 \
 `xs`` ``<-`` ``1``:``1000`\
-`ys`` ``<-`` ``bplapply``(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`ys`` ``<-`` `[`bplapply`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)`(``xs``, ``slow_fcn``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 `#> x = 1`\
 `#> x = 2`\
 `#> x = 3`\
@@ -103,36 +108,47 @@ The
 function supports parallelization of all **BiocParallel** functions that
 take argument `BPPARAM`. Specifically,
 
-- `bplapply()` and `.bplapply_impl()`
-- `bpmapply()` and `.bpmapply_impl()`
-- `bpvec()`
-- `bpaggregate()`
+- [`bplapply()`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html) and
+  [`.bplapply_impl()`](https://rdrr.io/pkg/BiocParallel/man/DeveloperInterface.html)
+- [`bpmapply()`](https://rdrr.io/pkg/BiocParallel/man/bpmapply.html) and
+  `.bpmapply_impl()`
+- [`bpvec()`](https://rdrr.io/pkg/BiocParallel/man/bpvec.html)
+- [`bpaggregate()`](https://rdrr.io/pkg/BiocParallel/man/bpaggregate.html)
 
 The following functions are currently not supported:
 
-- `bpiterate()` - technically supported, but because this function does
-  not support using `DoparParam()` with it, it effectively does not work
-  with
+- [`bpiterate()`](https://rdrr.io/pkg/BiocParallel/man/bpiterate.html) -
+  technically supported, but because this function does not support
+  using
+  [`DoparParam()`](https://rdrr.io/pkg/BiocParallel/man/DoparParam-class.html)
+  with it, it effectively does not work with
   [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
-- `bpvectorize()`
-- `register()`
+- [`bpvectorize()`](https://rdrr.io/pkg/BiocParallel/man/bpvectorize.html)
+- [`register()`](https://rdrr.io/pkg/BiocParallel/man/register.html)
 
 ## Bioconductor packages using BiocParallel
 
 Most Bioconductor packages that support parallelization do so via
 **BiocParallel** internally. These packages typically expose a `BPPARAM`
 argument in their functions, which controls the parallel backend used.
-For example, `DESeq2::DESeq()` has a `BPPARAM` argument that defaults to
-`BiocParallel::bpparam()`, which corresponds to the currently registered
-**BiocParallel** backend. This means that, in order to parallelize such
-a function, one can call `BiocParallel::register()` to set a parallel
-backend, and then the function will use it automatically.
+For example,
+[`DESeq2::DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) has a
+`BPPARAM` argument that defaults to
+[`BiocParallel::bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html),
+which corresponds to the currently registered **BiocParallel** backend.
+This means that, in order to parallelize such a function, one can call
+[`BiocParallel::register()`](https://rdrr.io/pkg/BiocParallel/man/register.html)
+to set a parallel backend, and then the function will use it
+automatically.
 
-However, not all packages default to `bpparam()`. For example,
-`sva::ComBat()` defaults to `bpparam("SerialParam")`, which means it
-always runs sequentially unless you explicitly pass a parallel `BPPARAM`
-argument. Because of this, one cannot count on `bpparam()` being the
-default everywhere - some functions require an explicit `BPPARAM` to
+However, not all packages default to
+[`bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html). For
+example, [`sva::ComBat()`](https://rdrr.io/pkg/sva/man/ComBat.html)
+defaults to `bpparam("SerialParam")`, which means it always runs
+sequentially unless you explicitly pass a parallel `BPPARAM` argument.
+Because of this, one cannot count on
+[`bpparam()`](https://rdrr.io/pkg/BiocParallel/man/register.html) being
+the default everywhere - some functions require an explicit `BPPARAM` to
 parallelize. With **futurize**, this is handled automatically:
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 injects the appropriate `BPPARAM` argument regardless of what the

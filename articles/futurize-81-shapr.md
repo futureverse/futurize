@@ -21,7 +21,7 @@ function. Easy!
 `  x_explain ``=`` ``x_explain``,`\
 `  x_train ``=`` ``x_train``,`\
 `  approach ``=`` ``"empirical"``,`\
-`  phi0 ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``y_train``)`\
+`  phi0 ``=`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``y_train``)`\
 `)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
@@ -60,7 +60,7 @@ using a simple linear model:
 `  x_explain ``=`` ``x_explain``,`\
 `  x_train ``=`` ``x_train``,`\
 `  approach ``=`` ``"empirical"``,`\
-`  phi0 ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``y_train``)`\
+`  phi0 ``=`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``y_train``)`\
 `)`
 
 Here
@@ -78,7 +78,7 @@ evaluate them in parallel by piping to
 `  x_explain ``=`` ``x_explain``,`\
 `  x_train ``=`` ``x_train``,`\
 `  approach ``=`` ``"empirical"``,`\
-`  phi0 ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``y_train``)`\
+`  phi0 ``=`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``y_train``)`\
 `)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the coalition computations across the available

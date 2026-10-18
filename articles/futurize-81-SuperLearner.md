@@ -43,7 +43,7 @@ ensemble. For example:
 \
 `n`` ``<-`` ``100`\
 `p`` ``<-`` ``5`\
-`X`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(`[`matrix`](https://rdrr.io/r/base/matrix.html)`(`[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n`` ``*`` ``p``)``, ``n``, ``p``)``)`\
+`X`` ``<-`` `[`as.data.frame`](https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html)`(`[`matrix`](https://rdrr.io/r/base/matrix.html)`(`[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n`` ``*`` ``p``)``, ``n``, ``p``)``)`\
 `Y`` ``<-`` ``X``[``, ``1``]`` ``+`` ``X``[``, ``2``]`` ``+`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n``)`\
 `SL.library`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"SL.glm"``, ``"SL.mean"``)`\
 \

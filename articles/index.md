@@ -88,6 +88,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-SuperLearner.md):
 - [Parallelize 'sva'
   functions](https://futurize.futureverse.org/articles/futurize-81-sva.md):
+- [Parallelize 'terra'
+  functions](https://futurize.futureverse.org/articles/futurize-81-terra.md):
 - [Parallelize 'tm'
   functions](https://futurize.futureverse.org/articles/futurize-81-tm.md):
 - [Parallelize 'TSP'

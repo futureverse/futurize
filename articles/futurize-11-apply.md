@@ -27,22 +27,24 @@ function. Easy!
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize
-functions such as [`lapply()`](https://rdrr.io/r/base/lapply.html),
-[`tapply()`](https://rdrr.io/r/base/tapply.html),
+functions such as
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html),
+[`tapply()`](https://rdrr.io/pkg/BiocGenerics/man/tapply.html),
 [`apply()`](https://rdrr.io/r/base/apply.html), and
 [`replicate()`](https://rdrr.io/r/base/lapply.html) in the **base**
 package, and [`kernapply()`](https://rdrr.io/r/stats/kernapply.html) in
 the **stats** package. For example, consider the base R
-[`lapply()`](https://rdrr.io/r/base/lapply.html) function, which is
-commonly used to apply a function to the elements of a vector or a list,
-as in:
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) function,
+which is commonly used to apply a function to the elements of a vector
+or a list, as in:
 
 \
 `xs`` ``<-`` ``1``:``1000`\
 `ys`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``xs``, ``slow_fcn``)`
 
-Here [`lapply()`](https://rdrr.io/r/base/lapply.html) evaluates
-sequentially, but we can easily make it evaluate in parallel, by using:
+Here [`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)
+evaluates sequentially, but we can easily make it evaluate in parallel,
+by using:
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
@@ -101,19 +103,19 @@ The
 function supports parallelization of the common base R functions. The
 following **base** package functions are supported:
 
-- [`lapply()`](https://rdrr.io/r/base/lapply.html),
+- [`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html),
   [`vapply()`](https://rdrr.io/r/base/lapply.html),
-  [`sapply()`](https://rdrr.io/r/base/lapply.html),
-  [`tapply()`](https://rdrr.io/r/base/tapply.html)
-- [`mapply()`](https://rdrr.io/r/base/mapply.html),
+  [`sapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html),
+  [`tapply()`](https://rdrr.io/pkg/BiocGenerics/man/tapply.html)
+- [`mapply()`](https://rdrr.io/pkg/BiocGenerics/man/mapply.html),
   [`.mapply()`](https://rdrr.io/r/base/mapply.html),
-  [`Map()`](https://rdrr.io/r/base/funprog.html)
+  [`Map()`](https://rdrr.io/pkg/BiocGenerics/man/funprog.html)
 - [`eapply()`](https://rdrr.io/r/base/eapply.html)
 - [`apply()`](https://rdrr.io/r/base/apply.html)
 - [`replicate()`](https://rdrr.io/r/base/lapply.html) with `seed = TRUE`
   as the default
 - [`by()`](https://rdrr.io/r/base/by.html)
-- [`Filter()`](https://rdrr.io/r/base/funprog.html)
+- [`Filter()`](https://rdrr.io/pkg/BiocGenerics/man/funprog.html)
 
 The [`rapply()`](https://rdrr.io/r/base/rapply.html) function is not
 supported by
@@ -150,7 +152,8 @@ Note how
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 unwraps the expression - it descends through
 [`progressify()`](https://progressify.futureverse.org/reference/progressify.html)
-to identify the [`lapply()`](https://rdrr.io/r/base/lapply.html) call to
+to identify the
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) call to
 be futurized. Using the default progress handler, the above output and
 progress reporting will appear as:
 
@@ -167,11 +170,11 @@ x = 20
 The
 **[BiocGenerics](https://www.bioconductor.org/packages/BiocGenerics/)**
 package defines generic functions
-[`lapply()`](https://rdrr.io/r/base/lapply.html),
-[`sapply()`](https://rdrr.io/r/base/lapply.html),
-[`mapply()`](https://rdrr.io/r/base/mapply.html), and
-[`tapply()`](https://rdrr.io/r/base/tapply.html). These S4 generic
-functions override the non-generic, counterpart functions in the
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html),
+[`sapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html),
+[`mapply()`](https://rdrr.io/pkg/BiocGenerics/man/mapply.html), and
+[`tapply()`](https://rdrr.io/pkg/BiocGenerics/man/tapply.html). These S4
+generic functions override the non-generic, counterpart functions in the
 **base** package, which are only used as a fallback if there is no
 matching method. For example, in a vanilla R session we have that both
 of the following calls are identical:
@@ -184,12 +187,13 @@ However, if we attach the **BiocGenerics** package, we have that the
 following two calls are identical:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(``BiocGenerics``)`\
-`y_2`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``3``, ``sqrt``)`\
-`y_3`` ``<-`` ``BiocGenerics``::``lapply``(``1``:``3``, ``sqrt``)`
+[`library`](https://rdrr.io/r/base/library.html)`(`[`BiocGenerics`](https://bioconductor.org/packages/BiocGenerics)`)`\
+`y_2`` ``<-`` `[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``1``:``3``, ``sqrt``)`\
+`y_3`` ``<-`` ``BiocGenerics``::`[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``1``:``3``, ``sqrt``)`
 
-The reason is that [`lapply()`](https://rdrr.io/r/base/lapply.html) here
-is no longer [`base::lapply()`](https://rdrr.io/r/base/lapply.html), but
+The reason is that
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) here is
+no longer [`base::lapply()`](https://rdrr.io/r/base/lapply.html), but
 the one defined by **BiocGenerics**, which masks the one in **base**. We
 can see this with:
 
@@ -200,21 +204,23 @@ can see this with:
 This matters in the context of **futurize**. With **BiocGenerics**
 attached,
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
-identifies which method [`lapply()`](https://rdrr.io/r/base/lapply.html)
+identifies which method
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)
 dispatches to. If it is the **base** fallback, as for `1:3`, then
 
 \
-`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``1``:``3``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`y`` ``<-`` `[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``1``:``3``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 is futurized as if we had called `base::lapply(1:3, sqrt)`. However, if
-the object has its own [`lapply()`](https://rdrr.io/r/base/lapply.html)
-method, such as a `List` of the **S4Vectors** package, then that method
-cannot be futurized, e.g.
+the object has its own
+[`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html) method,
+such as a `List` of the **S4Vectors** package, then that method cannot
+be futurized, e.g.
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(``S4Vectors``)`\
-`x`` ``<-`` ``List``(``a ``=`` ``1``:``3``, b ``=`` ``4``:``6``)`\
-`y`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``x``, ``sum``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+[`library`](https://rdrr.io/r/base/library.html)`(`[`S4Vectors`](https://bioconductor.org/packages/S4Vectors)`)`\
+`x`` ``<-`` `[`List`](https://rdrr.io/pkg/S4Vectors/man/List-class.html)`(``a ``=`` ``1``:``3``, b ``=`` ``4``:``6``)`\
+`y`` ``<-`` `[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``x``, ``sum``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 results in:
 
@@ -228,4 +234,4 @@ The solution is to coerce the object to a regular list and specify that
 it is the **base** version we wish to futurize, i.e.
 
 \
-`y`` ``<-`` ``base``::`[`lapply`](https://rdrr.io/r/base/lapply.html)`(`[`as.list`](https://rdrr.io/r/base/list.html)`(``x``)``, ``sum``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`y`` ``<-`` ``base``::`[`lapply`](https://rdrr.io/r/base/lapply.html)`(`[`as.list`](https://rdrr.io/pkg/BiocGenerics/man/as.list.html)`(``x``)``, ``sum``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`

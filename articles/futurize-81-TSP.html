@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9024</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0-9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,6 +87,7 @@
     <li><a class="dropdown-item" href="../articles/futurize-81-stars.html">Parallelize 'stars' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-strucchange.html">Parallelize 'strucchange' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-SuperLearner.html">Parallelize 'SuperLearner' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-terra.html">Parallelize 'terra' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-tm.html">Parallelize 'tm' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-TSP.html">Parallelize 'TSP' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-vegan.html">Parallelize 'vegan' functions</a></li>
@@ -225,10 +226,10 @@ provides algorithms for solving the traveling salesperson problem
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## calculate tours - each tour in parallel</span></span>
-<span><span class="va">tours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">tours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">methods</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/TSP/man/solve_TSP.html" class="external-link">solve_TSP</a></span><span class="op">(</span><span class="va">USCA50</span>, rep <span class="op">=</span> <span class="fl">10L</span>, method <span class="op">=</span> <span class="va">m</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tours</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">methods</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tours</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">methods</span></span></code></pre></div>
 <p>This will parallelize the computations, given that we have set up
 parallel workers, e.g.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">

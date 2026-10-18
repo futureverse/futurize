@@ -11,6 +11,14 @@
   e.g. `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
   such attempts were silently ignored.
 
+- Futurization of **GSVA** functions will stop working with **GSVA**
+  (\>= 2.7.0).
+
+### New Transpilers
+
+- Add support for domain-specific CRAN package **terra**,
+  e.g. `res <- focal(r, w = 5, fun = function(v) mean(v, na.rm = TRUE)) |> futurize()`.
+
 ### New Features
 
 - [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -27,22 +35,8 @@
 - Option `chunk_size` was ignored when futurizing
   `times(n) %do% { ... }`.
 
-- All futurize options, e.g. `seed`, `packages`, and `label`, were
-  ignored when futurizing **BiocParallel** functions.
-
 - Futurize option `packages` would drop packages that the transpiler
   declares as required on parallel workers.
-
-- Futurizing **plyr** functions with argument `.paropts` gave an obscure
-  error. Now the `.paropts` options are passed on as-is, unless they
-  specify `.options.future`, which gives an informative error suggesting
-  to pass such options to
-  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
-  instead.
-
-- Futurizing **plyr** functions produced a “No parallel backend
-  registered” warning when using a single parallel worker,
-  e.g. `plan(sequential)`.
 
 - Futurizing a call that specifies an argument that
   [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
@@ -68,6 +62,20 @@
 
 - Attempts to futurize an expression that is not a function call,
   e.g. `{ x } |> futurize()`, gave an obscure error message.
+
+- All futurize options, e.g. `seed`, `packages`, and `label`, were
+  ignored when futurizing **BiocParallel** functions.
+
+- Futurizing **plyr** functions with argument `.paropts` gave an obscure
+  error. Now the `.paropts` options are passed on as-is, unless they
+  specify `.options.future`, which gives an informative error suggesting
+  to pass such options to
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  instead.
+
+- Futurizing **plyr** functions produced a “No parallel backend
+  registered” warning when using a single parallel worker,
+  e.g. `plan(sequential)`.
 
 ## Version 1.0.0
 
@@ -115,8 +123,10 @@ CRAN release: 2026-06-12
 ### Documentation
 
 - Update **SingleCellExperiment** and **scuttle** examples and tests to
-  use `scuttle::perFeatureQCMetrics()` instead of the deprecated
-  `scuttle::perCellQCMetrics()`.
+  use
+  [`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+  instead of the deprecated
+  [`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html).
 
 ### Bug Fixes
 
@@ -296,7 +306,8 @@ This is the first version submitted to CRAN.
   `%dopar%` or `%dofuture%`.
 
 - Error messages now distinguish between infix operators (e.g. `%do%`)
-  and functions (e.g. [`lapply()`](https://rdrr.io/r/base/lapply.html)).
+  and functions
+  (e.g. [`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)).
 
 ## Version 0.0.5
 
@@ -304,8 +315,8 @@ This is the first version submitted to CRAN.
 
 - Add support for futurizing calls nested in one or more layers of
   `{ ... }`, `( ... )`, `local( ... )`,
-  [`I()`](https://rdrr.io/r/base/AsIs.html), and
-  [`identity()`](https://rdrr.io/r/base/identity.html), e.g.
+  [`I()`](https://rdrr.io/pkg/S4Vectors/man/S4Vectors-internals.html),
+  and [`identity()`](https://rdrr.io/r/base/identity.html), e.g.
   `local({ lapply(x, f) }) |> futurize()` is the same as
   `local({ lapply(x, f) |> futurize() })`.
 

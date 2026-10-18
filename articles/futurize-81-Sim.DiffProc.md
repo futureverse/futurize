@@ -19,7 +19,7 @@ function. Easy!
 `f`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``0``)`\
 `g`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``1``)`\
 `mod1d`` ``<-`` `[`snssde1d`](https://rdrr.io/pkg/Sim.DiffProc/man/snssde1d.html)`(``drift ``=`` ``f``, diffusion ``=`` ``g``, x0 ``=`` ``1``, M ``=`` ``10``, N ``=`` ``100``)`\
-`stat`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)`\
+`stat`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``x``)`\
 \
 `res`` ``<-`` `[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``mod1d``, statistic ``=`` ``stat``, R ``=`` ``10``, time ``=`` ``0.5``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
@@ -47,7 +47,7 @@ function performs Monte Carlo simulations for SDEs. For example:
 `f`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``0``)`\
 `g`` ``<-`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``1``)`\
 `mod1d`` ``<-`` `[`snssde1d`](https://rdrr.io/pkg/Sim.DiffProc/man/snssde1d.html)`(``drift ``=`` ``f``, diffusion ``=`` ``g``, x0 ``=`` ``1``, M ``=`` ``10``, N ``=`` ``100``)`\
-`stat`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)`\
+`stat`` ``<-`` ``function``(``x``, ``...``)`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``x``)`\
 \
 `res`` ``<-`` `[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``mod1d``, statistic ``=`` ``stat``, R ``=`` ``10``, time ``=`` ``0.5``)`
 
