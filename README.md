@@ -152,6 +152,7 @@ parallelization.
 | **[stars]**                | `st_apply()`                                                                 | **[future.apply]** |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
 | **[SuperLearner]**         | `CV.SuperLearner()`                                                          | -                  |
+| **[terra]**                | `focal()`, `tile_apply()`                                                    | **[future.apply]** |
 | **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
 | **[TSP]**                  | `solve_TSP()`                                                                | **[doFuture]**     |
 | **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca'  | -                  |
@@ -220,6 +221,9 @@ res <- stars::st_apply(s, MARGIN = 1, FUN = mean) |> futurize()
 bp <- strucchange::breakpoints(Nile ~ 1) |> futurize()
 
 res <- SuperLearner::CV.SuperLearner(Y, X, SL.library = SL.library) |> futurize()
+
+r <- terra::rast(system.file("ex/elev.tif", package = "terra"))
+res <- terra::focal(r, w = 5, fun = function(v) mean(v, na.rm = TRUE)) |> futurize()
 
 m <- tm::tm_map(crude, content_transformer(tolower)) |> futurize()
 
@@ -316,6 +320,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [SimDesign]: https://cran.r-project.org/package=SimDesign
 [stars]: https://cran.r-project.org/package=stars
 [strucchange]: https://cran.r-project.org/package=strucchange
+[terra]: https://cran.r-project.org/package=terra
 [sva]: https://bioconductor.org/packages/sva/
 [SuperLearner]: https://cran.r-project.org/package=SuperLearner
 [tm]: https://cran.r-project.org/package=tm

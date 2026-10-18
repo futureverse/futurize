@@ -74,6 +74,8 @@ articles-cran:
     href: articles/futurize-81-strucchange.html
   - text: Parallelize 'SuperLearner' functions
     href: articles/futurize-81-SuperLearner.html
+  - text: Parallelize 'terra' functions
+    href: articles/futurize-81-terra.html
   - text: Parallelize 'tm' functions
     href: articles/futurize-81-tm.html
   - text: Parallelize 'TSP' functions

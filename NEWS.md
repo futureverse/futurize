@@ -11,6 +11,12 @@
  * Futurization of **GSVA** functions will stop working with **GSVA**
    (>= 2.7.0).
  
+## New Transpilers
+
+ * Add support for domain-specific CRAN package **terra**, e.g. `res
+   <- focal(r, w = 5, fun = function(v) mean(v, na.rm = TRUE)) |>
+   futurize()`.
+
 ## New Features
 
  * `futurize()` now unwraps `withCallingHandlers()`, e.g.
