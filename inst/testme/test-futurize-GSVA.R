@@ -38,7 +38,7 @@ if (gsva_doparparam_broken) {
   }
 
   res <- tryCatch({
-    gsva(param, verbose = FALSE) |> futurize(),
+    gsva(param, verbose = FALSE) |> futurize()
   }, error = identity)
   assert_not_supported(res)
 
