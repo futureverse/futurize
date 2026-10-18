@@ -49,5 +49,33 @@ if (requireNamespace("terra") && requireNamespace("future.apply")) {
   }, error = identity)
   stopifnot(inherits(res, "error"))
 
+  ## -------------------------------------------------------
+  ## app(), lapp(), and predict()
+  ## -------------------------------------------------------
+  r3 <- rast(nrows = 30L, ncols = 30L, nlyr = 2L, vals = 1:1800)
+  names(r3) <- c("x1", "x2")
+
+  result_truth4 <- app(r3, fun = function(v) sum(v))
+  result4 <- app(r3, fun = function(v) sum(v)) |> futurize_and_verify()
+  stopifnot(all.equal(result4, result_truth4))
+
+  result_truth5 <- lapp(r3, fun = function(a, b) a + b)
+  result5 <- lapp(r3, fun = function(a, b) a + b) |> futurize_and_verify()
+  stopifnot(all.equal(result5, result_truth5))
+
+  set.seed(42)
+  df <- data.frame(y = 1:100, x1 = rnorm(100), x2 = rnorm(100))
+  model <- lm(y ~ x1 + x2, data = df)
+  result_truth6 <- predict(r3, model)
+  result6 <- predict(r3, model) |> futurize_and_verify()
+  stopifnot(all.equal(result6, result_truth6))
+
+  ## Argument 'cores' must not be specified when using futurize()
+  res2 <- tryCatch({
+    app(r3, fun = sum, cores = 2L) |> futurize()
+    NULL
+  }, error = identity)
+  stopifnot(inherits(res2, "error"))
+
   plan(sequential)
 } ## if (requireNamespace("terra") ...)

@@ -37,17 +37,17 @@ res <- focal(r, w = 5, fun = function(v) mean(v, na.rm = TRUE)) |> futurize()
 # Introduction
 
 This vignette demonstrates how to use this approach to parallelize
-**[terra]** functions such as `focal()` and `tile_apply()`.
+**[terra]** functions such as `focal()`, `tile_apply()`, `app()`,
+`lapp()`, and `predict()`.
 
 The **[terra]** package provides classes and methods for spatial data
 analysis with raster and vector data. Operations that apply a function
 to each cell, window, or tile of a large raster can be computationally
 intensive, making  them candidates for parallelization.
 
-Two of **terra**'s function have support for parallelization via
-futures: `focal()` and `tile_apply()`. That is enabled by specifying
-argument `cores = "future"`. To simplify it, you can achieve the same
-by piping to `futurize()`.
+Several of **terra**'s functions have support for parallelization,
+which allows **futurize** to support them: `app()`, `lapp()`,
+`focal()`, `predict()` and `tile_apply()`.
 
 
 ## Example: Parallelizing a moving-window calculation
@@ -86,8 +86,8 @@ main R session.
 
 Note that **terra** recognizes a small set of built-in functions, such
 as `mean()`, `median()`, and `sum()`. For those special functions, it
-will always runs them via its own C++ code, ignoring `futurize()`. To
-override this behavior for these special casee, use something like
+always runs them via its own C++ code, ignoring `futurize()`. To
+override this behavior for these special cases, use something like
 `fun = function(v) mean(v, na.rm = TRUE)`.
 
 
@@ -107,18 +107,33 @@ res <- tile_apply(r, function(x) x * 2) |> futurize()
 ```
 
 
+## Example: Applying a function cell-by-cell or predicting from a model
+
+The `app()` and `lapp()` functions apply a custom function to the
+layers of each cell of a raster, and `predict()` produces a raster of
+predictions from a fitted model (e.g. `lm()`, `glm()`, or
+`randomForest()`). We can parallelize these as:
+
+```r
+library(futurize)
+library(terra)
+
+r <- rast(system.file("ex/elev.tif", package = "terra"))
+
+res <- app(r, fun = function(v) sum(v)) |> futurize()
+```
+
+
 # Supported Functions
 
 The following **terra** functions are supported by `futurize()`, with
 `seed = TRUE` as the default:
 
+* `app()`
 * `focal()`
+* `lapp()`
+* `predict()`
 * `tile_apply()`
-
-Other **terra** functions that accept a `cores` argument, such as
-`app()`, `lapp()`, and `predict()`, build and drive a `parallel`
-cluster directly and do not go through `future`, and are therefore
-not (yet) supported by `futurize()`.
 
 
 [terra]: https://cran.r-project.org/package=terra

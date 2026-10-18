@@ -152,7 +152,7 @@ parallelization.
 | **[stars]**                | `st_apply()`                                                                 | **[future.apply]** |
 | **[strucchange]**          | `breakpoints()` for 'formula'                                                | **[doFuture]**     |
 | **[SuperLearner]**         | `CV.SuperLearner()`                                                          | -                  |
-| **[terra]**                | `focal()`, `tile_apply()`                                                    | **[future.apply]** |
+| **[terra]**                | `app()`, `focal()`, `lapp()`, `predict()`, `tile_apply()`                    | **[future]**, **[future.apply]** |
 | **[tm]**                   | `TermDocumentMatrix()`, `tm_index()`, `tm_map()`                             | -                  |
 | **[TSP]**                  | `solve_TSP()`                                                                | **[doFuture]**     |
 | **[vegan]**                | `adonis()`, `adonis2()`, `anova()` for 'cca', `anosim()`, `cascadeKM()`, `estaccumR()`, `mantel()`, `mantel.partial()`, `metaMDSiter()`, `mrpp()`, `oecosimu()`, `ordiareatest()`, `permutest()` for 'betadisper', and 'cca'  | -                  |

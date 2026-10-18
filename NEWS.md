@@ -14,8 +14,7 @@
 ## New Transpilers
 
  * Add support for domain-specific CRAN package **terra**, e.g. `res
-   <- focal(r, w = 5, fun = function(v) mean(v, na.rm = TRUE)) |>
-   futurize()`.
+   <- tile_apply(r, function(x) x * 2) |> futurize()`.
 
 ## New Features
 

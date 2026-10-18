@@ -7,12 +7,18 @@
 #   terra::focal(x, w, fun, ..., cores = "future")
 # })
 #
+# terra::app(x, fun, ...) =>
+# terra::lapp(x, fun, ...) =>
+# terra::predict(object, model, ...) =>
+#
+# local({
+#   cl <- future::makeClusterFuture(<future arguments>)
+#   terra::app(x, fun, ..., cores = cl)
+# })
+#
 append_transpilers_for_terra <- function() {
   transpilers <- make_package_transpilers("terra", FUN = function(fcn, name) {
-    ## focal() and tile_apply() support argument cores = "future". Other 'terra'
-    ## functions supports futureverse automatically, meaning there is no argument to
-    ## specify, e.g. app(), lapp(), predict(). We could add no-op futurize() support
-    ## for these for consistency, but that would interfer with terra's API.
+    ## focal() and tile_apply() support cores = "future"
     if (name %in% c("focal", "tile_apply")) {
       defaults <- list(
         future.seed = TRUE,
@@ -22,10 +28,6 @@ append_transpilers_for_terra <- function() {
         defaults = defaults,
         args = list(cores = "future")
       )
-      ## Note: this version check must run here, at transpile time, and
-      ## not at registration time, because errors raised while registering
-      ## transpilers (futurize:::transpilers_for_package(action = "make"))
-      ## are silently swallowed.
       transpiler <- function(expr, options = NULL) {
         if (utils::packageVersion("terra") < "1.9.25") {
           stop(sprintf("You are running terra %s, but futurization of 'terra' functions requires terra (>= 1.9-25)", utils::packageVersion("terra")))
@@ -37,11 +39,24 @@ append_transpilers_for_terra <- function() {
         label = sprintf("terra::%s() ~> terra::%s(..., cores = \"future\")", name, name),
         transpiler = transpiler
       )
+    } else if (name %in% c("app", "lapp", "predict")) {
+      ## app(), lapp(), and predict() accept argument 'cores', which
+      ## takes any parallel 'cluster' object.
+      list(
+        label = sprintf("terra::%s() ~> terra::%s(..., cores = cl)", name, name),
+        transpiler = make_futurize_for_makeClusterFuture(
+          args = list(cores = quote(cl)),
+          defaults = list(
+            seed = TRUE,
+            label = sprintf("fz:terra::%s-%%d", name)
+          )
+        )
+      )
     }
   })
 
   append_transpilers("futurize::add-on", transpilers)
 
   ## Return required packages
-  c("terra", "future.apply")
+  c("terra", "future", "future.apply")
 }
