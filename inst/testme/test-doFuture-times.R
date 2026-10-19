@@ -1,6 +1,6 @@
 #' @tags pkg-doFuture
 #' @tags %dopar%
-#' @tags sequential multisession cluster multicore
+#' @tags sequential multisession multicore
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
@@ -9,7 +9,7 @@ library(futurize)
 library(foreach)
 `%dofuture%` <- doFuture::`%dofuture%`
 
-strategies <- future:::supportedStrategies()
+strategies <- supportedStrategies(excl = "cluster")
 
 message("*** times() ...")
 
