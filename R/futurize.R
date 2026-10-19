@@ -127,7 +127,6 @@
 #' To see which functions a specific package supports, use
 #' [futurize_supported_functions()].
 #'
-#' @aliases fz
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
@@ -144,5 +143,6 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 class(futurize) <- c("transpiler", class(futurize))
 
 
+#' @rdname futurize
 #' @export
 fz <- futurize

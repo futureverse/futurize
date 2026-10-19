@@ -1,4 +1,4 @@
-# Version (development version)
+# Version 1.1.0 (2026-10-18)
 
 ## Significant Changes
 
@@ -26,6 +26,9 @@
    supported.
 
 ## Bug Fixes
+
+ * `R CMD check` reported an INFO on `fz()`, the alias for `futurize()`,
+   because it lacked its own usage information.
 
  * Option `chunk_size` was ignored when futurizing `times(n) %do% {
    ... }`.
