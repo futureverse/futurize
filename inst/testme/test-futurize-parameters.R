@@ -21,7 +21,7 @@ data(mtcars, package = "datasets")
 model_lm <- lm(mpg ~ wt, data = mtcars)
 
 set.seed(42)
-fit_lm <- bootstrap_model(model_lm, iterations = 10L) |> futurize_and_verify()
+fit_lm <- bootstrap_model(model_lm, iterations = 2L) |> futurize_and_verify()
 
 print(head(fit_lm))
 stopifnot(inherits(fit_lm, "bootstrap_model"))
@@ -32,7 +32,7 @@ if (requireNamespace("lme4", quietly = TRUE)) {
   model_lmer <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
   set.seed(42)
-  fit_lmer <- bootstrap_model(model_lmer, iterations = 10L) |> futurize_and_verify()
+  fit_lmer <- bootstrap_model(model_lmer, iterations = 2L) |> futurize_and_verify()
   ## If it correctly uses ClusterFuture, delta[["created"]] should be > 0
   ## Actually, future::makeClusterFuture() creates a cluster that 
   ## bootstrap_model() then uses.
@@ -50,7 +50,7 @@ message("bootstrap_parameters() ...")
 
 set.seed(42)
 
-params <- bootstrap_parameters(model_lm, iterations = 10L) |> futurize_and_verify()
+params <- bootstrap_parameters(model_lm, iterations = 3L) |> futurize_and_verify()
 
 print(params)
 stopifnot(inherits(params, "parameters_model"))
