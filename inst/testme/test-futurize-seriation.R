@@ -2,6 +2,11 @@
 if (requireNamespace("seriation") && requireNamespace("doFuture")) {
 library(futurize)
 library(seriation)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("seriation")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

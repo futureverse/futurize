@@ -25,6 +25,11 @@ all_equal_ignore_call <- function(a, b, ...) {
 
 library(futurize)
 library(vegan)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("vegan")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

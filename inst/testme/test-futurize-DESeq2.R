@@ -3,6 +3,11 @@
 if (requireNamespace("DESeq2") && requireNamespace("doFuture")) {
 library(futurize)
 library(DESeq2)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("DESeq2")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

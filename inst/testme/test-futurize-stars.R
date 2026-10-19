@@ -2,6 +2,11 @@
 if (requireNamespace("stars")) {
   library(futurize)
   library(stars)
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions("stars")
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
 
   plan(multisession)
 

@@ -2,6 +2,11 @@
 if (requireNamespace("glmmTMB") && getRversion() >= "4.4.0") {
 library(futurize)
 library(glmmTMB)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("glmmTMB")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

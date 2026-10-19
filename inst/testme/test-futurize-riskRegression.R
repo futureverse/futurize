@@ -2,6 +2,11 @@
 if (requireNamespace("riskRegression") && requireNamespace("survival") && requireNamespace("doFuture")) {
 library(futurize)
 library(riskRegression)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("riskRegression")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 library(survival)
 options(future.rng.onMisuse = "error")
 

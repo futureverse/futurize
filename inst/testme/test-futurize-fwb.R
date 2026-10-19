@@ -2,6 +2,11 @@
 if (requireNamespace("fwb") && requireNamespace("boot")) {
   library(futurize)
   library(fwb)
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions("fwb")
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
   city <- boot::city
   options(future.rng.onMisuse = "error")
 

@@ -2,6 +2,11 @@
 if (requireNamespace("pvclust") && getRversion() >= "4.4.0") {
 library(futurize)
 library(pvclust)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("pvclust")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 all_equal <- function(a, b, ...) {

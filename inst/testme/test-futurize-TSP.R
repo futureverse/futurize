@@ -2,6 +2,11 @@
 if (requireNamespace("TSP") && requireNamespace("doFuture")) {
 library(futurize)
 library(TSP)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("TSP")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

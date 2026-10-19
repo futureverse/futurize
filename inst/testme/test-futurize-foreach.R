@@ -2,6 +2,11 @@
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("foreach")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

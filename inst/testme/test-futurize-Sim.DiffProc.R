@@ -2,6 +2,11 @@
 if (requireNamespace("Sim.DiffProc") && getRversion() >= "4.4.0") {
 library(futurize)
 library(Sim.DiffProc)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("Sim.DiffProc")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

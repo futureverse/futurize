@@ -2,6 +2,11 @@
 if (requireNamespace("lme4") && (getRversion() >= "4.4.0" || utils::packageVersion("lme4") >= "2.0-6")) {
 library(futurize)
 library(lme4)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("lme4")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 ## Disable checks for stray assignments to the global environment(),

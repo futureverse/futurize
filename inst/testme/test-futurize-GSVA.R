@@ -2,6 +2,11 @@
 if (requireNamespace("GSVA") && requireNamespace("doFuture")) {
 library(futurize)
 library(GSVA)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("GSVA")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 print(sessionInfo())
 
 options(future.rng.onMisuse = "error")

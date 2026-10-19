@@ -2,6 +2,11 @@
 if (requireNamespace("terra") && requireNamespace("future.apply")) {
   library(futurize)
   library(terra)
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions("terra")
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
 
   plan(multisession, workers = 2)
 

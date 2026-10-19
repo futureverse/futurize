@@ -2,6 +2,13 @@
 if (requireNamespace("future.apply")) {
 library(futurize)
 library(stats)
+for (pkg in c("base", "stats")) {
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions(pkg)
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
+}
 library(datasets)
 options(future.rng.onMisuse = "error")
 

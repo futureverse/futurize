@@ -2,6 +2,11 @@
 if (requireNamespace("scuttle") && requireNamespace("doFuture") && requireNamespace("DelayedArray")) {
 library(futurize)
 library(scuttle)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("scuttle")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 
 ## Use a small block size to ensure multiple blocks and thus multiple futures
 DelayedArray::setAutoBlockSize(10000)

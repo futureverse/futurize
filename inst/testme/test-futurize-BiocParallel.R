@@ -2,6 +2,11 @@
 if (requireNamespace("BiocParallel") && requireNamespace("doFuture")) {
 library(futurize)
 library(BiocParallel)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("BiocParallel")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

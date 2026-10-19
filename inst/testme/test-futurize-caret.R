@@ -2,6 +2,11 @@
 if (requireNamespace("caret") && requireNamespace("randomForest") && requireNamespace("doFuture")) {
 library(futurize)
 library(caret)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("caret")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
