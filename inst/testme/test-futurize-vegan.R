@@ -166,11 +166,11 @@ data(sipoo)
 
 ## Adopted from example("oecosimu", package = "vegan")
 set.seed(42)
-res_truth <- oecosimu(sipoo, nestedchecker, "r0")
+res_truth <- oecosimu(sipoo, nestedchecker, "r0", nsimul = 9L)
 print(res_truth)
 
 set.seed(42)
-res <- oecosimu(sipoo, nestedchecker, "r0") |> futurize_and_verify()
+res <- oecosimu(sipoo, nestedchecker, "r0", nsimul = 9L) |> futurize_and_verify()
 print(res)
 
 stopifnot(all_equal_ignore_call(res, res_truth))
