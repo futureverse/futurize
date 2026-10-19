@@ -7,13 +7,6 @@ if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
-
-options(
-  parallelly.debug = TRUE,
-  future.debug = TRUE,
-  doFuture.debug = TRUE
-)
-
 strategies <- future:::supportedStrategies()
 
 message("*** doFuture - explicitly exported globals ...")

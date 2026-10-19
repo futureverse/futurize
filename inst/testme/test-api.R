@@ -1,5 +1,4 @@
 library(futurize)
-options(futurize.debug = TRUE)
 
 # --------------------------------------------------------------------
 # futurize()

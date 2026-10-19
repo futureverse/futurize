@@ -4,7 +4,6 @@ library(futurize)
 library(stats)
 library(datasets)
 options(future.rng.onMisuse = "error")
-options(futurize.debug = TRUE)
 
 plan(multisession)
 
