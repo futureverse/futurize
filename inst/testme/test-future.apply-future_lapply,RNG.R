@@ -58,8 +58,7 @@ seed_sets <- list(
   C = 42L,
   D = as_lecyer_cmrg_seed(42L),
   E = list(),
-  F = vector("list", length = length(x)),
-  G = NULL
+  F = vector("list", length = length(x))
 )
 
 ## Generate sequence of seeds of the current RNGkind()
@@ -75,7 +74,6 @@ seeds <- seed_sets$F
 seeds[[1]] <- seed_sets$D
 for (kk in 2:length(x)) seeds[[kk]] <- parallel::nextRNGStream(seeds[[kk - 1]])
 seed_sets$F <- seeds
-seed_sets$G <- seed_sets$A
 
 rm(list = "seeds")
 
@@ -168,35 +166,35 @@ for (cores in 1:availCores) {
         stopifnot(!identical(seed, seed0), identical(seed, seed00),
                   identical(y, y0))
       }
+    } ## for (name ...)
 
-      ## Nested future_lapply():s
-      for (scheduling in list(FALSE, TRUE)) {
-        y <- lapply(x, FUN = function(i) {
-          .seed <- globalenv()$.Random.seed
+    ## Nested future_lapply():s
+    for (scheduling in list(FALSE, TRUE)) {
+      y <- lapply(x, FUN = function(i) {
+        .seed <- globalenv()$.Random.seed
 
-          z <- lapply(1:3, FUN = function(j) {
-            list(j = j, seed = globalenv()$.Random.seed)
-          }) |> futurize_and_verify(seed = .seed)
+        z <- lapply(1:3, FUN = function(j) {
+          list(j = j, seed = globalenv()$.Random.seed)
+        }) |> futurize_and_verify(seed = .seed)
 
-          ## Assert that all future seeds are unique
-          seeds <- lapply(z, FUN = function(x) x$seed)
-          for (kk in 2:length(seeds)) stopifnot(!all(seeds[[kk]] == seeds[[1]]))
-
-          list(i = i, seed = .seed, sample = rnorm(1L), z = z)
-        }) |> futurize_and_verify(seed = 42L, scheduling = scheduling)
-
-        if (is.null(y0_nested)) y0_nested <- y
-        str(list(y = y))
-
-        ## Assert that all future seeds (also nested ones) are unique
-        seeds <- Reduce(c, lapply(y, FUN = function(x) {
-          c(list(seed = x$seed), lapply(x$z, FUN = function(x) x$seed))
-        }))
+        ## Assert that all future seeds are unique
+        seeds <- lapply(z, FUN = function(x) x$seed)
         for (kk in 2:length(seeds)) stopifnot(!all(seeds[[kk]] == seeds[[1]]))
 
-        stopifnot(identical(y, y0_nested))
-      }
-    } ## for (name ...)
+        list(i = i, seed = .seed, sample = rnorm(1L), z = z)
+      }) |> futurize_and_verify(seed = 42L, scheduling = scheduling)
+
+      if (is.null(y0_nested)) y0_nested <- y
+      str(list(y = y))
+
+      ## Assert that all future seeds (also nested ones) are unique
+      seeds <- Reduce(c, lapply(y, FUN = function(x) {
+        c(list(seed = x$seed), lapply(x$z, FUN = function(x) x$seed))
+      }))
+      for (kk in 2:length(seeds)) stopifnot(!all(seeds[[kk]] == seeds[[1]]))
+
+      stopifnot(identical(y, y0_nested))
+    }
 
     message(sprintf("* plan('%s') ... DONE", strategy))
   }  ## for (strategy ...)
