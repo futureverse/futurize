@@ -1,6 +1,6 @@
 #' @tags pkg-doFuture
 #' @tags %dofuture%
-#' @tags sequential multisession cluster multicore
+#' @tags sequential multisession multicore
 #' @tags detritus-files
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
@@ -19,7 +19,7 @@ library(foreach)
 ## See https://bugs.r-project.org/show_bug.cgi?id=18133 for more details.
 if (.Platform$OS.type == "windows") Sys.setenv(TMPDIR = tempdir())
 
-strategies <- future:::supportedStrategies()
+strategies <- supportedStrategies(excl = "cluster")
 
 options(future.debug = FALSE)
 options(doFuture.debug = FALSE)

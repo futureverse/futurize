@@ -2,6 +2,11 @@
 if (requireNamespace("metafor") && getRversion() >= "4.4.0") {
 library(futurize)
 library(metafor)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("metafor")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 
 plan(multisession)
 

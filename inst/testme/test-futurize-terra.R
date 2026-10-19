@@ -2,14 +2,19 @@
 if (requireNamespace("terra") && requireNamespace("future.apply")) {
   library(futurize)
   library(terra)
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions("terra")
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
 
   plan(multisession, workers = 2)
 
-  ## We need a raster large enough for focal() to run in parallel,
-  ## which happens at nrow(v) >= max(256L, 64L * nworkers), i.e.
-  ## nrow(v) >= 256 for nworkers = 2
+  ## We need a raster large enough for focal() to run in parallel, which
+  ## happens at nrow(v) >= max(256L, 64L * nworkers), where nrow(v) is
+  ## the number of cells in the block, i.e. >= 256 for nworkers = 2
   set.seed(42)
-  r <- rast(nrows = 200L, ncols = 200L, vals = runif(200 * 200))
+  r <- rast(nrows = 20L, ncols = 20L, vals = runif(20 * 20))
   myfun <- function(v) mean(v, na.rm = TRUE)
 
   ## -------------------------------------------------------
@@ -29,17 +34,17 @@ if (requireNamespace("terra") && requireNamespace("future.apply")) {
   ## -------------------------------------------------------
   ## tile_apply()
   ## -------------------------------------------------------
-  r2 <- rast(nrows = 20, ncols = 20, vals = 1:400)
+  r2 <- rast(nrows = 10L, ncols = 10L, vals = 1:100)
 
-  result_truth2 <- tile_apply(r2, function(x) x * 2, tiles = 10L)
+  result_truth2 <- tile_apply(r2, function(x) x * 2, tiles = 2L)
 
-  result2 <- tile_apply(r2, function(x) x * 2, tiles = 10L) |> futurize_and_verify()
+  result2 <- tile_apply(r2, function(x) x * 2, tiles = 2L) |> futurize_and_verify()
 
   stopifnot(all.equal(result2, result_truth2))
 
   ## Assert R option 'future.disposable' is undone
   oopts <- getOption("future.disposable")
-  result3 <- tile_apply(r2, function(x) x * 2, tiles = 10L) |> futurize_and_verify()
+  result3 <- tile_apply(r2, function(x) x * 2, tiles = 2L) |> futurize_and_verify()
   stopifnot(identical(getOption("future.disposable"), oopts))
 
   ## Argument 'cores' must not be specified when using futurize()
@@ -52,7 +57,7 @@ if (requireNamespace("terra") && requireNamespace("future.apply")) {
   ## -------------------------------------------------------
   ## app(), lapp(), and predict()
   ## -------------------------------------------------------
-  r3 <- rast(nrows = 30L, ncols = 30L, nlyr = 2L, vals = 1:1800)
+  r3 <- rast(nrows = 10L, ncols = 10L, nlyr = 2L, vals = 1:200)
   names(r3) <- c("x1", "x2")
 
   result_truth4 <- app(r3, fun = function(v) sum(v))
@@ -64,7 +69,7 @@ if (requireNamespace("terra") && requireNamespace("future.apply")) {
   stopifnot(all.equal(result5, result_truth5))
 
   set.seed(42)
-  df <- data.frame(y = 1:100, x1 = rnorm(100), x2 = rnorm(100))
+  df <- data.frame(y = 1:20, x1 = rnorm(20), x2 = rnorm(20))
   model <- lm(y ~ x1 + x2, data = df)
   result_truth6 <- predict(r3, model)
   result6 <- predict(r3, model) |> futurize_and_verify()

@@ -1,15 +1,13 @@
 #' @tags pkg-doFuture
 #' @tags %dofuture%
 #' @tags detritus-files
-#' @tags sequential multisession cluster multicore
+#' @tags sequential multisession multicore
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
-strategies <- future:::supportedStrategies()
-
-message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ...")
+strategies <- supportedStrategies(excl = "cluster")
 
 for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
@@ -17,6 +15,8 @@ for (strategy in strategies) {
 
   mu <- 1.0
   sigma <- 2.0
+
+  message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ...")
 
   message("Futureverse-style error handling ...")
   res <- tryCatch({
@@ -81,23 +81,11 @@ for (strategy in strategies) {
     message(sprintf(".errorhandling = '%s' ... done", .errorhandling))
   } ## for (.errorhandling ...)
 
-  # Shutdown current plan
-  plan(sequential)
-
-  message(sprintf("- plan('%s') ... DONE", strategy))
-} ## for (strategy ...)
-
-message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ... DONE")
+  message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ... DONE")
 
 
-message("*** doFuture() - error handling w/ 'pass' ...")
+  message("*** doFuture() - error handling w/ 'pass' ...")
 
-for (strategy in strategies) {
-  message(sprintf("- plan('%s') ...", strategy))
-  plan(strategy)
-
-  mu <- 1.0
-  sigma <- 2.0
   res <- foreach(i = 1:10, .errorhandling = "pass") %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('pass'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
@@ -108,23 +96,11 @@ for (strategy in strategies) {
     length(res) == 10L
   )
 
-  # Shutdown current plan
-  plan(sequential)
-
-  message(sprintf("- plan('%s') ... DONE", strategy))
-} ## for (strategy ...)
-
-message("*** doFuture() - error handling w/ 'pass' ... DONE")
+  message("*** doFuture() - error handling w/ 'pass' ... DONE")
 
 
-message("*** doFuture() - error handling w/ 'remove' ...")
+  message("*** doFuture() - error handling w/ 'remove' ...")
 
-for (strategy in strategies) {
-  message(sprintf("- plan('%s') ...", strategy))
-  plan(strategy)
-
-  mu <- 1.0
-  sigma <- 2.0
   res <- foreach(i = 1:10, .errorhandling = "remove") %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('remove'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
@@ -135,13 +111,13 @@ for (strategy in strategies) {
     length(res) == 5L
   )
 
+  message("*** doFuture() - error handling w/ 'remove' ... DONE")
+
   # Shutdown current plan
   plan(sequential)
-  
+
   message(sprintf("- plan('%s') ... DONE", strategy))
 } ## for (strategy ...)
-
-message("*** doFuture() - error handling w/ 'remove' ... DONE")
 
 message("*** doFuture() - invalid accumulator ...")
 

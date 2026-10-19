@@ -3,6 +3,11 @@
 if (requireNamespace("gamlss") && requireNamespace("gamlss.data") && getRversion() >= "4.4.0") {
 library(futurize)
 library(gamlss)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("gamlss")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "ignore")
 
 plan(multisession)

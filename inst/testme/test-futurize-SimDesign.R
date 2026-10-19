@@ -2,6 +2,11 @@
 if (requireNamespace("SimDesign") && getRversion() >= "4.4.0") {
 library(futurize)
 library(SimDesign)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("SimDesign")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 
 plan(multisession)
 

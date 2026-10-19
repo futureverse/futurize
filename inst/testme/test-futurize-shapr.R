@@ -2,6 +2,11 @@
 if (requireNamespace("shapr")) {
   library(futurize)
   library(shapr)
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions("shapr")
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
   options(future.rng.onMisuse = "error")
 
   plan(multisession)

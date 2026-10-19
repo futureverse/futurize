@@ -1,5 +1,4 @@
 library(futurize)
-options(futurize.debug = TRUE)
 
 # --------------------------------------------------------------------
 # futurize()
@@ -141,12 +140,14 @@ print(pkgs)
 
 ## Assert that there are not clashes between supported packages
 pkgs <- futurize_supported_packages()
-for (pkg in rep(pkgs, times = 2L)) {
+stopifnot(all(c("base", "stats") %in% pkgs))
+
+for (pkg in rep(c("base", "stats"), times = 2L)) {
   cat(sprintf("Package %s:\n", pkg))
-  ## futurize_supported_functions() fail if required packages
-  ## are not supported
   fcns <- tryCatch({
     futurize::futurize_supported_functions(pkg)
   }, error = identity)
   print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
 }
+

@@ -2,6 +2,11 @@
 if (requireNamespace("crossmap")) {
 library(futurize)
 library(crossmap)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("crossmap")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

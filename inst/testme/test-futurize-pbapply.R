@@ -2,6 +2,11 @@
 if (requireNamespace("pbapply") && requireNamespace("future.apply")) {
 library(futurize)
 library(pbapply)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("pbapply")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

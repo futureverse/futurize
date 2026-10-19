@@ -2,6 +2,11 @@
 if (requireNamespace("tm") && getRversion() >= "4.4.0") {
 library(futurize)
 library(tm)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("tm")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 data(crude)
 
 plan(multisession)
