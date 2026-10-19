@@ -27,9 +27,6 @@
 
 ## Bug Fixes
 
- * `R CMD check` reported an INFO on `fz()`, the alias for `futurize()`,
-   because it lacked its own usage information.
-
  * Option `chunk_size` was ignored when futurizing `times(n) %do% {
    ... }`.
 

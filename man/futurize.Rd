@@ -14,16 +14,6 @@ futurize(
   eval = TRUE,
   envir = parent.frame()
 )
-
-fz(
-  expr,
-  substitute = TRUE,
-  options = futurize_options(...),
-  ...,
-  when = TRUE,
-  eval = TRUE,
-  envir = parent.frame()
-)
 }
 \arguments{
 \item{expr}{An \R expression, typically a function call to futurize.
