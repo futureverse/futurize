@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                                                      |
 |ctype    |en_US.UTF-8                                                      |
 |tz       |America/Los_Angeles                                              |
-|date     |2026-10-05                                                       |
+|date     |2026-10-18                                                       |
 |pandoc   |3.12 @ /home/hb/shared/software/CBI/pandoc-3.12/bin/pandoc       |
 |quarto   |1.10.18 @ /home/hb/shared/software/CBI/quarto-1.10.18/bin/quarto |
 
@@ -18,29 +18,24 @@
 
 |package    |old    |new        |Δ  |
 |:----------|:------|:----------|:--|
-|futurize   |1.0.0  |1.0.0-9023 |*  |
+|futurize   |1.0.0  |1.0.0-9031 |*  |
 |codetools  |0.2-20 |0.2-20     |   |
 |digest     |0.6.39 |0.6.39     |   |
-|future     |1.76.0 |1.76.0     |   |
-|globals    |0.19.1 |0.19.1     |   |
+|future     |1.76.0 |1.80.0     |*  |
+|globals    |0.19.1 |0.20.0     |*  |
 |listenv    |1.1.0  |1.1.0      |   |
 |parallelly |1.48.0 |1.48.0     |   |
 
 # Revdeps
 
-## New problems (1)
+## All (6)
 
-|package     |version |error  |warning |note |
-|:-----------|:-------|:------|:-------|:----|
-|[progressify](problems.md#progressify)|0.2.0   |__+1__ |        |     |
-
-## All (5)
-
-|package      |version |error  |warning |note |
-|:------------|:-------|:------|:-------|:----|
-|futureverse  |0.3.0   |       |        |     |
-|marcxmlr     |0.3.1   |       |        |     |
-|[progressify](problems.md#progressify)|0.2.0   |__+1__ |        |     |
-|summarisebig |0.1.0   |       |        |     |
-|xmlrectr     |0.1.0   |       |        |     |
+|package      |version |error |warning |note |
+|:------------|:-------|:-----|:-------|:----|
+|futureverse  |0.3.0   |      |        |     |
+|fwb          |1.0.0   |      |        |     |
+|marcxmlr     |0.4.0   |      |        |     |
+|progressify  |0.4.0   |-1    |        |     |
+|summarisebig |0.1.0   |      |        |     |
+|xmlrectr     |0.1.0   |      |        |     |
 
