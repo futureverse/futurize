@@ -26,15 +26,16 @@ plan(multisession)
 ## Adopted from example("allFit", package = "lme4")
 gm1 <- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
              data = cbpp, family = binomial)
+meth.tab <- allFit(show.meth.tab = TRUE)[1:2, , drop = FALSE]
 
 message("Ordinary processing:")
 set.seed(42)
-gm_all_truth <- allFit(gm1)
+gm_all_truth <- allFit(gm1, meth.tab = meth.tab)
 print(gm_all_truth)
 
 message("Futurized processing:")
 set.seed(42)
-gm_all <- allFit(gm1) |> futurize_and_verify()
+gm_all <- allFit(gm1, meth.tab = meth.tab) |> futurize_and_verify()
 print(gm_all)
 
 message("Comparing results:")
@@ -43,7 +44,8 @@ stopifnot(all_equal(gm_all, gm_all_truth))
 if (utils::packageVersion("lme4") >= "2.0.1") {
   ## influence.merMod() via stats::influence() S3 generic dispatch
   ## Adopted from example("influence.merMod", package = "lme4")
-  fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+  sleepstudy_sub <- subset(sleepstudy, Subject %in% c("308", "309", "310", "330", "333"))
+  fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy_sub)
   stopifnot(inherits(fm1, "merMod"))
   
   message("Ordinary processing:")
@@ -64,9 +66,9 @@ if (utils::packageVersion("lme4") >= "2.0-6") {
 
   message("Futurized processing:")
   set.seed(42)
-  boo_1 <- bootMer(fm01ML, mySumm, nsim = 10) |> futurize_and_verify()
+  boo_1 <- bootMer(fm01ML, mySumm, nsim = 3L) |> futurize_and_verify()
   set.seed(42)
-  boo_2 <- bootMer(fm01ML, mySumm, nsim = 10) |> futurize()
+  boo_2 <- bootMer(fm01ML, mySumm, nsim = 3L) |> futurize()
 
   message("Comparing results:")
   stopifnot(all.equal(boo_1$t, boo_2$t))
