@@ -22,6 +22,9 @@ lapply
 lme
 mgcv
 parallelization
+parallelize
+parallelized
+Parallelizing
 partykit
 pathwise
 pbapply
@@ -30,6 +33,7 @@ purrr
 scalable
 seriation
 strucchange
+terra
 tm
 transpilable
 transpilation

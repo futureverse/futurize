@@ -200,35 +200,39 @@ find("lapply")
 #> [1] "package:BiocGenerics" "package:base" 
 ```
 
-This matters in the context of **futurize**. In a vanilla R session,
+This matters in the context of **futurize**. With **BiocGenerics**
+attached, `futurize()` identifies which method `lapply()` dispatches
+to. If it is the **base** fallback, as for `1:3`, then
 
 ```r
 y <- lapply(1:3, sqrt) |> futurize()
 ```
 
-is identical to
+is futurized as if we had called `base::lapply(1:3, sqrt)`. However,
+if the object has its own `lapply()` method, such as a `List` of the
+**S4Vectors** package, then that method cannot be futurized, e.g.
 
 ```r
-y <- base::lapply(1:3, sqrt) |> futurize()
+library(S4Vectors)
+x <- List(a = 1:3, b = 4:6)
+y <- lapply(x, sum) |> futurize()
 ```
 
-However, with **BiocGenerics** attached, it is instead identical to:
+results in:
+
+```
+Error: Do not know how to futurize lapply(), because it dispatches to
+the S4 method of package 'S4Vectors' for class 'SimpleList', which is
+not supported. If you meant base::lapply(), call it explicitly, e.g.
+'base::lapply(...) |> futurize()', possibly after coercing the first
+argument to a basic R object
+```
+
+The solution is to coerce the object to a regular list and specify
+that it is the **base** version we wish to futurize, i.e.
 
 ```r
-y <- BiocGenerics::lapply(1:3, sqrt) |> futurize()
-```
-
-which results in:
-
-```
-Error in transpilers_for_package(type = type, package = ns_name, action = "make",  : 
-  There are no factory functions for creating 'futurize::add-on' transpilers for package 'BiocGenerics'
-```
-
-The solution is to specify that it is the **base** version we wish to futurize, i.e.
-
-```r
-y <- base::lapply(1:3, sqrt) |> futurize()
+y <- base::lapply(as.list(x), sum) |> futurize()
 ```
 
 

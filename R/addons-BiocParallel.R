@@ -46,7 +46,7 @@ append_transpilers_for_BiocParallel <- function() {
       BPPARAM = quote(BiocParallel::DoparParam())
     )
     defaults <- list(label = sprintf("fz:BiocParallel::%s-%%d", .(NAME)))
-    opts <- make_options_for_doFuture(options, defaults = defaults, wrap = TRUE)
+    opts <- make_options_for_doFuture(options, defaults = defaults, wrap = FALSE)
     ## Update 'OPTS'
     bquote_apply(template,
       OPTS = opts,

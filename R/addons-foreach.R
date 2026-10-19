@@ -15,6 +15,17 @@ append_transpilers_for_doFuture <- function() {
     .(EXPR)
   }))
   
+  ## All foreach() calls in a, possibly nested, foreach() %:% foreach() chain
+  foreach_calls <- function(call) {
+    if (is.call(call) &&
+        (identical(call[[1]], as.symbol("%:%")) ||
+         identical(call[[1]], quote(foreach::`%:%`)))) {
+      c(foreach_calls(call[[2]]), foreach_calls(call[[3]]))
+    } else {
+      list(call)
+    }
+  }
+
   transpiler <- function(expr, options = NULL) {
     ## Replace `%do%` with doFuture::`%dofuture%`
     expr[[1]] <- quote(doFuture::`%dofuture%`)
@@ -25,12 +36,8 @@ append_transpilers_for_doFuture <- function() {
     if (identical(fcn, as.symbol("times")) ||
         identical(fcn, quote(foreach::times))) {
       ## Default to seed = TRUE
-      if (!"seed" %in% attr(options, "specified")) {
-        options[["seed"]] <- TRUE
-      }
-      if (!"label" %in% attr(options, "specified")) {
-        options[["label"]] <- "fz:foreach::times-%d"
-      }
+      defaults <- list(seed = TRUE, label = "fz:foreach::times-%d")
+      options <- make_options_for_doFuture(options, defaults = defaults, wrap = FALSE)
       expr <- bquote_apply(template,
         OPTS = options,
         EXPR = expr
@@ -51,6 +58,13 @@ append_transpilers_for_doFuture <- function() {
         idx_EXPR <- 2:3
       } else {
         idx_EXPR <- 2L
+      }
+
+      ## Assert that argument '.options.future' is not specified with %do%
+      for (call in foreach_calls(expr[[2]])) {
+        if (is.call(call) && !is.null(call[[".options.future"]])) {
+          stop(sprintf("Cannot futurize foreach(..., .options.future = ...) %%do%% { ... }. Instead, pass future options to futurize(), e.g. futurize(seed = TRUE): %s", paste(deparse(call), collapse = " ")))
+        }
       }
 
       expr[[idx_EXPR]] <- append_call_arguments(expr[[idx_EXPR]],

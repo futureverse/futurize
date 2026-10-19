@@ -13,6 +13,11 @@ make_options_for_doFuture <- local({
     if (length(defaults) > 0) {
       names <- setdiff(names(defaults), attr(options, "specified"))
       for (name in names) options[[name]] <- defaults[[name]]
+
+      ## Packages required by the transpiler are always appended
+      if ("packages" %in% names(defaults)) {
+        options[["packages"]] <- unique(c(options[["packages"]], defaults[["packages"]]))
+      }
     }
 
     ## Remap chunk_size -> chunk.size

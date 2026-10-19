@@ -3,6 +3,11 @@
 if (requireNamespace("glmnet")) {
 library(futurize)
 library(glmnet)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("glmnet")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 all_equal <- function(a, b, ...) {

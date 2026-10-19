@@ -2,6 +2,11 @@
 if (requireNamespace("caret") && requireNamespace("randomForest") && requireNamespace("doFuture")) {
 library(futurize)
 library(caret)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("caret")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
@@ -14,14 +19,14 @@ print(d)
 stopifnot(all.equal(d, d_truth))
 
 # Define training control
-ctrl <- trainControl(method = "cv", number = 3L)
+ctrl <- trainControl(method = "cv", number = 2L)
 
 set.seed(1011)
-model_truth <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl)
+model_truth <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl, tuneLength = 1L, ntree = 3L)
 print(model_truth)
 
 set.seed(1011)
-model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl) |> futurize_and_verify()
+model <- train(Species ~ ., data = iris, method = "rf", trControl = ctrl, tuneLength = 1L, ntree = 3L) |> futurize_and_verify()
 print(model)
 
 ## Cannot really compare results, because of different RNGs

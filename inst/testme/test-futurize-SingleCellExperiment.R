@@ -2,6 +2,11 @@
 if (requireNamespace("SingleCellExperiment") && requireNamespace("scuttle") && requireNamespace("doFuture") && requireNamespace("DelayedArray")) {
 library(futurize)
 library(SingleCellExperiment)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("SingleCellExperiment")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 library(scuttle)
 library(DelayedArray)
 

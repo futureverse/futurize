@@ -23,6 +23,9 @@ make_options_for_future.apply <- local({
     }
     
     ## Default future.* arguments
+    ## Packages required by the transpiler
+    req_pkgs <- defaults[["future.packages"]]
+
     defaults <- c(defaults_base, get_defaults(fcn), defaults)
     keep <- !duplicated(names(defaults), fromLast = TRUE)
     defaults <- defaults[keep]
@@ -42,6 +45,11 @@ make_options_for_future.apply <- local({
     names <- setdiff(names(defaults), specified)
     names(options) <- sprintf("future.%s", names(options))
     for (name in names) options[[name]] <- defaults[[name]]
+
+    ## Packages required by the transpiler are always appended
+    if (length(req_pkgs) > 0) {
+      options[["future.packages"]] <- unique(c(options[["future.packages"]], req_pkgs))
+    }
 
     ## Silently drop non-existing future options
     keep <- intersect(names(options), names(defaults))

@@ -1,3 +1,75 @@
+# Version 1.1.0 (2026-10-18)
+
+## Significant Changes
+
+ * Futurizing `foreach(..., .options.future = list(...)) %do% { ... }`
+   is now an error, because `%do%` never supported such options in the
+   first place. Instead, pass future options to `futurize()`, e.g.
+   `foreach(...) %do% { ... } |> futurize(seed = TRUE)`. Previously,
+   such attempts were silently ignored.
+
+ * Futurization of **GSVA** functions will stop working with **GSVA**
+   (>= 2.7.0).
+ 
+## New Transpilers
+
+ * Add support for domain-specific CRAN package **terra**, e.g. `res
+   <- tile_apply(r, function(x) x * 2) |> futurize()`.
+
+## New Features
+
+ * `futurize()` now unwraps `withCallingHandlers()`, e.g.
+   `withCallingHandlers(lapply(xs, fcn), warning = ...) |> futurize()`.
+
+ * Futurization of **lme4** functions now uses `parallel = "future"`
+   available in **lme4** (>= 2.0-6). Older versions are still
+   supported.
+
+## Bug Fixes
+
+ * Option `chunk_size` was ignored when futurizing `times(n) %do% {
+   ... }`.
+
+ * Futurize option `packages` would drop packages that the transpiler
+   declares as required on parallel workers.
+   
+ * Futurizing a call that specifies an argument that `futurize()`
+   sets, e.g. `bplapply(xs, fcn, BPPARAM = SerialParam())`, or
+   `boot(..., parallel = "multicore")`, gave an obscure error
+   message. Now it gives an informative error.
+
+ * Futurizing a call to an S3 or S4 generic function, whose first
+   argument is a function call, e.g. `influence(lmer(...)) |>
+   futurize()`, would evaluate that first argument twice; once to
+   identify the method to be called, and once more when calling it.
+   Now it is evaluated only once.
+
+ * Attempts to futurize a generic function that dispatches to an
+   unsupported S3 or S4 method gave an uninformative error message,
+   e.g. `summary(fit) |> futurize()` and, with **BiocGenerics**
+   attached, `lapply(x, fcn) |> futurize()` for an **S4Vectors**
+   `List`. Now the error message names the method, its package, and
+   the class dispatched on.
+
+ * Attempts to futurize a function not part of a package gave an
+   obscure error message suggestion to install a non-existing package.
+
+ * Attempts to futurize an expression that is not a function call,
+   e.g. `{ x } |> futurize()`, gave an obscure error message.
+
+ * All futurize options, e.g. `seed`, `packages`, and `label`, were
+   ignored when futurizing **BiocParallel** functions.
+
+ * Futurizing **plyr** functions with argument `.paropts` gave an
+   obscure error. Now the `.paropts` options are passed on as-is,
+   unless they specify `.options.future`, which gives an informative
+   error suggesting to pass such options to `futurize()` instead.
+
+ * Futurizing **plyr** functions produced a "No parallel backend
+   registered" warning when using a single parallel worker,
+   e.g. `plan(sequential)`.
+
+
 # Version 1.0.0 (2026-06-11)
 
 ## Significant Changes

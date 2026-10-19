@@ -1,6 +1,7 @@
 #' @tags pkg-future.apply
 #' @tags future_lapply future_mapply
 #' @tags sequential multisession multicore
+#' @tags detritus-files
 
 if (requireNamespace("future.apply", quietly = TRUE)) {
 

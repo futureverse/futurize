@@ -27,7 +27,8 @@
 #' The transpilation mechanism includes logic to "unwrap" expressions
 #' enclosed in constructs such as `!`, `{ }`, `( )`, `local()`, `I()`,
 #' `identity()`, `invisible()`, `suppressMessages()`, `suppressWarnings()`,
-#' and `with()`. The transpiler descends through wrapping
+#' `suppressPackageStartupMessages()`, `withCallingHandlers()`, and
+#' `with()`. The transpiler descends through wrapping
 #' constructs until it finds a transpilable expression, avoiding the
 #' need to place `futurize()` inside such constructs. This allows for
 #' patterns like:
@@ -44,6 +45,39 @@
 #' y <- {
 #'   lapply(xs, fcn) |> futurize()
 #' } |> suppressMessages()
+#' ```
+#'
+#'
+#' @section Generic functions:
+#' Some functions can be futurized only via their S3 or S4 methods, e.g.
+#' `influence()` of the \pkg{stats} package dispatches to the
+#' `influence.merMod()` method of the \pkg{lme4} package. To identify
+#' which method is called, `futurize()` has to evaluate the first argument
+#' of the generic function. If the first argument is a variable, a
+#' formula, or a `list()` or `c()` of variables, it is evaluated
+#' directly. Otherwise, `futurize()` makes sure it is evaluated only once,
+#' by first assigning it to a temporary variable. For example,
+#'
+#' ```r
+#' inf <- influence(lmer(...)) |> futurize()
+#' ```
+#'
+#' is evaluated as:
+#'
+#' ```r
+#' inf <- local({
+#'   ...futurize.x <- lmer(...)
+#'   influence(...futurize.x) |> futurize()
+#' })
+#' ```
+#'
+#' Because of this, methods that use `substitute()` or `match.call()` on
+#' the first argument, e.g. for labeling, see `...futurize.x`. To avoid
+#' this, assign the first argument to a variable yourself, e.g.
+#'
+#' ```r
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+#' inf <- influence(fit) |> futurize()
 #' ```
 #'
 #'
@@ -97,7 +131,7 @@
 #' @export
 futurize <- function(expr, substitute = TRUE, options = futurize_options(...), ..., when = TRUE, eval = TRUE, envir = parent.frame()) {
   if (substitute) expr <- substitute(expr)
-  debug <- isTRUE(getOption("futurize.debug"))
+  debug <- isDebugEnabled()
   if (debug) {
     mdebug_push("futurize() ...")
     on.exit(mdebug_pop())

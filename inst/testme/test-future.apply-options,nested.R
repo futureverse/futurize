@@ -12,7 +12,9 @@ message("*** Options in nested parallelization ...")
 
 options(future.debug = FALSE)
 options(future.apply.debug = FALSE)
-options(future.globals.maxSize = 2.50 * 1024^2)
+delta <- 2.5e6 ## Seems to be needed on MS Windows, where the size of the
+               ## 'futurize_and_verify()' closure appears to be larger
+options(future.globals.maxSize = 2.50 * 1024^2 + delta)
 
 for (cores in 1:availCores) {
   message(sprintf("Testing with %d cores ...", cores))

@@ -3,6 +3,11 @@
 if (requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)
 library(Rsamtools)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("Rsamtools")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

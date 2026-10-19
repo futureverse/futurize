@@ -3,6 +3,11 @@
 if (requireNamespace("DESeq2") && requireNamespace("doFuture")) {
 library(futurize)
 library(DESeq2)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("DESeq2")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
@@ -45,6 +50,33 @@ stopifnot(all.equal(results(result), results(result_truth)))
 set.seed(42)
 result2 <- DESeq2::DESeq(dds) |> futurize_and_verify()
 stopifnot(all.equal(results(result2), results(result_truth)))
+
+## With DESeq2 attached, so is BiocGenerics, which masks base::lapply()
+## with an S4 generic. The S4 dispatch argument must be evaluated only
+## once, also when it is not a variable
+stopifnot(methods::is(lapply, "standardGeneric"))
+n_calls <- 0L
+make_xs <- function() {
+  n_calls <<- n_calls + 1L
+  1:3
+}
+y_truth <- base::lapply(1:3, sqrt)
+y <- lapply(1:3, sqrt) |> futurize_and_verify()
+stopifnot(identical(y, y_truth))
+y <- lapply(make_xs(), sqrt) |> futurize_and_verify()
+stopifnot(identical(y, y_truth), n_calls == 1L)
+
+## An S4 method that is not supported, here lapply() for an S4Vectors
+## 'List', should give an informative error naming the method's package,
+## and suggest using base::lapply()
+x <- S4Vectors::List(a = 1:3, b = 4:6)
+res <- tryCatch(lapply(x, sum) |> futurize(), error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  grepl("S4Vectors", conditionMessage(res), fixed = TRUE),
+  grepl("base::lapply()", conditionMessage(res), fixed = TRUE)
+)
 
 plan(sequential)
 } ## if (requireNamespace("DESeq2") && ...)

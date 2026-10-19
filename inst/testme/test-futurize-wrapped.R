@@ -116,5 +116,24 @@ truth6 <- suppressWarnings({ lapply(1:3, identity) }, classes = "warning")
 y <- suppressWarnings({ lapply(1:3, identity) }, classes = "warning") |> futurize_and_verify()
 stopifnot(identical(y, truth6))
 
+## Wrapped in withCallingHandlers(..., warning = ...)
+## Warnings from futurized code are relayed to the calling handler
+warnings <- list()
+y <- withCallingHandlers({
+  lapply(1:3, function(x) { if (x == 2) warning("boom"); x })
+}, warning = function(w) {
+  warnings <<- c(warnings, list(w))
+  invokeRestart("muffleWarning")
+}) |> futurize_and_verify()
+stopifnot(
+  identical(y, list(1L, 2L, 3L)),
+  length(warnings) == 1L,
+  conditionMessage(warnings[[1]]) == "boom"
+)
+
+## Wrapped in { withCallingHandlers(...) }
+y <- { withCallingHandlers(lapply(1, identity), warning = identity) } |> futurize_and_verify()
+stopifnot(identical(y, truth))
+
 plan(sequential)
 } ## if (requireNamespace("future.apply"))

@@ -2,6 +2,11 @@
 if (requireNamespace("purrr") && requireNamespace("furrr")) {
 library(futurize)
 library(purrr)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("purrr")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

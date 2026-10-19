@@ -10,7 +10,7 @@
   .package[["version"]] <- packageVersion(pkgname)
 
   update_package_option("futurize.debug", mode = "logical")
-  debug <- isTRUE(getOption("futurize.debug"))
+  debug <- isDebugEnabled()
 
   if (debug) {
     envs <- Sys.getenv()

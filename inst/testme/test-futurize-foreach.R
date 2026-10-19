@@ -2,6 +2,11 @@
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("foreach")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
@@ -59,6 +64,11 @@ message("times(...) %do% |> futurize()")
 y <- times(1L) %do% { 42L } |> futurize_and_verify()
 print(y)
 stopifnot(identical(y, 42L))
+
+message("times(...) %do% |> futurize(chunk_size = 2L)")
+y <- times(4L) %do% { 42L } |> futurize_and_verify(chunk_size = 2L)
+print(y)
+stopifnot(identical(y, rep(42L, times = 4L)))
 
 message("Non-supported %dopar% and %dofuture%")
 res <- tryCatch({ foreach(x = 1) %dopar% x |> futurize_and_verify() }, FuturizeTestAssertionError = stop, error = identity)

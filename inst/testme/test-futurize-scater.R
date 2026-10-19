@@ -2,6 +2,11 @@
 if (requireNamespace("scater") && requireNamespace("doFuture")) {
 library(futurize)
 library(scater)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("scater")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

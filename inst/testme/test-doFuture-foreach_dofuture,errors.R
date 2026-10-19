@@ -1,26 +1,22 @@
 #' @tags pkg-doFuture
 #' @tags %dofuture%
-#' @tags %dopar%
 #' @tags detritus-files
-#' @tags sequential multisession cluster multicore
+#' @tags sequential multisession multicore
 
 if (requireNamespace("foreach") && requireNamespace("doFuture")) {
 library(futurize)
 library(foreach)
 
-doFuture::registerDoFuture()
+strategies <- supportedStrategies(excl = "cluster")
 
-strategies <- future:::supportedStrategies()
-
-message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ...")
-
-.options.future <- list(errors = "foreach")
 for (strategy in strategies) {
   message(sprintf("- plan('%s') ...", strategy))
   plan(strategy)
 
   mu <- 1.0
   sigma <- 2.0
+
+  message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ...")
 
   message("Futureverse-style error handling ...")
   res <- tryCatch({
@@ -40,7 +36,7 @@ for (strategy in strategies) {
     message(sprintf(".errorhandling = '%s' ...", .errorhandling))
     
     truth <- tryCatch({
-      foreach(i = 1:10, .errorhandling = .errorhandling, .options.future = .options.future) %dopar% {
+      foreach(i = 1:10, .errorhandling = .errorhandling) %do% {
         if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
         list(i = i, value = dnorm(i, mean = mu, sd = sigma))
       }
@@ -48,7 +44,7 @@ for (strategy in strategies) {
     str(truth)
 
     res <- tryCatch({
-      foreach(i = 1:10, .errorhandling = .errorhandling, .options.future = .options.future) %do% {
+      foreach(i = 1:10, .errorhandling = .errorhandling) %do% {
         if (i %% 2 == 0) stop(sprintf("Index error ('stop'), because i = %d", i))
         list(i = i, value = dnorm(i, mean = mu, sd = sigma))
       } |> futurize_and_verify()
@@ -85,24 +81,12 @@ for (strategy in strategies) {
     message(sprintf(".errorhandling = '%s' ... done", .errorhandling))
   } ## for (.errorhandling ...)
 
-  # Shutdown current plan
-  plan(sequential)
-
-  message(sprintf("- plan('%s') ... DONE", strategy))
-} ## for (strategy ...)
-
-message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ... DONE")
+  message("*** doFuture() - error handling w/ .errorhandling in c('stop', 'remove', 'pass') ... DONE")
 
 
-message("*** doFuture() - error handling w/ 'pass' ...")
+  message("*** doFuture() - error handling w/ 'pass' ...")
 
-for (strategy in strategies) {
-  message(sprintf("- plan('%s') ...", strategy))
-  plan(strategy)
-
-  mu <- 1.0
-  sigma <- 2.0
-  res <- foreach(i = 1:10, .errorhandling = "pass", .options.future = .options.future) %do% {
+  res <- foreach(i = 1:10, .errorhandling = "pass") %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('pass'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
   } |> futurize_and_verify()
@@ -112,24 +96,12 @@ for (strategy in strategies) {
     length(res) == 10L
   )
 
-  # Shutdown current plan
-  plan(sequential)
-
-  message(sprintf("- plan('%s') ... DONE", strategy))
-} ## for (strategy ...)
-
-message("*** doFuture() - error handling w/ 'pass' ... DONE")
+  message("*** doFuture() - error handling w/ 'pass' ... DONE")
 
 
-message("*** doFuture() - error handling w/ 'remove' ...")
+  message("*** doFuture() - error handling w/ 'remove' ...")
 
-for (strategy in strategies) {
-  message(sprintf("- plan('%s') ...", strategy))
-  plan(strategy)
-
-  mu <- 1.0
-  sigma <- 2.0
-  res <- foreach(i = 1:10, .errorhandling = "remove", .options.future = .options.future) %do% {
+  res <- foreach(i = 1:10, .errorhandling = "remove") %do% {
     if (i %% 2 == 0) stop(sprintf("Index error ('remove'), because i = %d", i))
     list(i = i, value = dnorm(i, mean = mu, sd = sigma))
   } |> futurize_and_verify()
@@ -139,13 +111,13 @@ for (strategy in strategies) {
     length(res) == 5L
   )
 
+  message("*** doFuture() - error handling w/ 'remove' ... DONE")
+
   # Shutdown current plan
   plan(sequential)
-  
+
   message(sprintf("- plan('%s') ... DONE", strategy))
 } ## for (strategy ...)
-
-message("*** doFuture() - error handling w/ 'remove' ... DONE")
 
 message("*** doFuture() - invalid accumulator ...")
 

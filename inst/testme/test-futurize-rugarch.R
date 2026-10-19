@@ -2,6 +2,11 @@
 if (requireNamespace("rugarch") && getRversion() >= "4.4.0") {
 library(futurize)
 library(rugarch)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("rugarch")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

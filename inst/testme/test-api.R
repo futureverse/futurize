@@ -1,5 +1,4 @@
 library(futurize)
-options(futurize.debug = TRUE)
 
 # --------------------------------------------------------------------
 # futurize()
@@ -60,6 +59,59 @@ res <- tryCatch(futurize:::import_future() |> futurize::futurize(), error = iden
 print(res)
 stopifnot(inherits(res, "error"))
 
+## Cannot futurize functions that are not part of a package
+my_fcn <- function(x) x
+res <- tryCatch(my_fcn(1) |> futurize::futurize(), error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  !grepl("Please install", conditionMessage(res)),
+  grepl("not part of a package", conditionMessage(res))
+)
+
+res <- local({
+  my_local_fcn <- function(x) x
+  tryCatch(my_local_fcn(1) |> futurize::futurize(), error = identity)
+})
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  !grepl("Please install", conditionMessage(res)),
+  grepl("not part of a package", conditionMessage(res))
+)
+
+## Cannot futurize S3 methods that are not supported, which should
+## give an informative error naming the method and its package
+fit <- lm(dist ~ speed, data = cars)
+res <- tryCatch(summary(fit) |> futurize::futurize(), error = identity)
+print(res)
+stopifnot(
+  inherits(res, "error"),
+  grepl("summary.lm()", conditionMessage(res), fixed = TRUE),
+  grepl("stats", conditionMessage(res), fixed = TRUE)
+)
+
+## Cannot futurize expressions that are not function calls
+x <- 1:3
+exprs <- list(
+  quote(x),
+  quote(42),
+  quote({ x }),
+  quote({}),
+  quote(( x )),
+  quote(identity(x)),
+  quote(local(x)),
+  quote(suppressWarnings({ x }))
+)
+for (expr in exprs) {
+  res <- tryCatch(futurize::futurize(expr, substitute = FALSE), error = identity)
+  print(res)
+  stopifnot(
+    inherits(res, "error"),
+    grepl("not a function call", conditionMessage(res), fixed = TRUE)
+  )
+}
+
 
 # --------------------------------------------------------------------
 # futurize_options()
@@ -88,12 +140,14 @@ print(pkgs)
 
 ## Assert that there are not clashes between supported packages
 pkgs <- futurize_supported_packages()
-for (pkg in rep(pkgs, times = 2L)) {
+stopifnot(all(c("base", "stats") %in% pkgs))
+
+for (pkg in rep(c("base", "stats"), times = 2L)) {
   cat(sprintf("Package %s:\n", pkg))
-  ## futurize_supported_functions() fail if required packages
-  ## are not supported
   fcns <- tryCatch({
     futurize::futurize_supported_functions(pkg)
   }, error = identity)
   print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
 }
+

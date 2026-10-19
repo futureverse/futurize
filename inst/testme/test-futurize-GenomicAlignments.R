@@ -2,6 +2,11 @@
 if (requireNamespace("GenomicAlignments") && requireNamespace("Rsamtools") && requireNamespace("doFuture")) {
 library(futurize)
 library(GenomicAlignments)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("GenomicAlignments")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 library(Rsamtools)
 options(future.rng.onMisuse = "error")
 

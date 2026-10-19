@@ -2,6 +2,11 @@
 if (requireNamespace("riskRegression") && requireNamespace("survival") && requireNamespace("doFuture")) {
 library(futurize)
 library(riskRegression)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("riskRegression")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 library(survival)
 options(future.rng.onMisuse = "error")
 
@@ -27,6 +32,21 @@ sc <- Score(list("CSC" = fit), data = d,
             times = 5, B = 10, split.method = "bootcv",
             seed = 42) |> futurize_and_verify()
 print(sc)
+
+## The S3 dispatch argument must be evaluated only once, also when
+## list(...) comprises function calls
+n_fits <- 0L
+fit_model <- function() {
+  n_fits <<- n_fits + 1L
+  fit
+}
+set.seed(42)
+sc2 <- Score(list("CSC" = fit_model()), data = d,
+             formula = Hist(time, event) ~ 1,
+             times = 5, B = 10, split.method = "bootcv",
+             seed = 42) |> futurize_and_verify()
+print(sc2)
+stopifnot(n_fits == 1L)
 
 plan(sequential)
 } ## if (requireNamespace("riskRegression"))

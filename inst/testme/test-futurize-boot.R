@@ -2,6 +2,11 @@
 if (requireNamespace("boot") && getRversion() >= "4.4.0") {
 library(futurize)
 library(boot)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("boot")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 all_equal <- function(a, b, ...) {

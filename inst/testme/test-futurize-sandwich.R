@@ -2,6 +2,11 @@
 if (requireNamespace("sandwich") && requireNamespace("future.apply")) {
 library(futurize)
 library(sandwich)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("sandwich")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession, workers = 2L)

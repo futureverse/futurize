@@ -2,6 +2,11 @@
 if (requireNamespace("modelsummary") && requireNamespace("future.apply")) {
   library(futurize)
   library(modelsummary)
+  fcns <- tryCatch({
+    futurize::futurize_supported_functions("modelsummary")
+  }, error = identity)
+  print(fcns)
+  stopifnot(is.character(fcns), length(fcns) > 0L)
   options(future.rng.onMisuse = "error")
 
   plan(multisession, workers = 2L)

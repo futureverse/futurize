@@ -2,10 +2,16 @@
 if (requireNamespace("mgcv") && getRversion() >= "4.4.0") {
 library(futurize)
 library(mgcv)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("mgcv")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)
 
+set.seed(42)
 dat <- gamSim(1, n = 500L, dist = "normal", scale = 20)
 bs <- "cr"
 k <- 12
@@ -34,6 +40,19 @@ stopifnot(all.equal(as.numeric(p), as.numeric(p_truth)))
 
 p2 <- stats::predict(b_truth, newdata = newdat) |> futurize_and_verify()
 stopifnot(all.equal(as.numeric(p2), as.numeric(p_truth)))
+
+## The S3 dispatch argument must be evaluated only once, also when it
+## is not a variable
+n_fits <- 0L
+fit_model <- function() {
+  n_fits <<- n_fits + 1L
+  b_truth
+}
+p3 <- predict(fit_model(), newdata = newdat) |> futurize_and_verify()
+stopifnot(
+  n_fits == 1L,
+  all.equal(as.numeric(p3), as.numeric(p_truth))
+)
 
 plan(sequential)
 } ## if (requireNamespace("mgcv"))

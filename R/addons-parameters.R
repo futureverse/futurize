@@ -17,19 +17,9 @@ append_transpilers_for_parameters <- function() {
     stop(sprintf("You are running R %s, but futurization of 'parameters' functions requires R (>= 4.4.0)", getRversion()))
   }
 
-  template_ignore_clusterEvalQ <- bquote_compile(
-    local({
-      cl <- do.call(.(CALL), args = .(OPTS))
-      oopts <- options(future.ClusterFuture.clusterEvalQ = "ignore")
-      on.exit(options(oopts))
-      .(EXPR)
-    })
-  )
-
   transpilers <- make_package_transpilers("parameters", FUN = function(fcn, name) {
     if (name %in% c("bootstrap_model", "bootstrap_parameters")) {
       transpiler <- make_futurize_for_makeClusterFuture(
-        template = template_ignore_clusterEvalQ,
         args = list(
           parallel = "snow",
           n_cpus = 2L,   ## only used for test ncpus > 1

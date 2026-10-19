@@ -38,9 +38,8 @@ make_addon_transpilers <- function(from_package, to_package, make_options) {
     transpiler <- eval(bquote(function(expr, options = NULL) {
       call <- make_call(.(name))
       fcn <- eval(call)
+      expr <- append_call_arguments(expr, .args = .(make_options)(options, fcn, defaults = .(defaults)))
       expr[[1]] <- call
-      parts <- c(as.list(expr), .(make_options)(options, fcn, defaults = .(defaults)))
-      expr <- as.call(parts)
       expr
     }))
     body(transpiler) <- body(transpiler)

@@ -2,6 +2,11 @@
 if (requireNamespace("DiceKriging") && requireNamespace("doFuture")) {
 library(futurize)
 library(DiceKriging)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("DiceKriging")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "ignore")
 
 plan(multisession)

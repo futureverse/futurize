@@ -3,6 +3,11 @@
 if (requireNamespace("fgsea") && requireNamespace("doFuture")) {
 library(futurize)
 library(fgsea)
+fcns <- tryCatch({
+  futurize::futurize_supported_functions("fgsea")
+}, error = identity)
+print(fcns)
+stopifnot(is.character(fcns), length(fcns) > 0L)
 options(future.rng.onMisuse = "error")
 
 plan(multisession)

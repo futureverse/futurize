@@ -48,7 +48,8 @@ whether futurization was previously enabled or disabled.
 The transpilation mechanism includes logic to "unwrap" expressions
 enclosed in constructs such as \code{!}, \code{{ }}, \verb{( )}, \code{local()}, \code{I()},
 \code{identity()}, \code{invisible()}, \code{suppressMessages()}, \code{suppressWarnings()},
-and \code{with()}. The transpiler descends through wrapping
+\code{suppressPackageStartupMessages()}, \code{withCallingHandlers()}, and
+\code{with()}. The transpiler descends through wrapping
 constructs until it finds a transpilable expression, avoiding the
 need to place \code{futurize()} inside such constructs. This allows for
 patterns like:
@@ -63,6 +64,37 @@ avoiding having to write:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- \{
   lapply(xs, fcn) |> futurize()
 \} |> suppressMessages()
+}\if{html}{\out{</div>}}
+}
+
+\section{Generic functions}{
+
+Some functions can be futurized only via their S3 or S4 methods, e.g.
+\code{influence()} of the \pkg{stats} package dispatches to the
+\code{influence.merMod()} method of the \pkg{lme4} package. To identify
+which method is called, \code{futurize()} has to evaluate the first argument
+of the generic function. If the first argument is a variable, a
+formula, or a \code{list()} or \code{c()} of variables, it is evaluated
+directly. Otherwise, \code{futurize()} makes sure it is evaluated only once,
+by first assigning it to a temporary variable. For example,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{inf <- influence(lmer(...)) |> futurize()
+}\if{html}{\out{</div>}}
+
+is evaluated as:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{inf <- local(\{
+  ...futurize.x <- lmer(...)
+  influence(...futurize.x) |> futurize()
+\})
+}\if{html}{\out{</div>}}
+
+Because of this, methods that use \code{substitute()} or \code{match.call()} on
+the first argument, e.g. for labeling, see \code{...futurize.x}. To avoid
+this, assign the first argument to a variable yourself, e.g.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fit <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+inf <- influence(fit) |> futurize()
 }\if{html}{\out{</div>}}
 }
 
