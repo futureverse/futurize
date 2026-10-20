@@ -1,6 +1,15 @@
 # Changelog
 
+## Version (development version)
+
+### Miscellaneous
+
+- Now using `genericFunction` for S4 classes rather than
+  `standardGeneric`, which will be removed in R (\>= 4.7.0).
+
 ## Version 1.1.0
+
+CRAN release: 2026-10-19
 
 ### Significant Changes
 
