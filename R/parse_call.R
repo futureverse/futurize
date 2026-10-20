@@ -83,7 +83,7 @@ parse_call <- function(call, envir = parent.frame(), what = "transpiler", debug 
 
     if (is.null(env) && is.primitive(fcn)) {
       env <- baseenv()
-    } else if (inherits(fcn, "standardGeneric")) {
+    } else if (inherits(fcn, "genericFunction")) {
       env <- parent.env(env)
     }
     tenv <- env
