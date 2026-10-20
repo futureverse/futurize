@@ -54,7 +54,7 @@ stopifnot(all.equal(results(result2), results(result_truth)))
 ## With DESeq2 attached, so is BiocGenerics, which masks base::lapply()
 ## with an S4 generic. The S4 dispatch argument must be evaluated only
 ## once, also when it is not a variable
-stopifnot(methods::is(lapply, "standardGeneric"))
+stopifnot(methods::is(lapply, "genericFunction"))
 n_calls <- 0L
 make_xs <- function() {
   n_calls <<- n_calls + 1L
