@@ -204,18 +204,6 @@ sequential code into parallel code by piping the sequential code to the
 <span><span class="va">es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="deprecation-warning">Deprecation Warning<a class="anchor" aria-label="anchor" href="#deprecation-warning"></a>
-</h2>
-<p>As of <strong>GSVA</strong> (&gt;= 2.7.0), futurization is no longer
-supported. An informative error message will produced, if attempted.</p>
-<p>The reason for this is that <strong>GSVA</strong> has moved to using
-<code><a href="https://rdrr.io/pkg/BiocParallel/man/bpiterate.html" class="external-link">BiocParallel::bpiterate()</a></code> internally. That call is not
-supported by the <code><a href="https://rdrr.io/pkg/BiocParallel/man/DoparParam-class.html" class="external-link">BiocParallel::DoparParam()</a></code> backend, which
-is the only one that currently bridges Futureverse and BiocParallel. See
-<a href="https://github.com/futureverse/futurize/issues/14" class="external-link uri">https://github.com/futureverse/futurize/issues/14</a> for
-details and status updates.</p>
-</div>
-<div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette demonstrates how to use this approach to parallelize
@@ -291,7 +279,7 @@ objects. All of them can be parallelized with
 <div class="section level3">
 <h3 id="rank-based-functions">Rank-based functions<a class="anchor" aria-label="anchor" href="#rank-based-functions"></a>
 </h3>
-<p>As of <strong>GSVA</strong> (&gt;= 2.7.5), the two-step
+<p>As of <strong>GSVA</strong> (&gt;= 2.7.25), the two-step
 <code><a href="https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html" class="external-link">gsvaRanks()</a></code> + <code><a href="https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html" class="external-link">gsvaScores()</a></code> pipeline is
 deprecated in favor of a three-step <code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaRowNorm()</a></code> +
 <code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaColRanks()</a></code> + <code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaColScores()</a></code> pipeline.
@@ -311,10 +299,10 @@ Each of these steps can be parallelized with
 <ul>
 <li><code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">gsva()</a></code></li>
 <li><code><a href="https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html" class="external-link">gsvaRanks()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html" class="external-link">gsvaScores()</a></code></li>
 <li>
-<code><a href="https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html" class="external-link">gsvaScores()</a></code>
-<!-- * `gsvaRowNorm()`, `gsvaColRanks()`, and `gsvaColScores()` (**GSVA** >= 2.7.5) -->
-</li>
+<code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaRowNorm()</a></code>, <code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaColRanks()</a></code>, and
+<code><a href="https://rdrr.io/pkg/GSVA/man/gsvaRanks.html" class="external-link">gsvaColScores()</a></code> (<strong>GSVA</strong> &gt;= 2.7.25)</li>
 <li><code><a href="https://rdrr.io/pkg/GSVA/man/spatCor.html" class="external-link">spatCor()</a></code></li>
 </ul>
 </div>

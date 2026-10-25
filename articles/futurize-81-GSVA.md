@@ -19,19 +19,6 @@ function. Easy!
 `param`` ``<-`` `[`gsvaParam`](https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html)`(``expr``, ``geneSets``)`\
 `es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
-## Deprecation Warning
-
-As of **GSVA** (\>= 2.7.0), futurization is no longer supported. An
-informative error message will produced, if attempted.
-
-The reason for this is that **GSVA** has moved to using
-[`BiocParallel::bpiterate()`](https://rdrr.io/pkg/BiocParallel/man/bpiterate.html)
-internally. That call is not supported by the
-[`BiocParallel::DoparParam()`](https://rdrr.io/pkg/BiocParallel/man/DoparParam-class.html)
-backend, which is the only one that currently bridges Futureverse and
-BiocParallel. See <https://github.com/futureverse/futurize/issues/14>
-for details and status updates.
-
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize the
@@ -118,7 +105,7 @@ objects. All of them can be parallelized with
 
 ### Rank-based functions
 
-As of **GSVA** (\>= 2.7.5), the two-step
+As of **GSVA** (\>= 2.7.25), the two-step
 [`gsvaRanks()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html) +
 [`gsvaScores()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html)
 pipeline is deprecated in favor of a three-step
@@ -141,4 +128,8 @@ The following **GSVA** functions are supported by
 - [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html)
 - [`gsvaRanks()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html)
 - [`gsvaScores()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html)
+- [`gsvaRowNorm()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html),
+  [`gsvaColRanks()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html), and
+  [`gsvaColScores()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
+  (**GSVA** \>= 2.7.25)
 - [`spatCor()`](https://rdrr.io/pkg/GSVA/man/spatCor.html)

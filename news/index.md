@@ -2,6 +2,18 @@
 
 ## Version (development version)
 
+### New Transpilers
+
+- Add support for new **GSVA** (\>= 2.7.25) functions
+  [`gsvaRowNorm()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html),
+  [`gsvaColRanks()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html), and
+  [`gsvaColScores()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html).
+
+### Bug Fixes
+
+- Futurization of **GSVA** functions works again, but it requires
+  **GSVA** (\< 2.7.0) or **GSVA** (\>= 2.7.25).
+
 ### Miscellaneous
 
 - Now using `genericFunction` for S4 classes rather than
