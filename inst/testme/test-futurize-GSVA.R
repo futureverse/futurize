@@ -27,10 +27,12 @@ geneSets <- list(
   geneSet3 = paste0("gene", sample(n_genes, 20L))
 )
 
-## GSVA (>= 2.7.0) uses BiocParallel::bpiterate(), which is not supported
-## by DoparParam - the only bridge between futures and BiocParallel
+## GSVA (>= 2.7.0 & < 2.7.25) is not supported. As of GSVA (>= 2.7.25),
+## support is back, with an additional check for early 2.7.25 builds.
 ## https://github.com/futureverse/futurize/issues/14
-gsva_doparparam_broken <- (utils::packageVersion("GSVA") >= "2.7.0")
+gsva_doparparam_broken <- (utils::packageVersion("GSVA") >= "2.7.0") &&
+  (utils::packageVersion("GSVA") < "2.7.25" ||
+   exists(".gsva_bpiterate", envir = asNamespace("GSVA"), inherits = FALSE))
 
 if (gsva_doparparam_broken) {
   param <- gsvaParam(expr, geneSets)
@@ -116,7 +118,7 @@ if (!gsva_doparparam_broken && "gsva" %in% futurize_supported_functions("GSVA"))
 } ## if ("gsva" %in% futurize_supported_functions("GSVA"))
 
 ## gsvaRowNorm(), gsvaColRanks(), and gsvaColScores() replace
-## deprecated gsvaRanks() and gsvaScores() as of GSVA (>= 2.7.5)
+## deprecated gsvaRanks() and gsvaScores() as of GSVA (>= 2.7.25)
 ## https://github.com/futureverse/futurize/issues/14
 if (!gsva_doparparam_broken && "gsvaColRanks" %in% futurize_supported_functions("GSVA")) {
   ## ---------------------------------------------------------

@@ -1,5 +1,15 @@
 # Version (development version)
 
+## New Transpilers
+
+ * Add support for new **GSVA** (>= 2.7.25) functions `gsvaRowNorm()`,
+   `gsvaColRanks()`, and `gsvaColScores()`.
+
+## Bug Fixes
+
+ * Futurization of **GSVA** functions works again, but it requires
+   **GSVA** (< 2.7.0) or **GSVA** (>= 2.7.25).
+
 ## Miscellaneous
 
  * Now using `genericFunction` for S4 classes rather than

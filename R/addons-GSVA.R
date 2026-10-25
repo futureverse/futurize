@@ -15,18 +15,18 @@ append_transpilers_for_GSVA <- function() {
                    (ns_version >= "2.4.2" && ns_version < "2.5.0")
 
   ## gsvaRowNorm(), gsvaColRanks(), and gsvaColScores() replace the
-  ## deprecated gsvaRanks() and gsvaScores() as of GSVA (>= 2.7.5)
+  ## deprecated gsvaRanks() and gsvaScores() as of GSVA (>= 2.7.25)
   ## https://github.com/futureverse/futurize/issues/14
-  supports_colranks <- (ns_version >= "2.7.5")
+  supports_colranks <- (ns_version >= "2.7.25")
 
-  ## GSVA (>= 2.7.0) uses BiocParallel::bpiterate(), which DoparParam
-  ## does not support. Until there is a dedicated FutureParam backend,
-  ## DoparParam is the only option to use futures with BiocParallel. 
+  ## GSVA (>= 2.7.0 & < 2.7.25) is not supported. As of GSVA (>= 2.7.25),
+  ## support is back, with an additional check for early 2.7.25 builds.
   ## https://github.com/futureverse/futurize/issues/14
   ##
   ## Note, we keep the transpiler templates as-is, in case things
-  ## changes in GSVA or BiocParallel
-  gsva_doparparam_broken <- (ns_version >= "2.7.0")
+  ## change in GSVA or BiocParallel
+  gsva_doparparam_broken <- (ns_version >= "2.7.0") &&
+    (ns_version < "2.7.25" || exists(".gsva_bpiterate", envir = ns, inherits = FALSE))
 
   ## These GSVA functions accept BPPARAM via '...' (S4 generics)
   names <- c(
@@ -50,7 +50,7 @@ append_transpilers_for_GSVA <- function() {
           name <- name
           function(expr, options = NULL) {
             stop(sprintf(
-              "futurize() does not support GSVA::%s() for GSVA (>= 2.7.0), because GSVA's internal row-filtering relies on BiocParallel::bpiterate(), which does not support BiocParallel::DoparParam() (the installed GSVA is %s). See https://github.com/futureverse/futurize/issues/14 for details and status.",
+              "futurize() does not support GSVA::%s() with GSVA %s. Support requires GSVA (< 2.7.0) or GSVA (>= 2.7.25). See https://github.com/futureverse/futurize/issues/14 for details.",
               name, as.character(ns_version)
             ))
           }

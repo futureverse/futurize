@@ -35,18 +35,6 @@ es <- gsva(param) |> futurize()
 ```
 
 
-# Deprecation Warning
-
-As of **GSVA** (>= 2.7.0), futurization is no longer supported. An
-informative error message will produced, if attempted.
-
-The reason for this is that **GSVA** has moved to using
-`BiocParallel::bpiterate()` internally. That call is not supported by
-the `BiocParallel::DoparParam()` backend, which is the only one that
-currently bridges Futureverse and BiocParallel. See
-<https://github.com/futureverse/futurize/issues/14> for details and
-status updates.
-
 # Introduction
 
 This vignette demonstrates how to use this approach to parallelize
@@ -137,7 +125,7 @@ es <- gsva(zscoreParam(expr, geneSets)) |> futurize()
 
 ## Rank-based functions
 
-As of **GSVA** (>= 2.7.5), the two-step `gsvaRanks()` + `gsvaScores()`
+As of **GSVA** (>= 2.7.25), the two-step `gsvaRanks()` + `gsvaScores()`
 pipeline is deprecated in favor of a three-step `gsvaRowNorm()` +
 `gsvaColRanks()` + `gsvaColScores()` pipeline. Each of these steps can
 be parallelized with `futurize()`:
@@ -156,7 +144,7 @@ The following **GSVA** functions are supported by `futurize()`:
 * `gsva()`
 * `gsvaRanks()`
 * `gsvaScores()`
-<!-- * `gsvaRowNorm()`, `gsvaColRanks()`, and `gsvaColScores()` (**GSVA** >= 2.7.5) -->
+* `gsvaRowNorm()`, `gsvaColRanks()`, and `gsvaColScores()` (**GSVA** >= 2.7.25)
 * `spatCor()`
 
 
