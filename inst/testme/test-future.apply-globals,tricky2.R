@@ -6,8 +6,6 @@
 
 if (requireNamespace("future.apply", quietly = TRUE)) {
 
-if (isTRUE(getOption("future.globals.keepWhere"))) {
-
   library(futurize)
 
 
@@ -48,7 +46,5 @@ if (isTRUE(getOption("future.globals.keepWhere"))) {
     
     message(sprintf("- plan('%s') ... done", strategy))
   }
-
-} ## if (isTRUE(getOption("future.globals.keepWhere")))
 
 } ## if (requireNamespace("future.apply", quietly = TRUE))
