@@ -42,7 +42,7 @@ Example adopted from
 `)`\
 \
 `## calculate tours - each tour in parallel`\
-`tours`` ``<-`` `[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``methods``, FUN ``=`` ``function``(``m``)`` ``{`\
+`tours`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``methods``, FUN ``=`` ``function``(``m``)`` ``{`\
 `  `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, rep ``=`` ``10L``, method ``=`` ``m``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 `}``)`\
 [`names`](https://rspatial.github.io/terra/reference/names.html)`(``tours``)`` ``<-`` ``methods`

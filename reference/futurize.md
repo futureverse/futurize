@@ -143,6 +143,32 @@ only the end-user that may control whether futurization should be
 disabled and enabled. A package must *never* disable or enable
 futurization.
 
+## Future labels
+
+Futures created by `futurize()` are labeled automatically, so that each
+future identifies the package and function that created it, e.g. in
+error messages, event logs, and tools that inspect futures. The default
+labels follow the convention:
+
+- `fz:<package>::<function>-%d` if the call is evaluated by several
+  futures, e.g. one per chunk, where `%d` is replaced by the index of
+  the future
+
+- `fz:<package>::<function>` if the call is evaluated by a single future
+
+For example, `lapply(xs, fcn) |> futurize()` labels its futures
+`fz:base::lapply-1`, `fz:base::lapply-2`, and so on, and
+[`boot::boot()`](https://rdrr.io/pkg/boot/man/boot.html) is labeled
+`fz:boot::boot`. The `fz:` prefix identifies futures that were created
+by `futurize()`.
+
+To use a different label, specify argument `label`, which takes
+precedence over the default label. For example,
+
+    y <- lapply(xs, fcn) |> futurize(label = "my-analysis-%d")
+
+labels the futures `my-analysis-1`, `my-analysis-2`, and so on.
+
 ## See also
 
 To see which CRAN and Bioconductor packages are supported, use

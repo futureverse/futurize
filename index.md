@@ -99,7 +99,7 @@ Here are some examples:
 `ys`` ``<-`` ``pbapply``::`[`pblapply`](https://peter.solymos.org/pbapply/reference/pbapply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `xs`` ``<-`` ``1``:``10`\
-`ys`` ``<-`` ``BiocParallel``::`[`bplapply`](https://rdrr.io/pkg/BiocParallel/man/bplapply.html)`(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`ys`` ``<-`` ``BiocParallel``::``bplapply``(``xs``, ``sqrt``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 and
 
@@ -253,20 +253,20 @@ for parallel transpilation.*
 Here are some examples:
 
 \
-`dds`` ``<-`` ``DESeq2``::`[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`dds`` ``<-`` ``DESeq2``::``DESeq``(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`res`` ``<-`` ``fgsea``::`[`fgsea`](https://rdrr.io/pkg/fgsea/man/fgsea.html)`(``pathways``, ``stats``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`res`` ``<-`` ``fgsea``::``fgsea``(``pathways``, ``stats``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`se`` ``<-`` ``GenomicAlignments``::`[`summarizeOverlaps`](https://rdrr.io/pkg/GenomicAlignments/man/summarizeOverlaps-methods.html)`(``features``, ``bam_files``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`se`` ``<-`` ``GenomicAlignments``::``summarizeOverlaps``(``features``, ``bam_files``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`es`` ``<-`` ``GSVA``::`[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(``GSVA``::`[`gsvaParam`](https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html)`(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`es`` ``<-`` ``GSVA``::``gsva``(``GSVA``::``gsvaParam``(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`counts`` ``<-`` ``Rsamtools``::`[`countBam`](https://rdrr.io/pkg/Rsamtools/man/scanBam.html)`(``bamViews``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`counts`` ``<-`` ``Rsamtools``::``countBam``(``bamViews``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`sce`` ``<-`` ``scater``::`[`runPCA`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`sce`` ``<-`` ``scater``::``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`qc`` ``<-`` ``scuttle``::`[`perFeatureQCMetrics`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`qc`` ``<-`` ``scuttle``::``perFeatureQCMetrics``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
-`result`` ``<-`` ``SingleCellExperiment``::`[`applySCE`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)`(``sce``, ``scuttle``::`[`perFeatureQCMetrics`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`result`` ``<-`` ``SingleCellExperiment``::``applySCE``(``sce``, ``scuttle``::``perFeatureQCMetrics``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 `  `\
-`adjusted`` ``<-`` ``sva``::`[`ComBat`](https://rdrr.io/pkg/sva/man/ComBat.html)`(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`adjusted`` ``<-`` ``sva``::``ComBat``(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`

@@ -14,10 +14,10 @@ function. Easy!
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`GSVA`](https://github.com/rcastelo/GSVA)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``GSVA``)`\
 \
-`param`` ``<-`` `[`gsvaParam`](https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html)`(``expr``, ``geneSets``)`\
-`es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`param`` ``<-`` ``gsvaParam``(``expr``, ``geneSets``)`\
+`es`` ``<-`` ``gsva``(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -28,26 +28,24 @@ The **[GSVA](https://bioconductor.org/packages/GSVA/)** Bioconductor
 package implements gene set variation analysis, a non-parametric,
 unsupervised method for estimating variation of gene set enrichment
 through the samples of an expression data set. The main function
-[`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) computes enrichment
-scores for each gene set and sample, which can be parallelized across
-gene sets.
+`gsva()` computes enrichment scores for each gene set and sample, which
+can be parallelized across gene sets.
 
 ### Example: Running gsva() in parallel
 
-The [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) function computes
-gene set enrichment scores using different methods depending on the
-parameter object passed to it:
+The `gsva()` function computes gene set enrichment scores using
+different methods depending on the parameter object passed to it:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`GSVA`](https://github.com/rcastelo/GSVA)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(``GSVA``)`\
 \
 `# Create example data`\
 [`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
 `n_genes`` ``<-`` ``200L`\
 `n_samples`` ``<-`` ``120L`\
 `expr`` ``<-`` `[`matrix`](https://rdrr.io/r/base/matrix.html)`(`[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n_genes`` ``*`` ``n_samples``)``, nrow ``=`` ``n_genes``, ncol ``=`` ``n_samples``)`\
-[`rownames`](https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html)`(``expr``)`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"gene"``, `[`seq_len`](https://rdrr.io/r/base/seq.html)`(``n_genes``)``)`\
-[`colnames`](https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html)`(``expr``)`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"sample"``, `[`seq_len`](https://rdrr.io/r/base/seq.html)`(``n_samples``)``)`\
+[`rownames`](https://rdrr.io/r/base/colnames.html)`(``expr``)`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"gene"``, `[`seq_len`](https://rdrr.io/r/base/seq.html)`(``n_genes``)``)`\
+[`colnames`](https://rdrr.io/r/base/colnames.html)`(``expr``)`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"sample"``, `[`seq_len`](https://rdrr.io/r/base/seq.html)`(``n_samples``)``)`\
 \
 `geneSets`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
 `  geneSet1 ``=`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"gene"``, `[`sample`](https://rdrr.io/r/base/sample.html)`(``n_genes``, ``30L``)``)``,`\
@@ -55,17 +53,17 @@ parameter object passed to it:
 `  geneSet3 ``=`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"gene"``, `[`sample`](https://rdrr.io/r/base/sample.html)`(``n_genes``, ``40L``)``)`\
 `)`\
 \
-`param`` ``<-`` `[`gsvaParam`](https://rdrr.io/pkg/GSVA/man/gsvaParam-class.html)`(``expr``, ``geneSets``)`\
-`es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(``param``)`
+`param`` ``<-`` ``gsvaParam``(``expr``, ``geneSets``)`\
+`es`` ``<-`` ``gsva``(``param``)`
 
-Here [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html) runs
-sequentially, but we can easily make it run in parallel by piping to
+Here `gsva()` runs sequentially, but we can easily make it run in
+parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 \
-`es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`es`` ``<-`` ``gsva``(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.
@@ -95,41 +93,35 @@ objects. All of them can be parallelized with
 
 \
 `## ssGSEA method`\
-`es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(`[`ssgseaParam`](https://rdrr.io/pkg/GSVA/man/ssgseaParam-class.html)`(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`es`` ``<-`` ``gsva``(``ssgseaParam``(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `## PLAGE method`\
-`es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(`[`plageParam`](https://rdrr.io/pkg/GSVA/man/plageParam-class.html)`(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`es`` ``<-`` ``gsva``(``plageParam``(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `## Combined z-score method`\
-`es`` ``<-`` `[`gsva`](https://rdrr.io/pkg/GSVA/man/gsva.html)`(`[`zscoreParam`](https://rdrr.io/pkg/GSVA/man/zscoreParam-class.html)`(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`es`` ``<-`` ``gsva``(``zscoreParam``(``expr``, ``geneSets``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ### Rank-based functions
 
-As of **GSVA** (\>= 2.7.25), the two-step
-[`gsvaRanks()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html) +
-[`gsvaScores()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html)
-pipeline is deprecated in favor of a three-step
-[`gsvaRowNorm()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html) +
-[`gsvaColRanks()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html) +
-[`gsvaColScores()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
-pipeline. Each of these steps can be parallelized with
+As of **GSVA** (\>= 2.7.25), the two-step `gsvaRanks()` + `gsvaScores()`
+pipeline is deprecated in favor of a three-step `gsvaRowNorm()` +
+`gsvaColRanks()` + `gsvaColScores()` pipeline. Each of these steps can
+be parallelized with
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 \
-`gsvarnorm`` ``<-`` `[`gsvaRowNorm`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)`(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
-`gsvaranks`` ``<-`` `[`gsvaColRanks`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)`(``gsvarnorm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
-`es`` ``<-`` `[`gsvaColScores`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)`(``gsvaranks``, `[`geneSets`](https://rdrr.io/pkg/GSVA/man/geneSets.html)`(``param``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`gsvarnorm`` ``<-`` ``gsvaRowNorm``(``param``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`gsvaranks`` ``<-`` ``gsvaColRanks``(``gsvarnorm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`es`` ``<-`` ``gsvaColScores``(``gsvaranks``, ``geneSets``(``param``)``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions
 
 The following **GSVA** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`gsva()`](https://rdrr.io/pkg/GSVA/man/gsva.html)
-- [`gsvaRanks()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html)
-- [`gsvaScores()`](https://rdrr.io/pkg/GSVA/man/GSVA-pkg-deprecated.html)
-- [`gsvaRowNorm()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html),
-  [`gsvaColRanks()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html), and
-  [`gsvaColScores()`](https://rdrr.io/pkg/GSVA/man/gsvaRanks.html)
-  (**GSVA** \>= 2.7.25)
-- [`spatCor()`](https://rdrr.io/pkg/GSVA/man/spatCor.html)
+- `gsva()`
+- `gsvaRanks()`
+- `gsvaScores()`
+- `gsvaRowNorm()`, `gsvaColRanks()`, and `gsvaColScores()` (**GSVA** \>=
+  2.7.25)
+- `spatCor()`
