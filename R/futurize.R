@@ -119,6 +119,33 @@
 #' disable or enable futurization.
 #'
 #'
+#' @section Future labels:
+#' Futures created by `futurize()` are labeled automatically, so that
+#' each future identifies the package and function that created it, e.g.
+#' in error messages, event logs, and tools that inspect futures. The
+#' default labels follow the convention:
+#'
+#'  * `fz:<package>::<function>-%d` if the call is evaluated by several
+#'    futures, e.g. one per chunk, where `%d` is replaced by the index of
+#'    the future
+#'  * `fz:<package>::<function>` if the call is evaluated by a single
+#'    future
+#'
+#' For example, `lapply(xs, fcn) |> futurize()` labels its futures
+#' `fz:base::lapply-1`, `fz:base::lapply-2`, and so on, and
+#' `boot::boot()` is labeled `fz:boot::boot`. The `fz:` prefix
+#' identifies futures that were created by `futurize()`.
+#'
+#' To use a different label, specify argument `label`, which takes
+#' precedence over the default label. For example,
+#'
+#' ```r
+#' y <- lapply(xs, fcn) |> futurize(label = "my-analysis-%d")
+#' ```
+#'
+#' labels the futures `my-analysis-1`, `my-analysis-2`, and so on.
+#'
+#'
 #' @example incl/futurize.R
 #'
 #' @seealso
