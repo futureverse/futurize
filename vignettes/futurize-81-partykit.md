@@ -29,7 +29,9 @@ library(futurize)
 plan(multisession)
 library(partykit)
 
-cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
+airq <- na.omit(airquality)
+cf <- cforest(Ozone ~ ., data = airq)
+vi <- varimp(cf, conditional = TRUE) |> futurize()
 ```
 
 
@@ -39,31 +41,44 @@ The **[partykit]** package provides a toolkit for recursive
 partitioning.
 
 
-## Example: Conditional random forests inference
+## Example: Conditional variable importance
 
-Example adopted from `help("cforest", package = "partykit")`:
+Conditional variable importance is one of the most computationally
+expensive steps when working with conditional random forests. It is
+estimated one tree at a time, which makes it well suited for parallel
+processing. Example adopted from `help("varimp", package = "partykit")`:
 
 ```r
 library(futurize)
 plan(multisession)
 library(partykit)
 
-## basic example: conditional inference forest for cars data
-cf <- cforest(dist ~ speed, data = cars) |> futurize()
+## conditional inference forest for the complete cases of 'airquality'
+airq <- na.omit(airquality)
+set.seed(42)
+cf <- cforest(Ozone ~ ., data = airq, ntree = 500L)
 
-## prediction of fitted mean and visualization
-nd <- data.frame(speed = 4:25)
-nd$mean  <- predict(cf, newdata = nd, type = "response")
-plot(dist ~ speed, data = cars)
-lines(mean ~ speed, data = nd)
+## conditional variable importance, estimated in parallel
+vi <- varimp(cf, conditional = TRUE, nperm = 10L) |> futurize()
+print(vi)
 ```
 
-This will parallelize the computations of the variable selection
-criterion, given that we have set up parallel workers, e.g.
+This will parallelize the estimation of the variable importance
+across the trees of the forest, given that we have set up parallel
+workers, e.g.
 
 ```r
 plan(multisession)
 ```
+
+With 500 trees and 10 permutations per tree, this takes roughly 13
+seconds sequentially and about half of that on four parallel workers
+(single runs on a laptop; the speedup grows with the number of trees
+and permutations).
+
+The same pattern applies to growing the forest itself, i.e.
+`cforest(...) |> futurize()`, but the variable-importance step
+typically dominates the run time.
 
 The built-in `multisession` backend parallelizes on your local
 computer and works on all operating systems. There are [other
@@ -94,20 +109,23 @@ The following **partykit** functions are supported by `futurize()`:
 
 # Without futurize: Manual PSOCK cluster setup
 
-For comparison, here is what it takes to parallelize `cforest()`
+For comparison, here is what it takes to parallelize `varimp()`
 using the **parallel** package directly, without **futurize**:
 
 ```r
 library(partykit)
 library(parallel)
 
+airq <- na.omit(airquality)
+cf <- cforest(Ozone ~ ., data = airq, ntree = 500L)
+
 ## Set up a PSOCK cluster
 ncpus <- 4L
 cl <- makeCluster(ncpus)
 
-## Fit a conditional inference forest in parallel
-cf <- cforest(dist ~ speed, data = cars,
-              applyfun = function(X, FUN, ...) parLapply(cl, X, FUN, ...))
+## Estimate the conditional variable importance in parallel
+vi <- varimp(cf, conditional = TRUE, nperm = 10L,
+             applyfun = function(X, FUN, ...) parLapply(cl, X, FUN, ...))
 
 ## Tear down the cluster
 stopCluster(cl)
