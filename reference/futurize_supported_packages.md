@@ -35,14 +35,15 @@ pkgs
 #> [16] "ez"                   "fgsea"                "foreach"             
 #> [19] "fwb"                  "gamlss"               "glmmTMB"             
 #> [22] "glmnet"               "kernelshap"           "lme4"                
-#> [25] "metafor"              "mgcv"                 "modelsummary"        
-#> [28] "parameters"           "partykit"             "pbapply"             
-#> [31] "pls"                  "plyr"                 "purrr"               
-#> [34] "pvclust"              "riskRegression"       "rugarch"             
-#> [37] "sandwich"             "scater"               "scuttle"             
-#> [40] "seriation"            "shapr"                "stars"               
-#> [43] "stats"                "strucchange"          "sva"                 
-#> [46] "terra"                "tm"                   "vegan"               
+#> [25] "metafor"              "mgcv"                 "mlr3"                
+#> [28] "modelsummary"         "parameters"           "partykit"            
+#> [31] "pbapply"              "pls"                  "plyr"                
+#> [34] "purrr"                "pvclust"              "riskRegression"      
+#> [37] "rugarch"              "sandwich"             "scater"              
+#> [40] "scuttle"              "seriation"            "shapr"               
+#> [43] "stars"                "stats"                "strucchange"         
+#> [46] "sva"                  "terra"                "tm"                  
+#> [49] "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

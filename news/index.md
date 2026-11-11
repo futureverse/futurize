@@ -4,6 +4,11 @@
 
 ### New Transpilers
 
+- Add support for **mlr3** functions
+  [`resample()`](https://rspatial.github.io/terra/reference/resample.html)
+  and
+  [`benchmark()`](https://mlr3.mlr-org.com/reference/benchmark.html).
+
 - Add support for new **GSVA** (\>= 2.7.25) functions `gsvaRowNorm()`,
   `gsvaColRanks()`, and `gsvaColScores()`.
 

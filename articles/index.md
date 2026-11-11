@@ -48,6 +48,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-81-metafor.md):
 - [Parallelize 'mgcv'
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
+- [Parallelize 'mlr3'
+  functions](https://futurize.futureverse.org/articles/futurize-81-mlr3.md):
 - [Parallelize 'modelsummary'
   functions](https://futurize.futureverse.org/articles/futurize-81-modelsummary.md):
 - [Parallelize 'parameters'
