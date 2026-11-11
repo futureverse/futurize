@@ -46,6 +46,8 @@ articles-cran:
     href: articles/futurize-81-mgcv.html
   - text: Parallelize 'mlr3' functions
     href: articles/futurize-81-mlr3.html
+  - text: Parallelize 'mlr3tuning' functions
+    href: articles/futurize-81-mlr3tuning.html
   - text: Parallelize 'modelsummary' functions
     href: articles/futurize-81-modelsummary.html
   - text: Parallelize 'parameters' functions

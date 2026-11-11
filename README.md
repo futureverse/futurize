@@ -138,6 +138,7 @@ parallelization.
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
 | **[mlr3]**                 | `resample()`, `benchmark()`                                                  | **[future.apply]** |
+| **[mlr3tuning]**           | `tune()`, `tune_nested()`                                                    | **[future.apply]** |
 | **[modelsummary]**         | `modelsummary()`, `msummary()`, `modelplot()`                                | **[future.apply]** |
 | **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`                                | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
@@ -190,6 +191,8 @@ pr <- profile(fit) |> futurize()
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
 rr <- mlr3::resample(task, learner, resampling) |> futurize()
+
+instance <- mlr3tuning::tune(tuner, task, learner, resampling, measure, term_evals = 20) |> futurize()
 
 fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
 
@@ -303,6 +306,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
 [mlr3]: https://cran.r-project.org/package=mlr3
+[mlr3tuning]: https://cran.r-project.org/package=mlr3tuning
 [modelsummary]: https://cran.r-project.org/package=modelsummary
 [parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit
