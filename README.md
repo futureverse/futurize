@@ -137,6 +137,7 @@ parallelization.
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
+| **[mlr3]**                 | `resample()`, `benchmark()`                                                  | **[future.apply]** |
 | **[modelsummary]**         | `modelsummary()`, `msummary()`, `modelplot()`                                | **[future.apply]** |
 | **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`                                | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
@@ -187,6 +188,8 @@ fit <- metafor::rma(yi, vi)
 pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
+
+rr <- mlr3::resample(task, learner, resampling) |> futurize()
 
 fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
 
@@ -299,6 +302,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [lme4]: https://cran.r-project.org/package=lme4
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
+[mlr3]: https://cran.r-project.org/package=mlr3
 [modelsummary]: https://cran.r-project.org/package=modelsummary
 [parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit

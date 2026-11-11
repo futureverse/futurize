@@ -67,6 +67,8 @@ navbar:
         href: articles/futurize-81-metafor.html
       - text: Parallelize 'mgcv' functions
         href: articles/futurize-81-mgcv.html
+      - text: Parallelize 'mlr3' functions
+        href: articles/futurize-81-mlr3.html
       - text: Parallelize 'modelsummary' functions
         href: articles/futurize-81-modelsummary.html
       - text: Parallelize 'parameters' functions

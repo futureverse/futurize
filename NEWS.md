@@ -2,6 +2,8 @@
 
 ## New Transpilers
 
+ * Add support for **mlr3** functions `resample()` and `benchmark()`.
+
  * Add support for new **GSVA** (>= 2.7.25) functions `gsvaRowNorm()`,
    `gsvaColRanks()`, and `gsvaColScores()`.
 
