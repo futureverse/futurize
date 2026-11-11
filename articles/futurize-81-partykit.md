@@ -16,37 +16,52 @@ function. Easy!
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`partykit`](https://codeberg.org/thothorn/partykit)`)`\
 \
-`cf`` ``<-`` ``partykit``::`[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`airq`` ``<-`` `[`na.omit`](https://rdrr.io/r/stats/na.fail.html)`(``airquality``)`\
+`cf`` ``<-`` `[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``Ozone`` ``~`` ``.``, data ``=`` ``airq``)`\
+`vi`` ``<-`` `[`varimp`](https://rdrr.io/pkg/partykit/man/varimp.html)`(``cf``, conditional ``=`` ``TRUE``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
 The **[partykit](https://cran.r-project.org/package=partykit)** package
 provides a toolkit for recursive partitioning.
 
-### Example: Conditional random forests inference
+### Example: Conditional variable importance
 
-Example adopted from
-[`help("cforest", package = "partykit")`](https://rdrr.io/pkg/partykit/man/cforest.html):
+Conditional variable importance is one of the most computationally
+expensive steps when working with conditional random forests. It is
+estimated one tree at a time, which makes it well suited for parallel
+processing. Example adopted from
+[`help("varimp", package = "partykit")`](https://rdrr.io/pkg/partykit/man/varimp.html):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`partykit`](https://codeberg.org/thothorn/partykit)`)`\
 \
-`## basic example: conditional inference forest for cars data`\
-`cf`` ``<-`` `[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`## conditional inference forest for the complete cases of 'airquality'`\
+`airq`` ``<-`` `[`na.omit`](https://rdrr.io/r/stats/na.fail.html)`(``airquality``)`\
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``42``)`\
+`cf`` ``<-`` `[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``Ozone`` ``~`` ``.``, data ``=`` ``airq``, ntree ``=`` ``500L``)`\
 \
-`## prediction of fitted mean and visualization`\
-`nd`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``speed ``=`` ``4``:``25``)`\
-`nd``$``mean``  ``<-`` `[`predict`](https://rdrr.io/r/stats/predict.html)`(``cf``, newdata ``=`` ``nd``, type ``=`` ``"response"``)`\
-[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``)`\
-[`lines`](https://rdrr.io/r/graphics/lines.html)`(``mean`` ``~`` ``speed``, data ``=`` ``nd``)`
+`## conditional variable importance, estimated in parallel`\
+`vi`` ``<-`` `[`varimp`](https://rdrr.io/pkg/partykit/man/varimp.html)`(``cf``, conditional ``=`` ``TRUE``, nperm ``=`` ``10L``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+[`print`](https://rdrr.io/r/base/print.html)`(``vi``)`
 
-This will parallelize the computations of the variable selection
-criterion, given that we have set up parallel workers, e.g.
+This will parallelize the estimation of the variable importance across
+the trees of the forest, given that we have set up parallel workers,
+e.g.
 
 \
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`
+
+With 500 trees and 10 permutations per tree, this takes roughly 13
+seconds sequentially and about half of that on four parallel workers
+(single runs on a laptop; the speedup grows with the number of trees and
+permutations).
+
+The same pattern applies to growing the forest itself, i.e.
+`cforest(...) |> futurize()`, but the variable-importance step typically
+dominates the run time.
 
 The built-in `multisession` backend parallelizes on your local computer
 and works on all operating systems. There are [other parallel
@@ -79,20 +94,23 @@ The following **partykit** functions are supported by
 ## Without futurize: Manual PSOCK cluster setup
 
 For comparison, here is what it takes to parallelize
-[`cforest()`](https://rdrr.io/pkg/partykit/man/cforest.html) using the
+[`varimp()`](https://rdrr.io/pkg/partykit/man/varimp.html) using the
 **parallel** package directly, without **futurize**:
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`partykit`](https://codeberg.org/thothorn/partykit)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(``parallel``)`\
 \
+`airq`` ``<-`` `[`na.omit`](https://rdrr.io/r/stats/na.fail.html)`(``airquality``)`\
+`cf`` ``<-`` `[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``Ozone`` ``~`` ``.``, data ``=`` ``airq``, ntree ``=`` ``500L``)`\
+\
 `## Set up a PSOCK cluster`\
 `ncpus`` ``<-`` ``4L`\
 `cl`` ``<-`` `[`makeCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``ncpus``)`\
 \
-`## Fit a conditional inference forest in parallel`\
-`cf`` ``<-`` `[`cforest`](https://rdrr.io/pkg/partykit/man/cforest.html)`(``dist`` ``~`` ``speed``, data ``=`` ``cars``,`\
-`              applyfun ``=`` ``function``(``X``, ``FUN``, ``...``)`` `[`parLapply`](https://rdrr.io/r/parallel/clusterApply.html)`(``cl``, ``X``, ``FUN``, ``...``)``)`\
+`## Estimate the conditional variable importance in parallel`\
+`vi`` ``<-`` `[`varimp`](https://rdrr.io/pkg/partykit/man/varimp.html)`(``cf``, conditional ``=`` ``TRUE``, nperm ``=`` ``10L``,`\
+`             applyfun ``=`` ``function``(``X``, ``FUN``, ``...``)`` `[`parLapply`](https://rdrr.io/r/parallel/clusterApply.html)`(``cl``, ``X``, ``FUN``, ``...``)``)`\
 \
 `## Tear down the cluster`\
 [`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`

@@ -16,7 +16,7 @@ function. Easy!
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`seriation`](https://github.com/mhahsler/seriation)`)`\
 \
-`o`` ``<-`` ``seriation``::`[`seriate_best`](http://michael.hahsler.net/seriation/reference/seriate_best.md)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`o`` ``<-`` ``seriation``::`[`seriate_best`](https://michael.hahsler.net/seriation/reference/seriate_best.html)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -28,7 +28,7 @@ and dendrograms.
 ### Example: Seriate best
 
 Example adopted from
-[`help("seriate_best", package = "seriation")`](http://michael.hahsler.net/seriation/reference/seriate_best.md):
+[`help("seriate_best", package = "seriation")`](https://michael.hahsler.net/seriation/reference/seriate_best.html):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
@@ -38,7 +38,7 @@ Example adopted from
 [`data`](https://rdrr.io/r/utils/data.html)`(``SupremeCourt``)`\
 `d_supreme`` ``<-`` `[`as.dist`](https://rdrr.io/r/stats/dist.html)`(``SupremeCourt``)`\
 \
-`o`` ``<-`` `[`seriate_best`](http://michael.hahsler.net/seriation/reference/seriate_best.md)`(``d_supreme``, criterion ``=`` ``"AR_events"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`o`` ``<-`` `[`seriate_best`](https://michael.hahsler.net/seriation/reference/seriate_best.html)`(``d_supreme``, criterion ``=`` ``"AR_events"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 [`print`](https://rdrr.io/r/base/print.html)`(``o``)`
 
 This will parallelize the computations, given that we have set up
@@ -66,7 +66,7 @@ and
 The following **seriation** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`seriate_best()`](http://michael.hahsler.net/seriation/reference/seriate_best.md)
+- [`seriate_best()`](https://michael.hahsler.net/seriation/reference/seriate_best.html)
   with `seed = TRUE` as the default
-- [`seriate_rep()`](http://michael.hahsler.net/seriation/reference/seriate_best.md)
+- [`seriate_rep()`](https://michael.hahsler.net/seriation/reference/seriate_best.html)
   with `seed = TRUE` as the default

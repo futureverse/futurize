@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -199,7 +199,9 @@ sequential code into parallel code by piping the sequential code to the
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://codeberg.org/thothorn/partykit" class="external-link">partykit</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu">partykit</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">airq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">airq</span><span class="op">)</span></span>
+<span><span class="va">vi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">varimp</a></span><span class="op">(</span><span class="va">cf</span>, conditional <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -207,27 +209,38 @@ sequential code into parallel code by piping the sequential code to the
 <p>The <strong><a href="https://cran.r-project.org/package=partykit" class="external-link">partykit</a></strong>
 package provides a toolkit for recursive partitioning.</p>
 <div class="section level3">
-<h3 id="example-conditional-random-forests-inference">Example: Conditional random forests inference<a class="anchor" aria-label="anchor" href="#example-conditional-random-forests-inference"></a>
+<h3 id="example-conditional-variable-importance">Example: Conditional variable importance<a class="anchor" aria-label="anchor" href="#example-conditional-variable-importance"></a>
 </h3>
-<p>Example adopted from
-<code><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">help("cforest", package = "partykit")</a></code>:</p>
+<p>Conditional variable importance is one of the most computationally
+expensive steps when working with conditional random forests. It is
+estimated one tree at a time, which makes it well suited for parallel
+processing. Example adopted from
+<code><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">help("varimp", package = "partykit")</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://codeberg.org/thothorn/partykit" class="external-link">partykit</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## basic example: conditional inference forest for cars data</span></span>
-<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">## conditional inference forest for the complete cases of 'airquality'</span></span>
+<span><span class="va">airq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">airq</span>, ntree <span class="op">=</span> <span class="fl">500L</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## prediction of fitted mean and visualization</span></span>
-<span><span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>speed <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span></span>
-<span><span class="va">nd</span><span class="op">$</span><span class="va">mean</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">cf</span>, newdata <span class="op">=</span> <span class="va">nd</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">mean</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">nd</span><span class="op">)</span></span></code></pre></div>
-<p>This will parallelize the computations of the variable selection
-criterion, given that we have set up parallel workers, e.g.</p>
+<span><span class="co">## conditional variable importance, estimated in parallel</span></span>
+<span><span class="va">vi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">varimp</a></span><span class="op">(</span><span class="va">cf</span>, conditional <span class="op">=</span> <span class="cn">TRUE</span>, nperm <span class="op">=</span> <span class="fl">10L</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vi</span><span class="op">)</span></span></code></pre></div>
+<p>This will parallelize the estimation of the variable importance
+across the trees of the forest, given that we have set up parallel
+workers, e.g.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span></code></pre></div>
+<p>With 500 trees and 10 permutations per tree, this takes roughly 13
+seconds sequentially and about half of that on four parallel workers
+(single runs on a laptop; the speedup grows with the number of trees and
+permutations).</p>
+<p>The same pattern applies to growing the forest itself, i.e.
+<code>cforest(...) |&gt; futurize()</code>, but the variable-importance
+step typically dominates the run time.</p>
 <p>The built-in <code>multisession</code> backend parallelizes on your
 local computer and works on all operating systems. There are <a href="https://www.futureverse.org/backends.html" class="external-link">other parallel
 backends</a> to choose from, including alternatives to parallelize
@@ -263,19 +276,22 @@ default</li>
 <h2 id="without-futurize-manual-psock-cluster-setup">Without futurize: Manual PSOCK cluster setup<a class="anchor" aria-label="anchor" href="#without-futurize-manual-psock-cluster-setup"></a>
 </h2>
 <p>For comparison, here is what it takes to parallelize
-<code><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest()</a></code> using the <strong>parallel</strong> package
+<code><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">varimp()</a></code> using the <strong>parallel</strong> package
 directly, without <strong>futurize</strong>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://codeberg.org/thothorn/partykit" class="external-link">partykit</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">airq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">airq</span>, ntree <span class="op">=</span> <span class="fl">500L</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co">## Set up a PSOCK cluster</span></span>
 <span><span class="va">ncpus</span> <span class="op">&lt;-</span> <span class="fl">4L</span></span>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">ncpus</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Fit a conditional inference forest in parallel</span></span>
-<span><span class="va">cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/cforest.html" class="external-link">cforest</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span>,</span>
-<span>              applyfun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span>, <span class="va">FUN</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">X</span>, <span class="va">FUN</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Estimate the conditional variable importance in parallel</span></span>
+<span><span class="va">vi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/partykit/man/varimp.html" class="external-link">varimp</a></span><span class="op">(</span><span class="va">cf</span>, conditional <span class="op">=</span> <span class="cn">TRUE</span>, nperm <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>             applyfun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span>, <span class="va">FUN</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">X</span>, <span class="va">FUN</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Tear down the cluster</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>

@@ -208,7 +208,7 @@ Here are some examples:
 `result`` ``<-`` ``shapr``::`[`explain`](https://norskregnesentral.github.io/shapr/reference/explain.html)`(``model``, ``x_explain``, ``x_train``, approach ``=`` ``"empirical"``, phi0 ``=`` ``phi0``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 \
-`o`` ``<-`` ``seriation``::`[`seriate_best`](http://michael.hahsler.net/seriation/reference/seriate_best.md)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`o`` ``<-`` ``seriation``::`[`seriate_best`](https://michael.hahsler.net/seriation/reference/seriate_best.html)`(``d_supreme``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `res`` ``<-`` ``Sim.DiffProc``::`[`MCM.sde`](https://rdrr.io/pkg/Sim.DiffProc/man/MCM.sde.html)`(``model``, statistic ``=`` ``stat``, R ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
