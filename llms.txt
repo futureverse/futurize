@@ -136,6 +136,7 @@ parallelization.
 | **[metafor](https://cran.r-project.org/package=metafor)** | [`profile()`](https://rdrr.io/r/stats/profile.html), [`rstudent()`](https://rdrr.io/r/stats/influence.measures.html), [`cooks.distance()`](https://rdrr.io/r/stats/influence.measures.html), [`dfbetas()`](https://rdrr.io/r/stats/influence.measures.html) for ‘rma’ | \- |
 | **[mgcv](https://cran.r-project.org/package=mgcv)** | `bam()`, [`predict()`](https://rdrr.io/r/stats/predict.html) for ‘bam’ | \- |
 | **[mlr3](https://cran.r-project.org/package=mlr3)** | `resample()`, `benchmark()` | **[future.apply](https://future.apply.futureverse.org)** |
+| **[mlr3tuning](https://cran.r-project.org/package=mlr3tuning)** | `tune()`, `tune_nested()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[modelsummary](https://cran.r-project.org/package=modelsummary)** | `modelsummary()`, `msummary()`, `modelplot()` | **[future.apply](https://future.apply.futureverse.org)** |
 | **[parameters](https://cran.r-project.org/package=parameters)** | `bootstrap_model()`, `bootstrap_parameters()` | \- |
 | **[partykit](https://cran.r-project.org/package=partykit)** | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for ‘cforest’ | **[future.apply](https://future.apply.futureverse.org)** |
@@ -190,6 +191,8 @@ Here are some examples:
 `b`` ``<-`` ``mgcv``::`[`bam`](https://rdrr.io/pkg/mgcv/man/bam.html)`(``y`` ``~`` ``s``(``x0``, bs ``=`` ``bs``)`` ``+`` ``s``(``x1``, bs ``=`` ``bs``)``, data ``=`` ``dat``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `rr`` ``<-`` ``mlr3``::`[`resample`](https://mlr3.mlr-org.com/reference/resample.html)`(``task``, ``learner``, ``resampling``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+\
+`instance`` ``<-`` ``mlr3tuning``::`[`tune`](https://mlr3tuning.mlr-org.com/reference/tune.html)`(``tuner``, ``task``, ``learner``, ``resampling``, ``measure``, term_evals ``=`` ``20``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `fit`` ``<-`` ``parameters``::`[`bootstrap_model`](https://easystats.github.io/parameters/reference/bootstrap_model.html)`(``model``, iterations ``=`` ``1000``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
@@ -346,6 +349,8 @@ Here are some examples:
   functions](https://futurize.futureverse.org/articles/futurize-81-mgcv.md):
 - [Parallelize 'mlr3'
   functions](https://futurize.futureverse.org/articles/futurize-81-mlr3.md):
+- [Parallelize 'mlr3tuning'
+  functions](https://futurize.futureverse.org/articles/futurize-81-mlr3tuning.md):
 - [Parallelize 'modelsummary'
   functions](https://futurize.futureverse.org/articles/futurize-81-modelsummary.md):
 - [Parallelize 'parameters'

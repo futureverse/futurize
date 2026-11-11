@@ -36,14 +36,14 @@ pkgs
 #> [19] "fwb"                  "gamlss"               "glmmTMB"             
 #> [22] "glmnet"               "kernelshap"           "lme4"                
 #> [25] "metafor"              "mgcv"                 "mlr3"                
-#> [28] "modelsummary"         "parameters"           "partykit"            
-#> [31] "pbapply"              "pls"                  "plyr"                
-#> [34] "purrr"                "pvclust"              "riskRegression"      
-#> [37] "rugarch"              "sandwich"             "scater"              
-#> [40] "scuttle"              "seriation"            "shapr"               
-#> [43] "stars"                "stats"                "strucchange"         
-#> [46] "sva"                  "terra"                "tm"                  
-#> [49] "vegan"               
+#> [28] "mlr3tuning"           "modelsummary"         "parameters"          
+#> [31] "partykit"             "pbapply"              "pls"                 
+#> [34] "plyr"                 "purrr"                "pvclust"             
+#> [37] "riskRegression"       "rugarch"              "sandwich"            
+#> [40] "scater"               "scuttle"              "seriation"           
+#> [43] "shapr"                "stars"                "stats"               
+#> [46] "strucchange"          "sva"                  "terra"               
+#> [49] "tm"                   "vegan"               
 
 if (requireNamespace("future.apply")) {
   fcns <- futurize_supported_functions("base")

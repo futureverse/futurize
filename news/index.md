@@ -9,6 +9,12 @@
   and
   [`benchmark()`](https://mlr3.mlr-org.com/reference/benchmark.html).
 
+- Add support for **mlr3tuning** functions
+  [`tune()`](https://mlr3tuning.mlr-org.com/reference/tune.html) and
+  [`tune_nested()`](https://mlr3tuning.mlr-org.com/reference/tune_nested.html),
+  when using batch tuners. Asynchronous tuners are not supported,
+  because they do not use futures.
+
 - Add support for new **GSVA** (\>= 2.7.25) functions `gsvaRowNorm()`,
   `gsvaColRanks()`, and `gsvaColScores()`.
 
