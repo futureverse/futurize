@@ -79,18 +79,17 @@ workers back to your main R session. For instance, when running the
 above, you will see the progress output from each optimizer as it
 completes:
 
-    > cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
-    fold 1
-    fold 2
-    fold 3
-    fold 4
-    fold 5
-    fold 6
-    fold 7
-    fold 8
-    fold 9
-    fold 10
-    > 
+    cv <- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |> futurize()
+    #> fold 1
+    #> fold 2
+    #> fold 3
+    #> fold 4
+    #> fold 5
+    #> fold 6
+    #> fold 7
+    #> fold 8
+    #> fold 9
+    #> fold 10
 
 This output originates from the parallel workers and is relayed to your
 R session, so you get the same informative feedback as when running

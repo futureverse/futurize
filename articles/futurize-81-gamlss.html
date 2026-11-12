@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -251,18 +251,17 @@ parallel workers, given that we have set up parallel workers, e.g.</p>
 standard output, messages, and warnings produced by the parallel workers
 back to your main R session. For instance, when running the above, you
 will see the progress output from each optimizer as it completes:</p>
-<pre><code>&gt; cv &lt;- gamlssCV(y ~ pb(x), data = abdom, K.fold = 10) |&gt; futurize()
-fold 1
-fold 2
-fold 3
-fold 4
-fold 5
-fold 6
-fold 7
-fold 8
-fold 9
-fold 10
-&gt; </code></pre>
+<pre><code><span><span class="va">cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/gamlssVGD.html" class="external-link">gamlssCV</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/gamlss/man/ps.html" class="external-link">pb</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">abdom</span>, K.fold <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; fold 1</span></span>
+<span><span class="co">#&gt; fold 2</span></span>
+<span><span class="co">#&gt; fold 3</span></span>
+<span><span class="co">#&gt; fold 4</span></span>
+<span><span class="co">#&gt; fold 5</span></span>
+<span><span class="co">#&gt; fold 6</span></span>
+<span><span class="co">#&gt; fold 7</span></span>
+<span><span class="co">#&gt; fold 8</span></span>
+<span><span class="co">#&gt; fold 9</span></span>
+<span><span class="co">#&gt; fold 10</span></span></code></pre>
 <p>This output originates from the parallel workers and is relayed to
 your R session, so you get the same informative feedback as when running
 sequentially.</p>
