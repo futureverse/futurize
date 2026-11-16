@@ -13,6 +13,10 @@
 
 ## Bug Fixes
 
+ * Printing a futurized call with an argument set to `NULL`, e.g.
+   `futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)`, gave an
+   error on "subscript out of bounds".
+
  * Futurization of **GSVA** functions works again, but it requires
    **GSVA** (< 2.7.0) or **GSVA** (>= 2.7.25).
 

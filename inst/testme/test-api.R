@@ -27,6 +27,11 @@ if (requireNamespace("future.apply", quietly = TRUE)) {
   stopifnot(identical(y, y_truth))
   expr <- lapply(1:3, identity) |> futurize(when = FALSE, eval = FALSE)
   print(expr)
+
+  message("print() futurized call with NULL argument:")
+  expr <- lapply(1:3, identity) |> futurize(seed = NULL, eval = FALSE)
+  stopifnot("future.seed" %in% names(expr), is.null(expr[["future.seed"]]))
+  print(expr)
 }
 
 ## Cannot futurize non-calls

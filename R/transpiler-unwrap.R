@@ -65,7 +65,7 @@ print.transpiled_call <- function(x, ...) {
   ## print() method from scratch
   ...x... <- as.list(x)
   for (...kk... in seq_along(...x...)) {
-    ...x...[[...kk...]] <- local({
+    ...x...[...kk...] <- list(local({
       expr <- ...x...[[...kk...]]
       code <- c("substitute(", deparse(expr), ")")
       tryCatch({
@@ -74,7 +74,7 @@ print.transpiled_call <- function(x, ...) {
         ## Some deparsed expression cannot be parsed
         expr
       })
-    })
+    }))
   }
   x <- as.call(...x...)
   
