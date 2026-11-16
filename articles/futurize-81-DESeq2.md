@@ -14,30 +14,31 @@ function. Easy!
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(``DESeq2``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`DESeq2`](https://github.com/thelovelab/DESeq2)`)`\
 \
-`dds`` ``<-`` ``DESeqDataSetFromMatrix``(``countData``, ``colData``, design ``=`` ``~`` ``condition``)`\
-`dds`` ``<-`` ``DESeq``(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`dds`` ``<-`` `[`DESeqDataSetFromMatrix`](https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html)`(``countData``, ``colData``, design ``=`` ``~`` ``condition``)`\
+`dds`` ``<-`` `[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
 This vignette demonstrates how to use this approach to parallelize the
-**[DESeq2](https://bioconductor.org/packages/DESeq2/)** `DESeq()`
-function.
+**[DESeq2](https://bioconductor.org/packages/DESeq2/)**
+[`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) function.
 
 The **[DESeq2](https://bioconductor.org/packages/DESeq2/)** Bioconductor
 package provides methods to test for differential expression in RNA-seq
-data. The main function `DESeq()` runs a pipeline of gene-wise
-dispersion estimation, fitting, and statistical testing, which can be
-parallelized across genes.
+data. The main function
+[`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) runs a pipeline
+of gene-wise dispersion estimation, fitting, and statistical testing,
+which can be parallelized across genes.
 
 ### Example: Running DESeq() in parallel
 
-The `DESeq()` function performs the full differential expression
-analysis:
+The [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) function
+performs the full differential expression analysis:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(``DESeq2``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`DESeq2`](https://github.com/thelovelab/DESeq2)`)`\
 \
 `# Simulate data`\
 `n_genes`` ``<-`` ``100L`\
@@ -54,27 +55,27 @@ analysis:
 ` `\
 `col_data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`\
 `  condition ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(`[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"control"``, ``"treated"``)``, each ``=`` ``n_samples`` ``/`` ``2L``)``)``,`\
-`  row.names ``=`` `[`colnames`](https://rdrr.io/r/base/colnames.html)`(``counts``)`\
+`  row.names ``=`` `[`colnames`](https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html)`(``counts``)`\
 `)`\
 \
-`dds`` ``<-`` ``DESeqDataSetFromMatrix``(`\
+`dds`` ``<-`` `[`DESeqDataSetFromMatrix`](https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html)`(`\
 `  countData ``=`` ``counts``,`\
 `  colData ``=`` ``col_data``,`\
 `  design ``=`` ``~`` ``condition`\
 `)`\
 \
-`dds`` ``<-`` ``DESeq``(``dds``)`\
-`res`` ``<-`` ``results``(``dds``)`
+`dds`` ``<-`` `[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`\
+`res`` ``<-`` `[`results`](https://rdrr.io/pkg/DESeq2/man/results.html)`(``dds``)`
 
-Here `DESeq()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html) runs
+sequentially, but we can easily make it run in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 \
-`dds`` ``<-`` ``DESeq``(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
-`res`` ``<-`` ``results``(``dds``)`
+`dds`` ``<-`` `[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`res`` ``<-`` `[`results`](https://rdrr.io/pkg/DESeq2/man/results.html)`(``dds``)`
 
 This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.
@@ -101,6 +102,6 @@ and
 The following **DESeq2** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `DESeq()`
-- `lfcShrink()`
-- `results()`
+- [`DESeq()`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)
+- [`lfcShrink()`](https://rdrr.io/pkg/DESeq2/man/lfcShrink.html)
+- [`results()`](https://rdrr.io/pkg/DESeq2/man/results.html)

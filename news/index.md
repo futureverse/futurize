@@ -2,6 +2,26 @@
 
 ## Version (development version)
 
+### Significant Changes
+
+- Add
+  [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+  option `rng`, which declares whether parallel random number generation
+  (RNG) is needed, e.g. `lapply(xs, fcn) |> futurize(rng = TRUE)`. This
+  supersedes option `seed`, which is still supported for backward
+  compatibility, i.e. `futurize(seed = TRUE)` is equivalent to
+  `futurize(rng = TRUE)`. Options `rng` and `seed` must not be specified
+  at the same time. Currently, `rng` accepts only `TRUE`, `FALSE`, and
+  `NA`; other values are reserved for future extensions.
+
+- Use `futurize(rng = NA)` to declare that random numbers may be
+  generated, but that they do not affect the results. This silences
+  false-positive RNG-misuse warnings without setting up parallel RNG
+  streams. This is equivalent to `futurize(seed = NULL)`.
+
+- Error messages and vignettes now suggest `futurize(rng = TRUE)`
+  instead of `futurize(seed = TRUE)`.
+
 ### New Transpilers
 
 - Add support for **mlr3** functions
@@ -19,6 +39,10 @@
   `gsvaColRanks()`, and `gsvaColScores()`.
 
 ### Bug Fixes
+
+- Printing a futurized call with an argument set to `NULL`, e.g.
+  `futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)`, gave an error
+  on “subscript out of bounds”.
 
 - Futurization of **GSVA** functions works again, but it requires
   **GSVA** (\< 2.7.0) or **GSVA** (\>= 2.7.25).
@@ -153,8 +177,10 @@ CRAN release: 2026-06-12
 ### Documentation
 
 - Update **SingleCellExperiment** and **scuttle** examples and tests to
-  use `scuttle::perFeatureQCMetrics()` instead of the deprecated
-  `scuttle::perCellQCMetrics()`.
+  use
+  [`scuttle::perFeatureQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)
+  instead of the deprecated
+  [`scuttle::perCellQCMetrics()`](https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html).
 
 ### Bug Fixes
 
@@ -334,7 +360,8 @@ This is the first version submitted to CRAN.
   `%dopar%` or `%dofuture%`.
 
 - Error messages now distinguish between infix operators (e.g. `%do%`)
-  and functions (e.g. [`lapply()`](https://rdrr.io/r/base/lapply.html)).
+  and functions
+  (e.g. [`lapply()`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)).
 
 ## Version 0.0.5
 
@@ -342,8 +369,8 @@ This is the first version submitted to CRAN.
 
 - Add support for futurizing calls nested in one or more layers of
   `{ ... }`, `( ... )`, `local( ... )`,
-  [`I()`](https://rdrr.io/r/base/AsIs.html), and
-  [`identity()`](https://rdrr.io/r/base/identity.html), e.g.
+  [`I()`](https://rdrr.io/pkg/S4Vectors/man/S4Vectors-internals.html),
+  and [`identity()`](https://rdrr.io/r/base/identity.html), e.g.
   `local({ lapply(x, f) }) |> futurize()` is the same as
   `local({ lapply(x, f) |> futurize() })`.
 

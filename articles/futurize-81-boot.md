@@ -96,7 +96,7 @@ series:
 `## Fit AR models to bootstrap replicates of the lynx time series`\
 `lynx_fun`` ``<-`` ``function``(``tsb``)`` ``{`\
 `    ``ar_fit`` ``<-`` `[`ar`](https://rdrr.io/r/stats/ar.html)`(``tsb``, order.max ``=`` ``25``)`\
-`    `[`c`](https://rdrr.io/r/base/c.html)`(``ar_fit``$``order``, `[`mean`](https://rdrr.io/r/base/mean.html)`(``tsb``)``, ``tsb``)`\
+`    `[`c`](https://rdrr.io/r/base/c.html)`(``ar_fit``$``order``, `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``tsb``)``, ``tsb``)`\
 `}`\
 \
 `lynx_boot`` ``<-`` `[`tsboot`](https://rdrr.io/pkg/boot/man/tsboot.html)`(`[`log`](https://rdrr.io/r/base/Log.html)`(``lynx``)``, ``lynx_fun``, R ``=`` ``999``, l ``=`` ``20``, sim ``=`` ``"geom"``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`

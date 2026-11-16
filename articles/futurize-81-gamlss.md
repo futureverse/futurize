@@ -134,7 +134,7 @@ The following **gamlss** functions are supported by
 - [`drop1All()`](https://rdrr.io/pkg/gamlss/man/stepGAIC.html)
 - [`drop1TGD()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html)
 - [`gamlssCV()`](https://rdrr.io/pkg/gamlss/man/gamlssVGD.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

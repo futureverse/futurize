@@ -81,14 +81,14 @@ parallelized as:
 `  .data ``=`` ``ANT``,`\
 `  .variables ``=`` `[`.`](https://rdrr.io/pkg/plyr/man/quoted.html)`(``subnum``, ``group``, ``cue``, ``flank``)``,`\
 `  .fun ``=`` ``function``(``x``)`` ``{`\
-`    `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mrt ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``$``rt``[``x``$``error`` ``==`` ``0``]``)``)`\
+`    `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mrt ``=`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``x``$``rt``[``x``$``error`` ``==`` ``0``]``)``)`\
 `  ``}`\
 `)`\
 `gmrt`` ``<-`` `[`ddply`](https://rdrr.io/pkg/plyr/man/ddply.html)`(`\
 `  .data ``=`` ``cell_stats``,`\
 `  .variables ``=`` `[`.`](https://rdrr.io/pkg/plyr/man/quoted.html)`(``subnum``, ``group``)``,`\
 `  .fun ``=`` ``function``(``x``)`` ``{`\
-`    `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mrt ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``$``mrt``)``)`\
+`    `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``mrt ``=`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``x``$``mrt``)``)`\
 `  ``}`\
 `)`\
 \
@@ -105,8 +105,8 @@ parallelized as:
 The following **ez** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`ezBoot()`](https://rdrr.io/pkg/ez/man/ezBoot.html) with
-  `seed = TRUE` as the default
-- [`ezPerm()`](https://rdrr.io/pkg/ez/man/ezPerm.html) with
-  `seed = TRUE` as the default
+- [`ezBoot()`](https://rdrr.io/pkg/ez/man/ezBoot.html) with `rng = TRUE`
+  as the default
+- [`ezPerm()`](https://rdrr.io/pkg/ez/man/ezPerm.html) with `rng = TRUE`
+  as the default
 - [`ezPlot2()`](https://rdrr.io/pkg/ez/man/ezPlot2.html)

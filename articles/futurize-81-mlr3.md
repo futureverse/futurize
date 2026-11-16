@@ -103,7 +103,7 @@ have been set up for **mlr3**, e.g. by other code in your R session.
 
 The **mlr3** package itself decides which globals and packages to export
 to the parallel workers, and it always uses parallel random number
-generation (`seed = TRUE`). Because of this,
+generation (`rng = TRUE`). Because of this,
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 options `globals` and `packages` are ignored for **mlr3** functions.
 Other future options, e.g. `chunk_size` and `stdout`, are passed on
@@ -118,6 +118,6 @@ The following **mlr3** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`benchmark()`](https://mlr3.mlr-org.com/reference/benchmark.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`resample()`](https://mlr3.mlr-org.com/reference/resample.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default

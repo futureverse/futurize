@@ -109,6 +109,6 @@ The following **fwb** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`fwb()`](https://ngreifer.github.io/fwb/reference/fwb.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 - [`vcovFWB()`](https://ngreifer.github.io/fwb/reference/vcovFWB.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default

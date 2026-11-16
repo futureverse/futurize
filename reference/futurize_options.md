@@ -12,6 +12,7 @@ chunking).
 
 ``` r
 futurize_options(
+  rng = FALSE,
   seed = FALSE,
   globals = TRUE,
   packages = NULL,
@@ -25,22 +26,33 @@ futurize_options(
 
 ## Arguments
 
+- rng:
+
+  (resources) If TRUE, parallel-safe random number generation (RNG) is
+  set up such that each element is processed with its own, statistically
+  sound RNG stream. This is needed whenever the code uses random
+  numbers, e.g. via [`rnorm()`](https://rdrr.io/r/stats/Normal.html) or
+  [`sample()`](https://rdrr.io/r/base/sample.html). The results are
+  reproducible given a fixed
+  [`set.seed()`](https://rdrr.io/r/base/Random.html), regardless of how
+  and where the elements are processed. Currently, the L'Ecuyer-CMRG RNG
+  is used for this. If FALSE (default), then no RNG streams are set up,
+  and you will be warned if random numbers are still generated. If NA,
+  then no RNG streams are set up, and there is no check for random
+  numbers being generated. This can be used to silence false-positive
+  RNG warnings, e.g. when the code uses random numbers in a way that
+  does not affect the results. If in doubt, use `rng = TRUE`, which is
+  always statistically sound. Currently, only `TRUE`, `FALSE`, and `NA`
+  are supported; other types of values are reserved for future
+  extensions. If `rng` is specified, then `seed` must not be specified.
+
 - seed:
 
-  (resource; optional) If TRUE, the random seed, that is, the state of
-  the random number generator (RNG) will be set such that statistically
-  sound random numbers are produced (also during parallelization). If
-  FALSE (default), it is assumed that the future expression neither
-  needs nor uses random number generation. To use a fixed random seed,
-  specify a L'Ecuyer-CMRG seed (seven integers) or a regular RNG seed (a
-  single integer). If the latter, then a L'Ecuyer-CMRG seed will be
-  automatically created based on the given seed. Furthermore, if FALSE,
-  then the future will be monitored to make sure it does not use random
-  numbers. If it does and depending on the value of option
-  [future.rng.onMisuse](https://future.futureverse.org/reference/zzz-future.options.html),
-  the check is ignored, an informative warning, or error will be
-  produced. If `seed` is NULL, then the effect is as with `seed = FALSE`
-  but without the RNG check being performed.
+  (resources) Superseded by `rng`, but kept for backward compatibility.
+  `seed = TRUE`, `seed = FALSE`, and `seed = NULL` are equivalent to
+  `rng = TRUE`, `rng = FALSE`, and `rng = NA`. For other values, see the
+  `seed` argument of
+  [`future::future()`](https://future.futureverse.org/reference/future.html).
 
 - globals:
 
@@ -126,4 +138,16 @@ str(futurize_options())
 #>  $ scheduling: num 1
 #>  $ chunk_size: NULL
 #>  - attr(*, "specified")= chr(0) 
+
+# Declare that parallel random number generation is needed
+str(futurize_options(rng = TRUE))
+#> List of 7
+#>  $ seed      : logi TRUE
+#>  $ globals   : logi TRUE
+#>  $ packages  : NULL
+#>  $ stdout    : logi TRUE
+#>  $ conditions: chr "condition"
+#>  $ scheduling: num 1
+#>  $ chunk_size: NULL
+#>  - attr(*, "specified")= chr "seed"
 ```

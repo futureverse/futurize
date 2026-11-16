@@ -17,7 +17,7 @@ function. Easy!
 [`library`](https://rdrr.io/r/base/library.html)`(`[`TSP`](https://github.com/mhahsler/TSP)`)`\
 \
 [`data`](https://rdrr.io/r/utils/data.html)`(``"USCA50"``)`\
-`tour`` ``<-`` `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10L``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`tour`` ``<-`` `[`solve_TSP`](https://michael.hahsler.net/TSP/reference/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10L``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -27,7 +27,7 @@ algorithms for solving the traveling salesperson problem (TSP).
 ### Example:
 
 Example adopted from
-[`help("solve_TSP", package = "TSP")`](https://rdrr.io/pkg/TSP/man/solve_TSP.html):
+[`help("solve_TSP", package = "TSP")`](https://michael.hahsler.net/TSP/reference/solve_TSP.html):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
@@ -42,8 +42,8 @@ Example adopted from
 `)`\
 \
 `## calculate tours - each tour in parallel`\
-`tours`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``methods``, FUN ``=`` ``function``(``m``)`` ``{`\
-`  `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, rep ``=`` ``10L``, method ``=`` ``m``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`tours`` ``<-`` `[`lapply`](https://rdrr.io/pkg/BiocGenerics/man/lapply.html)`(``methods``, FUN ``=`` ``function``(``m``)`` ``{`\
+`  `[`solve_TSP`](https://michael.hahsler.net/TSP/reference/solve_TSP.html)`(``USCA50``, rep ``=`` ``10L``, method ``=`` ``m``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 `}``)`\
 [`names`](https://rspatial.github.io/terra/reference/names.html)`(``tours``)`` ``<-`` ``methods`
 
@@ -72,14 +72,15 @@ and
 The following **TSP** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`solve_TSP()`](https://rdrr.io/pkg/TSP/man/solve_TSP.html) with
-  `seed = TRUE` as the default
+- [`solve_TSP()`](https://michael.hahsler.net/TSP/reference/solve_TSP.html)
+  with `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 
 For comparison, here is what it takes to parallelize
-[`solve_TSP()`](https://rdrr.io/pkg/TSP/man/solve_TSP.html) using the
-**parallel** and **doParallel** packages directly, without **futurize**:
+[`solve_TSP()`](https://michael.hahsler.net/TSP/reference/solve_TSP.html)
+using the **parallel** and **doParallel** packages directly, without
+**futurize**:
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`TSP`](https://github.com/mhahsler/TSP)`)`\
@@ -94,7 +95,7 @@ For comparison, here is what it takes to parallelize
 [`registerDoParallel`](https://rdrr.io/pkg/doParallel/man/registerDoParallel.html)`(``cl``)`\
 \
 `## Solve the TSP in parallel via foreach`\
-`tour`` ``<-`` `[`solve_TSP`](https://rdrr.io/pkg/TSP/man/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10L``)`\
+`tour`` ``<-`` `[`solve_TSP`](https://michael.hahsler.net/TSP/reference/solve_TSP.html)`(``USCA50``, method ``=`` ``"nn"``, rep ``=`` ``10L``)`\
 \
 `## Tear down the cluster`\
 [`stopCluster`](https://rdrr.io/r/parallel/makeCluster.html)`(``cl``)`\

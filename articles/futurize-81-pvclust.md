@@ -84,7 +84,7 @@ The following **pvclust** function is supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`pvclust()`](https://rdrr.io/pkg/pvclust/man/pvclust.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

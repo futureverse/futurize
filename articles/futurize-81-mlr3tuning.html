@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -287,7 +287,7 @@ parallelizes via futures, even if mirai daemons have been set up for
 <strong>mlr3</strong>. Also, the <code><a href="../reference/futurize.html">futurize()</a></code> options
 <code>globals</code> and <code>packages</code> are ignored, because
 <strong>mlr3</strong> manages those itself, and parallel random number
-generation (<code>seed = TRUE</code>) is always used.</p>
+generation (<code>rng = TRUE</code>) is always used.</p>
 <p>Asynchronous tuners, e.g. <code>tnr("async_random_search")</code>,
 are <em>not</em> supported. They run on <strong>rush</strong> workers,
 which do not use futures. If you try to futurize <code><a href="https://mlr3tuning.mlr-org.com/reference/tune.html" class="external-link">tune()</a></code> or
@@ -301,10 +301,9 @@ produced.</p>
 <code><a href="../reference/futurize.html">futurize()</a></code>:</p>
 <ul>
 <li>
-<code><a href="https://mlr3tuning.mlr-org.com/reference/tune.html" class="external-link">tune()</a></code> with <code>seed = TRUE</code> as the
-default</li>
+<code><a href="https://mlr3tuning.mlr-org.com/reference/tune.html" class="external-link">tune()</a></code> with <code>rng = TRUE</code> as the default</li>
 <li>
-<code><a href="https://mlr3tuning.mlr-org.com/reference/tune_nested.html" class="external-link">tune_nested()</a></code> with <code>seed = TRUE</code> as the
+<code><a href="https://mlr3tuning.mlr-org.com/reference/tune_nested.html" class="external-link">tune_nested()</a></code> with <code>rng = TRUE</code> as the
 default</li>
 </ul>
 </div>

@@ -105,7 +105,7 @@ The following **riskRegression** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`Score()`](https://rdrr.io/pkg/riskRegression/man/Score.html) for
-  ‘list’ with `seed = TRUE` as the default
+  ‘list’ with `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

@@ -67,6 +67,6 @@ The following **seriation** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`seriate_best()`](https://michael.hahsler.net/seriation/reference/seriate_best.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`seriate_rep()`](https://michael.hahsler.net/seriation/reference/seriate_best.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default

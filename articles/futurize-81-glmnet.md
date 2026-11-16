@@ -112,7 +112,7 @@ The following **glmnet** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`cv.glmnet()`](https://glmnet.stanford.edu/reference/cv.glmnet.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

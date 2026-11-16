@@ -110,7 +110,7 @@ guarantees that **mlr3** parallelizes via futures, even if mirai daemons
 have been set up for **mlr3**. Also, the
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
 options `globals` and `packages` are ignored, because **mlr3** manages
-those itself, and parallel random number generation (`seed = TRUE`) is
+those itself, and parallel random number generation (`rng = TRUE`) is
 always used.
 
 Asynchronous tuners, e.g. `tnr("async_random_search")`, are *not*
@@ -126,6 +126,6 @@ The following **mlr3tuning** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`tune()`](https://mlr3tuning.mlr-org.com/reference/tune.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 - [`tune_nested()`](https://mlr3tuning.mlr-org.com/reference/tune_nested.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default

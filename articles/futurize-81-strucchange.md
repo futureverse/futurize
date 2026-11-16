@@ -43,8 +43,8 @@ e.g. in time-series data.
 [`data`](https://rdrr.io/r/utils/data.html)`(``"UKDriverDeaths"``)`\
 \
 `seatbelt`` ``<-`` `[`log10`](https://rdrr.io/r/base/Log.html)`(``UKDriverDeaths``)`\
-`seatbelt`` ``<-`` `[`cbind`](https://rdrr.io/r/base/cbind.html)`(``seatbelt``, `[`lag`](https://rdrr.io/r/stats/lag.html)`(``seatbelt``, k ``=`` ``-``1``)``, `[`lag`](https://rdrr.io/r/stats/lag.html)`(``seatbelt``, k ``=`` ``-``12``)``)`\
-[`colnames`](https://rdrr.io/r/base/colnames.html)`(``seatbelt``)`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"y"``, ``"ylag1"``, ``"ylag12"``)`\
+`seatbelt`` ``<-`` `[`cbind`](https://rdrr.io/pkg/BiocGenerics/man/cbind.html)`(``seatbelt``, `[`lag`](https://rdrr.io/r/stats/lag.html)`(``seatbelt``, k ``=`` ``-``1``)``, `[`lag`](https://rdrr.io/r/stats/lag.html)`(``seatbelt``, k ``=`` ``-``12``)``)`\
+[`colnames`](https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html)`(``seatbelt``)`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"y"``, ``"ylag1"``, ``"ylag12"``)`\
 `seatbelt`` ``<-`` `[`window`](https://rdrr.io/r/stats/window.html)`(``seatbelt``, start ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1970``, ``1``)``, end ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1984``, ``12``)``)`\
 [`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``seatbelt``[``,``"y"``]``, ylab ``=`` `[`expression`](https://rdrr.io/r/base/expression.html)`(``log``[``10``]``(``casualties``)``)``)`\
 \

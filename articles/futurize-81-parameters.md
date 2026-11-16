@@ -92,9 +92,9 @@ The following **parameters** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`bootstrap_model()`](https://easystats.github.io/parameters/reference/bootstrap_model.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`bootstrap_parameters()`](https://easystats.github.io/parameters/reference/bootstrap_parameters.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

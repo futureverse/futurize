@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,6 +132,12 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
 <div class="section level3">
+<h3 id="significant-changes-development-version">Significant Changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<ul><li><p>Add <code><a href="../reference/futurize.html">futurize()</a></code> option <code>rng</code>, which declares whether parallel random number generation (RNG) is needed, e.g. <code>lapply(xs, fcn) |&gt; futurize(rng = TRUE)</code>. This supersedes option <code>seed</code>, which is still supported for backward compatibility, i.e. <code>futurize(seed = TRUE)</code> is equivalent to <code>futurize(rng = TRUE)</code>. Options <code>rng</code> and <code>seed</code> must not be specified at the same time. Currently, <code>rng</code> accepts only <code>TRUE</code>, <code>FALSE</code>, and <code>NA</code>; other values are reserved for future extensions.</p></li>
+<li><p>Use <code>futurize(rng = NA)</code> to declare that random numbers may be generated, but that they do not affect the results. This silences false-positive RNG-misuse warnings without setting up parallel RNG streams. This is equivalent to <code>futurize(seed = NULL)</code>.</p></li>
+<li><p>Error messages and vignettes now suggest <code>futurize(rng = TRUE)</code> instead of <code>futurize(seed = TRUE)</code>.</p></li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
 <ul><li><p>Add support for <strong>mlr3</strong> functions <code><a href="https://rspatial.github.io/terra/reference/resample.html" class="external-link">resample()</a></code> and <code><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark()</a></code>.</p></li>
 <li><p>Add support for <strong>mlr3tuning</strong> functions <code><a href="https://mlr3tuning.mlr-org.com/reference/tune.html" class="external-link">tune()</a></code> and <code><a href="https://mlr3tuning.mlr-org.com/reference/tune_nested.html" class="external-link">tune_nested()</a></code>, when using batch tuners. Asynchronous tuners are not supported, because they do not use futures.</p></li>
@@ -139,7 +145,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Futurization of <strong>GSVA</strong> functions works again, but it requires <strong>GSVA</strong> (&lt; 2.7.0) or <strong>GSVA</strong> (&gt;= 2.7.25).</li>
+<ul><li><p>Printing a futurized call with an argument set to <code>NULL</code>, e.g. <code>futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)</code>, gave an error on “subscript out of bounds”.</p></li>
+<li><p>Futurization of <strong>GSVA</strong> functions works again, but it requires <strong>GSVA</strong> (&lt; 2.7.0) or <strong>GSVA</strong> (&gt;= 2.7.25).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="miscellaneous-development-version">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-development-version"></a></h3>
@@ -198,7 +205,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-1-0-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-0"></a></h3>
-<ul><li>Update <strong>SingleCellExperiment</strong> and <strong>scuttle</strong> examples and tests to use <code>scuttle::perFeatureQCMetrics()</code> instead of the deprecated <code>scuttle::perCellQCMetrics()</code>.</li>
+<ul><li>Update <strong>SingleCellExperiment</strong> and <strong>scuttle</strong> examples and tests to use <code><a href="https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html" class="external-link">scuttle::perFeatureQCMetrics()</a></code> instead of the deprecated <code><a href="https://rdrr.io/pkg/scuttle/man/perCellQCMetrics.html" class="external-link">scuttle::perCellQCMetrics()</a></code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-0"></a></h3>
@@ -282,14 +289,14 @@
 <li><p>Add custom <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for transpiled calls such that attributes are displayed for arguments and their content.</p></li>
 <li><p>Transpiler can now handle nested, complex wrapped expressions.</p></li>
 <li><p>Error messages now suggest using <code>%do%</code> when trying to futurize <code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach()</a></code> with <code>%dopar%</code> or <code>%dofuture%</code>.</p></li>
-<li><p>Error messages now distinguish between infix operators (e.g. <code>%do%</code>) and functions (e.g. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>).</p></li>
+<li><p>Error messages now distinguish between infix operators (e.g. <code>%do%</code>) and functions (e.g. <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.5" id="version-005">Version 0.0.5<a class="anchor" aria-label="anchor" href="#version-005"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-0-5"></a></h3>
-<ul><li>Add support for futurizing calls nested in one or more layers of <code>{ ... }</code>, <code>( ... )</code>, <code>local( ... )</code>, <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>, and <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, e.g. <code>local({ lapply(x, f) }) |&gt; futurize()</code> is the same as <code>local({ lapply(x, f) |&gt; futurize() })</code>.</li>
+<ul><li>Add support for futurizing calls nested in one or more layers of <code>{ ... }</code>, <code>( ... )</code>, <code>local( ... )</code>, <code><a href="https://rdrr.io/pkg/S4Vectors/man/S4Vectors-internals.html" class="external-link">I()</a></code>, and <code><a href="https://rdrr.io/r/base/identity.html" class="external-link">identity()</a></code>, e.g. <code>local({ lapply(x, f) }) |&gt; futurize()</code> is the same as <code>local({ lapply(x, f) |&gt; futurize() })</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -14,7 +14,7 @@ function. Easy!
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret)`)`\
 \
 `ctrl`` ``<-`` `[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
 `model`` ``<-`` `[`train`](https://rdrr.io/pkg/caret/man/train.html)`(``Species`` ``~`` ``.``, data ``=`` ``iris``, method ``=`` ``"rf"``, trControl ``=`` ``ctrl``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
@@ -37,7 +37,7 @@ The [`train()`](https://rdrr.io/pkg/caret/man/train.html) function fits
 models across multiple resampling iterations:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret)`)`\
 \
 `## Set up 10-fold cross-validation`\
 `ctrl`` ``<-`` `[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
@@ -52,7 +52,7 @@ to
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`caret`](https://github.com/topepo/caret)`)`\
 \
 `ctrl`` ``<-`` `[`trainControl`](https://rdrr.io/pkg/caret/man/trainControl.html)`(``method ``=`` ``"cv"``, number ``=`` ``10``)`\
 `model`` ``<-`` `[`train`](https://rdrr.io/pkg/caret/man/train.html)`(``Species`` ``~`` ``.``, data ``=`` ``iris``, method ``=`` ``"rf"``, trControl ``=`` ``ctrl``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
@@ -82,17 +82,17 @@ and
 The following **caret** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- [`bag()`](https://rdrr.io/pkg/caret/man/bag.html) with `seed = TRUE`
-  as the default
+- [`bag()`](https://rdrr.io/pkg/caret/man/bag.html) with `rng = TRUE` as
+  the default
 - [`gafs()`](https://rdrr.io/pkg/caret/man/gafs.default.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 - [`nearZeroVar()`](https://rdrr.io/pkg/caret/man/nearZeroVar.html) with
-  `seed = TRUE` as the default
-- [`rfe()`](https://rdrr.io/pkg/caret/man/rfe.html) with `seed = TRUE`
+  `rng = TRUE` as the default
+- [`rfe()`](https://rdrr.io/pkg/caret/man/rfe.html) with `rng = TRUE` as
+  the default
+- [`safs()`](https://rdrr.io/pkg/caret/man/safs.html) with `rng = TRUE`
   as the default
-- [`safs()`](https://rdrr.io/pkg/caret/man/safs.html) with `seed = TRUE`
-  as the default
-- [`sbf()`](https://rdrr.io/pkg/caret/man/sbf.html) with `seed = TRUE`
-  as the default
+- [`sbf()`](https://rdrr.io/pkg/caret/man/sbf.html) with `rng = TRUE` as
+  the default
 - [`train()`](https://rdrr.io/pkg/caret/man/train.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default

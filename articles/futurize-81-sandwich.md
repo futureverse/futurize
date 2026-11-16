@@ -70,9 +70,9 @@ The following **sandwich** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`vcovBS()`](https://zeileis.codeberg.page/sandwich/reference/vcovBS.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`vcovJK()`](https://zeileis.codeberg.page/sandwich/reference/vcovJK.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 
 ## Without futurize: Manual setup
 

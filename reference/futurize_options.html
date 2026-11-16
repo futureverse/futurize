@@ -27,7 +27,7 @@ of futures are partitioned (e.g. chunking)."><!-- Global site tag (gtag.js) - Go
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -158,6 +158,7 @@ of futures are partitioned (e.g. chunking).</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">futurize_options</span><span class="op">(</span></span>
+<span>  rng <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  globals <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  packages <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -173,22 +174,32 @@ of futures are partitioned (e.g. chunking).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>(resource; optional) If TRUE, the random seed, that is, the
-state of the random number generator (RNG) will be set such that
-statistically sound random numbers are produced (also during
-parallelization).
-If FALSE (default), it is assumed that the future expression neither
-needs nor uses random number generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
-or a regular RNG seed (a single integer).  If the latter, then a
-L'Ecuyer-CMRG seed will be automatically created based on the given seed.
-Furthermore, if FALSE, then the future will be monitored to make sure it
-does not use random numbers.  If it does and depending on the value of
-option <a href="https://future.futureverse.org/reference/zzz-future.options.html" class="external-link">future.rng.onMisuse</a>, the check is
-ignored, an informative warning, or error will be produced.
-If <code>seed</code> is NULL, then the effect is as with <code>seed = FALSE</code>
-but without the RNG check being performed.</p></dd>
+<dl><dt id="arg-rng">rng<a class="anchor" aria-label="anchor" href="#arg-rng"></a></dt>
+<dd><p>(resources) If TRUE, parallel-safe random number generation
+(RNG) is set up such that each element is processed with its own,
+statistically sound RNG stream. This is needed whenever the code
+uses random numbers, e.g. via <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm()</a></code> or <code><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample()</a></code>. The results
+are reproducible given a fixed <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code>, regardless of how
+and where the elements are processed. Currently, the L'Ecuyer-CMRG
+RNG is used for this.
+If FALSE (default), then no RNG streams are set up, and you will be
+warned if random numbers are still generated.
+If NA, then no RNG streams are set up, and there is no check for
+random numbers being generated. This can be used to silence
+false-positive RNG warnings, e.g. when the code uses random numbers
+in a way that does not affect the results. If in doubt, use
+<code>rng = TRUE</code>, which is always statistically sound.
+Currently, only <code>TRUE</code>, <code>FALSE</code>, and <code>NA</code> are supported; other
+types of values are reserved for future extensions.
+If <code>rng</code> is specified, then <code>seed</code> must not be specified.</p></dd>
+
+
+<dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
+<dd><p>(resources) Superseded by <code>rng</code>, but kept for backward
+compatibility. <code>seed = TRUE</code>, <code>seed = FALSE</code>, and <code>seed = NULL</code> are
+equivalent to <code>rng = TRUE</code>, <code>rng = FALSE</code>, and <code>rng = NA</code>.
+For other values, see the <code>seed</code>
+argument of <code><a href="https://future.futureverse.org/reference/future.html" class="external-link">future::future()</a></code>.</p></dd>
 
 
 <dt id="arg-globals">globals<a class="anchor" aria-label="anchor" href="#arg-globals"></a></dt>
@@ -279,6 +290,18 @@ that were explicitly specified.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ scheduling: num 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ chunk_size: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "specified")= chr(0) </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Declare that parallel random number generation is needed</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">futurize_options</span><span class="op">(</span>rng <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ seed      : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ globals   : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ packages  : NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ stdout    : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ conditions: chr "condition"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ scheduling: num 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chunk_size: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "specified")= chr "seed"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

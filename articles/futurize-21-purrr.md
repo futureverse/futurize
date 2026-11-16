@@ -100,7 +100,7 @@ Another example is:
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``future.mirai``::`[`mirai_multisession`](https://future.mirai.futureverse.org/reference/mirai_multisession.html)`)`\
 \
 `ys`` ``<-`` ``1``:``10`` ``|>`\
-`        `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``rnorm``, n ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``seed ``=`` ``TRUE``)`` ``|>`\
+`        `[`map`](https://purrr.tidyverse.org/reference/map.html)`(``rnorm``, n ``=`` ``10``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``rng ``=`` ``TRUE``)`` ``|>`\
 `        `[`map_dbl`](https://purrr.tidyverse.org/reference/map.html)`(``mean``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Supported Functions

@@ -69,8 +69,8 @@ The following **modelsummary** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`modelsummary()`](https://modelsummary.com/man/modelsummary.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`msummary()`](https://modelsummary.com/man/msummary.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 - [`modelplot()`](https://modelsummary.com/man/modelplot.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default

@@ -61,7 +61,7 @@ conditions. For example:
 `}`\
 \
 `Analyse`` ``<-`` ``function``(``condition``, ``dat``, ``fixed_objects``)`` ``{`\
-`  `[`c`](https://rdrr.io/r/base/c.html)`(``mean_est ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``dat``)``)`\
+`  `[`c`](https://rdrr.io/r/base/c.html)`(``mean_est ``=`` `[`mean`](https://rdrr.io/pkg/BiocGenerics/man/mean.html)`(``dat``)``)`\
 `}`\
 \
 `Summarise`` ``<-`` ``function``(``condition``, ``results``, ``fixed_objects``)`` ``{`\

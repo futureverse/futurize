@@ -16,7 +16,7 @@ function. Easy!
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
 \
-`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/r/base/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
+`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/pkg/BiocGenerics/man/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
 `             data ``=`` ``cbpp``, family ``=`` ``binomial``)`\
 `gm_all`` ``<-`` `[`allFit`](https://rdrr.io/pkg/lme4/man/allFit.html)`(``gm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
@@ -44,7 +44,7 @@ a model with each available optimizer, which can be done in parallel:
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
 \
 `## Fit a generalized linear mixed model`\
-`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/r/base/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
+`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/pkg/BiocGenerics/man/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
 `            data ``=`` ``cbpp``, family ``=`` ``binomial``)`\
 \
 `## Try all available optimizers`\
@@ -59,7 +59,7 @@ to
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`lme4`](https://github.com/lme4/lme4/)`)`\
 \
-`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/r/base/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
+`gm`` ``<-`` `[`glmer`](https://rdrr.io/pkg/lme4/man/glmer.html)`(`[`cbind`](https://rdrr.io/pkg/BiocGenerics/man/cbind.html)`(``incidence``, ``size`` ``-`` ``incidence``)`` ``~`` ``period`` ``+`` ``(``1`` ``|`` ``herd``)``,`\
 `            data ``=`` ``cbpp``, family ``=`` ``binomial``)`\
 `gm_all`` ``<-`` `[`allFit`](https://rdrr.io/pkg/lme4/man/allFit.html)`(``gm``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 

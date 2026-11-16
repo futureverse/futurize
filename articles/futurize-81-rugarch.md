@@ -79,25 +79,25 @@ The following **rugarch** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 - [`arfimacv()`](https://rdrr.io/pkg/rugarch/man/arfimacv.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 - [`arfimadistribution()`](https://rdrr.io/pkg/rugarch/man/arfimadistribution-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`arfimaroll()`](https://rdrr.io/pkg/rugarch/man/arfimaroll-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`autoarfima()`](https://rdrr.io/pkg/rugarch/man/autoarfima.html) with
-  `seed = TRUE` as the default
+  `rng = TRUE` as the default
 - [`multifilter()`](https://rdrr.io/pkg/rugarch/man/multifilter-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`multifit()`](https://rdrr.io/pkg/rugarch/man/multifit-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`multiforecast()`](https://rdrr.io/pkg/rugarch/man/multiforecast-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`ugarchboot()`](https://rdrr.io/pkg/rugarch/man/ugarchboot-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`ugarchdistribution()`](https://rdrr.io/pkg/rugarch/man/ugarchdistribution-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 - [`ugarchroll()`](https://rdrr.io/pkg/rugarch/man/ugarchroll-methods.html)
-  with `seed = TRUE` as the default
+  with `rng = TRUE` as the default
 
 ## Without futurize: Manual PSOCK cluster setup
 

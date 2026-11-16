@@ -132,7 +132,7 @@ can parallelize these as:
 
 The following **terra** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md),
-with `seed = TRUE` as the default:
+with `rng = TRUE` as the default:
 
 - [`app()`](https://rspatial.github.io/terra/reference/app.html)
 - [`focal()`](https://rspatial.github.io/terra/reference/focal.html)

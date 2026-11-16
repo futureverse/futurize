@@ -14,11 +14,11 @@ function. Easy!
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 [`plan`](https://future.futureverse.org/reference/plan.html)`(``multisession``)`\
-[`library`](https://rdrr.io/r/base/library.html)`(``scater``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`scater`](http://bioconductor.org/packages/scater/)`)`\
 \
-`sce`` ``<-`` ``scuttle``::``logNormCounts``(``sce``)`\
-`sce`` ``<-`` ``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
-`sce`` ``<-`` ``runUMAP``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`sce`` ``<-`` ``scuttle``::`[`logNormCounts`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)`(``sce``)`\
+`sce`` ``<-`` `[`runPCA`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`sce`` ``<-`` `[`runUMAP`](https://rdrr.io/pkg/scater/man/runUMAP.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 ## Introduction
 
@@ -32,25 +32,26 @@ be parallelized across cells.
 
 ### Example: Running PCA in parallel
 
-The `runPCA()` function performs PCA on a `SingleCellExperiment` object:
+The [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)
+function performs PCA on a `SingleCellExperiment` object:
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(``scater``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`scater`](http://bioconductor.org/packages/scater/)`)`\
 \
 `# Simulate data`\
-`sce`` ``<-`` ``scuttle``::``mockSCE``(``)`\
-`sce`` ``<-`` ``scuttle``::``logNormCounts``(``sce``)`\
+`sce`` ``<-`` ``scuttle``::`[`mockSCE`](https://rdrr.io/pkg/scuttle/man/mockSCE.html)`(``)`\
+`sce`` ``<-`` ``scuttle``::`[`logNormCounts`](https://rdrr.io/pkg/scuttle/man/logNormCounts.html)`(``sce``)`\
 \
-`sce`` ``<-`` ``runPCA``(``sce``)`
+`sce`` ``<-`` `[`runPCA`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)`(``sce``)`
 
-Here `runPCA()` runs sequentially, but we can easily make it run in
-parallel by piping to
+Here [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html) runs
+sequentially, but we can easily make it run in parallel by piping to
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`futurize`](https://futurize.futureverse.org)`)`\
 \
-`sce`` ``<-`` ``runPCA``(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+`sce`` ``<-`` `[`runPCA`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)`(``sce``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
 
 This will distribute the work across the available parallel workers,
 given that we have set up parallel workers, e.g.
@@ -77,13 +78,13 @@ and
 The following **scater** functions are supported by
 [`futurize()`](https://futurize.futureverse.org/reference/futurize.md):
 
-- `calculatePCA()`
-- `calculateTSNE()`
-- `calculateUMAP()`
-- `runPCA()`
-- `runTSNE()`
-- `runUMAP()`
-- `runColDataPCA()`
-- `nexprs()`
-- `getVarianceExplained()`
-- `plotRLE()`
+- [`calculatePCA()`](https://rdrr.io/pkg/scater/man/runPCA.html)
+- [`calculateTSNE()`](https://rdrr.io/pkg/scater/man/runTSNE.html)
+- [`calculateUMAP()`](https://rdrr.io/pkg/scater/man/runUMAP.html)
+- [`runPCA()`](https://rdrr.io/pkg/BiocSingular/man/runPCA.html)
+- [`runTSNE()`](https://rdrr.io/pkg/scater/man/runTSNE.html)
+- [`runUMAP()`](https://rdrr.io/pkg/scater/man/runUMAP.html)
+- [`runColDataPCA()`](https://rdrr.io/pkg/scater/man/runColDataPCA.html)
+- [`nexprs()`](https://rdrr.io/pkg/scater/man/nexprs.html)
+- [`getVarianceExplained()`](https://rdrr.io/pkg/scater/man/getVarianceExplained.html)
+- [`plotRLE()`](https://rdrr.io/pkg/scater/man/plotRLE.html)
