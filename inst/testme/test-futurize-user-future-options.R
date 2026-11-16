@@ -24,7 +24,7 @@ if (requireNamespace("foreach", quietly = TRUE) && requireNamespace("doFuture", 
     print(res)
     stopifnot(
       inherits(res, "error"),
-      grepl("futurize(seed = TRUE)", conditionMessage(res), fixed = TRUE)
+      grepl("futurize(rng = TRUE)", conditionMessage(res), fixed = TRUE)
     )
   }
 

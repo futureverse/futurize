@@ -99,13 +99,13 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **caret** functions are supported by `futurize()`:
 
-* `bag()` with `seed = TRUE` as the default
-* `gafs()` with `seed = TRUE` as the default
-* `nearZeroVar()` with `seed = TRUE` as the default
-* `rfe()` with `seed = TRUE` as the default
-* `safs()` with `seed = TRUE` as the default
-* `sbf()` with `seed = TRUE` as the default
-* `train()` with `seed = TRUE` as the default
+* `bag()` with `rng = TRUE` as the default
+* `gafs()` with `rng = TRUE` as the default
+* `nearZeroVar()` with `rng = TRUE` as the default
+* `rfe()` with `rng = TRUE` as the default
+* `safs()` with `rng = TRUE` as the default
+* `sbf()` with `rng = TRUE` as the default
+* `train()` with `rng = TRUE` as the default
 
 
 [caret]: https://cran.r-project.org/package=caret

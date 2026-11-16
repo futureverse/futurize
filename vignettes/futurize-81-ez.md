@@ -114,8 +114,8 @@ mean_rt_perm <- ezPerm(
 
 The following **ez** functions are supported by `futurize()`:
 
-* `ezBoot()` with `seed = TRUE` as the default
-* `ezPerm()` with `seed = TRUE` as the default
+* `ezBoot()` with `rng = TRUE` as the default
+* `ezPerm()` with `rng = TRUE` as the default
 * `ezPlot2()`
 
 

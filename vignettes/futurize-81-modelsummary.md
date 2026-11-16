@@ -85,9 +85,9 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **modelsummary** functions are supported by `futurize()`:
 
-* `modelsummary()` with `seed = TRUE` as the default
-* `msummary()` with `seed = TRUE` as the default
-* `modelplot()` with `seed = TRUE` as the default
+* `modelsummary()` with `rng = TRUE` as the default
+* `msummary()` with `rng = TRUE` as the default
+* `modelplot()` with `rng = TRUE` as the default
 
 
 [modelsummary]: https://cran.r-project.org/package=modelsummary

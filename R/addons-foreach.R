@@ -63,7 +63,7 @@ append_transpilers_for_doFuture <- function() {
       ## Assert that argument '.options.future' is not specified with %do%
       for (call in foreach_calls(expr[[2]])) {
         if (is.call(call) && !is.null(call[[".options.future"]])) {
-          stop(sprintf("Cannot futurize foreach(..., .options.future = ...) %%do%% { ... }. Instead, pass future options to futurize(), e.g. futurize(seed = TRUE): %s", paste(deparse(call), collapse = " ")))
+          stop(sprintf("Cannot futurize foreach(..., .options.future = ...) %%do%% { ... }. Instead, pass future options to futurize(), e.g. futurize(rng = TRUE): %s", paste(deparse(call), collapse = " ")))
         }
       }
 

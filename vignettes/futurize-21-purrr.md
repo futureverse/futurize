@@ -114,7 +114,7 @@ library(futurize)
 plan(future.mirai::mirai_multisession)
 
 ys <- 1:10 |>
-        map(rnorm, n = 10) |> futurize(seed = TRUE) |>
+        map(rnorm, n = 10) |> futurize(rng = TRUE) |>
         map_dbl(mean) |> futurize()
 ```
 

@@ -5,6 +5,7 @@
 \title{Options controlling resources, scheduling and evaluation of futures}
 \usage{
 futurize_options(
+  rng = FALSE,
   seed = FALSE,
   globals = TRUE,
   packages = NULL,
@@ -16,21 +17,29 @@ futurize_options(
 )
 }
 \arguments{
-\item{seed}{(resource; optional) If TRUE, the random seed, that is, the
-state of the random number generator (RNG) will be set such that
-statistically sound random numbers are produced (also during
-parallelization).
-If FALSE (default), it is assumed that the future expression neither
-needs nor uses random number generation.
-To use a fixed random seed, specify a L'Ecuyer-CMRG seed (seven integers)
-or a regular RNG seed (a single integer).  If the latter, then a
-L'Ecuyer-CMRG seed will be automatically created based on the given seed.
-Furthermore, if FALSE, then the future will be monitored to make sure it
-does not use random numbers.  If it does and depending on the value of
-option \link[future]{future.rng.onMisuse}, the check is
-ignored, an informative warning, or error will be produced.
-If \code{seed} is NULL, then the effect is as with \code{seed = FALSE}
-but without the RNG check being performed.}
+\item{rng}{(resources) If TRUE, parallel-safe random number generation
+(RNG) is set up such that each element is processed with its own,
+statistically sound RNG stream. This is needed whenever the code
+uses random numbers, e.g. via \code{rnorm()} or \code{sample()}. The results
+are reproducible given a fixed \code{set.seed()}, regardless of how
+and where the elements are processed. Currently, the L'Ecuyer-CMRG
+RNG is used for this.
+If FALSE (default), then no RNG streams are set up, and you will be
+warned if random numbers are still generated.
+If NA, then no RNG streams are set up, and there is no check for
+random numbers being generated. This can be used to silence
+false-positive RNG warnings, e.g. when the code uses random numbers
+in a way that does not affect the results. If in doubt, use
+\code{rng = TRUE}, which is always statistically sound.
+Currently, only \code{TRUE}, \code{FALSE}, and \code{NA} are supported; other
+types of values are reserved for future extensions.
+If \code{rng} is specified, then \code{seed} must not be specified.}
+
+\item{seed}{(resources) Superseded by \code{rng}, but kept for backward
+compatibility. \code{seed = TRUE}, \code{seed = FALSE}, and \code{seed = NULL} are
+equivalent to \code{rng = TRUE}, \code{rng = FALSE}, and \code{rng = NA}.
+For other values, see the \code{seed}
+argument of \code{\link[future:future]{future::future()}}.}
 
 \item{globals}{(resource; optional) a logical, a character vector, or
 a named list to control how globals are handled.
@@ -104,5 +113,8 @@ of futures are partitioned (e.g. chunking).
 \examples{
 # Default futurize options
 str(futurize_options())
+
+# Declare that parallel random number generation is needed
+str(futurize_options(rng = TRUE))
 
 }

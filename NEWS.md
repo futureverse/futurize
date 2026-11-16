@@ -1,5 +1,24 @@
 # Version (development version)
 
+## Significant Changes
+
+ * Add `futurize()` option `rng`, which declares whether parallel random
+   number generation (RNG) is needed, e.g. `lapply(xs, fcn) |>
+   futurize(rng = TRUE)`. This supersedes option `seed`, which is still
+   supported for backward compatibility, i.e. `futurize(seed = TRUE)` is
+   equivalent to `futurize(rng = TRUE)`. Options `rng` and `seed` must
+   not be specified at the same time. Currently, `rng` accepts only
+   `TRUE`, `FALSE`, and `NA`; other values are reserved for future
+   extensions.
+
+ * Use `futurize(rng = NA)` to declare that random numbers may be
+   generated, but that they do not affect the results. This silences
+   false-positive RNG-misuse warnings without setting up parallel RNG
+   streams. This is equivalent to `futurize(seed = NULL)`.
+
+ * Error messages and vignettes now suggest `futurize(rng = TRUE)`
+   instead of `futurize(seed = TRUE)`.
+
 ## New Transpilers
 
  * Add support for **mlr3** functions `resample()` and `benchmark()`.

@@ -118,7 +118,7 @@ R functions. The following **base** package functions are supported:
  * `mapply()`, `.mapply()`, `Map()`
  * `eapply()`
  * `apply()`
- * `replicate()` with `seed = TRUE` as the default
+ * `replicate()` with `rng = TRUE` as the default
  * `by()`
  * `Filter()`
 

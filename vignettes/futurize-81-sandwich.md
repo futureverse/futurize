@@ -88,8 +88,8 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **sandwich** functions are supported by `futurize()`:
 
-* `vcovBS()` with `seed = TRUE` as the default
-* `vcovJK()` with `seed = TRUE` as the default
+* `vcovBS()` with `rng = TRUE` as the default
+* `vcovJK()` with `rng = TRUE` as the default
 
 
 # Without futurize: Manual setup

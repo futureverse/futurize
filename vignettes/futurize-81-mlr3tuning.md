@@ -119,7 +119,7 @@ configurations using `mlr3::benchmark()`, which parallelizes via
 parallelizes via futures, even if mirai daemons have been set up for
 **mlr3**. Also, the `futurize()` options `globals` and `packages` are
 ignored, because **mlr3** manages those itself, and parallel random
-number generation (`seed = TRUE`) is always used.
+number generation (`rng = TRUE`) is always used.
 
 Asynchronous tuners, e.g. `tnr("async_random_search")`, are _not_
 supported. They run on **rush** workers, which do not use futures.
@@ -131,8 +131,8 @@ asynchronous tuner, an error is produced.
 
 The following **mlr3tuning** functions are supported by `futurize()`:
 
-* `tune()` with `seed = TRUE` as the default
-* `tune_nested()` with `seed = TRUE` as the default
+* `tune()` with `rng = TRUE` as the default
+* `tune_nested()` with `rng = TRUE` as the default
 
 
 [mlr3]: https://cran.r-project.org/package=mlr3

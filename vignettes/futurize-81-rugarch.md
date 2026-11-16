@@ -88,16 +88,16 @@ dist <- ugarchdistribution(fit, n.sim = 100, n.hist = 10) |> futurize()
 
 The following **rugarch** functions are supported by `futurize()`:
 
-* `arfimacv()` with `seed = TRUE` as the default
-* `arfimadistribution()` with `seed = TRUE` as the default
-* `arfimaroll()` with `seed = TRUE` as the default
-* `autoarfima()` with `seed = TRUE` as the default
-* `multifilter()` with `seed = TRUE` as the default
-* `multifit()` with `seed = TRUE` as the default
-* `multiforecast()` with `seed = TRUE` as the default
-* `ugarchboot()` with `seed = TRUE` as the default
-* `ugarchdistribution()` with `seed = TRUE` as the default
-* `ugarchroll()` with `seed = TRUE` as the default
+* `arfimacv()` with `rng = TRUE` as the default
+* `arfimadistribution()` with `rng = TRUE` as the default
+* `arfimaroll()` with `rng = TRUE` as the default
+* `autoarfima()` with `rng = TRUE` as the default
+* `multifilter()` with `rng = TRUE` as the default
+* `multifit()` with `rng = TRUE` as the default
+* `multiforecast()` with `rng = TRUE` as the default
+* `ugarchboot()` with `rng = TRUE` as the default
+* `ugarchdistribution()` with `rng = TRUE` as the default
+* `ugarchroll()` with `rng = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

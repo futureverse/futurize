@@ -115,7 +115,7 @@ The `futurize()` function supports parallelization of the following
 **foreach** functions:
 
  * `foreach(...) %do% { ... }`
- * `times(...) %do% { ... }` with `seed = TRUE` as the default
+ * `times(...) %do% { ... }` with `rng = TRUE` as the default
 
 
 # Progress Reporting via progressify

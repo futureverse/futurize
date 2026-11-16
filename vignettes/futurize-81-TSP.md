@@ -89,7 +89,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **TSP** functions are supported by `futurize()`:
 
-* `solve_TSP()` with `seed = TRUE` as the default
+* `solve_TSP()` with `rng = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

@@ -104,8 +104,8 @@ boot_params <- bootstrap_parameters(model, iterations = 1000) |> futurize()
 
 The following **parameters** functions are supported by `futurize()`:
 
-* `bootstrap_model()` with `seed = TRUE` as the default
-* `bootstrap_parameters()` with `seed = TRUE` as the default
+* `bootstrap_model()` with `rng = TRUE` as the default
+* `bootstrap_parameters()` with `rng = TRUE` as the default
 
 # Without futurize: Manual PSOCK cluster setup
 

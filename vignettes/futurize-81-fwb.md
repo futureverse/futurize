@@ -125,8 +125,8 @@ V <- vcovFWB(lm_fit, R = 999) |> futurize()
 
 The following **fwb** functions are supported by `futurize()`:
 
-* `fwb()` with `seed = TRUE` as the default
-* `vcovFWB()` with `seed = TRUE` as the default
+* `fwb()` with `rng = TRUE` as the default
+* `vcovFWB()` with `rng = TRUE` as the default
 
 
 [fwb]: https://cran.r-project.org/package=fwb

@@ -114,7 +114,7 @@ parallelize via futures, even if mirai daemons have been set up for
 
 The **mlr3** package itself decides which globals and packages to
 export to the parallel workers, and it always uses parallel random
-number generation (`seed = TRUE`). Because of this, `futurize()`
+number generation (`rng = TRUE`). Because of this, `futurize()`
 options `globals` and `packages` are ignored for **mlr3** functions.
 Other future options, e.g. `chunk_size` and `stdout`, are passed on
 as-is, e.g.
@@ -128,8 +128,8 @@ rr <- resample(task, learner, resampling) |> futurize(chunk_size = 5)
 
 The following **mlr3** functions are supported by `futurize()`:
 
-* `benchmark()` with `seed = TRUE` as the default
-* `resample()` with `seed = TRUE` as the default
+* `benchmark()` with `rng = TRUE` as the default
+* `resample()` with `rng = TRUE` as the default
 
 
 [mlr3]: https://cran.r-project.org/package=mlr3

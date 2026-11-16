@@ -71,7 +71,7 @@ merge_paropts_call <- function(paropts, options) {
   bquote(local({
     paropts <- as.list(.(paropts))
     if (".options.future" %in% names(paropts)) {
-      stop("Cannot futurize plyr functions called with .paropts = list(.options.future = ...). Instead, pass future options to futurize(), e.g. futurize(seed = TRUE)", call. = FALSE)
+      stop("Cannot futurize plyr functions called with .paropts = list(.options.future = ...). Instead, pass future options to futurize(), e.g. futurize(rng = TRUE)", call. = FALSE)
     }
     c(paropts, .(options))
   }))
