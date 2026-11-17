@@ -18,6 +18,8 @@
   functions](https://futurize.futureverse.org/articles/futurize-61-BiocParallel.md):
 - [Parallelize 'boot'
   functions](https://futurize.futureverse.org/articles/futurize-81-boot.md):
+- [Parallelize 'bumphunter'
+  functions](https://futurize.futureverse.org/articles/futurize-81-bumphunter.md):
 - [Parallelize 'caret'
   functions](https://futurize.futureverse.org/articles/futurize-81-caret.md):
 - [Parallelize 'DESeq2'

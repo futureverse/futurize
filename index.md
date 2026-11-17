@@ -241,6 +241,7 @@ Here are some examples:
 
 | Package | Functions | Requires |
 |----|----|----|
+| **[bumphunter](https://bioconductor.org/packages/bumphunter/)** | `bumphunter()`, `bumphunterEngine()`, `smoother()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[DESeq2](https://bioconductor.org/packages/DESeq2/)** | `DESeq()`, `lfcShrink()`, `results()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[fgsea](https://bioconductor.org/packages/fgsea/)** | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture](https://doFuture.futureverse.org)** |
 | **[GenomicAlignments](https://bioconductor.org/packages/GenomicAlignments/)** | `summarizeOverlaps()` | **[doFuture](https://doFuture.futureverse.org)** |
@@ -258,6 +259,8 @@ for parallel transpilation.*
 
 Here are some examples:
 
+\
+`bumps`` ``<-`` ``bumphunter``::``bumphunter``(``mat``, ``design``, chr ``=`` ``chr``, pos ``=`` ``pos``, cutoff ``=`` ``0.5``, B ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `dds`` ``<-`` ``DESeq2``::`[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \

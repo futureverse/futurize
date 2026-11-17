@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-bioc-focus" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Bioc focus</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-bioc-focus"><li><h6 class="dropdown-header" data-toc-skip>Bioconductor packages supporting futurize()</h6></li>
     <li><a class="dropdown-item" href="../articles/futurize-61-BiocParallel.html">Parallelize 'BiocParallel' functions</a></li>
+    <li><a class="dropdown-item" href="../articles/futurize-81-bumphunter.html">Parallelize 'bumphunter' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-DESeq2.html">Parallelize 'DESeq2' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-fgsea.html">Parallelize 'fgsea' functions</a></li>
     <li><a class="dropdown-item" href="../articles/futurize-81-GenomicAlignments.html">Parallelize 'GenomicAlignments' functions</a></li>
@@ -139,7 +140,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-transpilers-development-version">New Transpilers<a class="anchor" aria-label="anchor" href="#new-transpilers-development-version"></a></h3>
-<ul><li><p>Add support for <strong>mlr3</strong> functions <code><a href="https://rspatial.github.io/terra/reference/resample.html" class="external-link">resample()</a></code> and <code><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark()</a></code>.</p></li>
+<ul><li><p>Add support for Bioconductor package <strong>bumphunter</strong>, e.g. <code>bumps &lt;- bumphunter(mat, design, chr = chr, pos = pos, cutoff = 0.5, B = 100) |&gt; futurize()</code>.</p></li>
+<li><p>Add support for <strong>mlr3</strong> functions <code><a href="https://rspatial.github.io/terra/reference/resample.html" class="external-link">resample()</a></code> and <code><a href="https://mlr3.mlr-org.com/reference/benchmark.html" class="external-link">benchmark()</a></code>.</p></li>
 <li><p>Add support for <strong>mlr3tuning</strong> functions <code><a href="https://mlr3tuning.mlr-org.com/reference/tune.html" class="external-link">tune()</a></code> and <code><a href="https://mlr3tuning.mlr-org.com/reference/tune_nested.html" class="external-link">tune_nested()</a></code>, when using batch tuners. Asynchronous tuners are not supported, because they do not use futures.</p></li>
 <li><p>Add support for new <strong>GSVA</strong> (&gt;= 2.7.25) functions <code>gsvaRowNorm()</code>, <code>gsvaColRanks()</code>, and <code>gsvaColScores()</code>.</p></li>
 </ul></div>

@@ -24,6 +24,9 @@
 
 ### New Transpilers
 
+- Add support for Bioconductor package **bumphunter**,
+  e.g. `bumps <- bumphunter(mat, design, chr = chr, pos = pos, cutoff = 0.5, B = 100) |> futurize()`.
+
 - Add support for **mlr3** functions
   [`resample()`](https://rspatial.github.io/terra/reference/resample.html)
   and
