@@ -125,6 +125,27 @@ The following **stats** package function is also supported:
 
 - [`kernapply()`](https://rdrr.io/r/stats/kernapply.html)
 
+These functions are futurized via the
+**[future.apply](https://future.apply.futureverse.org/)** package,
+e.g. `lapply(xs, fcn) |> futurize()` is evaluated as
+`future.apply::future_lapply(xs, fcn, ...)`. Because of this, the
+**future.apply** package must be installed for
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+to work.
+
+If you use
+[`futurize()`](https://futurize.futureverse.org/reference/futurize.md)
+in a package, the package must (1) declare **future.apply** as a
+dependency too, e.g.
+
+    Imports:
+        futurize,
+        future.apply
+
+in the package `DESCRIPTION` file. It must also (2) import one of its
+functions in the package `NAMESPACE` file, e.g.
+`importFrom(future.apply, future_lapply)`.
+
 ## Progress Reporting via progressify
 
 The **[progressify](https://progressify.futureverse.org/)** package is

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -260,6 +260,25 @@ futurization should be disabled and enabled. A package must <em>never</em>
 disable or enable futurization.</p>
     </div>
     <div class="section level2">
+    <h2 id="required-packages">Required packages<a class="anchor" aria-label="anchor" href="#required-packages"></a></h2>
+
+
+<p>Futurization of a function call is in some cases done via a package
+that implements the corresponding future-based alternative. For
+example, <code>lapply(xs, fcn) |&gt; futurize()</code> is futurized via
+<code><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future.apply::future_lapply()</a></code>, and <code>purrr::map(xs, fcn) |&gt; futurize()</code>
+via <code><a href="https://furrr.futureverse.org/reference/future_map.html" class="external-link">furrr::future_map()</a></code>. These packages must be installed for
+<code>futurize()</code> to work.</p>
+<p>If you use <code>futurize()</code> in a package, the package must (1) declare
+these required packages as dependencies too, e.g.</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>Imports<span class="sc">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    futurize,</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    future.apply</span></code></pre><p></p></div>
+<p>in the package <code>DESCRIPTION</code> file. It must also (2) import one of its
+functions in the package <code>NAMESPACE</code> file, e.g.
+<code>importFrom(future.apply, future_lapply)</code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="future-labels">Future labels<a class="anchor" aria-label="anchor" href="#future-labels"></a></h2>
 
 
@@ -295,6 +314,8 @@ To see which functions a specific package supports, use
 <span class="r-in"><span><span class="co"># ------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># Base R apply functions</span></span></span>
 <span class="r-in"><span><span class="co"># ------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"future.apply"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sequential lapply()</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">xs</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
@@ -305,6 +326,8 @@ To see which functions a specific package supports, use
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">futurize</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co">## if (require ...)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : int 3</span>

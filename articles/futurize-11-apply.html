@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -298,6 +298,19 @@ supported:</p>
 <ul>
 <li><code><a href="https://rdrr.io/r/stats/kernapply.html" class="external-link">kernapply()</a></code></li>
 </ul>
+<p>These functions are futurized via the <strong><a href="https://future.apply.futureverse.org/" class="external-link">future.apply</a></strong>
+package, e.g. <code>lapply(xs, fcn) |&gt; futurize()</code> is evaluated
+as <code>future.apply::future_lapply(xs, fcn, ...)</code>. Because of
+this, the <strong>future.apply</strong> package must be installed for
+<code><a href="../reference/futurize.html">futurize()</a></code> to work.</p>
+<p>If you use <code><a href="../reference/futurize.html">futurize()</a></code> in a package, the package must (1)
+declare <strong>future.apply</strong> as a dependency too, e.g.</p>
+<pre><code>Imports:
+    futurize,
+    future.apply</code></pre>
+<p>in the package <code>DESCRIPTION</code> file. It must also (2) import
+one of its functions in the package <code>NAMESPACE</code> file, e.g.
+<code>importFrom(future.apply, future_lapply)</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="progress-reporting-via-progressify">Progress Reporting via progressify<a class="anchor" aria-label="anchor" href="#progress-reporting-via-progressify"></a>
@@ -314,7 +327,7 @@ instantly. What is unique about <strong>progressify</strong> is that it
 adds progress reporting to your existing code without you having to
 change your code.</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://futurize.futureverse.org">futurize</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://progressify.futureverse.org" class="external-link">progressify</a></span><span class="op">)</span></span>
@@ -341,12 +354,12 @@ These S4 generic functions override the non-generic, counterpart
 functions in the <strong>base</strong> package, which are only used as a
 fallback if there is no matching method. For example, in a vanilla R
 session we have that both of the following calls are identical:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y_0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span>
 <span><span class="va">y_1</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
 <p>However, if we attach the <strong>BiocGenerics</strong> package, we
 have that the following two calls are identical:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/BiocGenerics" class="external-link">BiocGenerics</a></span><span class="op">)</span></span>
 <span><span class="va">y_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span>
 <span><span class="va">y_3</span> <span class="op">&lt;-</span> <span class="fu">BiocGenerics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span></span></code></pre></div>
@@ -354,21 +367,21 @@ have that the following two calls are identical:</p>
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::lapply()</a></code>, but the one defined by
 <strong>BiocGenerics</strong>, which masks the one in
 <strong>base</strong>. We can see this with:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/apropos.html" class="external-link">find</a></span><span class="op">(</span><span class="st">"lapply"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "package:BiocGenerics" "package:base" </span></span></code></pre></div>
 <p>This matters in the context of <strong>futurize</strong>. With
 <strong>BiocGenerics</strong> attached, <code><a href="../reference/futurize.html">futurize()</a></code>
 identifies which method <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code> dispatches to. If it is
 the <strong>base</strong> fallback, as for <code>1:3</code>, then</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>is futurized as if we had called
 <code>base::lapply(1:3, sqrt)</code>. However, if the object has its own
 <code><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply()</a></code> method, such as a <code>List</code> of the
 <strong>S4Vectors</strong> package, then that method cannot be
 futurized, e.g.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/S4Vectors" class="external-link">S4Vectors</a></span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/List-class.html" class="external-link">List</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, b <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">sum</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -381,7 +394,7 @@ argument to a basic R object</code></pre>
 <p>The solution is to coerce the object to a regular list and specify
 that it is the <strong>base</strong> version we wish to futurize,
 i.e.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

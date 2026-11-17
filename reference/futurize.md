@@ -143,6 +143,27 @@ only the end-user that may control whether futurization should be
 disabled and enabled. A package must *never* disable or enable
 futurization.
 
+## Required packages
+
+Futurization of a function call is in some cases done via a package that
+implements the corresponding future-based alternative. For example,
+`lapply(xs, fcn) |> futurize()` is futurized via
+[`future.apply::future_lapply()`](https://future.apply.futureverse.org/reference/future_lapply.html),
+and `purrr::map(xs, fcn) |> futurize()` via
+[`furrr::future_map()`](https://furrr.futureverse.org/reference/future_map.html).
+These packages must be installed for `futurize()` to work.
+
+If you use `futurize()` in a package, the package must (1) declare these
+required packages as dependencies too, e.g.
+
+    Imports:
+        futurize,
+        future.apply
+
+in the package `DESCRIPTION` file. It must also (2) import one of its
+functions in the package `NAMESPACE` file, e.g.
+`importFrom(future.apply, future_lapply)`.
+
 ## Future labels
 
 Futures created by `futurize()` are labeled automatically, so that each
@@ -184,6 +205,8 @@ xs <- list(1, 1:2, 1:2, 1:5)
 # ------------------------------------------
 # Base R apply functions
 # ------------------------------------------
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 # Sequential lapply()
 y <- lapply(X = xs, FUN = function(x) {
   sum(x)
@@ -194,6 +217,8 @@ y <- lapply(X = xs, FUN = function(x) {
   sum(x)
 }) |> futurize()
 str(y)
+
+} ## if (require ...)
 #> List of 4
 #>  $ : num 1
 #>  $ : int 3
