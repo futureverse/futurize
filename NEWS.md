@@ -19,11 +19,6 @@
  * Error messages and vignettes now suggest `futurize(rng = TRUE)`
    instead of `futurize(seed = TRUE)`.
 
- * RNG-misuse warnings and errors from futurized calls now suggest
-   `futurize(rng = TRUE)` and `futurize(rng = NA)`, instead of
-   backend-specific instructions such as `future.seed = TRUE` or
-   `.options.future = list(seed = TRUE)`.
-
 ## New Transpilers
 
  * Add support for **mlr3** functions `resample()` and `benchmark()`.
