@@ -27,6 +27,42 @@ res <- tryCatch({
 }, error = identity)
 stopifnot(inherits(res, "error"))
 
+message("*** futurize(rng = FALSE) - RNG misuse suggests futurize(rng = TRUE)")
+stopifnot(grepl("futurize(rng = TRUE)", conditionMessage(res), fixed = TRUE))
+stopifnot(!grepl("future.seed", conditionMessage(res), fixed = TRUE))
+oopts <- options(future.rng.onMisuse = "warning")
+res <- tryCatch({
+  lapply(xs, fcn) |> futurize(rng = FALSE)
+}, warning = identity)
+options(oopts)
+print(res)
+stopifnot(
+  inherits(res, "RngFutureWarning"),
+  grepl("futurize(rng = TRUE)", conditionMessage(res), fixed = TRUE),
+  grepl("futurize(rng = NA)", conditionMessage(res), fixed = TRUE)
+)
+
+## Also for futurized purrr::map(), whose RNG-misuse condition is
+## produced by 'future' itself
+if (requireNamespace("furrr", quietly = TRUE)) {
+  res <- tryCatch({
+    purrr::map(xs, fcn) |> futurize(rng = FALSE)
+  }, error = identity)
+  print(res)
+  msg <- conditionMessage(res)
+  stopifnot(
+    grepl("futurize(rng = TRUE)", msg, fixed = TRUE),
+    !grepl("'seed'", msg, fixed = TRUE)
+  )
+}
+
+## Also with a user-specified future label
+res <- tryCatch({
+  lapply(xs, fcn) |> futurize(rng = FALSE, label = "my-%d")
+}, error = identity)
+print(res)
+stopifnot(grepl("futurize(rng = TRUE)", conditionMessage(res), fixed = TRUE))
+
 message("*** futurize(rng = FALSE) - overrides transpiler default")
 ## replicate() is futurized with seed = TRUE by default
 y <- replicate(2L, 42) |> futurize(rng = FALSE)
@@ -91,6 +127,7 @@ res <- tryCatch({
   foreach(x = 1:4) %do% rnorm(1L) |> futurize(rng = FALSE)
 }, error = identity)
 stopifnot(inherits(res, "error"))
+stopifnot(grepl("futurize(rng = TRUE)", conditionMessage(res), fixed = TRUE))
 
 y <- foreach(x = 1:4) %do% rnorm(1L) |> futurize(rng = NA)
 stopifnot(length(y) == 4L)

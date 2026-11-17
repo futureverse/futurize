@@ -166,10 +166,57 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
   disable <- !isTRUE(getOption("futurize.enable", TRUE))
   
-  transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, disable = disable, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
+  ## Adjust RNG-misuse warnings and errors to suggest futurize() options
+  withCallingHandlers({
+    transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, disable = disable, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
+  }, RngFutureCondition = function(cond) {
+    cond2 <- futurize_rng_condition(cond)
+    if (is.null(cond2)) return()
+    if (inherits(cond2, "warning")) {
+      warning(cond2)
+      invokeRestart("muffleWarning")
+    } else if (inherits(cond2, "error")) {
+      stop(cond2)
+    }
+  })
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 
 
 #' @export
 fz <- futurize
+
+
+#' Rewrite an RNG-misuse condition to suggest futurize() options
+#'
+#' @param cond An `RngFutureCondition`.
+#'
+#' @return
+#' A modified copy of `cond`, where the instructions on how to fix or
+#' disable the RNG check refer to `futurize(rng = TRUE)` and
+#' `futurize(rng = NA)`. If `cond` has already been rewritten, e.g. by
+#' a nested futurize() call, then NULL is returned.
+#'
+#' @details
+#' We cannot rely on future labels to identify futures created by
+#' futurize(), because the user may override the default `fz:` labels
+#' via `futurize(label = ...)`.
+#'
+#' @noRd
+futurize_rng_condition <- function(cond) {
+  msg <- conditionMessage(cond)
+  if (grepl("futurize(rng = TRUE)", msg, fixed = TRUE)) return(NULL)
+
+  ## future's default message refers to future() argument 'seed'
+  msg <- sub(" without specifying argument 'seed'", " without declaring so", msg, fixed = TRUE)
+
+  advice <- "To fix this, use 'futurize(rng = TRUE)'. This ensures that proper, parallel-safe random numbers are produced. To disable this check, use 'futurize(rng = NA)'."
+  pattern <- "To fix this,.*$"
+  if (grepl(pattern, msg)) {
+    msg <- sub(pattern, advice, msg)
+  } else {
+    msg <- paste(msg, advice)
+  }
+  cond[["message"]] <- msg
+  cond
+}
