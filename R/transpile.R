@@ -367,10 +367,26 @@ get_transpiler <- function(expr, envir = parent.frame(), unwrap = list(), type, 
     ## tryCatch() is needed for cases where a package re-exports a generic
     ## from another package, e.g. scater::runPCA() is a re-export of
     ## BiocSingular::runPCA()
+    ##
+    ## If a factory function fails because a package it needs is not
+    ## available, e.g. 'future.apply' for base::lapply(), then we
+    ## report on that
     req_pkgs <- tryCatch(
       transpilers_for_package(type = type, package = ns_name, action = "make", debug = debug),
+      packageNotFoundError = identity,
       error = function(e) NULL
     )
+    
+    if (inherits(req_pkgs, "packageNotFoundError")) {
+      pkg <- req_pkgs[["package"]]
+      info <- if (grepl("^%.*%$", fcn_name)) {
+        sprintf("%s::`%s`", ns_name, fcn_name)
+      } else {
+        sprintf("%s::%s()", ns_name, fcn_name)
+      }
+      stop(sprintf("Please install %s in order to %s %s. If this is called from a package, make sure that package declares %s as a dependency",
+           sQuote(pkg), what, info, sQuote(pkg)))
+    }
     if (!is.null(req_pkgs)) {
       if (debug) {
         mdebugf("Required packages: [n=%d] %s", length(req_pkgs), commaq(req_pkgs))
