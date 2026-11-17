@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>Printing a futurized call with an argument set to <code>NULL</code>, e.g. <code>futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)</code>, gave an error on “subscript out of bounds”.</p></li>
+<ul><li><p>If a package required for futurization was not available, e.g. <strong>future.apply</strong> for <code>lapply(xs, fcn) |&gt; futurize()</code>, the error message was the misleading “Function base::lapply() is not in one of the registered futurize namespaces”. This could happen during <code>R CMD check</code> of a package that uses <strong>futurize</strong> without declaring <strong>future.apply</strong> as a dependency. Now the error message says which package is missing.</p></li>
+<li><p>Printing a futurized call with an argument set to <code>NULL</code>, e.g. <code>futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)</code>, gave an error on “subscript out of bounds”.</p></li>
 <li><p>Futurization of <strong>GSVA</strong> functions works again, but it requires <strong>GSVA</strong> (&lt; 2.7.0) or <strong>GSVA</strong> (&gt;= 2.7.25).</p></li>
 </ul></div>
 <div class="section level3">

@@ -43,6 +43,14 @@
 
 ### Bug Fixes
 
+- If a package required for futurization was not available, e.g.
+  **future.apply** for `lapply(xs, fcn) |> futurize()`, the error
+  message was the misleading “Function base::lapply() is not in one of
+  the registered futurize namespaces”. This could happen during
+  `R CMD check` of a package that uses **futurize** without declaring
+  **future.apply** as a dependency. Now the error message says which
+  package is missing.
+
 - Printing a futurized call with an argument set to `NULL`, e.g.
   `futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)`, gave an error
   on “subscript out of bounds”.
