@@ -119,6 +119,28 @@
 #' disable or enable futurization.
 #'
 #'
+#' @section Required packages:
+#' Futurization of a function call is in some cases done via a package
+#' that implements the corresponding future-based alternative. For
+#' example, `lapply(xs, fcn) |> futurize()` is futurized via
+#' `future.apply::future_lapply()`, and `purrr::map(xs, fcn) |> futurize()`
+#' via `furrr::future_map()`. These packages must be installed for
+#' `futurize()` to work.
+#'
+#' If you use `futurize()` in a package, the package must (1) declare
+#' these required packages as dependencies too, e.g.
+#'
+#' ```
+#' Imports:
+#'     futurize,
+#'     future.apply
+#' ```
+#'
+#' in the package `DESCRIPTION` file. It must also (2) import one of its
+#' functions in the package `NAMESPACE` file, e.g.
+#' `importFrom(future.apply, future_lapply)`.
+#'
+#'
 #' @section Future labels:
 #' Futures created by `futurize()` are labeled automatically, so that
 #' each future identifies the package and function that created it, e.g.

@@ -134,6 +134,28 @@ futurization should be disabled and enabled. A package must \emph{never}
 disable or enable futurization.
 }
 
+\section{Required packages}{
+
+Futurization of a function call is in some cases done via a package
+that implements the corresponding future-based alternative. For
+example, \code{lapply(xs, fcn) |> futurize()} is futurized via
+\code{future.apply::future_lapply()}, and \code{purrr::map(xs, fcn) |> futurize()}
+via \code{furrr::future_map()}. These packages must be installed for
+\code{futurize()} to work.
+
+If you use \code{futurize()} in a package, the package must (1) declare
+these required packages as dependencies too, e.g.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Imports:
+    futurize,
+    future.apply
+}\if{html}{\out{</div>}}
+
+in the package \code{DESCRIPTION} file. It must also (2) import one of its
+functions in the package \code{NAMESPACE} file, e.g.
+\code{importFrom(future.apply, future_lapply)}.
+}
+
 \section{Future labels}{
 
 Futures created by \code{futurize()} are labeled automatically, so that
@@ -168,6 +190,8 @@ xs <- list(1, 1:2, 1:2, 1:5)
 # ------------------------------------------
 # Base R apply functions
 # ------------------------------------------
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 # Sequential lapply()
 y <- lapply(X = xs, FUN = function(x) {
   sum(x)
@@ -178,6 +202,8 @@ y <- lapply(X = xs, FUN = function(x) {
   sum(x)
 }) |> futurize()
 str(y)
+
+} ## if (require ...)
 
 
 # ------------------------------------------

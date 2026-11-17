@@ -128,6 +128,24 @@ The following **stats** package function is also supported:
 
  * `kernapply()`
 
+These functions are futurized via the **[future.apply]** package,
+e.g. `lapply(xs, fcn) |> futurize()` is evaluated as
+`future.apply::future_lapply(xs, fcn, ...)`. Because of this, the
+**future.apply** package must be installed for `futurize()` to work.
+
+If you use `futurize()` in a package, the package must (1) declare
+**future.apply** as a dependency too, e.g.
+
+```
+Imports:
+    futurize,
+    future.apply
+```
+
+in the package `DESCRIPTION` file. It must also (2) import one of its
+functions in the package `NAMESPACE` file, e.g.
+`importFrom(future.apply, future_lapply)`.
+
 
 # Progress Reporting via progressify
 
@@ -237,5 +255,6 @@ y <- base::lapply(as.list(x), sum) |> futurize()
 
 
 [progressify]: https://progressify.futureverse.org/
+[future.apply]: https://future.apply.futureverse.org/
 [other parallel backends]: https://www.futureverse.org/backends.html
 [BiocGenerics]: https://www.bioconductor.org/packages/BiocGenerics/
