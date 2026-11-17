@@ -92,6 +92,8 @@ articles-bioc:
   - text: "Bioconductor packages supporting futurize()"
   - text: Parallelize 'BiocParallel' functions
     href: articles/futurize-61-BiocParallel.html
+  - text: Parallelize 'bumphunter' functions
+    href: articles/futurize-81-bumphunter.html
   - text: Parallelize 'DESeq2' functions
     href: articles/futurize-81-DESeq2.html
   - text: Parallelize 'fgsea' functions

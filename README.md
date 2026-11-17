@@ -243,6 +243,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 
 | Package                    | Functions                                                                 | Requires           |
 |----------------------------|---------------------------------------------------------------------------|--------------------|
+| **[bumphunter]**           | `bumphunter()`, `bumphunterEngine()`, `smoother()`                        | **[doFuture]**     |
 | **[DESeq2]**               | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
 | **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[GenomicAlignments]**    | `summarizeOverlaps()`                                                     | **[doFuture]**     |
@@ -260,6 +261,8 @@ currently supported by `futurize()` for parallel transpilation._
 Here are some examples:
 
 ```r
+bumps <- bumphunter::bumphunter(mat, design, chr = chr, pos = pos, cutoff = 0.5, B = 100) |> futurize()
+
 dds <- DESeq2::DESeq(dds) |> futurize()
 
 res <- fgsea::fgsea(pathways, stats) |> futurize()
@@ -288,6 +291,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [doFuture]: https://doFuture.futureverse.org
 [TSP]: https://cran.r-project.org/package=TSP
 [boot]: https://cran.r-project.org/package=boot
+[bumphunter]: https://bioconductor.org/packages/bumphunter/
 [caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
 [DESeq2]: https://bioconductor.org/packages/DESeq2/

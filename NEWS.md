@@ -21,6 +21,10 @@
 
 ## New Transpilers
 
+ * Add support for Bioconductor package **bumphunter**, e.g. `bumps <-
+   bumphunter(mat, design, chr = chr, pos = pos, cutoff = 0.5, B = 100)
+   |> futurize()`.
+
  * Add support for **mlr3** functions `resample()` and `benchmark()`.
 
  * Add support for **mlr3tuning** functions `tune()` and

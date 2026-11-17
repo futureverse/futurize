@@ -55,6 +55,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "vegan",          append_transpilers_for_vegan)
 
   ## Domain-specific Bioconductor packages
+  transpilers_for_package("futurize::add-on", package = "bumphunter",           append_transpilers_for_bumphunter)
   transpilers_for_package("futurize::add-on", package = "DESeq2",               append_transpilers_for_DESeq2)
   transpilers_for_package("futurize::add-on", package = "fgsea",                append_transpilers_for_fgsea)
   transpilers_for_package("futurize::add-on", package = "GenomicAlignments",    append_transpilers_for_GenomicAlignments)
