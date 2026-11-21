@@ -279,3 +279,19 @@ Here are some examples:
 `result`` ``<-`` ``SingleCellExperiment``::`[`applySCE`](https://rdrr.io/pkg/SingleCellExperiment/man/applySCE.html)`(``sce``, ``scuttle``::`[`perFeatureQCMetrics`](https://rdrr.io/pkg/scuttle/man/perFeatureQCMetrics.html)`)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 `  `\
 `adjusted`` ``<-`` ``sva``::`[`ComBat`](https://rdrr.io/pkg/sva/man/ComBat.html)`(``dat ``=`` ``dat``, batch ``=`` ``batch``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`
+
+## Installation
+
+R package futurize is available on
+[CRAN](https://cran.r-project.org/package=futurize) and can be installed
+in R as:
+
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"futurize"``)`
+
+### Pre-release version
+
+To install the pre-release version, use:
+
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"futurize"``, repos ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"https://futureverse-devel.r-universe.dev"``, ``"https://cloud.r-project.org"``)``)`
