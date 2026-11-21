@@ -284,6 +284,24 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 
 
 
+## Installation
+
+R package futurize is available on [CRAN](https://cran.r-project.org/package=futurize) and can be installed in R as:
+
+```r
+install.packages("futurize")
+```
+
+
+### Pre-release version
+
+To install the pre-release version, use:
+
+```r
+install.packages("futurize", repos = c("https://futureverse-devel.r-universe.dev", "https://cloud.r-project.org"))
+```
+
+
 [futureverse]: https://www.futureverse.org
 [future]: https://future.futureverse.org
 [future.apply]: https://future.apply.futureverse.org
