@@ -57,7 +57,7 @@
    `standardGeneric`, which will be removed in R (>= 4.7.0).
 
 
-# Version 1.1.0 (2026-10-18)
+# Version 1.1.0 [2026-10-19]
 
 ## Significant Changes
 
@@ -129,7 +129,7 @@
    e.g. `plan(sequential)`.
 
 
-# Version 1.0.0 (2026-06-11)
+# Version 1.0.0 [2026-06-12]
 
 ## Significant Changes
 
@@ -332,7 +332,7 @@ for futurizing many more packages going forward.
 This is the first version submitted to CRAN.
 
 
-# Version 0.0.6 (2026-01-14)
+# Version 0.0.6 [2026-01-14]
 
 ## New Transpilers
 
@@ -357,7 +357,7 @@ This is the first version submitted to CRAN.
    (e.g. `%do%`) and functions (e.g. `lapply()`).
 
 
-# Version 0.0.5 (2025-11-26)
+# Version 0.0.5 [2025-11-26]
 
 ## New Features
 
@@ -367,7 +367,7 @@ This is the first version submitted to CRAN.
    `local({ lapply(x, f) |> futurize() })`.
 
 
-# Version 0.0.4 (2025-09-26)
+# Version 0.0.4 [2025-09-26]
 
 ## New Transpilers
 
@@ -386,7 +386,7 @@ This is the first version submitted to CRAN.
    enabling futurizing of calls.
 
  
-# Version 0.0.3 (2025-08-20)
+# Version 0.0.3 [2025-08-20]
 
 ## New Transpilers
 
@@ -408,7 +408,7 @@ This is the first version submitted to CRAN.
    the futurized expression instead of evaluating it.
  
 
-# Version 0.0.2 (2025-05-23)
+# Version 0.0.2 [2025-05-23]
 
 The **futurize** package unifies our current **future.apply**,
 **furrr**, and **doFuture** solutions into a minimal, unified
@@ -451,7 +451,7 @@ and how output and conditions are relayed, among other things.
    allFit(gm) |> futurize()`.
 
  
-# Version 0.0.1 (2025-03-07)
+# Version 0.0.1 [2025-03-07]
 
 ## New Features
 
