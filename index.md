@@ -260,7 +260,7 @@ for parallel transpilation.*
 Here are some examples:
 
 \
-`bumps`` ``<-`` ``bumphunter``::``bumphunter``(``mat``, ``design``, chr ``=`` ``chr``, pos ``=`` ``pos``, cutoff ``=`` ``0.5``, B ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
+`bumps`` ``<-`` ``bumphunter``::`[`bumphunter`](https://rdrr.io/pkg/bumphunter/man/bumphunter.html)`(``mat``, ``design``, chr ``=`` ``chr``, pos ``=`` ``pos``, cutoff ``=`` ``0.5``, B ``=`` ``100``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \
 `dds`` ``<-`` ``DESeq2``::`[`DESeq`](https://rdrr.io/pkg/DESeq2/man/DESeq.html)`(``dds``)`` ``|>`` `[`futurize`](https://futurize.futureverse.org/reference/futurize.md)`(``)`\
 \

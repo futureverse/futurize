@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">futurize</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0-9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -684,7 +684,7 @@
 <p><em>Table 3: Bioconductor packages with domain-specific functions currently supported by <code><a href="reference/futurize.html">futurize()</a></code> for parallel transpilation.</em></p>
 <p>Here are some examples:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bumps</span> <span class="op">&lt;-</span> <span class="fu">bumphunter</span><span class="fu">::</span><span class="fu">bumphunter</span><span class="op">(</span><span class="va">mat</span>, <span class="va">design</span>, chr <span class="op">=</span> <span class="va">chr</span>, pos <span class="op">=</span> <span class="va">pos</span>, cutoff <span class="op">=</span> <span class="fl">0.5</span>, B <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">bumps</span> <span class="op">&lt;-</span> <span class="fu">bumphunter</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bumphunter/man/bumphunter.html" class="external-link">bumphunter</a></span><span class="op">(</span><span class="va">mat</span>, <span class="va">design</span>, chr <span class="op">=</span> <span class="va">chr</span>, pos <span class="op">=</span> <span class="va">pos</span>, cutoff <span class="op">=</span> <span class="fl">0.5</span>, B <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dds</span> <span class="op">&lt;-</span> <span class="fu">DESeq2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="va">dds</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/futurize.html">futurize</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
