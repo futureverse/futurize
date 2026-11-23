@@ -127,7 +127,7 @@ res <- app(r, fun = function(v) sum(v)) |> futurize()
 # Supported Functions
 
 The following **terra** functions are supported by `futurize()`, with
-`seed = TRUE` as the default:
+`rng = TRUE` as the default:
 
 * `app()`
 * `focal()`

@@ -94,7 +94,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **SuperLearner** functions are supported by `futurize()`:
 
-* `CV.SuperLearner()` with `seed = TRUE` as the default
+* `CV.SuperLearner()` with `rng = TRUE` as the default
 
 [SuperLearner]: https://cran.r-project.org/package=SuperLearner
 [other parallel backends]: https://www.futureverse.org/backends.html

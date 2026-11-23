@@ -119,6 +119,55 @@
 #' disable or enable futurization.
 #'
 #'
+#' @section Required packages:
+#' Futurization of a function call is in some cases done via a package
+#' that implements the corresponding future-based alternative. For
+#' example, `lapply(xs, fcn) |> futurize()` is futurized via
+#' `future.apply::future_lapply()`, and `purrr::map(xs, fcn) |> futurize()`
+#' via `furrr::future_map()`. These packages must be installed for
+#' `futurize()` to work.
+#'
+#' If you use `futurize()` in a package, the package must (1) declare
+#' these required packages as dependencies too, e.g.
+#'
+#' ```
+#' Imports:
+#'     futurize,
+#'     future.apply
+#' ```
+#'
+#' in the package `DESCRIPTION` file. It must also (2) import one of its
+#' functions in the package `NAMESPACE` file, e.g.
+#' `importFrom(future.apply, future_lapply)`.
+#'
+#'
+#' @section Future labels:
+#' Futures created by `futurize()` are labeled automatically, so that
+#' each future identifies the package and function that created it, e.g.
+#' in error messages, event logs, and tools that inspect futures. The
+#' default labels follow the convention:
+#'
+#'  * `fz:<package>::<function>-%d` if the call is evaluated by several
+#'    futures, e.g. one per chunk, where `%d` is replaced by the index of
+#'    the future
+#'  * `fz:<package>::<function>` if the call is evaluated by a single
+#'    future
+#'
+#' For example, `lapply(xs, fcn) |> futurize()` labels its futures
+#' `fz:base::lapply-1`, `fz:base::lapply-2`, and so on, and
+#' `boot::boot()` is labeled `fz:boot::boot`. The `fz:` prefix
+#' identifies futures that were created by `futurize()`.
+#'
+#' To use a different label, specify argument `label`, which takes
+#' precedence over the default label. For example,
+#'
+#' ```r
+#' y <- lapply(xs, fcn) |> futurize(label = "my-analysis-%d")
+#' ```
+#'
+#' labels the futures `my-analysis-1`, `my-analysis-2`, and so on.
+#'
+#'
 #' @example incl/futurize.R
 #'
 #' @seealso
@@ -139,10 +188,57 @@ futurize <- function(expr, substitute = TRUE, options = futurize_options(...), .
 
   disable <- !isTRUE(getOption("futurize.enable", TRUE))
   
-  transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, disable = disable, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
+  ## Adjust RNG-misuse warnings and errors to suggest futurize() options
+  withCallingHandlers({
+    transpile(expr, substitute = FALSE, options = options, when = when, eval = eval, disable = disable, type = "futurize::add-on", envir = envir, what = "futurize", debug = debug)
+  }, RngFutureCondition = function(cond) {
+    cond2 <- futurize_rng_condition(cond)
+    if (is.null(cond2)) return()
+    if (inherits(cond2, "warning")) {
+      warning(cond2)
+      invokeRestart("muffleWarning")
+    } else if (inherits(cond2, "error")) {
+      stop(cond2)
+    }
+  })
 } ## futurize()
 class(futurize) <- c("transpiler", class(futurize))
 
 
 #' @export
 fz <- futurize
+
+
+#' Rewrite an RNG-misuse condition to suggest futurize() options
+#'
+#' @param cond An `RngFutureCondition`.
+#'
+#' @return
+#' A modified copy of `cond`, where the instructions on how to fix or
+#' disable the RNG check refer to `futurize(rng = TRUE)` and
+#' `futurize(rng = NA)`. If `cond` has already been rewritten, e.g. by
+#' a nested futurize() call, then NULL is returned.
+#'
+#' @details
+#' We cannot rely on future labels to identify futures created by
+#' futurize(), because the user may override the default `fz:` labels
+#' via `futurize(label = ...)`.
+#'
+#' @noRd
+futurize_rng_condition <- function(cond) {
+  msg <- conditionMessage(cond)
+  if (grepl("futurize(rng = TRUE)", msg, fixed = TRUE)) return(NULL)
+
+  ## future's default message refers to future() argument 'seed'
+  msg <- sub(" without specifying argument 'seed'", " without declaring so", msg, fixed = TRUE)
+
+  advice <- "To fix this, use 'futurize(rng = TRUE)'. This ensures that proper, parallel-safe random numbers are produced. To disable this check, use 'futurize(rng = NA)'."
+  pattern <- "To fix this,.*$"
+  if (grepl(pattern, msg)) {
+    msg <- sub(pattern, advice, msg)
+  } else {
+    msg <- paste(msg, advice)
+  }
+  cond[["message"]] <- msg
+  cond
+}

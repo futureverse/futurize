@@ -3,6 +3,8 @@ xs <- list(1, 1:2, 1:2, 1:5)
 # ------------------------------------------
 # Base R apply functions
 # ------------------------------------------
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 # Sequential lapply()
 y <- lapply(X = xs, FUN = function(x) {
   sum(x)
@@ -13,6 +15,8 @@ y <- lapply(X = xs, FUN = function(x) {
   sum(x)
 }) |> futurize()
 str(y)
+
+} ## if (require ...)
 
 
 # ------------------------------------------

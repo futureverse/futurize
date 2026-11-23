@@ -98,7 +98,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **Sim.DiffProc** functions are supported by `futurize()`:
 
-* `MCM.sde()` with `seed = TRUE` as the default
+* `MCM.sde()` with `rng = TRUE` as the default
 
 [Sim.DiffProc]: https://cran.r-project.org/package=Sim.DiffProc
 [other parallel backends]: https://www.futureverse.org/backends.html

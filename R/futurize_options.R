@@ -11,6 +11,30 @@
 #'
 #' @inheritParams future::future
 #'
+#' @param rng (resources) If TRUE, parallel-safe random number generation
+#'        (RNG) is set up such that each element is processed with its own,
+#'        statistically sound RNG stream. This is needed whenever the code
+#'        uses random numbers, e.g. via `rnorm()` or `sample()`. The results
+#'        are reproducible given a fixed `set.seed()`, regardless of how
+#'        and where the elements are processed. Currently, the L'Ecuyer-CMRG
+#'        RNG is used for this.
+#'        If FALSE (default), then no RNG streams are set up, and you will be
+#'        warned if random numbers are still generated.
+#'        If NA, then no RNG streams are set up, and there is no check for
+#'        random numbers being generated. This can be used to silence
+#'        false-positive RNG warnings, e.g. when the code uses random numbers
+#'        in a way that does not affect the results. If in doubt, use
+#'        `rng = TRUE`, which is always statistically sound.
+#'        Currently, only `TRUE`, `FALSE`, and `NA` are supported; other
+#'        types of values are reserved for future extensions.
+#'        If `rng` is specified, then `seed` must not be specified.
+#'
+#' @param seed (resources) Superseded by `rng`, but kept for backward
+#'        compatibility. `seed = TRUE`, `seed = FALSE`, and `seed = NULL` are
+#'        equivalent to `rng = TRUE`, `rng = FALSE`, and `rng = NA`.
+#'        For other values, see the `seed`
+#'        argument of [future::future()].
+#'
 #' @param scheduling (scheduling) Average number of futures ("chunks") per
 #'        worker.
 #'        If `0.0`, then a single future is used to process all elements.
@@ -37,8 +61,18 @@
 #' # Default futurize options
 #' str(futurize_options())
 #'
+#' # Declare that parallel random number generation is needed
+#' str(futurize_options(rng = TRUE))
+#'
 #' @export
-futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", scheduling = 1.0, chunk_size = NULL, ...) {
+futurize_options <- function(rng = FALSE, seed = FALSE, globals = TRUE, packages = NULL, stdout = TRUE, conditions = "condition", scheduling = 1.0, chunk_size = NULL, ...) {
+  if (!missing(rng)) {
+    if (!missing(seed)) {
+      stop("futurize() options 'rng' and 'seed' must not be specified at the same time; use only 'rng'", call. = FALSE)
+    }
+    seed <- parse_rng(rng)
+  }
+
   args <- list(
      # Resources:
            seed = seed,
@@ -53,7 +87,7 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
                   ...
   )
   specified <- character(0L)
-  if (!missing(seed)) specified <- c(specified, "seed")
+  if (!missing(rng) || !missing(seed)) specified <- c(specified, "seed")
   if (!missing(globals)) specified <- c(specified, "globals")
   if (!missing(packages)) specified <- c(specified, "packages")
   if (!missing(stdout)) specified <- c(specified, "stdout")
@@ -63,4 +97,29 @@ futurize_options <- function(seed = FALSE, globals = TRUE, packages = NULL, stdo
   specified <- c(specified, ...names())
   attr(args, "specified") <- specified
   args
+}
+
+
+#' Parse the 'rng' option into a 'seed' value understood by future
+#'
+#' @param rng The value of the futurize() `rng` option.
+#'
+#' @return
+#' A value to be used for the `seed` argument of [future::future()].
+#'
+#' @details
+#' Currently, only `TRUE`, `FALSE`, and `NA` are supported, where `NA`
+#' corresponds to `seed = NULL`, i.e. no RNG streams and no RNG checks. This is where support
+#' for additional types of RNG declarations, e.g. alternative parallel RNG
+#' methods, will be added in the future.
+#'
+#' @noRd
+parse_rng <- function(rng) {
+  if (is.logical(rng) && length(rng) == 1L) {
+    ## rng = NA: no RNG streams and no RNG checks
+    if (is.na(rng)) return(NULL)
+    return(rng)
+  }
+  value <- if (is.null(rng)) "NULL" else paste(deparse(rng), collapse = " ")
+  stop(sprintf("futurize() option 'rng' must be TRUE, FALSE, or NA: %s", value), call. = FALSE)
 }

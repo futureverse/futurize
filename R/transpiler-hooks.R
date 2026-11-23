@@ -29,5 +29,5 @@ make_runtime_transpile_call <- function(expr, options = NULL) {
 #'
 #' @noRd
 controlled_argument_hint <- function() {
-  "pass any future options to futurize() instead, e.g. futurize(seed = TRUE)"
+  "pass any future options to futurize() instead, e.g. futurize(rng = TRUE)"
 }

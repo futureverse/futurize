@@ -32,6 +32,8 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "glmmTMB",        append_transpilers_for_glmmTMB)
   transpilers_for_package("futurize::add-on", package = "lme4",           append_transpilers_for_lme4)
   transpilers_for_package("futurize::add-on", package = "metafor",        append_transpilers_for_metafor)
+  transpilers_for_package("futurize::add-on", package = "mlr3",           append_transpilers_for_mlr3)
+  transpilers_for_package("futurize::add-on", package = "mlr3tuning",     append_transpilers_for_mlr3tuning)
   transpilers_for_package("futurize::add-on", package = "modelsummary",   append_transpilers_for_modelsummary)
   transpilers_for_package("futurize::add-on", package = "partykit",       append_transpilers_for_partykit)
   transpilers_for_package("futurize::add-on", package = "parameters",     append_transpilers_for_parameters)
@@ -53,6 +55,7 @@ register_all_transpilers <- function() {
   transpilers_for_package("futurize::add-on", package = "vegan",          append_transpilers_for_vegan)
 
   ## Domain-specific Bioconductor packages
+  transpilers_for_package("futurize::add-on", package = "bumphunter",           append_transpilers_for_bumphunter)
   transpilers_for_package("futurize::add-on", package = "DESeq2",               append_transpilers_for_DESeq2)
   transpilers_for_package("futurize::add-on", package = "fgsea",                append_transpilers_for_fgsea)
   transpilers_for_package("futurize::add-on", package = "GenomicAlignments",    append_transpilers_for_GenomicAlignments)

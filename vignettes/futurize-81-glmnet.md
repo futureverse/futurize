@@ -124,7 +124,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **glmnet** functions are supported by `futurize()`:
 
-* `cv.glmnet()` with `seed = TRUE` as the default
+* `cv.glmnet()` with `rng = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

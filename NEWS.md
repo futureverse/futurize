@@ -1,4 +1,63 @@
-# Version 1.1.0 (2026-10-18)
+# Version 1.2.0 [2026-11-23]
+
+## Significant Changes
+
+ * Add `futurize()` option `rng`, which declares whether parallel random
+   number generation (RNG) is needed, e.g. `lapply(xs, fcn) |>
+   futurize(rng = TRUE)`. This supersedes option `seed`, which is still
+   supported for backward compatibility, i.e. `futurize(seed = TRUE)` is
+   equivalent to `futurize(rng = TRUE)`. Options `rng` and `seed` must
+   not be specified at the same time. Currently, `rng` accepts only
+   `TRUE`, `FALSE`, and `NA`; other values are reserved for future
+   extensions.
+
+ * Use `futurize(rng = NA)` to declare that random numbers may be
+   generated, but that they do not affect the results. This silences
+   false-positive RNG-misuse warnings without setting up parallel RNG
+   streams. This is equivalent to `futurize(seed = NULL)`.
+
+ * Error messages and vignettes now suggest `futurize(rng = TRUE)`
+   instead of `futurize(seed = TRUE)`.
+
+## New Transpilers
+
+ * Add support for Bioconductor package **bumphunter**, e.g. `bumps <-
+   bumphunter(mat, design, chr = chr, pos = pos, cutoff = 0.5, B = 100)
+   |> futurize()`.
+
+ * Add support for **mlr3** functions `resample()` and `benchmark()`.
+
+ * Add support for **mlr3tuning** functions `tune()` and
+   `tune_nested()`, when using batch tuners. Asynchronous tuners are
+   not supported, because they do not use futures.
+
+ * Add support for new **GSVA** (>= 2.7.25) functions `gsvaRowNorm()`,
+   `gsvaColRanks()`, and `gsvaColScores()`.
+
+## Bug Fixes
+
+ * If a package required for futurization was not available, e.g.
+   **future.apply** for `lapply(xs, fcn) |> futurize()`, the error
+   message was the misleading "Function base::lapply() is not in one
+   of the registered futurize namespaces". This could happen during
+   `R CMD check` of a package that uses **futurize** without
+   declaring **future.apply** as a dependency. Now the error message
+   says which package is missing.
+
+ * Printing a futurized call with an argument set to `NULL`, e.g.
+   `futurize(lapply(xs, fcn), seed = NULL, eval = FALSE)`, gave an
+   error on "subscript out of bounds".
+
+ * Futurization of **GSVA** functions works again, but it requires
+   **GSVA** (< 2.7.0) or **GSVA** (>= 2.7.25).
+
+## Miscellaneous
+
+ * Now using `genericFunction` for S4 classes rather than
+   `standardGeneric`, which will be removed in R (>= 4.7.0).
+
+
+# Version 1.1.0 [2026-10-19]
 
 ## Significant Changes
 
@@ -70,7 +129,7 @@
    e.g. `plan(sequential)`.
 
 
-# Version 1.0.0 (2026-06-11)
+# Version 1.0.0 [2026-06-12]
 
 ## Significant Changes
 
@@ -273,7 +332,7 @@ for futurizing many more packages going forward.
 This is the first version submitted to CRAN.
 
 
-# Version 0.0.6 (2026-01-14)
+# Version 0.0.6 [2026-01-14]
 
 ## New Transpilers
 
@@ -298,7 +357,7 @@ This is the first version submitted to CRAN.
    (e.g. `%do%`) and functions (e.g. `lapply()`).
 
 
-# Version 0.0.5 (2025-11-26)
+# Version 0.0.5 [2025-11-26]
 
 ## New Features
 
@@ -308,7 +367,7 @@ This is the first version submitted to CRAN.
    `local({ lapply(x, f) |> futurize() })`.
 
 
-# Version 0.0.4 (2025-09-26)
+# Version 0.0.4 [2025-09-26]
 
 ## New Transpilers
 
@@ -327,7 +386,7 @@ This is the first version submitted to CRAN.
    enabling futurizing of calls.
 
  
-# Version 0.0.3 (2025-08-20)
+# Version 0.0.3 [2025-08-20]
 
 ## New Transpilers
 
@@ -349,7 +408,7 @@ This is the first version submitted to CRAN.
    the futurized expression instead of evaluating it.
  
 
-# Version 0.0.2 (2025-05-23)
+# Version 0.0.2 [2025-05-23]
 
 The **futurize** package unifies our current **future.apply**,
 **furrr**, and **doFuture** solutions into a minimal, unified
@@ -392,7 +451,7 @@ and how output and conditions are relayed, among other things.
    allFit(gm) |> futurize()`.
 
  
-# Version 0.0.1 (2025-03-07)
+# Version 0.0.1 [2025-03-07]
 
 ## New Features
 

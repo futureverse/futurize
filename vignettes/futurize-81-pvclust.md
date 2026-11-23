@@ -98,7 +98,7 @@ plan(future.batchtools::batchtools_slurm)
 
 The following **pvclust** function is supported by `futurize()`:
 
-* `pvclust()` with `seed = TRUE` as the default
+* `pvclust()` with `rng = TRUE` as the default
 
 
 # Without futurize: Manual PSOCK cluster setup

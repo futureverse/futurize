@@ -137,6 +137,8 @@ parallelization.
 | **[lme4]**                 | `allFit()`, `bootMer()`, `influence()` and `profile()` for 'merMod'          | -                  |
 | **[metafor]**              | `profile()`, `rstudent()`, `cooks.distance()`, `dfbetas()` for 'rma'         | -                  |
 | **[mgcv]**                 | `bam()`, `predict()` for 'bam'                                               | -                  |
+| **[mlr3]**                 | `resample()`, `benchmark()`                                                  | **[future.apply]** |
+| **[mlr3tuning]**           | `tune()`, `tune_nested()`                                                    | **[future.apply]** |
 | **[modelsummary]**         | `modelsummary()`, `msummary()`, `modelplot()`                                | **[future.apply]** |
 | **[parameters]**           | `bootstrap_model()`, `bootstrap_parameters()`                                | -                  |
 | **[partykit]**             | `cforest()`, `ctree_control()`, `mob_control()`, `varimp()` for 'cforest'    | **[future.apply]** |
@@ -188,6 +190,10 @@ pr <- profile(fit) |> futurize()
 
 b <- mgcv::bam(y ~ s(x0, bs = bs) + s(x1, bs = bs), data = dat) |> futurize()
 
+rr <- mlr3::resample(task, learner, resampling) |> futurize()
+
+instance <- mlr3tuning::tune(tuner, task, learner, resampling, measure, term_evals = 20) |> futurize()
+
 fit <- parameters::bootstrap_model(model, iterations = 1000) |> futurize()
 
 cf <- partykit::cforest(dist ~ speed, data = cars) |> futurize()
@@ -237,6 +243,7 @@ md <- vegan::mrpp(dune, Management) |> futurize()
 
 | Package                    | Functions                                                                 | Requires           |
 |----------------------------|---------------------------------------------------------------------------|--------------------|
+| **[bumphunter]**           | `bumphunter()`, `bumphunterEngine()`, `smoother()`                        | **[doFuture]**     |
 | **[DESeq2]**               | `DESeq()`, `lfcShrink()`, `results()`                                     | **[doFuture]**     |
 | **[fgsea]**                | `fgsea()`, `fgseaMultilevel()`, `fgseaSimple()`, `fgseaLabel()`, `geseca()`, `gesecaSimple()`, `collapsePathwaysGeseca()` | **[doFuture]**     |
 | **[GenomicAlignments]**    | `summarizeOverlaps()`                                                     | **[doFuture]**     |
@@ -254,6 +261,8 @@ currently supported by `futurize()` for parallel transpilation._
 Here are some examples:
 
 ```r
+bumps <- bumphunter::bumphunter(mat, design, chr = chr, pos = pos, cutoff = 0.5, B = 100) |> futurize()
+
 dds <- DESeq2::DESeq(dds) |> futurize()
 
 res <- fgsea::fgsea(pathways, stats) |> futurize()
@@ -275,6 +284,24 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 
 
 
+## Installation
+
+R package futurize is available on [CRAN](https://cran.r-project.org/package=futurize) and can be installed in R as:
+
+```r
+install.packages("futurize")
+```
+
+
+### Pre-release version
+
+To install the pre-release version, use:
+
+```r
+install.packages("futurize", repos = c("https://futureverse-devel.r-universe.dev", "https://cloud.r-project.org"))
+```
+
+
 [futureverse]: https://www.futureverse.org
 [future]: https://future.futureverse.org
 [future.apply]: https://future.apply.futureverse.org
@@ -282,6 +309,7 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [doFuture]: https://doFuture.futureverse.org
 [TSP]: https://cran.r-project.org/package=TSP
 [boot]: https://cran.r-project.org/package=boot
+[bumphunter]: https://bioconductor.org/packages/bumphunter/
 [caret]: https://cran.r-project.org/package=caret
 [crossmap]: https://cran.r-project.org/package=crossmap
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
@@ -299,6 +327,8 @@ adjusted <- sva::ComBat(dat = dat, batch = batch) |> futurize()
 [lme4]: https://cran.r-project.org/package=lme4
 [metafor]: https://cran.r-project.org/package=metafor
 [mgcv]: https://cran.r-project.org/package=mgcv
+[mlr3]: https://cran.r-project.org/package=mlr3
+[mlr3tuning]: https://cran.r-project.org/package=mlr3tuning
 [modelsummary]: https://cran.r-project.org/package=modelsummary
 [parameters]: https://cran.r-project.org/package=parameters
 [partykit]: https://cran.r-project.org/package=partykit

@@ -134,12 +134,64 @@ futurization should be disabled and enabled. A package must \emph{never}
 disable or enable futurization.
 }
 
+\section{Required packages}{
+
+Futurization of a function call is in some cases done via a package
+that implements the corresponding future-based alternative. For
+example, \code{lapply(xs, fcn) |> futurize()} is futurized via
+\code{future.apply::future_lapply()}, and \code{purrr::map(xs, fcn) |> futurize()}
+via \code{furrr::future_map()}. These packages must be installed for
+\code{futurize()} to work.
+
+If you use \code{futurize()} in a package, the package must (1) declare
+these required packages as dependencies too, e.g.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Imports:
+    futurize,
+    future.apply
+}\if{html}{\out{</div>}}
+
+in the package \code{DESCRIPTION} file. It must also (2) import one of its
+functions in the package \code{NAMESPACE} file, e.g.
+\code{importFrom(future.apply, future_lapply)}.
+}
+
+\section{Future labels}{
+
+Futures created by \code{futurize()} are labeled automatically, so that
+each future identifies the package and function that created it, e.g.
+in error messages, event logs, and tools that inspect futures. The
+default labels follow the convention:
+\itemize{
+\item \verb{fz:<package>::<function>-\%d} if the call is evaluated by several
+futures, e.g. one per chunk, where \verb{\%d} is replaced by the index of
+the future
+\item \verb{fz:<package>::<function>} if the call is evaluated by a single
+future
+}
+
+For example, \code{lapply(xs, fcn) |> futurize()} labels its futures
+\code{fz:base::lapply-1}, \code{fz:base::lapply-2}, and so on, and
+\code{boot::boot()} is labeled \code{fz:boot::boot}. The \verb{fz:} prefix
+identifies futures that were created by \code{futurize()}.
+
+To use a different label, specify argument \code{label}, which takes
+precedence over the default label. For example,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{y <- lapply(xs, fcn) |> futurize(label = "my-analysis-\%d")
+}\if{html}{\out{</div>}}
+
+labels the futures \code{my-analysis-1}, \code{my-analysis-2}, and so on.
+}
+
 \examples{
 xs <- list(1, 1:2, 1:2, 1:5)
 
 # ------------------------------------------
 # Base R apply functions
 # ------------------------------------------
+if (requireNamespace("future.apply", quietly = TRUE)) {
+
 # Sequential lapply()
 y <- lapply(X = xs, FUN = function(x) {
   sum(x)
@@ -150,6 +202,8 @@ y <- lapply(X = xs, FUN = function(x) {
   sum(x)
 }) |> futurize()
 str(y)
+
+} ## if (require ...)
 
 
 # ------------------------------------------
